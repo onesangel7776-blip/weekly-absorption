@@ -1,43 +1,72 @@
-
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Weekly Absorption</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Weekly Absorption - SUN 21:00 KST</title>
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
-body{margin:0;background:#0a0f1c;color:#c7d5e0;font-family: -apple-system, Pretendard, monospace; padding:16px}
-h1{color:#00d4ff;font-size:18px}
-.card{border:1px solid #1e3a5f;background:#0f1a2e;padding:12px;margin:10px 0;border-radius:8px}
-.badge{display:inline-block;padding:2px 6px;border:1px solid #00d4ff;color:#00d4ff;font-size:10px;margin-right:4px}
-.score{font-size:22px;color:#00ff88;font-weight:800}
-pre{white-space:pre-wrap;font-size:11px;background:#0a1426;padding:8px;border:1px solid #123;overflow:auto}
+body{background:#0b1020;color:#e5e7eb;font-family:ui-monospace, SFMono-Regular, Menlo, monospace}
+.card{background:#11172b;border:1px solid #1f2a4a;border-radius:16px}
+.risk-off{color:#f87171}.risk-on{color:#4ade80}.neutral{color:#fbbf24}
 </style>
 </head>
-<body>
-<h1>주간 흡수 대시보드 - SUN 21:00 KST</h1>
-<div id="status">loading absorption.json...</div>
-<div id="list"></div>
+<body class="p-4 md:p-8">
+<div class="max-w-6xl mx-auto">
+<h1 class="text-2xl md:text-3xl font-bold text-sky-300">Weekly Absorption - SUN 21:00 KST</h1>
+<div id="meta" class="mt-2 text-sm text-slate-400">Loading...</div>
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+<div class="card p-4"><div class="text-xs text-slate-400">BIAS</div><div id="bias" class="text-xl font-bold mt-1">-</div></div>
+<div class="card p-4"><div class="text-xs text-slate-400">DXY Proxy (DTWEXBGS)</div><div id="dxy" class="text-xl font-bold mt-1">-</div><div id="dxy_date" class="text-[10px] text-slate-500"></div></div>
+<div class="card p-4"><div class="text-xs text-slate-400">US10Y (DGS10)</div><div id="us10y" class="text-xl font-bold mt-1">-</div><div id="us10y_date" class="text-[10px] text-slate-500"></div></div>
+<div class="card p-4"><div class="text-xs text-slate-400">VIX (VIXCLS)</div><div id="vix" class="text-xl font-bold mt-1">-</div><div id="vix_date" class="text-[10px] text-slate-500"></div></div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+<div class="card p-4 md:col-span-2">
+<h2 class="text-sky-300 font-bold">COT Summary</h2>
+<div id="cot" class="mt-3 text-sm whitespace-pre-wrap text-slate-300"></div>
+</div>
+<div class="card p-4">
+<h2 class="text-sky-300 font-bold">Candidates / Scores</h2>
+<div id="candidates" class="mt-3 text-sm"></div>
+</div>
+</div>
+
+<div class="card p-4 mt-6">
+<h2 class="text-sky-300 font-bold">Raw JSON</h2>
+<pre id="raw" class="mt-3 text-[11px] overflow-auto max-h-[500px] text-slate-400"></pre>
+</div>
+
+<div class="mt-6 text-[11px] text-slate-500">Auto update: Sunday 21:00 KST / cron: 0 12 * * 0 UTC / Sources: FRED, CFTC COT, Finnhub</div>
+</div>
+
 <script>
-fetch('./absorption.json').then(r=>r.json()).then(data=>{
-  document.getElementById('status').innerHTML = `날짜: ${data.date} / BIAS: <b style="color:#00d4ff">${data.bias}</b> / 후보 ${data.candidates.length}개`;
-  const list = document.getElementById('list');
-  data.candidates.forEach(c=>{
-    const box = data.scores[c.ticker]?.box || {};
-    const div = document.createElement('div');
-    div.className='card';
-    div.innerHTML = `<div><span class="badge">${c.ticker}</span><span class="badge">${c.bias}</span></div>
-      <div class="score">${c.score}점</div>
-      <div style="font-size:12px">Box ${box.box_low} ~ ${box.box_high} (${box.box_range_pct}% ) Vol ${box.vol_ratio}x</div>
-      <pre>${JSON.stringify(data.scores[c.ticker],null,2)}</pre>`;
-    list.appendChild(div);
-  });
-  const pre = document.createElement('pre');
-  pre.textContent = JSON.stringify(data,null,2).slice(0,5000);
-  list.appendChild(pre);
-}).catch(e=>{
-  document.getElementById('status').textContent = 'absorption.json 없음 - 아직 Actions 안 돌았거나 로컬에서 python scoring_engine.py 실행 필요: ' + e;
-});
+async function load(){
+ try{
+  const res = await fetch('./absorption.json?v='+Date.now());
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  const j = await res.json();
+  document.getElementById('meta').innerText = `Date: ${j.date} / ${j.kst_run||''} / Candidates ${j.candidates?.length||0} / COT: ${j.cot?.status||'-'}`;
+  const biasEl = document.getElementById('bias');
+  biasEl.innerText = j.bias || j.fred?.bias || '-';
+  biasEl.className = 'text-xl font-bold mt-1 ' + ((j.bias||'').includes('RISK_OFF') ? 'risk-off' : (j.bias||'').includes('RISK_ON') ? 'risk-on' : 'neutral');
+  const dxy = j.fred?.DXY_proxy; if(dxy){ document.getElementById('dxy').innerText = dxy.latest?.value || '-'; document.getElementById('dxy_date').innerText = dxy.latest?.date || '' }
+  const us10y = j.fred?.US10Y; if(us10y){ document.getElementById('us10y').innerText = (us10y.latest?.value||'-')+' %'; document.getElementById('us10y_date').innerText = us10y.latest?.date || '' }
+  const vix = j.fred?.VIX; if(vix){ document.getElementById('vix').innerText = vix.latest?.value || '-'; document.getElementById('vix_date').innerText = vix.latest?.date || '' }
+  const cotEl = document.getElementById('cot');
+  if(j.cot){ cotEl.innerText = `status: ${j.cot.status}\nraw_lines: ${j.cot.meta?.raw_lines||''} / samples: ${j.cot.meta?.samples||''}\n\nsource: ${j.cot.source||''}`; }
+  const candEl = document.getElementById('candidates');
+  if(j.candidates && j.candidates.length){ candEl.innerHTML = j.candidates.map(c=>`<div class="border-b border-slate-800 py-2">${c.ticker||c} - ${c.score||''}</div>`).join(''); }
+  else { let s = j.scores ? JSON.stringify(j.scores,null,2) : 'No candidates (RISK_OFF filter)'; candEl.innerHTML = `<pre class="text-xs whitespace-pre-wrap">${s}</pre>`; }
+  document.getElementById('raw').innerText = JSON.stringify(j,null,2);
+ }catch(e){
+  document.getElementById('meta').innerText = 'absorption.json not found - run Actions or check path: '+e;
+  document.getElementById('raw').innerText = String(e);
+ }
+}
+load();
 </script>
 </body>
 </html>
