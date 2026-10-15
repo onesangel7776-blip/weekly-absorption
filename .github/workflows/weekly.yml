@@ -33,8 +33,10 @@ jobs:
 
       - name: Commit results
         run: |
+          mkdir -p docs
+          cp absorption.json docs/absorption.json
           git config user.name "absorption-bot"
           git config user.email "bot@weekly-absorption.local"
-          git add absorption.json docs/index.html || true
+          git add absorption.json docs/absorption.json docs/index.html || true
           git diff --staged --quiet || git commit -m "weekly update $(date -u +%Y-%m-%d)"
           git push
