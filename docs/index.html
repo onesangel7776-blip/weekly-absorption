@@ -1,0 +1,43 @@
+
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Weekly Absorption</title>
+<style>
+body{margin:0;background:#0a0f1c;color:#c7d5e0;font-family: -apple-system, Pretendard, monospace; padding:16px}
+h1{color:#00d4ff;font-size:18px}
+.card{border:1px solid #1e3a5f;background:#0f1a2e;padding:12px;margin:10px 0;border-radius:8px}
+.badge{display:inline-block;padding:2px 6px;border:1px solid #00d4ff;color:#00d4ff;font-size:10px;margin-right:4px}
+.score{font-size:22px;color:#00ff88;font-weight:800}
+pre{white-space:pre-wrap;font-size:11px;background:#0a1426;padding:8px;border:1px solid #123;overflow:auto}
+</style>
+</head>
+<body>
+<h1>주간 흡수 대시보드 - SUN 21:00 KST</h1>
+<div id="status">loading absorption.json...</div>
+<div id="list"></div>
+<script>
+fetch('./absorption.json').then(r=>r.json()).then(data=>{
+  document.getElementById('status').innerHTML = `날짜: ${data.date} / BIAS: <b style="color:#00d4ff">${data.bias}</b> / 후보 ${data.candidates.length}개`;
+  const list = document.getElementById('list');
+  data.candidates.forEach(c=>{
+    const box = data.scores[c.ticker]?.box || {};
+    const div = document.createElement('div');
+    div.className='card';
+    div.innerHTML = `<div><span class="badge">${c.ticker}</span><span class="badge">${c.bias}</span></div>
+      <div class="score">${c.score}점</div>
+      <div style="font-size:12px">Box ${box.box_low} ~ ${box.box_high} (${box.box_range_pct}% ) Vol ${box.vol_ratio}x</div>
+      <pre>${JSON.stringify(data.scores[c.ticker],null,2)}</pre>`;
+    list.appendChild(div);
+  });
+  const pre = document.createElement('pre');
+  pre.textContent = JSON.stringify(data,null,2).slice(0,5000);
+  list.appendChild(pre);
+}).catch(e=>{
+  document.getElementById('status').textContent = 'absorption.json 없음 - 아직 Actions 안 돌았거나 로컬에서 python scoring_engine.py 실행 필요: ' + e;
+});
+</script>
+</body>
+</html>
