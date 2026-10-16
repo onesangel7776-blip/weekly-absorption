@@ -1,50 +1,44 @@
 
 """
-MCP 뼈대 - 수동 모드: "SLV 왜 9.5점이야?" 같은 질문에 COT/ETF/뉴스 까서 설명
-
-실행: python mcp_server.py
-나중에 Claude/Meta AI MCP로 연결하면 tool로 노출 가능
+MCP Server - "SLV 왜 9.5점이야?" 4레이어 분해
+Usage: python mcp_server.py SLV
 """
+import json, sys, os
 
-from data_collectors.fred import fetch_all as fred_all
-from data_collectors.cftc import fetch_cot
-from data_collectors.finnhub_sentiment import fetch_news_sentiment
-from data_collectors.price import fetch_box
-import json
+def explain_ticker(ticker, json_path="absorption.json"):
+    ticker=ticker.upper()
+    try:
+        with open(json_path) as f:
+            data=json.load(f)
+        found = next((t for t in data['tickers'] if t['ticker']==ticker), None)
+        if not found:
+            print(f"{ticker} not found in {json_path}")
+            return
+        print(f"""
+=== {ticker} 4레이어 분해 ===
+점수: {found['score']} / 상태: {found['status']} / 심리: {found['sentiment']}
 
-def explain_ticker(ticker="SLV"):
-    fred = fred_all()
-    box = fetch_box(ticker)
-    cot = fetch_cot()
-    news = fetch_news_sentiment(ticker)
+1. BOX (40%) - 박스 구간: {found['box_range']}% | 점수 {found['breakdown']['box_score']}
+   - 거래량 배수: {found['vol_mult']}x | 체류일: {found['dwell']}D
+   - 의미: 박스가 좁을수록 매집 가능성 높음. 3% 이하면 타이트
 
-    explanation = f"""
-=== {ticker} 왜 9.5점이야? (4레이어 분해) ===
+2. COT (20%) - 투기 포지션: {found['cot_pct']}% Long | 점수 {found['breakdown']['cot_score']}
+   - 의미: 70% 이상이면 헤지펀드도 바닥 보고 있음
 
-[LAYER 1] FRED 환경:
-- DXY: {fred.get('DXY_proxy')}
-- US10Y: {fred.get('US10Y')}
-- VIX: {fred.get('VIX')}
--> DXY가 102~103이면 위험자산 중립, 101 이하면 RISK_ON
+3. FLOW (20%) - 자금 흐름: {found['flow_m']}M | 점수 {found['breakdown']['flow_score']}
+   - 의미: +면 기관 매수, -면 매도
 
-[LAYER 2] COT 포지셔닝:
-- {cot.get('source')} 에서 {ticker} 관련 라인 {len(cot.get('samples',[]))}개 감지
-- 천장/바닥은 COT가 극단에 있을 때 (상업적 헤저 vs 투기세력 역전)
+4. NEWS (20%) - 뉴스 심리: {found['news_sentiment']} | 점수 {found['breakdown']['news_score']} (기사 {found.get('news_count',0)}개)
+   - 의미: 화이트리스트 23개 언론사 + 중복 제거 + 금융 감성 필터
 
-[LAYER 3] PRICE BOX:
-- 22일 박스: {box.get('box_low')} ~ {box.get('box_high')} ({box.get('box_range_pct')}%)
-- 거래량 비율: {box.get('vol_ratio')}x (3x 이상이면 흡수)
-- 체류일: 22일 박스 안에 몇 일 있었는지 -> 98퍼타일은 22일 중 21일 이상
+Macro Bias: {data['macro']['bias']} | DXY {data['macro']['dxy']} US10Y {data['macro']['us10y']}%
+생성 시각: {data['generated_at']}
 
-[LAYER 4] NEWS SENTIMENT:
-- 최근 뉴스 {news.get('count')}개, 점수 {news.get('sentiment_score')}
-- 샘플: {news.get('samples')}
+공식: Strength = 40% Box + 20% COT + 20% Flow + 20% News
+        """
+    except FileNotFoundError:
+        print(f"{json_path} 없음. 먼저 python scoring_engine.py 실행")
 
-=> 종합: 박스 3% 이내 + 거래량 급증 + COT 극단 + DXY 약세 겹치면 9.5점
-"""
-    return explanation
-
-if __name__ == "__main__":
-    import sys
-    ticker = sys.argv[1] if len(sys.argv)>1 else "SLV"
-    print(explain_ticker(ticker))
+if __name__=="__main__":
+    t = sys.argv[1] if len(sys.argv)>1 else "SLV"
+    explain_ticker(t)
