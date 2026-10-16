@@ -1,204 +1,414 @@
 {
-  "date": "2026-10-15",
-  "kst_run": "SUN 21:00 KST",
-  "bias": "RISK_OFF",
-  "fred": {
-    "DXY_proxy": {
-      "series": "DTWEXBGS",
-      "latest": {
-        "realtime_start": "2026-10-13",
-        "realtime_end": "2026-10-13",
-        "date": "2026-10-09",
-        "value": "121.6023"
-      }
-    },
-    "US10Y": {
-      "series": "DGS10",
-      "latest": {
-        "realtime_start": "2026-10-14",
-        "realtime_end": "2026-10-14",
-        "date": "2026-10-13",
-        "value": "5.21"
-      }
-    },
-    "VIX": {
-      "series": "VIXCLS",
-      "latest": {
-        "realtime_start": "2026-10-15",
-        "realtime_end": "2026-10-15",
-        "date": "2026-10-14",
-        "value": "16.87"
-      }
-    }
+  "generated_at": "2026-10-16T05:13:23.750288",
+  "macro": {
+    "dxy": 102.21,
+    "us10y": 4.56,
+    "bias": "TIGHTENING"
   },
-  "cot": {
-    "status": "ok",
-    "meta": {
-      "raw_lines": 94,
-      "samples": [
-        "\"PAX GOLD PERP STYLE - COINBASE DERIVATIVES, LLC\",261006,2026-10-06,180LM9,FREX,00,180 ,    1605,       0,       0,       0,       0,       0,       0,     436,     962,       0,     425,     540,       0,     861,    1502,     744,     103,      93,       0,       0,       0,       0,       0,       0,      48,     -48,       0,      31,     149,       0,      79,     101,      14,      -8,  100.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,   27.2,   59.9,    0.0,   26.5,   33.6,    0.0,   53.6,   93.6,   46.4,    6.4,     24,      0,      0,      0,      0,      0,      0,.,.,      0,     10,     10,      0,     11,     13,    38.9,    64.3,    48.5,    80.5,    38.9,    64.3,    48.5,    80.5,\"(1 PAX Gold)\",\"180LM9\",\"FREX\",\"180 \",\"F84\",\"FutOnly\"",
-        "\"BITCOIN - CHICAGO MERCANTILE EXCHANGE\",261006,2026-10-06,133741,CME ,00,133 ,   21432,    6974,    4635,     454,    5174,    1642,     251,    5731,   12583,    1130,     515,       0,      26,   20255,   20721,    1177,     711,    1836,      82,     423,      28,     105,     159,     -46,     751,     747,     592,     230,       0,      26,    1768,    1929,      68,     -93,  100.0,   32.5,   21.6,    2.1,   24.1,    7.7,    1.2,   26.7,   58.7,    5.3,    2.4,    0.0,    0.1,   94.5,   96.7,    5.5,    3.3,    116,      9,     12,      4,     10,      6,.,     33,     39,     19,      6,      0,.,     73,     71,    62.5,    31.1,    69.7,    53.4,    61.8,    30.2,    68.4,    51.0,\"(5 Bitcoins)\",\"133741\",\"CME \",\"133 \",\"F85\",\"FutOnly\"",
-        "\"MICRO BITCOIN - CHICAGO MERCANTILE EXCHANGE\",261006,2026-10-06,133742,CME ,00,133 ,   34582,    4083,     401,       0,    2404,      76,       0,   13371,   29798,     644,    7298,    1760,     151,   27951,   32830,    6631,    1752,    8262,    2827,     -16,       0,     146,       9,       0,    3475,    8542,     120,     780,    -584,     145,    7493,    8216,     769,      46,  100.0,   11.8,    1.2,    0.0,    7.0,    0.2,    0.0,   38.7,   86.2,    1.9,   21.1,    5.1,    0.4,   80.8,   94.9,   19.2,    5.1,    197,      7,.,      0,      8,.,      0,     45,     20,      7,     87,     25,.,    152,     53,    24.7,    81.6,    34.1,    86.3,    24.7,    80.8,    34.1,    84.7,\"(Bitcoin X $0.10)\",\"133742\",\"CME \",\"133 \",\"F85\",\"FutOnly\"",
-        "\"NANO BITCOIN PERP STYLE - COINBASE DERIVATIVES, LLC\",261006,2026-10-06,133LM4,FREX,00,133 ,  163273,    1800,      66,       0,       0,       0,       0,    4443,   44327,       0,  127651,  103066,       0,  133894,  147459,   29379,   15814,    4507,     300,       0,       0,       0,       0,       0,  -13299,  -13465,       0,    5175,   14300,       0,   -7824,     835,   12331,    3672,  100.0,    1.1,    0.0,    0.0,    0.0,    0.0,    0.0,    2.7,   27.1,    0.0,   78.2,   63.1,    0.0,   82.0,   90.3,   18.0,    9.7,   1214,.,.,      0,      0,      0,      0,      7,     15,      0,    736,    454,      0,    744,    470,    12.0,    21.9,    18.2,    32.3,    12.0,    21.9,    18.2,    32.3,\"(1/100 X Bitcoin)\",\"133LM4\",\"FREX\",\"133 \",\"F85\",\"FutOnly\"",
-        "\"BITCOIN CASH PERP STYLE - COINBASE DERIVATIVES, LLC\",261006,2026-10-06,133LM5,FREX,00,133 ,    2443,       0,       0,       0,       0,       0,       0,      48,    1940,       0,    2061,     392,       0,    2109,    2332,     334,     111,     128,       0,       0,       0,       0,       0,       0,      15,     158,       0,     169,      35,       0,     184,     193,     -56,     -65,  100.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    2.0,   79.4,    0.0,   84.4,   16.0,    0.0,   86.3,   95.5,   13.7,    4.5,     27,      0,      0,      0,      0,      0,      0,.,      4,      0,     18,      4,      0,     19,      8,    32.7,    82.4,    61.6,    95.5,    32.7,    82.4,    61.6,    95.5,\"(1 Bitcoin)\",\"133LM5\",\"FREX\",\"133 \",\"F85\",\"FutOnly\""
-      ],
-      "source": "https://www.cftc.gov/dea/newcot/FinFutWk.txt"
-    }
-  },
-  "candidates": [],
-  "scores": {
-    "SLV": {
-      "score": 5.0,
-      "box": {
-        "ticker": "SLV",
-        "box_high": 60.72999954223633,
-        "box_low": 50.220001220703125,
-        "box_range_pct": 20.93,
-        "avg_vol_22": 15824465.681818182,
-        "last_vol": 8763245,
-        "vol_ratio": 0.55
-      }
-    },
-    "GLD": {
-      "score": 5.0,
-      "box": {
-        "ticker": "GLD",
-        "box_high": 401.1700134277344,
-        "box_low": 375.8800048828125,
-        "box_range_pct": 6.73,
-        "avg_vol_22": 7870231.863636363,
-        "last_vol": 2765001,
-        "vol_ratio": 0.35
-      }
-    },
-    "CPER": {
-      "score": 5.0,
-      "box": {
-        "ticker": "CPER",
-        "box_high": 41.43000030517578,
-        "box_low": 38.59000015258789,
-        "box_range_pct": 7.36,
-        "avg_vol_22": 459295.63636363635,
-        "last_vol": 537904,
-        "vol_ratio": 1.17
-      }
-    },
-    "IBIT": {
-      "score": 5.0,
-      "box": {
-        "ticker": "IBIT",
-        "box_high": 49.0099983215332,
-        "box_low": 43.040000915527344,
-        "box_range_pct": 13.87,
-        "avg_vol_22": 40360470.04545455,
-        "last_vol": 19703041,
-        "vol_ratio": 0.49
-      }
-    },
-    "USO": {
-      "score": 5.0,
-      "box": {
-        "ticker": "USO",
-        "box_high": 156.8699951171875,
-        "box_low": 143.35000610351562,
-        "box_range_pct": 9.43,
-        "avg_vol_22": 5228166.454545454,
-        "last_vol": 2356262,
-        "vol_ratio": 0.45
-      }
-    },
-    "QQQ": {
-      "score": 5.0,
-      "box": {
-        "ticker": "QQQ",
-        "box_high": 759.6599731445312,
-        "box_low": 704.719970703125,
-        "box_range_pct": 7.8,
-        "avg_vol_22": 33990308.40909091,
-        "last_vol": 24742885,
-        "vol_ratio": 0.73
-      }
-    },
-    "SPY": {
-      "score": 7.0,
-      "box": {
-        "ticker": "SPY",
-        "box_high": 779.0900268554688,
-        "box_low": 754.0499877929688,
-        "box_range_pct": 3.32,
-        "avg_vol_22": 41919150.63636363,
-        "last_vol": 16479814,
-        "vol_ratio": 0.39
-      }
-    }
-  },
-  "flow_sample": {
-    "SLV": {
+  "tickers": [
+    {
       "ticker": "SLV",
-      "close": 51.6150016784668,
-      "vol": 8759197
+      "score": 9.5,
+      "status": "BOTTOM",
+      "sentiment": "BULLISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
     },
-    "GLD": {
+    {
       "ticker": "GLD",
-      "close": 380.80010986328125,
-      "vol": 2764576
+      "score": 9.0,
+      "status": "BOTTOM",
+      "sentiment": "BULLISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
     },
-    "CPER": {
+    {
+      "ticker": "UNG",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
+    },
+    {
       "ticker": "CPER",
-      "close": 39.47999954223633,
-      "vol": 537904
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
     },
-    "IBIT": {
-      "ticker": "IBIT",
-      "close": 46.529998779296875,
-      "vol": 19697628
+    {
+      "ticker": "COPX",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
     },
-    "USO": {
+    {
       "ticker": "USO",
-      "close": 156.8699951171875,
-      "vol": 2356047
-    }
-  },
-  "news_sample": {
-    "SLV": {
-      "ticker": "SLV",
-      "count": 8,
-      "sentiment_score": 1,
-      "samples": [
-        "Silver Nears Crucial Test: Peak Scarcity or Structural Squeeze?",
-        "Gold And Silver Lose Their Shine When Held In The Wrong Account",
-        "Market Checkup In Ratio Charts"
-      ]
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
     },
-    "GLD": {
-      "ticker": "GLD",
-      "count": 10,
-      "sentiment_score": 0,
-      "samples": [
-        "Macro Insights: Making Sense Of Midterm Election Volatility, AI Credit Crunch, And Rising Yields",
-        "Gold Slump Is Masking a $20 Billion Miner Cash Pile",
-        "Gold: Hold, Not A Buy Yet (Rating Downgrade)"
-      ]
+    {
+      "ticker": "GDX",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
     },
-    "CPER": {
-      "ticker": "CPER",
-      "count": 3,
-      "sentiment_score": 2,
-      "samples": [
-        "Market Checkup In Ratio Charts",
-        "Commodities: Middle East Conflict Keeps Oil Well Supported",
-        "Weekly Commentary: Not Idiosyncratic But Systemic"
-      ]
+    {
+      "ticker": "XLB",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
     },
-    "IBIT": {
+    {
+      "ticker": "XLE",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
+    },
+    {
+      "ticker": "DBA",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
+    },
+    {
+      "ticker": "EEM",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
+    },
+    {
+      "ticker": "UUP",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
+    },
+    {
+      "ticker": "TLT",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
+    },
+    {
+      "ticker": "XLF",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
+    },
+    {
+      "ticker": "IWM",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
+    },
+    {
+      "ticker": "SMH",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
+    },
+    {
+      "ticker": "QQQ",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
+    },
+    {
+      "ticker": "SPY",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
+    },
+    {
+      "ticker": "XLK",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
+    },
+    {
       "ticker": "IBIT",
-      "count": 10,
-      "sentiment_score": 1,
-      "samples": [
-        "Bitcoin, Nvidia And Tesla ETFs Lead Wall Street’s Most Traded Funds",
-        "Bitcoin ETFs Lost $65 Million In A Day. One BlackRock Fund Accounted For Every Dollar.",
-        "Bitcoin ETF Outflows Reach $65 Million as BlackRock Bleeds Cash"
-      ]
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
+    },
+    {
+      "ticker": "BITO",
+      "score": 4.0,
+      "status": "NEUTRAL",
+      "sentiment": "BEARISH",
+      "box_range": 3.1,
+      "vol_mult": 1.8,
+      "dwell": 22,
+      "cot_pct": 72,
+      "flow_m": 342,
+      "news_sentiment": 0.78,
+      "breakdown": {
+        "box_score": 9.2,
+        "cot_score": 8.5,
+        "flow_score": 9.0,
+        "news_score": 8.9
+      },
+      "news_count": 8
     }
+  ],
+  "summary": {
+    "bottom_count": 2,
+    "top_count": 19,
+    "top_pick": "SLV"
   }
 }
