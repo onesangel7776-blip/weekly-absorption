@@ -1,8 +1,9 @@
+
 name: Weekly Absorption Update
 
 on:
   schedule:
-    - cron: '0 12 * * 0'
+    - cron: '0 12 * * *'
   workflow_dispatch:
 
 jobs:
@@ -11,32 +12,38 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Python
+      - uses: actions/checkout@v4
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
       - name: Install deps
-        run: pip install requests
-
+        run: |
+          pip install yfinance pandas numpy requests
       - name: Run scoring engine
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-          FINNHUB_KEY: ${{ secrets.FINNHUB_KEY }}
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           python scoring_engine.py
-          cat absorption.json
-
-      - name: Commit results
+      - name: Commit and push
         run: |
-          mkdir -p docs
-          cp absorption.json docs/absorption.json
-          git config user.name "absorption-bot"
-          git config user.email "bot@weekly-absorption.local"
-          git add absorption.json docs/absorption.json docs/index.html || true
-          git diff --staged --quiet || git commit -m "weekly update $(date -u +%Y-%m-%d)"
+          git config --local user.email "bot@absorption.local"
+          git config --local user.name "absorption-bot"
+          git add absorption.json docs/absorption.json || true
+          git diff --staged --quiet || git commit -m "weekly update $(date +%Y-%m-%d) - real scoring 40/20/20/20"
           git push
+      - name: Discord notify
+        if: env.DISCORD_WEBHOOK_URL != ''
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          python -c "
+import json, os, requests
+with open('absorption.json') as f:
+    data=json.load(f)
+top=data['tickers'][0]
+msg=f"**Daily Absorption Update {data['generated_at'][:10]}**\nMacro: {data['macro']['bias']} DXY {data['macro']['dxy']} US10Y {data['macro']['us10y']}%\nTop Pick: {top['ticker']} {top['score']} ({top['status']}) Box {top['box_range']}% Vol {top['vol_mult']}x\nBOTTOM {data['summary']['bottom_count']} / TOP {data['summary']['top_count']}\nhttps://onesangel7776-blip.github.io/weekly-absorption/"
+requests.post(os.getenv('DISCORD_WEBHOOK_URL'), json={'content': msg})
+"
