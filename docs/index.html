@@ -28,7 +28,6 @@ body{font-family:'Inter', sans-serif; background:#050a14; color:#e2e8f0}
       <div id="live_dot" class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
     </div>
   </div>
-
   <!-- Top 4 Cards -->
   <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
     <div id="bias_card" class="card-premium p-5 col-span-2 lg:col-span-1">
@@ -55,7 +54,6 @@ body{font-family:'Inter', sans-serif; background:#050a14; color:#e2e8f0}
       <div class="mt-3 h-1 bg-slate-800 rounded-full"><div class="h-1 bg-violet-400 rounded-full" style="width:35%"></div></div>
     </div>
   </div>
-
   <!-- Main Grid -->
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
     <!-- COT -->
@@ -68,7 +66,6 @@ body{font-family:'Inter', sans-serif; background:#050a14; color:#e2e8f0}
       <div id="cot_detail" class="mono text-[11px] leading-relaxed text-slate-300 bg-[#0a1225] rounded-xl p-4 border border-slate-800/50"></div>
       <div class="mt-4 text-[10px] text-slate-500 leading-relaxed">CFTC가 가상자산 선물을 포함하면서 계약 수가 94개로 늘었습니다. 엔진은 Gold/Silver/Micro Bitcoin 위주로 필터링합니다.</div>
     </div>
-
     <!-- Candidates -->
     <div class="lg:col-span-7 card-premium p-6">
       <div class="flex justify-between items-center mb-5">
@@ -83,17 +80,14 @@ body{font-family:'Inter', sans-serif; background:#050a14; color:#e2e8f0}
       </div>
     </div>
   </div>
-
   <!-- Raw -->
   <div class="card-premium p-6 mt-6">
     <details><summary class="font-bold text-slate-300 cursor-pointer text-sm">Raw JSON / Debug</summary>
     <pre id="raw" class="mono mt-4 text-[10px] overflow-auto max-h-[300px] text-slate-500 bg-[#050a14] p-4 rounded-xl"></pre>
     </details>
   </div>
-
   <div class="text-center mono text-[10px] text-slate-600 mt-8">Weekly Absorption Engine • FRED + CFTC COT + Finnhub • Auto Sunday 21:00 KST</div>
 </div>
-
 <script>
 async function load(){
  try{
@@ -101,7 +95,6 @@ async function load(){
   if(!res.ok) throw new Error('HTTP '+res.status);
   const j = await res.json();
   document.getElementById('meta').innerText = `${j.date} • ${j.kst_run||'SUN 21:00 KST'} • ${j.cot?.meta?.raw_lines||0} contracts scanned`;
-
   const bias = j.bias||j.fred?.bias||'-';
   const biasEl = document.getElementById('bias');
   biasEl.innerText = bias;
@@ -110,11 +103,9 @@ async function load(){
   if(bias.includes('RISK_OFF')){ card.classList.add('risk-off'); reason.innerText = 'DXY·US10Y 고점 구간, 안전모드로 후보 차단 중 (정상)'; biasEl.className='text-3xl font-extrabold mono text-red-300'; }
   else if(bias.includes('RISK_ON')){ card.classList.add('risk-on'); reason.innerText = '위험선호 구간, 매수 후보 탐색 중'; biasEl.className='text-3xl font-extrabold mono text-emerald-300'; }
   else { reason.innerText='중립 구간'; }
-
   const dxy=j.fred?.DXY_proxy; if(dxy){ document.getElementById('dxy').innerText=dxy.latest?.value||'-'; document.getElementById('dxy_date').innerText=dxy.latest?.date||''; }
   const us10y=j.fred?.US10Y; if(us10y){ document.getElementById('us10y').innerText=us10y.latest?.value||'-'; document.getElementById('us10y_date').innerText=us10y.latest?.date||''; }
   const vix=j.fred?.VIX; if(vix){ document.getElementById('vix').innerText=vix.latest?.value||'-'; document.getElementById('vix_date').innerText=vix.latest?.date||''; }
-
   // COT clean
   const badge=document.getElementById('cot_badge');
   if(j.cot){
@@ -127,7 +118,6 @@ async function load(){
     stats.innerHTML=`<div class="glass rounded-xl p-3 text-center"><div class="text-[10px] text-slate-400">GOLD</div><div class="font-bold mono text-amber-300">${gold}</div></div><div class="glass rounded-xl p-3 text-center"><div class="text-[10px] text-slate-400">BITCOIN</div><div class="font-bold mono text-orange-300">${btc}</div></div><div class="glass rounded-xl p-3 text-center"><div class="text-[10px] text-slate-400">TOTAL</div><div class="font-bold mono">${j.cot.meta?.raw_lines}</div></div>`;
     document.getElementById('cot_detail').innerHTML=`<div class="flex justify-between"><span>raw_lines</span><b>${j.cot.meta?.raw_lines}</b></div><div class="flex justify-between mt-1"><span>samples</span><b>${j.cot.meta?.samples}</b></div><div class="mt-3 pt-3 border-t border-slate-800 text-[10px] text-slate-400">엔진은 이 ${j.cot.meta?.raw_lines}개 중에서 Gold/Silver 선물만 필터링해서 사용합니다. PAX Gold, Micro/Nano Bitcoin 등 가상자산 선물은 새로 추가된 계약입니다.</div>`;
   }
-
   // Candidates premium cards
   const candWrap=document.getElementById('candidates');
   const empty=document.getElementById('candidates_empty');
