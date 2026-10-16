@@ -1,152 +1,116 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Weekly Absorption - SUN 21:00 KST</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>COMMAND CENTER - 21 TICKER LONG/SHORT</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@600;800&display=swap" rel="stylesheet">
 <style>
-body{font-family:'Inter', sans-serif; background:#050a14; color:#e2e8f0}
-.mono{font-family:'JetBrains Mono', monospace}
-.glass{background:rgba(17,23,43,0.8);backdrop-filter:blur(16px);border:1px solid rgba(31,42,74,0.6)}
-.card-premium{border-radius:20px; background:linear-gradient(135deg, #11172b 0%, #0f172a 100%); border:1px solid #1e293b; box-shadow: 0 8px 32px rgba(0,0,0,0.4)}
-.risk-off{ background:linear-gradient(135deg,#450a0a,#7f1d1d); border-color:#ef4444}
-.risk-on{ background:linear-gradient(135deg,#052e16,#14532d); border-color:#22c55e}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#e5e7eb;font-family:'JetBrains Mono',monospace;font-size:13px}
+.header{border-bottom:1px solid #1f2937;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;background:#0f0f14;position:sticky;top:0;z-index:10}
+.header h1{font-family:Inter;font-size:14px;letter-spacing:0.08em;color:#fff}
+.header h1 span{color:#22c55e}
+.badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.badge-RISK_ON{background:#052e16;color:#4ade80;border:1px solid #16a34a}
+.badge-RISK_OFF{background:#450a0a;color:#f87171;border:1px solid #dc2626}
+.badge-NEUTRAL{background:#1f2937;color:#9ca3af}
+.macro{display:flex;gap:12px;padding:12px 20px;background:#111118;border-bottom:1px solid #1f2937;flex-wrap:wrap}
+.macro div{font-size:11px;color:#9ca3af}.macro b{color:#fff;font-size:13px}
+.section{padding:18px 20px}
+.section h2{font-size:12px;letter-spacing:0.1em;margin-bottom:12px;display:flex;justify-content:space-between}
+.section h2 span.count{color:#6b7280}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.card{border:1px solid #1f2937;background:#12121a;border-radius:8px;padding:12px;position:relative;overflow:hidden}
+.card.BOTTOM{border-color:#16a34a44;background:linear-gradient(180deg,#0f1f14 0%,#12121a 100%)}
+.card.TOP{border-color:#dc262644;background:linear-gradient(180deg,#1f1010 0%,#12121a 100%)}
+.card.selected{outline:2px solid #22c55e;outline-offset:-2px}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.ticker{font-size:15px;font-weight:800;color:#fff;letter-spacing:0.04em}
+.score{padding:2px 8px;border-radius:4px;font-size:11px;font-weight:800}
+.score-high{background:#16a34a;color:#fff}
+.score-mid{background:#1f2937;color:#9ca3af}
+.score-low{background:#7f1d1d;color:#fca5a5}
+.meta{font-size:10px;color:#6b7280;line-height:1.6}
+.meta b{color:#d1d5db}
+.bar{height:4px;background:#1f2937;border-radius:2px;margin-top:8px;overflow:hidden}
+.bar-fill{height:100%;transition:width 0.3s}
+.bar-BOTTOM{background:#22c55e}
+.bar-TOP{background:#ef4444}
+.micro{margin-top:6px;font-size:10px;color:#22c55e}
+.sl{margin-top:4px;font-size:10px;color:#9ca3af}
+.selected-label{position:absolute;top:8px;right:8px;background:#22c55e;color:#000;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px}
+.footer{padding:20px;text-align:center;color:#4b5563;font-size:10px;border-top:1px solid #1f2937;margin-top:20px}
 </style>
 </head>
-<body class="min-h-screen p-4 md:p-6">
-<div class="max-w-7xl mx-auto">
-  <!-- Header -->
-  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-    <div>
-      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight"><span class="text-sky-300">Weekly</span> <span class="text-white">Absorption</span></h1>
-      <div id="meta" class="mono text-xs text-slate-400 mt-2">Loading data...</div>
-    </div>
-    <div class="flex items-center gap-3">
-      <div class="glass rounded-full px-4 py-2 text-xs mono text-slate-300">AUTO • SUN 21:00 KST</div>
-      <div id="live_dot" class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-    </div>
-  </div>
-  <!-- Top 4 Cards -->
-  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-    <div id="bias_card" class="card-premium p-5 col-span-2 lg:col-span-1">
-      <div class="text-[11px] mono tracking-widest text-slate-400 mb-2">MARKET BIAS</div>
-      <div id="bias" class="text-3xl font-extrabold mono">-</div>
-      <div id="bias_reason" class="text-[11px] text-slate-400 mt-2 leading-relaxed"></div>
-    </div>
-    <div class="card-premium p-5">
-      <div class="flex justify-between"><div class="text-[11px] mono text-slate-400">DXY PROXY</div><div class="text-[10px] text-slate-500">DTWEXBGS</div></div>
-      <div id="dxy" class="text-2xl font-bold mono mt-3">-</div>
-      <div id="dxy_date" class="text-[10px] mono text-slate-500 mt-1"></div>
-      <div class="mt-3 h-1 bg-slate-800 rounded-full"><div id="dxy_bar" class="h-1 bg-sky-400 rounded-full" style="width:60%"></div></div>
-    </div>
-    <div class="card-premium p-5">
-      <div class="flex justify-between"><div class="text-[11px] mono text-slate-400">US10Y</div><div class="text-[10px] text-slate-500">DGS10</div></div>
-      <div class="flex items-baseline gap-1"><div id="us10y" class="text-2xl font-bold mono mt-3">-</div><div class="text-sm">%</div></div>
-      <div id="us10y_date" class="text-[10px] mono text-slate-500 mt-1"></div>
-      <div class="mt-3 h-1 bg-slate-800 rounded-full"><div class="h-1 bg-amber-400 rounded-full" style="width:52%"></div></div>
-    </div>
-    <div class="card-premium p-5">
-      <div class="flex justify-between"><div class="text-[11px] mono text-slate-400">VIX</div><div class="text-[10px] text-slate-500">VIXCLS</div></div>
-      <div id="vix" class="text-2xl font-bold mono mt-3">-</div>
-      <div id="vix_date" class="text-[10px] mono text-slate-500 mt-1"></div>
-      <div class="mt-3 h-1 bg-slate-800 rounded-full"><div class="h-1 bg-violet-400 rounded-full" style="width:35%"></div></div>
-    </div>
-  </div>
-  <!-- Main Grid -->
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-    <!-- COT -->
-    <div class="lg:col-span-5 card-premium p-6">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="font-bold text-sky-200">COT Position</h2>
-        <span id="cot_badge" class="text-[10px] mono px-3 py-1 rounded-full bg-slate-800 text-slate-300">loading</span>
-      </div>
-      <div id="cot_stats" class="grid grid-cols-3 gap-3 mb-5"></div>
-      <div id="cot_detail" class="mono text-[11px] leading-relaxed text-slate-300 bg-[#0a1225] rounded-xl p-4 border border-slate-800/50"></div>
-      <div class="mt-4 text-[10px] text-slate-500 leading-relaxed">CFTC가 가상자산 선물을 포함하면서 계약 수가 94개로 늘었습니다. 엔진은 Gold/Silver/Micro Bitcoin 위주로 필터링합니다.</div>
-    </div>
-    <!-- Candidates -->
-    <div class="lg:col-span-7 card-premium p-6">
-      <div class="flex justify-between items-center mb-5">
-        <h2 class="font-bold text-sky-200">Top Absorption Candidates</h2>
-        <span id="cand_count" class="text-[10px] mono px-3 py-1 rounded-full bg-slate-800 text-slate-300">0 found</span>
-      </div>
-      <div id="candidates" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-      <div id="candidates_empty" class="hidden text-center py-12">
-        <div class="text-4xl mb-3">🛡️</div>
-        <div class="font-bold text-amber-300">RISK_OFF 필터 작동 중</div>
-        <div class="mono text-[11px] text-slate-400 mt-2">DXY/금리 높아서 후보를 0개로 차단한 정상 상태입니다.<br>점수는 아래에 미리 계산되어 있습니다.</div>
-      </div>
-    </div>
-  </div>
-  <!-- Raw -->
-  <div class="card-premium p-6 mt-6">
-    <details><summary class="font-bold text-slate-300 cursor-pointer text-sm">Raw JSON / Debug</summary>
-    <pre id="raw" class="mono mt-4 text-[10px] overflow-auto max-h-[300px] text-slate-500 bg-[#050a14] p-4 rounded-xl"></pre>
-    </details>
-  </div>
-  <div class="text-center mono text-[10px] text-slate-600 mt-8">Weekly Absorption Engine • FRED + CFTC COT + Finnhub • Auto Sunday 21:00 KST</div>
+<body>
+<div class="header">
+<h1>COMMAND CENTER - <span>21 TICKER REAL-TIME INFRA MONITOR</span></h1>
+<div id="biasBadge"></div>
+</div>
+<div class="macro" id="macro"></div>
+<div class="section">
+<h2>ACCUMULATION - BOTTOM <span class="count" id="bottomCount"></span></h2>
+<div class="grid" id="bottomGrid"></div>
+</div>
+<div class="section">
+<h2 style="color:#f87171">DISTRIBUTION - TOP <span class="count" id="topCount"></span></h2>
+<div class="grid" id="topGrid"></div>
+</div>
+<div class="section">
+<h2>SELECTED - THIS WEEK (MAX 3) <span style="color:#22c55e">LONG/SHORT</span></h2>
+<div class="grid" id="selectedGrid"></div>
+</div>
+<div class="footer">
+Strength Score (점수): 40% Box Range(박스권) + 20% COT Long(세력) + 20% ETF Flow(수급) + 20% News(뉴스) | SL/TP: GLD 1%/2%, QQQ 0.8%/1.6%, IBIT 3%/6% | Micro: MGC/MNQ/M2K/MBT
+<br>CONFIDENTIAL - INSTITUTIONAL USE ONLY - REAL-TIME INFRA MONITOR - NO ADVICE
 </div>
 <script>
 async function load(){
- try{
-  const res = await fetch('./absorption.json?v='+Date.now());
-  if(!res.ok) throw new Error('HTTP '+res.status);
-  const j = await res.json();
-  document.getElementById('meta').innerText = `${j.date} • ${j.kst_run||'SUN 21:00 KST'} • ${j.cot?.meta?.raw_lines||0} contracts scanned`;
-  const bias = j.bias||j.fred?.bias||'-';
-  const biasEl = document.getElementById('bias');
-  biasEl.innerText = bias;
-  const card = document.getElementById('bias_card');
-  const reason = document.getElementById('bias_reason');
-  if(bias.includes('RISK_OFF')){ card.classList.add('risk-off'); reason.innerText = 'DXY·US10Y 고점 구간, 안전모드로 후보 차단 중 (정상)'; biasEl.className='text-3xl font-extrabold mono text-red-300'; }
-  else if(bias.includes('RISK_ON')){ card.classList.add('risk-on'); reason.innerText = '위험선호 구간, 매수 후보 탐색 중'; biasEl.className='text-3xl font-extrabold mono text-emerald-300'; }
-  else { reason.innerText='중립 구간'; }
-  const dxy=j.fred?.DXY_proxy; if(dxy){ document.getElementById('dxy').innerText=dxy.latest?.value||'-'; document.getElementById('dxy_date').innerText=dxy.latest?.date||''; }
-  const us10y=j.fred?.US10Y; if(us10y){ document.getElementById('us10y').innerText=us10y.latest?.value||'-'; document.getElementById('us10y_date').innerText=us10y.latest?.date||''; }
-  const vix=j.fred?.VIX; if(vix){ document.getElementById('vix').innerText=vix.latest?.value||'-'; document.getElementById('vix_date').innerText=vix.latest?.date||''; }
-  // COT clean
-  const badge=document.getElementById('cot_badge');
-  if(j.cot){
-    badge.innerText=`${j.cot.status.toUpperCase()} • ${j.cot.meta?.raw_lines} contracts`;
-    badge.className='text-[10px] mono px-3 py-1 rounded-full bg-emerald-900/50 text-emerald-200 border border-emerald-700/50';
-    const stats=document.getElementById('cot_stats');
-    const gold=(j.cot.samples||[]).filter(s=>s.toUpperCase().includes('GOLD')).length;
-    const btc=(j.cot.samples||[]).filter(s=>s.toUpperCase().includes('BITCOIN')).length;
-    const eth=(j.cot.samples||[]).filter(s=>s.toUpperCase().includes('ETHER')).length;
-    stats.innerHTML=`<div class="glass rounded-xl p-3 text-center"><div class="text-[10px] text-slate-400">GOLD</div><div class="font-bold mono text-amber-300">${gold}</div></div><div class="glass rounded-xl p-3 text-center"><div class="text-[10px] text-slate-400">BITCOIN</div><div class="font-bold mono text-orange-300">${btc}</div></div><div class="glass rounded-xl p-3 text-center"><div class="text-[10px] text-slate-400">TOTAL</div><div class="font-bold mono">${j.cot.meta?.raw_lines}</div></div>`;
-    document.getElementById('cot_detail').innerHTML=`<div class="flex justify-between"><span>raw_lines</span><b>${j.cot.meta?.raw_lines}</b></div><div class="flex justify-between mt-1"><span>samples</span><b>${j.cot.meta?.samples}</b></div><div class="mt-3 pt-3 border-t border-slate-800 text-[10px] text-slate-400">엔진은 이 ${j.cot.meta?.raw_lines}개 중에서 Gold/Silver 선물만 필터링해서 사용합니다. PAX Gold, Micro/Nano Bitcoin 등 가상자산 선물은 새로 추가된 계약입니다.</div>`;
+  try{
+    const res = await fetch('./absorption.json?t='+Date.now());
+    const data = await res.json();
+    const macro = data.macro||{};
+    const bias = macro.bias||data.bias||'NEUTRAL';
+    document.getElementById('biasBadge').innerHTML = `<span class="badge badge-${bias}">${bias} • DXY ${macro.dxy} • US10Y ${macro.us10y}% • VIX ${macro.vix}</span>`;
+    document.getElementById('macro').innerHTML = `
+      <div>DATE <b>${data.date}</b></div>
+      <div>RUN <b>${data.kst_run||''}</b></div>
+      <div>DXY <b>${macro.dxy}</b> (${macro.dxy_date||''})</div>
+      <div>US10Y <b>${macro.us10y}%</b></div>
+      <div>VIX <b>${macro.vix}</b></div>
+      <div>BIAS <b>${bias}</b></div>
+      <div>BOTTOM <b style="color:#22c55e">${data.summary.bottom_count}</b> / TOP <b style="color:#ef4444">${data.summary.top_count}</b></div>
+    `;
+    document.getElementById('bottomCount').textContent = `${data.summary.bottom_count} TICKERS`;
+    document.getElementById('topCount').textContent = `${data.summary.top_count} TICKERS`;
+    function card(t, isSelected){
+      const isBottom = t.status==='BOTTOM';
+      const scoreClass = t.score>=7 ? 'score-high' : t.score<=4 ? 'score-low' : 'score-mid';
+      return `<div class="card ${t.status} ${isSelected?'selected':''}">
+        ${isSelected?'<div class="selected-label">SELECTED • '+t.side+'</div>':''}
+        <div class="card-header">
+          <div><span class="ticker">${t.ticker}</span> <span style="font-size:10px;color:#6b7280">${t.micro||''}</span></div>
+          <span class="score ${scoreClass}">${t.score}</span>
+        </div>
+        <div class="meta">
+          BOX RANGE <b>${t.box_range}%</b> (${t.box_low}~${t.box_high})<br>
+          VOL MULT <b>${t.vol_mult}x</b> DWELL <b>${t.dwell}d</b> POS <b>${t.pos}</b><br>
+          COT <b>${t.cot_pct}% Long</b> FLOW <b>${t.flow_m}m</b> NEWS <b>${t.news_sentiment}</b><br>
+          CLOSE <b>${t.close}</b> | ${t.status} ${t.sentiment}
+        </div>
+        <div class="micro">${t.micro} | SL ${t.sl} (${t.sl_pct}%) TP ${t.tp} (${t.tp_pct}%) ${t.side}</div>
+        <div class="bar"><div class="bar-fill bar-${t.status}" style="width:${t.score*10}%"></div></div>
+      </div>`;
+    }
+    const bottom = data.bottom||data.tickers.filter(x=>x.status==='BOTTOM');
+    const top = data.top||data.tickers.filter(x=>x.status==='TOP');
+    document.getElementById('bottomGrid').innerHTML = bottom.map(t=>card(t, data.selected?.some(s=>s.ticker===t.ticker))).join('') || '<div style="color:#4b5563">No BOTTOM this week</div>';
+    document.getElementById('topGrid').innerHTML = top.map(t=>card(t, data.selected?.some(s=>s.ticker===t.ticker))).join('') || '<div style="color:#4b5563">No TOP this week</div>';
+    document.getElementById('selectedGrid').innerHTML = (data.selected||[]).map(t=>card(t,true)).join('') || '<div style="color:#4b5563">NEUTRAL - Cash</div>';
+  }catch(e){
+    console.error(e);
+    document.getElementById('macro').textContent = 'Failed to load absorption.json - '+e;
   }
-  // Candidates premium cards
-  const candWrap=document.getElementById('candidates');
-  const empty=document.getElementById('candidates_empty');
-  const countEl=document.getElementById('cand_count');
-  const scores=j.scores||{};
-  const candCount=j.candidates?.length||0;
-  countEl.innerText=`${candCount} selected • ${Object.keys(scores).length} scored`;
-  if(candCount===0){ empty.classList.remove('hidden'); }
-  let html='';
-  const sorted=Object.entries(scores).sort((a,b)=>(b[1].score||0)-(a[1].score||0)).slice(0,8);
-  for(const [ticker,v] of sorted){
-    const score=v.score||0;
-    const color=score>=7?'text-emerald-300 border-emerald-500/30 bg-emerald-900/20':score>=6?'text-sky-300 border-sky-500/30 bg-sky-900/20':'text-slate-300 border-slate-700 bg-slate-800/30';
-    const range=v.box?.box_range_pct||0;
-    const vol=v.vol_ratio||v.box?.vol_ratio||0;
-    html+=`<div class="rounded-2xl p-4 border ${color} relative overflow-hidden">
-      <div class="flex justify-between items-start"><div class="font-extrabold tracking-widest">${ticker}</div><div class="mono text-[10px] px-2 py-1 rounded-full bg-black/40">SCORE ${score}</div></div>
-      <div class="mt-3 mono text-[11px] space-y-1 text-slate-300/80">
-        <div class="flex justify-between"><span>Box High</span><span>${v.box?.box_high?.toFixed? v.box.box_high.toFixed(2): v.box?.box_high||'-'}</span></div>
-        <div class="flex justify-between"><span>Box Low</span><span>${v.box?.box_low?.toFixed? v.box.box_low.toFixed(2): v.box?.box_low||'-'}</span></div>
-        <div class="flex justify-between"><span>Range</span><span>${typeof range==='number'?range.toFixed(2)+'%':range}</span></div>
-        <div class="flex justify-between"><span>Vol Ratio</span><span>${typeof vol==='number'?vol.toFixed(2):vol}</span></div>
-      </div>
-      <div class="mt-3 h-1.5 bg-black/40 rounded-full"><div class="h-1.5 rounded-full bg-current" style="width:${Math.min(100, score*14)}%"></div></div>
-    </div>`;
-  }
-  candWrap.innerHTML=html;
-  document.getElementById('raw').innerText=JSON.stringify(j,null,2);
- }catch(e){ document.getElementById('meta').innerText='Error: '+e; }
 }
 load();
 </script>
