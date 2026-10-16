@@ -5,29 +5,23 @@
   "fred": {
     "DXY_proxy": {
       "latest": {
-        "date": "2026-10-15",
-        "value": 103.8
+        "date": "2026-10-09",
+        "value": 121.6023
       },
       "prev": {
-        "value": 103.2
+        "value": 121.4469
       }
     },
     "US10Y": {
       "latest": {
-        "date": "2026-10-15",
-        "value": 4.25
-      },
-      "prev": {
-        "value": 4.18
+        "date": "2026-10-14",
+        "value": 5.19
       }
     },
     "VIX": {
       "latest": {
-        "date": "2026-10-15",
-        "value": 22.4
-      },
-      "prev": {
-        "value": 19.1
+        "date": "2026-10-14",
+        "value": 16.87
       }
     }
   },
@@ -41,8 +35,8 @@
       "GOLD - COMMODITY EXCHANGE INC.",
       "SILVER - COMMODITY EXCHANGE INC.",
       "MICRO BITCOIN - CHICAGO MERCANTILE EXCHANGE",
-      "MICRO ETHER - CHICAGO MERCANTILE EXCHANGE",
-      "PAX GOLD - ..."
+      "MICRO ETHER",
+      "PAX GOLD"
     ]
   },
   "candidates": [],
@@ -55,10 +49,7 @@
         "box_range_pct": 8.2,
         "vol_ratio": 0.42
       },
-      "flow": {
-        "etf_flow": "outflow",
-        "absorption": true
-      },
+      "flow": "outflow",
       "sentiment": 0.62
     },
     "GLD": {
@@ -68,11 +59,7 @@
         "box_low": 232.4,
         "box_range_pct": 5.1,
         "vol_ratio": 0.55
-      },
-      "flow": {
-        "etf_flow": "neutral"
-      },
-      "sentiment": 0.45
+      }
     },
     "CPER": {
       "score": 7.8,
@@ -109,6 +96,16 @@
         "box_range_pct": 5.3,
         "vol_ratio": 1.4
       }
+    },
+    "SPY": {
+      "score": 3.8,
+      "box": {
+        "box_high": 598.2,
+        "box_low": 570.1,
+        "box_range_pct": 4.7,
+        "vol_ratio": 1.1
+      }
     }
-  }
+  },
+  "generated_at": "2026-10-16T13:14:19.991226"
 }

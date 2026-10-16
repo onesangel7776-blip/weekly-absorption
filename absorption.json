@@ -1,414 +1,111 @@
 {
-  "generated_at": "2026-10-16T05:13:23.750288",
-  "macro": {
-    "dxy": 102.21,
-    "us10y": 4.56,
-    "bias": "TIGHTENING"
-  },
-  "tickers": [
-    {
-      "ticker": "SLV",
-      "score": 9.5,
-      "status": "BOTTOM",
-      "sentiment": "BULLISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
+  "date": "2026-10-16",
+  "kst_run": "SUN 21:00 KST",
+  "bias": "RISK_OFF",
+  "fred": {
+    "DXY_proxy": {
+      "latest": {
+        "date": "2026-10-09",
+        "value": 121.6023
       },
-      "news_count": 8
+      "prev": {
+        "value": 121.4469
+      }
     },
-    {
-      "ticker": "GLD",
-      "score": 9.0,
-      "status": "BOTTOM",
-      "sentiment": "BULLISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
+    "US10Y": {
+      "latest": {
+        "date": "2026-10-14",
+        "value": 5.19
+      }
     },
-    {
-      "ticker": "UNG",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "CPER",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "COPX",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "USO",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "GDX",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "XLB",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "XLE",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "DBA",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "EEM",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "UUP",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "TLT",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "XLF",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "IWM",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "SMH",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "QQQ",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "SPY",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "XLK",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "IBIT",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
-    },
-    {
-      "ticker": "BITO",
-      "score": 4.0,
-      "status": "NEUTRAL",
-      "sentiment": "BEARISH",
-      "box_range": 3.1,
-      "vol_mult": 1.8,
-      "dwell": 22,
-      "cot_pct": 72,
-      "flow_m": 342,
-      "news_sentiment": 0.78,
-      "breakdown": {
-        "box_score": 9.2,
-        "cot_score": 8.5,
-        "flow_score": 9.0,
-        "news_score": 8.9
-      },
-      "news_count": 8
+    "VIX": {
+      "latest": {
+        "date": "2026-10-14",
+        "value": 16.87
+      }
     }
-  ],
-  "summary": {
-    "bottom_count": 2,
-    "top_count": 19,
-    "top_pick": "SLV"
-  }
+  },
+  "cot": {
+    "status": "ok",
+    "meta": {
+      "raw_lines": 94,
+      "samples": 5
+    },
+    "samples": [
+      "GOLD - COMMODITY EXCHANGE INC.",
+      "SILVER - COMMODITY EXCHANGE INC.",
+      "MICRO BITCOIN - CHICAGO MERCANTILE EXCHANGE",
+      "MICRO ETHER",
+      "PAX GOLD"
+    ]
+  },
+  "candidates": [],
+  "scores": {
+    "SLV": {
+      "score": 9.5,
+      "box": {
+        "box_high": 32.45,
+        "box_low": 29.8,
+        "box_range_pct": 8.2,
+        "vol_ratio": 0.42
+      },
+      "flow": "outflow",
+      "sentiment": 0.62
+    },
+    "GLD": {
+      "score": 8.2,
+      "box": {
+        "box_high": 245.1,
+        "box_low": 232.4,
+        "box_range_pct": 5.1,
+        "vol_ratio": 0.55
+      }
+    },
+    "CPER": {
+      "score": 7.8,
+      "box": {
+        "box_high": 18.9,
+        "box_low": 17.2,
+        "box_range_pct": 9.0,
+        "vol_ratio": 0.61
+      }
+    },
+    "IBIT": {
+      "score": 6.5,
+      "box": {
+        "box_high": 62.3,
+        "box_low": 54.1,
+        "box_range_pct": 13.1,
+        "vol_ratio": 1.25
+      }
+    },
+    "USO": {
+      "score": 5.2,
+      "box": {
+        "box_high": 78.4,
+        "box_low": 72.1,
+        "box_range_pct": 8.0,
+        "vol_ratio": 0.9
+      }
+    },
+    "QQQ": {
+      "score": 4.1,
+      "box": {
+        "box_high": 512.3,
+        "box_low": 485.0,
+        "box_range_pct": 5.3,
+        "vol_ratio": 1.4
+      }
+    },
+    "SPY": {
+      "score": 3.8,
+      "box": {
+        "box_high": 598.2,
+        "box_low": 570.1,
+        "box_range_pct": 4.7,
+        "vol_ratio": 1.1
+      }
+    }
+  },
+  "generated_at": "2026-10-16T13:14:19.991226"
 }
