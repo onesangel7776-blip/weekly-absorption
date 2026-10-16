@@ -3,7 +3,7 @@ name: Weekly Absorption Update
 
 on:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 12 * * 0'  # SUN 21:00 KST = SUN 12:00 UTC
   workflow_dispatch:
 
 jobs:
@@ -19,12 +19,12 @@ jobs:
           python-version: '3.11'
       - name: Install deps
         run: |
-          pip install yfinance pandas numpy requests
+          pip install requests
       - name: Run scoring engine
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY || secrets.FINNHUB_KEY }}
+          FINNHUB_KEY: ${{ secrets.FINNHUB_KEY || secrets.FINNHUB_API_KEY }}
         run: |
           python scoring_engine.py
       - name: Commit and push
@@ -32,18 +32,5 @@ jobs:
           git config --local user.email "bot@absorption.local"
           git config --local user.name "absorption-bot"
           git add absorption.json docs/absorption.json || true
-          git diff --staged --quiet || git commit -m "weekly update $(date +%Y-%m-%d) - real scoring 40/20/20/20"
+          git diff --staged --quiet || git commit -m "weekly update $(date +%Y-%m-%d) - RISK logic"
           git push
-      - name: Discord notify
-        if: env.DISCORD_WEBHOOK_URL != ''
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: |
-          python -c "
-import json, os, requests
-with open('absorption.json') as f:
-    data=json.load(f)
-top=data['tickers'][0]
-msg=f"**Daily Absorption Update {data['generated_at'][:10]}**\nMacro: {data['macro']['bias']} DXY {data['macro']['dxy']} US10Y {data['macro']['us10y']}%\nTop Pick: {top['ticker']} {top['score']} ({top['status']}) Box {top['box_range']}% Vol {top['vol_mult']}x\nBOTTOM {data['summary']['bottom_count']} / TOP {data['summary']['top_count']}\nhttps://onesangel7776-blip.github.io/weekly-absorption/"
-requests.post(os.getenv('DISCORD_WEBHOOK_URL'), json={'content': msg})
-"
