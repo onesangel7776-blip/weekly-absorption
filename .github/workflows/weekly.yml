@@ -1,9 +1,9 @@
 
-name: Weekly Absorption Update
+name: 21 Ticker Command Center
 
 on:
   schedule:
-    - cron: '0 12 * * 0'  # SUN 21:00 KST = SUN 12:00 UTC
+    - cron: '0 12 * * 0'  # 매주 일요일 21:00 KST = 12:00 UTC
   workflow_dispatch:
 
 jobs:
@@ -19,18 +19,36 @@ jobs:
           python-version: '3.11'
       - name: Install deps
         run: |
-          pip install requests
-      - name: Run scoring engine
+          pip install yfinance pandas numpy requests
+      - name: Run 21 ticker engine
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY || secrets.FINNHUB_KEY }}
-          FINNHUB_KEY: ${{ secrets.FINNHUB_KEY || secrets.FINNHUB_API_KEY }}
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           python scoring_engine.py
       - name: Commit and push
         run: |
-          git config --local user.email "bot@absorption.local"
-          git config --local user.name "absorption-bot"
+          git config --local user.email "bot@commandcenter.local"
+          git config --local user.name "command-bot"
           git add absorption.json docs/absorption.json || true
-          git diff --staged --quiet || git commit -m "weekly update $(date +%Y-%m-%d) - RISK logic"
+          git diff --staged --quiet || git commit -m "21 ticker update $(date +%Y-%m-%d) - BOTTOM/TOP LONG/SHORT"
           git push
+      - name: Discord notify
+        if: env.DISCORD_WEBHOOK_URL != ''
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          python -c "
+import json, os, requests
+with open('absorption.json') as f:
+    data=json.load(f)
+sel = data.get('selected',[])
+sel_txt = ', '.join([f\"{s['ticker']} {s['side']} {s['score']}\" for s in sel]) if sel else 'No trade - NEUTRAL'
+macro = data.get('macro',{})
+msg=f\"\"\"**21 COMMAND CENTER {data['date']}** {macro.get('bias')} DXY {macro.get('dxy')} US10Y {macro.get('us10y')}%
+BOTTOM {data['summary']['bottom_count']} TOP {data['summary']['top_count']}
+SELECTED: {sel_txt}
+https://onesangel7776-blip.github.io/weekly-absorption/\"\"\"
+requests.post(os.getenv('DISCORD_WEBHOOK_URL'), json={'content': msg})
+"
