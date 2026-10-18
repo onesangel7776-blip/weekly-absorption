@@ -1,37 +1,40 @@
 {
-  "generated_at": "2026-10-18T07:15:01.456038",
+  "generated_at": "2026-10-18T07:30:53.424484",
   "date": "2026-10-18",
   "kst_run": "SUN 21:00 KST",
   "macro": {
-    "dxy": 121.6,
-    "dxy_date": "2026-10-09",
+    "dxy": 90.82,
+    "dxy_date": "2019-12-31",
     "us10y": 5.1,
     "vix": 16.46,
-    "bias": "RISK_OFF",
+    "bias": "NEUTRAL",
     "raw": {
       "DXY": {
-        "date": "2026-10-09",
-        "value": 121.6023,
-        "prev": 121.4469
+        "date": "2019-12-31",
+        "value": 90.8221,
+        "prev": 91.1403,
+        "source": "FRED DTWEXM"
       },
       "US10Y": {
         "date": "2026-10-15",
         "value": 5.1,
-        "prev": 5.19
+        "prev": 5.19,
+        "source": "FRED DGS10"
       },
       "VIX": {
         "date": "2026-10-15",
         "value": 16.46,
-        "prev": 16.87
+        "prev": 16.87,
+        "source": "FRED VIXCLS"
       }
     }
   },
   "fred": {
     "DXY_proxy": {
       "latest": {
-        "date": "2026-10-09",
-        "value": 121.6,
-        "source": ""
+        "date": "2019-12-31",
+        "value": 90.82,
+        "source": "FRED DTWEXM"
       }
     },
     "US10Y": {
@@ -45,7 +48,7 @@
       }
     }
   },
-  "bias": "RISK_OFF",
+  "bias": "NEUTRAL",
   "tickers": [
     {
       "ticker": "CPER",
@@ -945,6 +948,72 @@
   ],
   "selected": [
     {
+      "ticker": "CPER",
+      "micro": "MHG (Micro Copper)",
+      "score": 6.7,
+      "confidence": 67,
+      "status": "BOTTOM",
+      "side": "LONG",
+      "sentiment": "MIXED",
+      "box_range": 5.92,
+      "vol_mult": 0.68,
+      "pos": 0.13,
+      "dwell": 20,
+      "cot_pct": 68,
+      "cot_score": 8.5,
+      "flow_m": -1.2,
+      "flow_score": 8.0,
+      "news_sentiment": 5,
+      "news_score": 5.0,
+      "news_source": "finnhub",
+      "close": 39.5,
+      "box_high": 41.52,
+      "box_low": 39.2,
+      "sl": 39.18,
+      "tp": 40.13,
+      "sl_pct": 0.8,
+      "tp_pct": 1.6,
+      "breakdown": {
+        "box": 5.9,
+        "cot": 8.5,
+        "flow": 8.0,
+        "news": 5.0
+      }
+    },
+    {
+      "ticker": "SPY",
+      "micro": "MES (Micro S&P)",
+      "score": 6.6,
+      "confidence": 66,
+      "status": "BOTTOM",
+      "side": "LONG",
+      "sentiment": "MIXED",
+      "box_range": 3.01,
+      "vol_mult": 1.53,
+      "pos": 0.2,
+      "dwell": 20,
+      "cot_pct": 68,
+      "cot_score": 8.5,
+      "flow_m": 0.2,
+      "flow_score": 5.0,
+      "news_sentiment": 246,
+      "news_score": 6.5,
+      "news_source": "finnhub",
+      "close": 763.25,
+      "box_high": 781.62,
+      "box_low": 758.79,
+      "sl": 757.14,
+      "tp": 775.46,
+      "sl_pct": 0.8,
+      "tp_pct": 1.6,
+      "breakdown": {
+        "box": 6.5,
+        "cot": 8.5,
+        "flow": 5.0,
+        "news": 6.5
+      }
+    },
+    {
       "ticker": "XLE",
       "micro": "MCL proxy",
       "score": 2.8,
@@ -976,46 +1045,13 @@
         "flow": 5.0,
         "news": 6.0
       }
-    },
-    {
-      "ticker": "USO",
-      "micro": "MCL (Micro WTI)",
-      "score": 2.9,
-      "confidence": 71,
-      "status": "TOP",
-      "side": "SHORT",
-      "sentiment": "BEARISH",
-      "box_range": 14.55,
-      "vol_mult": 1.23,
-      "pos": 0.97,
-      "dwell": 20,
-      "cot_pct": 32,
-      "cot_score": 3.0,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 73,
-      "news_score": 6.5,
-      "news_source": "finnhub",
-      "close": 161.76,
-      "box_high": 162.38,
-      "box_low": 141.76,
-      "sl": 163.05,
-      "tp": 159.17,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
-      "breakdown": {
-        "box": 0,
-        "cot": 3.0,
-        "flow": 5.0,
-        "news": 6.5
-      }
     }
   ],
   "summary": {
     "bottom_count": 2,
     "top_count": 4,
     "total": 21,
-    "selected_count": 2,
+    "selected_count": 3,
     "top_pick": "CPER"
   },
   "micro_map": {
