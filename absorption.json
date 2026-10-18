@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-10-18T07:30:53.424484",
+  "generated_at": "2026-10-18T07:37:49.299409",
   "date": "2026-10-18",
   "kst_run": "SUN 21:00 KST",
   "macro": {
-    "dxy": 90.82,
-    "dxy_date": "2019-12-31",
+    "dxy": 101.84,
+    "dxy_date": "2026-10-16",
     "us10y": 5.1,
     "vix": 16.46,
     "bias": "NEUTRAL",
     "raw": {
       "DXY": {
-        "date": "2019-12-31",
-        "value": 90.8221,
-        "prev": 91.1403,
-        "source": "FRED DTWEXM"
+        "value": 101.84,
+        "date": "2026-10-16",
+        "source": "yfinance DX-Y.NYB"
       },
       "US10Y": {
         "date": "2026-10-15",
@@ -32,9 +31,9 @@
   "fred": {
     "DXY_proxy": {
       "latest": {
-        "date": "2019-12-31",
-        "value": 90.82,
-        "source": "FRED DTWEXM"
+        "date": "2026-10-16",
+        "value": 101.84,
+        "source": "yfinance DX-Y.NYB"
       }
     },
     "US10Y": {
