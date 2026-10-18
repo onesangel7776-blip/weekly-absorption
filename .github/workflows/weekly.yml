@@ -1,4 +1,5 @@
-name: 21 Ticker Command Center
+
+name: 21 Ticker Command Center - News Hybrid
 
 on:
   schedule:
@@ -19,23 +20,38 @@ jobs:
       - name: Install deps
         run: |
           pip install yfinance pandas numpy requests
-      - name: Run 21 ticker engine
+      - name: Run 21 ticker engine - Hybrid News
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          python scoring_engine.py
+          # data_collectors 폴더 확인
+          ls -R
+          python final_21_long_short/scoring_engine_hybrid.py
       - name: Commit and push
         run: |
           git config --local user.email "bot@commandcenter.local"
           git config --local user.name "command-bot"
-          git add absorption.json docs/absorption.json || true
-          git diff --staged --quiet || git commit -m "21 ticker update $(date +%Y-%m-%d) - BOTTOM/TOP LONG/SHORT"
+          git add absorption.json docs/absorption.json final_21_long_short/absorption.json || true
+          git diff --staged --quiet || git commit -m "21 ticker HYBRID update $(date +%Y-%m-%d) - Finnhub+GDELT News 0->real score"
           git push
-      - name: Discord notify
+      - name: Discord notify - Hybrid
         if: env.DISCORD_WEBHOOK_URL != ''
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          python discord_notify.py
+          python -c "
+import json, os, requests
+with open('absorption.json') as f:
+    data=json.load(f)
+sel = data.get('selected',[])
+sel_txt = ', '.join([f"{s['ticker']} {s['side']} {s['score']} News:{s.get('news_source','?')}" for s in sel]) if sel else 'No trade - NEUTRAL'
+macro = data.get('macro',{})
+msg=f'''**21 COMMAND CENTER HYBRID {data['date']}** {macro.get('bias')} DXY {macro.get('dxy')} US10Y {macro.get('us10y')}%
+BOTTOM {data['summary']['bottom_count']} TOP {data['summary']['top_count']}
+SELECTED: {sel_txt}
+News: Finnhub Primary + GDELT Backup ACTIVE
+https://onesangel7776-blip.github.io/weekly-absorption/'''
+requests.post(os.getenv('DISCORD_WEBHOOK_URL'), json={'content': msg})
+"
