@@ -19,7 +19,6 @@
 .pnl{font-weight:800} .pos{color:var(--green)} .neg{color:var(--red)}
 .small{font-size:11px;color:var(--dim);line-height:1.4}
 .hr{height:1px;background:var(--border);margin:10px 0}
-.input{width:100%;padding:7px 9px;border-radius:6px;border:1px solid var(--border);background:#0f0f17;color:var(--text)}
 table{width:100%;border-collapse:collapse;font-size:12px} th{color:var(--dim);text-align:left;padding:7px;border-bottom:1px solid var(--border)} td{padding:7px;border-bottom:1px solid rgba(36,36,50,.5)}
 .autoTag{font-size:10px;padding:2px 6px;border-radius:10px;background:#1e3a2a;color:var(--green);border:1px solid var(--green)}
 </style>
@@ -32,19 +31,15 @@ table{width:100%;border-collapse:collapse;font-size:12px} th{color:var(--dim);te
   </div>
   <div style="display:flex;gap:8px"><button class="btn" id="lang">한/영 KO</button><button class="btn" onclick="load()">새로고침</button></div>
 </div>
-
 <div class="grid3">
   <div class="card"><div class="row"><span class="k">자본</span><b id="capLabel">10,000,000원 / $7,407</b></div><div class="row"><span class="k">총 손익 KRW</span><span class="pnl" id="totalKrw">0원</span></div><div class="row"><span class="k">총 손익 USD</span><span class="pnl" id="totalUsd">$0.00</span></div><div class="row"><span class="k">승률</span><span id="winrate">0%</span></div><div class="small" style="margin-top:8px">주 3개 제한: RISK_ON=3롱, RISK_OFF=2숏+1방어롱, NEUTRAL=2바텀+1탑 준수<br>SL 0.8% / TP 1.6% / 1% 리스크</div></div>
   <div class="card"><div class="small">운영 모드</div><div style="margin-top:6px;font-size:12px;line-height:1.7">✅ GitHub Action 매일 21:00 UTC (미장 마감) 자동 실행<br>• 고가≥TP → 자동 익절 +20만원<br>• 저가≤SL → 자동 손절 -10만원<br>• 금요일 21:00 UTC → 시간 청산<br>• journal_data.json 자동 커밋<br><br>→ journal.html은 읽기만 하면 실시간 P&L 표시!<br><br>나중에 Alpaca/IBKR: yfinance → 주문 API 1줄 교체</div></div>
   <div class="card"><div class="small">현재 주</div><div id="weekInfo" style="font-size:12px;margin-top:6px"></div></div>
 </div>
-
 <h3 style="margin:18px 0 8px 0">이번 주 포지션 - 완전 자동 <span class="small" id="weekDate"></span></h3>
 <div class="grid3" id="cards"></div>
-
 <h3 style="margin:20px 0 8px 0">원장 (자동 + 수동 오버라이드 가능)</h3>
 <table><thead><tr><th>WEEK</th><th>TICKER (MICRO)</th><th>SIDE</th><th>진입</th><th>SL</th><th>TP</th><th>수량</th><th>현재가/청산가</th><th>상태</th><th>KRW</th><th>USD</th></tr></thead><tbody id="ledger"></tbody></table>
-
 <script>
 let LANG='ko';
 const fmtK=(n)=> (n>=0?'+':'')+Math.round(n).toLocaleString()+'원';
@@ -52,21 +47,57 @@ const fmtU=(n)=> (n>=0?'+$':'-$')+Math.abs(n).toFixed(2);
 async function fetchJson(url){try{const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw 0; return await r.json();}catch{return null;}}
 async function load(){
   document.getElementById('status').textContent='불러오는 중...';
-  const abs = await fetchJson('https://onesangel7776-blip.github.io/weekly-absorption/docs/absorption.json') || await fetchJson('https://onesangel7776-blip.github.io/weekly-absorption/absorption.json') || await fetchJson('./docs/absorption.json') || await fetchJson('./absorption.json');
-  const journal = await fetchJson('https://onesangel7776-blip.github.io/weekly-absorption/docs/journal_data.json') || await fetchJson('./docs/journal_data.json');
+  // FIXED: Try all possible paths for Pages serving from docs vs root
+  const absPaths = [
+    'https://onesangel7776-blip.github.io/weekly-absorption/docs/absorption.json',
+    'https://onesangel7776-blip.github.io/weekly-absorption/absorption.json',
+    './docs/absorption.json',
+    './absorption.json',
+    './journal_data.json',
+    'journal_data.json'
+  ];
+  let abs=null;
+  for(const u of absPaths){
+    abs=await fetchJson(u);
+    if(abs) break;
+  }
+  const journalPaths = [
+    'https://onesangel7776-blip.github.io/weekly-absorption/docs/journal_data.json',
+    'https://onesangel7776-blip.github.io/weekly-absorption/journal_data.json',
+    './docs/journal_data.json',
+    './journal_data.json',
+    'journal_data.json'
+  ];
+  let journal=null;
+  for(const u of journalPaths){
+    journal=await fetchJson(u);
+    if(journal) break;
+  }
   
-  const weekKey = abs?.date || Object.keys(journal?.weeks||{}).sort().pop() || 'W1';
-  const weekData = journal?.weeks?.[weekKey] || (journal?.weeks ? Object.values(journal.weeks).pop() : null);
+  const weekKey = abs?.date || Object.keys(journal?.weeks||{}).sort().pop() || new Date().toISOString().slice(0,10);
+  const weekData = journal?.weeks?.[weekKey] || (journal?.weeks ? Object.values(journal.weeks).sort((a,b)=>a.date.localeCompare(b.date)).pop() : null);
   
-  document.getElementById('status').textContent = journal ? `✅ 완전 자동: journal_data.json 로드 (${weekKey}) + absorption ${abs?abs.selected.length:0}개` : '⚠️ journal_data.json 없음 - 첫 주, 수동 또는 내일 자동 생성됨';
+  document.getElementById('status').textContent = journal ? `✅ 완전 자동: journal_data.json 로드 (${weekKey}) + absorption ${abs?.tickers?.length||abs?.selected?.length||0}개` : '⚠️ journal_data.json 없음 - 첫 주, 수동 또는 내일 자동 생성됨 (그래도 이번 주 티커는 표시됨)';
   document.getElementById('weekDate').textContent = weekKey;
-  const trades = weekData?.trades || abs?.selected?.map(s=>({ticker:s.ticker, micro:s.micro, side:s.side, score:s.score, entry:s.close, sl:s.sl, tp:s.tp, sl_pct:s.sl_pct, tp_pct:s.tp_pct, shares:0, status:'OPEN', current:s.close, exit:null, pnl_krw:0, pnl_usd:0})) || [];
+  // trades: from journal if exists else from absorption
+  let trades=[];
+  if(weekData?.trades) trades=weekData.trades;
+  else if(abs?.selected) trades=abs.selected.map(s=>({ticker:s.ticker, micro:s.micro, side:s.side, score:s.score, entry:s.close||s.entry||0, sl:s.sl, tp:s.tp, sl_pct:s.sl_pct||0.8, tp_pct:s.tp_pct||1.6, shares:1, status:'OPEN', current:s.close||s.entry||0, exit:null, pnl_krw:0, pnl_usd:0}));
+  else if(abs?.tickers){
+    const top=abs.tickers.slice().sort((a,b)=>b.score-a.score).slice(0,3);
+    trades=top.map((t,i)=>{
+      const entry=t.close||100;
+      const side = t.status==='BOTTOM' ? 'LONG' : (i===2?'SHORT':'LONG');
+      const sl_pct=0.8, tp_pct=1.6;
+      let sl,tp;
+      if(side==='LONG'){ sl=+(entry*(1-sl_pct/100)).toFixed(2); tp=+(entry*(1+tp_pct/100)).toFixed(2);} else { sl=+(entry*(1+sl_pct/100)).toFixed(2); tp=+(entry*(1-tp_pct/100)).toFixed(2);}
+      return {ticker:t.ticker, micro:t.ticker, side, score:t.score, entry, sl, tp, sl_pct, tp_pct, shares:1, status:'OPEN', current:entry, pnl_krw:0, pnl_usd:0};
+    });
+  }
   
-  // capital calc
   let cap=10000000, fx=1350;
-  document.getElementById('weekInfo').innerHTML = `DATE ${abs?.date||weekKey}<br>DXY ${abs?.macro?.dxy||''} (${abs?.macro?.dxy_date||''})<br>BIAS ${abs?.bias||abs?.macro?.bias||''}<br>GitHub Action: 매일 21UTC<br>주 3개 제한 준수 ✅`;
+  document.getElementById('weekInfo').innerHTML = `DATE ${abs?.date||weekKey}<br>DXY ${abs?.macro?.dxy||''} (${abs?.macro?.dxy_date||''})<br>BIAS ${abs?.bias||abs?.macro?.bias||''}<br>GitHub Action: 매일 21UTC<br>주 3개 제한 준수 ✅<br><br>journal: ${journal?'있음':'없음 - fallback 표시'}`;
   
-  // render cards
   const cards=document.getElementById('cards'); cards.innerHTML='';
   const ledger=document.getElementById('ledger'); ledger.innerHTML='';
   let totalK=0, totalU=0, wins=0, closed=0;
