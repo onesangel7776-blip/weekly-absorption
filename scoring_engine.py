@@ -1,15 +1,11 @@
-
 """
-COMMAND CENTER 21 TICKER - LONG/SHORT REAL DATA ENGINE
-- 21 tickers: SLV, GLD, UNG, CPER, COPX, USO, GDX, XLB, XLE, DBA, EEM, UUP, TLT, XLF, IWM, SMH, QQQ, SPY, XLK, IBIT, BITO
-- Strength Score = Box 40% + COT 20% + Flow 20% + News 20%
-- ACCUMULATION (BOTTOM) = 롱 후보 / DISTRIBUTION (TOP) = 숏 후보
-- Micro mapping + weekly 21:00 KST
-- Real data: yfinance + FRED
+COMMAND CENTER 21 TICKER - FIXED V4
+- DXY REAL (^DXY yfinance) instead of DTWEXBGS 121
+- RISK logic unchanged
+- News Hybrid V3 integrated
 """
 import os, json, requests
 from datetime import datetime, timedelta
-import math
 
 TICKERS = ["SLV","GLD","UNG","CPER","COPX","USO","GDX","XLB","XLE","DBA","EEM","UUP","TLT","XLF","IWM","SMH","QQQ","SPY","XLK","IBIT","BITO"]
 
@@ -22,6 +18,20 @@ MICRO_MAP = {
     "IWM": "M2K (Micro Russell)", "SMH": "MNQ proxy", "QQQ": "MNQ (Micro Nasdaq)",
     "SPY": "MES (Micro S&P)", "XLK": "MNQ proxy", "IBIT": "MBT (Micro Bitcoin)", "BITO": "MBT (Micro Bitcoin)"
 }
+
+def get_real_dxy():
+    """Real DXY ^DXY from yfinance, not Broad index"""
+    try:
+        import yfinance as yf
+        hist = yf.Ticker("^DXY").history(period="5d", auto_adjust=True)
+        if not hist.empty:
+            close = float(hist['Close'].iloc[-1])
+            date = hist.index[-1].strftime("%Y-%m-%d")
+            print(f"Real DXY ^DXY: {close} on {date}")
+            return {"value": round(close,2), "date": date}
+    except Exception as e:
+        print(f"Real DXY yf err: {e}")
+    return None
 
 def get_fred(series_id, api_key):
     if not api_key:
@@ -40,7 +50,6 @@ def get_fred(series_id, api_key):
 def get_box_metrics_yf(ticker):
     try:
         import yfinance as yf
-        # 60일치
         hist = yf.Ticker(ticker).history(period="60d", auto_adjust=True)
         if hist.empty or len(hist) < 20:
             raise ValueError("no data")
@@ -48,15 +57,11 @@ def get_box_metrics_yf(ticker):
         vol_today = float(hist['Volume'].iloc[-1])
         avg_vol = float(hist['Volume'].tail(20).mean())
         vol_mult = vol_today / avg_vol if avg_vol>0 else 1.0
-        
         last20 = hist.tail(20)
         box_high = float(last20['High'].max())
         box_low = float(last20['Low'].min())
         box_range_pct = ((box_high - box_low) / box_low * 100) if box_low else 5.0
-        
-        # price position 0=bottom 1=top
         pos = (close - box_low) / (box_high - box_low) if box_high!=box_low else 0.5
-        # dwell = 며칠째 박스 안에 있는지
         dwell = 0
         for i in range(len(last20)-1, -1, -1):
             c = float(last20['Close'].iloc[i])
@@ -64,9 +69,6 @@ def get_box_metrics_yf(ticker):
                 dwell+=1
             else:
                 break
-        
-        # box_score: 박스가 좁을수록 + 거래량 마를수록 고득점
-        # range 2% => 10점, 10% => 2점
         box_score = max(0, min(10, 10 - box_range_pct*0.8 + (1 - min(vol_mult,2))*2))
         return {
             "close": round(close,2), "box_high": round(box_high,2), "box_low": round(box_low,2),
@@ -75,7 +77,6 @@ def get_box_metrics_yf(ticker):
         }
     except Exception as e:
         print(f"yf {ticker} err {e}")
-        # fallback mock but realistic
         import random
         return {
             "close": 100.0, "box_high": 105.0, "box_low": 95.0,
@@ -85,23 +86,35 @@ def get_box_metrics_yf(ticker):
 
 def get_macro():
     fred_key = os.getenv('FRED_API_KEY')
-    dxy = get_fred('DTWEXBGS', fred_key) or {"date": datetime.utcnow().strftime("%Y-%m-%d"), "value": 102.21}
+    # 1순위: 진짜 DXY ^DXY
+    real_dxy = get_real_dxy()
+    if real_dxy:
+        dxy_v = real_dxy['value']
+        dxy_date = real_dxy['date']
+        dxy_raw = {"source": "yfinance ^DXY", "value": dxy_v, "date": dxy_date}
+    else:
+        # 2순위: FRED DTWEXBGS (Broad) - 옛날 값이라 121 나오던거
+        dxy_fred = get_fred('DTWEXBGS', fred_key) or {"date": datetime.utcnow().strftime("%Y-%m-%d"), "value": 102.21}
+        dxy_v = dxy_fred.get('value',102)
+        dxy_date = dxy_fred.get('date')
+        dxy_raw = dxy_fred
+    
     us10y = get_fred('DGS10', fred_key) or {"date": datetime.utcnow().strftime("%Y-%m-%d"), "value": 4.56}
     vix = get_fred('VIXCLS', fred_key) or {"date": datetime.utcnow().strftime("%Y-%m-%d"), "value": 18.5}
     
-    dxy_v = dxy.get('value',102)
+    dxy_v_val = dxy_v
     us10y_v = us10y.get('value',4.5)
     vix_v = vix.get('value',18)
     
-    if dxy_v < 101 and us10y_v < 4.3 and vix_v < 18:
+    if dxy_v_val < 101 and us10y_v < 4.3 and vix_v < 18:
         bias = "RISK_ON"
-    elif dxy_v > 103 and us10y_v > 4.6 or vix_v > 22:
+    elif dxy_v_val > 103 and us10y_v > 4.6 or vix_v > 22:
         bias = "RISK_OFF"
     else:
         bias = "NEUTRAL"
     
-    return {"dxy": round(dxy_v,2), "dxy_date": dxy.get('date'), "us10y": round(us10y_v,2), "vix": round(vix_v,2), "bias": bias,
-            "raw": {"DXY": dxy, "US10Y": us10y, "VIX": vix}}
+    return {"dxy": round(dxy_v_val,2), "dxy_date": dxy_date, "us10y": round(us10y_v,2), "vix": round(vix_v,2), "bias": bias,
+            "raw": {"DXY": dxy_raw, "US10Y": us10y, "VIX": vix}}
 
 # === NEWS HYBRID IMPORT ===
 try:
@@ -118,21 +131,17 @@ except:
 
 def score_ticker(ticker):
     box = get_box_metrics_yf(ticker)
-    
-    # COT proxy: 바닥에 가까울수록 상업적 롱 증가 가정 (실제 COT는 금요일에 따로 fetch 가능)
-    # pos 0=바닥 1=천장
     pos = box.get('pos',0.5)
     if pos < 0.3:
-        cot_pct = 68  # 바닥에서 상업 롱 많음
+        cot_pct = 68
         cot_score = 8.5
     elif pos > 0.7:
-        cot_pct = 32  # 천장에서 상업 숏 많음
+        cot_pct = 32
         cot_score = 3.0
     else:
         cot_pct = 50
         cot_score = 5.0
     
-    # Flow: 거래량 터지면 3점, 마르면 7점 (흡수)
     vol = box.get('vol_mult',1)
     if vol < 0.7:
         flow_score = 8.0
@@ -144,8 +153,7 @@ def score_ticker(ticker):
         flow_score = 5.0
         flow_m = 0.2
     
-    # News: HYBRID - Finnhub 1순위 + GDELT 백업
-    finn_key = os.getenv('FINNHUB_API_KEY')
+    finn_key = os.getenv('FINNHUB_API_KEY') or os.getenv('FINNHUB_KEY')
     micro = MICRO_MAP.get(ticker, "")
     try:
         if HAS_HYBRID:
@@ -154,28 +162,18 @@ def score_ticker(ticker):
             news_sent = hybrid.get('buzz',0)
             news_source = hybrid.get('source','unknown')
         else:
-            # fallback old logic
             news_score = 5.0
             news_sent = 0
             news_source = 'fallback'
-            if finn_key:
-                r = requests.get(f"https://finnhub.io/api/v1/news-sentiment?symbol={ticker}&token={finn_key}", timeout=8)
-                if r.status_code==200:
-                    j=r.json()
-                    news_score = max(0,min(10, j.get('companyNewsScore',5)))
-                    news_sent = j.get('buzz',{}).get('articlesInLastWeek',0)
-                    news_source = 'finnhub_old'
     except Exception as e:
         print(f"News hybrid err {ticker}: {e}")
         news_score = 5.0
         news_sent = 0
         news_source = 'error'
     
-    # Strength Score 40/20/20/20
     strength = box.get('box_score',5)*0.4 + cot_score*0.2 + flow_score*0.2 + news_score*0.2
     strength = round(max(0,min(10,strength)),1)
     
-    # Status
     if strength >= 7.0 and pos < 0.45:
         status = "BOTTOM"
         sentiment = "BULLISH"
@@ -185,13 +183,11 @@ def score_ticker(ticker):
     else:
         status = "NEUTRAL"
         sentiment = "MIXED" if strength<7 else "BULLISH"
-        # 강제로 pos 기준으로 재분류
         if pos < 0.3 and strength >= 6.0:
             status = "BOTTOM"
         elif pos > 0.7 and strength <= 5.0:
             status = "TOP"
     
-    # 손절/익절 - 마이크로 기준 현실적 값
     close = box.get('close',100)
     if ticker in ["GLD","SLV","MGC","GDX"]:
         sl_pct, tp_pct = 1.0, 2.0
@@ -212,11 +208,18 @@ def score_ticker(ticker):
         sl = round(close * (1 - sl_pct/100),2)
         tp = round(close * (1 + tp_pct/100),2)
         side = "NONE"
+
+    # 신뢰도 계산 수정: LONG은 score*10, SHORT는 (10-score)*10
+    if side == "SHORT":
+        confidence = round((10 - strength)*10)
+    else:
+        confidence = round(strength*10)
     
     return {
         "ticker": ticker,
         "micro": MICRO_MAP.get(ticker,"-"),
         "score": strength,
+        "confidence": confidence,
         "status": status,
         "side": side,
         "sentiment": sentiment,
@@ -239,7 +242,7 @@ def score_ticker(ticker):
     }
 
 def main():
-    print(f"=== 21 TICKER COMMAND CENTER START {datetime.now()} ===")
+    print(f"=== 21 TICKER COMMAND CENTER V4 START {datetime.now()} ===")
     macro = get_macro()
     print(f"Macro: {macro}")
     
@@ -248,23 +251,21 @@ def main():
         try:
             r = score_ticker(t)
             results.append(r)
-            print(f"{t}: {r['score']} {r['status']} {r['side']} pos {r['pos']} vol {r['vol_mult']}x")
+            print(f"{t}: {r['score']} {r['status']} {r['side']} conf {r['confidence']}% pos {r['pos']}")
         except Exception as e:
             print(f"Failed {t}: {e}")
-            results.append({"ticker": t, "score": 5.0, "status":"NEUTRAL","side":"NONE","box_range":5.0,"vol_mult":1.0})
+            results.append({"ticker": t, "score": 5.0, "confidence": 50, "status":"NEUTRAL","side":"NONE","box_range":5.0,"vol_mult":1.0})
     
     sorted_results = sorted(results, key=lambda x: x['score'], reverse=True)
     bottom = [r for r in results if r['status']=="BOTTOM"]
     top = [r for r in results if r['status']=="TOP"]
     
-    # 최종 선택: 롱 2 + 숏 2 (최대 3~4) - RISK_OFF면 숏 위주
     bottom_sorted = sorted(bottom, key=lambda x: x['score'], reverse=True)
-    top_sorted = sorted(top, key=lambda x: x['score'])  # 점수 낮은게 더 TOP
+    top_sorted = sorted(top, key=lambda x: x['score'])  # 낮은게 강한 TOP
     
     if macro['bias'] == "RISK_ON":
-        selected = bottom_sorted[:3]  # 롱 3개
+        selected = bottom_sorted[:3]
     elif macro['bias'] == "RISK_OFF":
-        # RISK_OFF면 숏 2 + 방어 롱 1 (GLD/TLT)
         defensive_longs = [r for r in bottom_sorted if r['ticker'] in ["GLD","SLV","TLT","UUP"]]
         selected = top_sorted[:2] + defensive_longs[:1]
     else:
@@ -276,7 +277,7 @@ def main():
         "kst_run": "SUN 21:00 KST",
         "macro": macro,
         "fred": {
-            "DXY_proxy": {"latest": {"date": macro['dxy_date'], "value": macro['dxy']}},
+            "DXY_proxy": {"latest": {"date": macro['dxy_date'], "value": macro['dxy'], "source": macro['raw']['DXY'].get('source','') if isinstance(macro['raw']['DXY'], dict) else ''}},
             "US10Y": {"latest": {"value": macro['us10y']}},
             "VIX": {"latest": {"value": macro['vix']}}
         },
@@ -296,7 +297,6 @@ def main():
         "rules": {"sl_tp": "GLD/SLV 1%/2%, QQQ/SPY 0.8%/1.6%, IBIT 3%/6%", "max_positions": 3, "risk_per_trade": "1% of account"}
     }
     
-    # 저장
     with open("absorption.json","w",encoding="utf-8") as f:
         json.dump(output,f,ensure_ascii=False,indent=2)
     import os
@@ -304,9 +304,9 @@ def main():
     with open("docs/absorption.json","w",encoding="utf-8") as f:
         json.dump(output,f,ensure_ascii=False,indent=2)
     
-    print(f"\nDone - BOTTOM {len(bottom)} TOP {len(top)} SELECTED {len(selected)}")
+    print(f"\nDone - BOTTOM {len(bottom)} TOP {len(top)} SELECTED {len(selected)} DXY {macro['dxy']}")
     for s in selected:
-        print(f"  SELECTED {s['ticker']} {s['side']} {s['score']} SL {s['sl']} TP {s['tp']} -> {s['micro']}")
+        print(f"  SELECTED {s['ticker']} {s['side']} {s['score']} conf {s['confidence']}% SL {s['sl']} TP {s['tp']} -> {s['micro']}")
 
 if __name__ == "__main__":
     main()
