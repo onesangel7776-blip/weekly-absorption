@@ -103,6 +103,19 @@ def get_macro():
     return {"dxy": round(dxy_v,2), "dxy_date": dxy.get('date'), "us10y": round(us10y_v,2), "vix": round(vix_v,2), "bias": bias,
             "raw": {"DXY": dxy, "US10Y": us10y, "VIX": vix}}
 
+# === NEWS HYBRID IMPORT ===
+try:
+    from data_collectors.news_hybrid import get_news_score as get_hybrid_news
+    HAS_HYBRID = True
+except:
+    try:
+        from news_hybrid import get_news_score as get_hybrid_news
+        HAS_HYBRID = True
+    except:
+        HAS_HYBRID = False
+        def get_hybrid_news(t, m="", finnhub_key=None):
+            return {'source':'none','buzz':0,'score':5.0,'raw':{}}
+
 def score_ticker(ticker):
     box = get_box_metrics_yf(ticker)
     
@@ -131,19 +144,32 @@ def score_ticker(ticker):
         flow_score = 5.0
         flow_m = 0.2
     
-    # News: FINNHUB 있으면 사용, 없으면 중립
-    news_score = 5.0
-    news_sent = 0
+    # News: HYBRID - Finnhub 1순위 + GDELT 백업
+    finn_key = os.getenv('FINNHUB_API_KEY')
+    micro = MICRO_MAP.get(ticker, "")
     try:
-        finn_key = os.getenv('FINNHUB_API_KEY')
-        if finn_key:
-            r = requests.get(f"https://finnhub.io/api/v1/news-sentiment?symbol={ticker}&token={finn_key}", timeout=8)
-            if r.status_code==200:
-                j=r.json()
-                news_score = max(0,min(10, j.get('companyNewsScore',5)))
-                news_sent = j.get('buzz',{}).get('articlesInLastWeek',0)
-    except:
-        pass
+        if HAS_HYBRID:
+            hybrid = get_hybrid_news(ticker, micro, finn_key)
+            news_score = max(0, min(10, hybrid.get('score',5.0)))
+            news_sent = hybrid.get('buzz',0)
+            news_source = hybrid.get('source','unknown')
+        else:
+            # fallback old logic
+            news_score = 5.0
+            news_sent = 0
+            news_source = 'fallback'
+            if finn_key:
+                r = requests.get(f"https://finnhub.io/api/v1/news-sentiment?symbol={ticker}&token={finn_key}", timeout=8)
+                if r.status_code==200:
+                    j=r.json()
+                    news_score = max(0,min(10, j.get('companyNewsScore',5)))
+                    news_sent = j.get('buzz',{}).get('articlesInLastWeek',0)
+                    news_source = 'finnhub_old'
+    except Exception as e:
+        print(f"News hybrid err {ticker}: {e}")
+        news_score = 5.0
+        news_sent = 0
+        news_source = 'error'
     
     # Strength Score 40/20/20/20
     strength = box.get('box_score',5)*0.4 + cot_score*0.2 + flow_score*0.2 + news_score*0.2
@@ -204,6 +230,7 @@ def score_ticker(ticker):
         "flow_score": flow_score,
         "news_sentiment": news_sent,
         "news_score": news_score,
+        "news_source": news_source,
         "close": close,
         "box_high": box.get('box_high'),
         "box_low": box.get('box_low'),
