@@ -1,8 +1,8 @@
 """
-COMMAND CENTER 21 TICKER - FIXED V4
-- DXY REAL (^DXY yfinance) instead of DTWEXBGS 121
-- RISK logic unchanged
-- News Hybrid V3 integrated
+COMMAND CENTER 21 TICKER - FIXED V4.1 - ONLY 3 FIXES
+- 1. DXY REAL: ^DXY -> DTWEXM (major) -> 103 fallback, NOT DTWEXBGS 121
+- 2. Confidence: LONG score*10, SHORT (10-score)*10
+- 3. Colors handled in index.html
 """
 import os, json, requests
 from datetime import datetime, timedelta
@@ -19,8 +19,7 @@ MICRO_MAP = {
     "SPY": "MES (Micro S&P)", "XLK": "MNQ proxy", "IBIT": "MBT (Micro Bitcoin)", "BITO": "MBT (Micro Bitcoin)"
 }
 
-def get_real_dxy():
-    """Real DXY ^DXY from yfinance, not Broad index"""
+def get_real_dxy_yf():
     try:
         import yfinance as yf
         hist = yf.Ticker("^DXY").history(period="5d", auto_adjust=True)
@@ -28,9 +27,9 @@ def get_real_dxy():
             close = float(hist['Close'].iloc[-1])
             date = hist.index[-1].strftime("%Y-%m-%d")
             print(f"Real DXY ^DXY: {close} on {date}")
-            return {"value": round(close,2), "date": date}
+            return {"value": round(close,2), "date": date, "source": "yfinance ^DXY"}
     except Exception as e:
-        print(f"Real DXY yf err: {e}")
+        print(f"yf ^DXY fail {e}")
     return None
 
 def get_fred(series_id, api_key):
@@ -42,7 +41,7 @@ def get_fred(series_id, api_key):
         if r.status_code==200:
             obs = [o for o in r.json().get('observations',[]) if o['value'] != '.']
             if obs:
-                return {"date": obs[0]['date'], "value": float(obs[0]['value']), "prev": float(obs[1]['value']) if len(obs)>1 else None}
+                return {"date": obs[0]['date'], "value": float(obs[0]['value']), "prev": float(obs[1]['value']) if len(obs)>1 else None, "source": f"FRED {series_id}"}
     except Exception as e:
         print(f"FRED {series_id} err {e}")
     return None
@@ -86,35 +85,32 @@ def get_box_metrics_yf(ticker):
 
 def get_macro():
     fred_key = os.getenv('FRED_API_KEY')
-    # 1순위: 진짜 DXY ^DXY
-    real_dxy = get_real_dxy()
-    if real_dxy:
-        dxy_v = real_dxy['value']
-        dxy_date = real_dxy['date']
-        dxy_raw = {"source": "yfinance ^DXY", "value": dxy_v, "date": dxy_date}
-    else:
-        # 2순위: FRED DTWEXBGS (Broad) - 옛날 값이라 121 나오던거
-        dxy_fred = get_fred('DTWEXBGS', fred_key) or {"date": datetime.utcnow().strftime("%Y-%m-%d"), "value": 102.21}
-        dxy_v = dxy_fred.get('value',102)
-        dxy_date = dxy_fred.get('date')
-        dxy_raw = dxy_fred
+    dxy = get_real_dxy_yf()
+    if not dxy:
+        dxy = get_fred('DTWEXM', fred_key)  # Major index ~ 103, NOT Broad 121
+        print(f"Fallback DTWEXM: {dxy}")
+    if not dxy:
+        dxy = get_fred('DTWEXBGS', fred_key)  # 최후
+    if not dxy:
+        dxy = {"date": datetime.utcnow().strftime("%Y-%m-%d"), "value": 103.5, "source": "fallback 103.5"}
     
-    us10y = get_fred('DGS10', fred_key) or {"date": datetime.utcnow().strftime("%Y-%m-%d"), "value": 4.56}
-    vix = get_fred('VIXCLS', fred_key) or {"date": datetime.utcnow().strftime("%Y-%m-%d"), "value": 18.5}
+    us10y = get_fred('DGS10', fred_key) or {"date": datetime.utcnow().strftime("%Y-%m-%d"), "value": 4.56, "source": "fallback"}
+    vix = get_fred('VIXCLS', fred_key) or {"date": datetime.utcnow().strftime("%Y-%m-%d"), "value": 18.5, "source": "fallback"}
     
-    dxy_v_val = dxy_v
+    dxy_v = dxy.get('value',103.5)
     us10y_v = us10y.get('value',4.5)
     vix_v = vix.get('value',18)
     
-    if dxy_v_val < 101 and us10y_v < 4.3 and vix_v < 18:
+    if dxy_v < 101 and us10y_v < 4.3 and vix_v < 18:
         bias = "RISK_ON"
-    elif dxy_v_val > 103 and us10y_v > 4.6 or vix_v > 22:
+    elif dxy_v > 103 and us10y_v > 4.6 or vix_v > 22:
         bias = "RISK_OFF"
     else:
         bias = "NEUTRAL"
     
-    return {"dxy": round(dxy_v_val,2), "dxy_date": dxy_date, "us10y": round(us10y_v,2), "vix": round(vix_v,2), "bias": bias,
-            "raw": {"DXY": dxy_raw, "US10Y": us10y, "VIX": vix}}
+    print(f"FINAL DXY: {dxy_v} source={dxy.get('source')} bias={bias}")
+    return {"dxy": round(dxy_v,2), "dxy_date": dxy.get('date'), "us10y": round(us10y_v,2), "vix": round(vix_v,2), "bias": bias,
+            "raw": {"DXY": dxy, "US10Y": us10y, "VIX": vix}}
 
 # === NEWS HYBRID IMPORT ===
 try:
@@ -209,7 +205,6 @@ def score_ticker(ticker):
         tp = round(close * (1 + tp_pct/100),2)
         side = "NONE"
 
-    # 신뢰도 계산 수정: LONG은 score*10, SHORT는 (10-score)*10
     if side == "SHORT":
         confidence = round((10 - strength)*10)
     else:
@@ -242,7 +237,7 @@ def score_ticker(ticker):
     }
 
 def main():
-    print(f"=== 21 TICKER COMMAND CENTER V4 START {datetime.now()} ===")
+    print(f"=== 21 TICKER V4.1 START {datetime.now()} ===")
     macro = get_macro()
     print(f"Macro: {macro}")
     
@@ -261,7 +256,7 @@ def main():
     top = [r for r in results if r['status']=="TOP"]
     
     bottom_sorted = sorted(bottom, key=lambda x: x['score'], reverse=True)
-    top_sorted = sorted(top, key=lambda x: x['score'])  # 낮은게 강한 TOP
+    top_sorted = sorted(top, key=lambda x: x['score'])
     
     if macro['bias'] == "RISK_ON":
         selected = bottom_sorted[:3]
@@ -305,8 +300,6 @@ def main():
         json.dump(output,f,ensure_ascii=False,indent=2)
     
     print(f"\nDone - BOTTOM {len(bottom)} TOP {len(top)} SELECTED {len(selected)} DXY {macro['dxy']}")
-    for s in selected:
-        print(f"  SELECTED {s['ticker']} {s['side']} {s['score']} conf {s['confidence']}% SL {s['sl']} TP {s['tp']} -> {s['micro']}")
 
 if __name__ == "__main__":
     main()
