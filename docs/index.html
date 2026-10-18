@@ -1,117 +1,137 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>COMMAND CENTER - 21 TICKER LONG/SHORT</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>COMMAND CENTER - 21 TICKER HYBRID</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0f;color:#e5e7eb;font-family:'JetBrains Mono',monospace;font-size:13px}
-.header{border-bottom:1px solid #1f2937;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;background:#0f0f14;position:sticky;top:0;z-index:10}
-.header h1{font-family:Inter;font-size:14px;letter-spacing:0.08em;color:#fff}
-.header h1 span{color:#22c55e}
-.badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
-.badge-RISK_ON{background:#052e16;color:#4ade80;border:1px solid #16a34a}
-.badge-RISK_OFF{background:#450a0a;color:#f87171;border:1px solid #dc2626}
-.badge-NEUTRAL{background:#1f2937;color:#9ca3af}
-.macro{display:flex;gap:12px;padding:12px 20px;background:#111118;border-bottom:1px solid #1f2937;flex-wrap:wrap}
-.macro div{font-size:11px;color:#9ca3af}.macro b{color:#fff;font-size:13px}
-.section{padding:18px 20px}
-.section h2{font-size:12px;letter-spacing:0.1em;margin-bottom:12px;display:flex;justify-content:space-between}
-.section h2 span.count{color:#6b7280}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
-.card{border:1px solid #1f2937;background:#12121a;border-radius:8px;padding:12px;position:relative;overflow:hidden}
-.card.BOTTOM{border-color:#16a34a44;background:linear-gradient(180deg,#0f1f14 0%,#12121a 100%)}
-.card.TOP{border-color:#dc262644;background:linear-gradient(180deg,#1f1010 0%,#12121a 100%)}
-.card.selected{outline:2px solid #22c55e;outline-offset:-2px}
-.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.ticker{font-size:15px;font-weight:800;color:#fff;letter-spacing:0.04em}
-.score{padding:2px 8px;border-radius:4px;font-size:11px;font-weight:800}
-.score-high{background:#16a34a;color:#fff}
-.score-mid{background:#1f2937;color:#9ca3af}
-.score-low{background:#7f1d1d;color:#fca5a5}
-.meta{font-size:10px;color:#6b7280;line-height:1.6}
-.meta b{color:#d1d5db}
-.bar{height:4px;background:#1f2937;border-radius:2px;margin-top:8px;overflow:hidden}
-.bar-fill{height:100%;transition:width 0.3s}
-.bar-BOTTOM{background:#22c55e}
-.bar-TOP{background:#ef4444}
-.micro{margin-top:6px;font-size:10px;color:#22c55e}
-.sl{margin-top:4px;font-size:10px;color:#9ca3af}
-.selected-label{position:absolute;top:8px;right:8px;background:#22c55e;color:#000;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px}
-.footer{padding:20px;text-align:center;color:#4b5563;font-size:10px;border-top:1px solid #1f2937;margin-top:20px}
+:root{--bg:#0a0e14;--card:#141a25;--green:#00ff88;--red:#ff4444;--gray:#5a6a7a;--text:#c8d4e0;--finnhub:#00d1ff;--gdelt:#ffaa00}
+*{box-sizing:border-box;margin:0;padding:0;font-family:ui-monospace,Menlo,Monaco,Consolas,monospace}
+body{background:var(--bg);color:var(--text);padding:16px}
+.header{display:flex;justify-content:space-between;align-items:center;border:1px solid #1e2a3a;padding:12px 16px;background:#0f1623;flex-wrap:wrap;gap:8px}
+.badge{border:1px solid var(--red);color:var(--red);padding:4px 10px;border-radius:20px;font-size:12px}
+.badge.green{border-color:var(--green);color:var(--green)}
+.meta{font-size:11px;color:var(--gray);margin:8px 0;display:flex;gap:12px;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px;margin:12px 0}
+.card{background:var(--card);border:1px solid #1e2a3a;padding:14px;border-radius:6px;position:relative}
+.card.long-sel{border-color:var(--green);box-shadow:0 0 0 1px var(--green)}
+.card.short-sel{border-color:var(--green);box-shadow:0 0 0 1px var(--green)}
+.score{position:absolute;right:12px;top:12px;background:#1a2332;padding:2px 8px;border-radius:4px;font-size:12px}
+.score.high{background:var(--green);color:#000;font-weight:bold}
+.pill{font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px;letter-spacing:0.5px}
+.pill.short{background:var(--red);color:#fff}
+.pill.long{background:var(--green);color:#000}
+.pill.selected{background:#00ff88;color:#000;font-weight:bold}
+.pill.finnhub{background:var(--finnhub);color:#000;font-weight:bold}
+.pill.gdelt{background:var(--gdelt);color:#000;font-weight:bold}
+.pill.fallback{background:#333;color:#aaa}
+.kv{font-size:11px;line-height:1.7;color:#8a9bb0}
+.kv b{color:var(--text)}
+.bar{height:4px;background:#1e2a3a;border-radius:2px;margin-top:8px;overflow:hidden}
+.bar>div{height:100%}
+.bar>div.long{background:var(--green)}
+.bar>div.short{background:var(--red)}
+.conf{font-size:11px;margin-top:6px}
+.conf b{color:var(--green)}
+.conf.short b{color:var(--red)}
+.topbar{display:flex;gap:8px;align-items:center}
+.btn{border:1px solid #2a3a4e;background:#141e2e;color:var(--text);padding:6px 10px;border-radius:4px;cursor:pointer;font-size:12px}
+.btn:hover{background:#1a2a40}
+h3{font-size:12px;letter-spacing:1px;margin:18px 0 8px;color:var(--gray)}
+.newsline{font-size:10px;color:#6a7a8a;margin-top:4px}
 </style>
 </head>
 <body>
 <div class="header">
-<h1>COMMAND CENTER - <span>21 TICKER REAL-TIME INFRA MONITOR</span></h1>
-<div id="biasBadge"></div>
+<div><b>COMMAND CENTER</b> - <span style="color:var(--green)">21 TICKER REAL-TIME INFRA MONITOR - HYBRID</span> <span style="font-size:10px;color:#ffaa00;margin-left:8px">Finnhub Primary + GDELT Backup</span></div>
+<div style="display:flex;gap:8px;align-items:center">
+<button class="btn" id="langBtn">한/영</button>
+<div class="badge" id="macroBadge">LOADING...</div>
 </div>
-<div class="macro" id="macro"></div>
-<div class="section">
-<h2>ACCUMULATION - BOTTOM <span class="count" id="bottomCount"></span></h2>
+</div>
+<div class="meta" id="metaLine">LOADING absorption.json ...</div>
+<h3>ACCUMULATION - BOTTOM <span style="float:right" id="bottomCount"></span></h3>
 <div class="grid" id="bottomGrid"></div>
-</div>
-<div class="section">
-<h2 style="color:#f87171">DISTRIBUTION - TOP <span class="count" id="topCount"></span></h2>
+<h3 style="color:var(--red)">DISTRIBUTION - TOP <span style="float:right" id="topCount"></span></h3>
 <div class="grid" id="topGrid"></div>
-</div>
-<div class="section">
-<h2>SELECTED - THIS WEEK (MAX 3) <span style="color:#22c55e">LONG/SHORT</span></h2>
-<div class="grid" id="selectedGrid"></div>
-</div>
-<div class="footer">
-Strength Score (점수): 40% Box Range(박스권) + 20% COT Long(세력) + 20% ETF Flow(수급) + 20% News(뉴스) | SL/TP: GLD 1%/2%, QQQ 0.8%/1.6%, IBIT 3%/6% | Micro: MGC/MNQ/M2K/MBT
-<br>CONFIDENTIAL - INSTITUTIONAL USE ONLY - REAL-TIME INFRA MONITOR - NO ADVICE
+<h3>SELECTED - THIS WEEK (MAX 3) <span style="float:right;color:var(--green)">LONG/SHORT</span></h3>
+<div class="grid" id="selGrid"></div>
+<div style="text-align:center;font-size:10px;color:#3a4a5a;margin-top:30px;line-height:1.6">
+Strength Score: 40% Box Range(박스권) + 20% COT Long(세력) + 20% ETF Flow(수급) + 20% News(뉴스: Finnhub/GDELT) | 신뢰도 = Score x 10% | SL/TP: GLD 1%/2%, QQQ 0.8%/1.6%, IBIT 3%/6% | Micro: MGC/MNQ/M2K/MBT<br>
+NEWS HYBRID ACTIVE: Finnhub 1순위 + GDELT 2순위 + Fallback | CONFIDENTIAL - INSTITUTIONAL USE ONLY - REAL-TIME INFRA MONITOR - NO ADVICE
 </div>
 <script>
+let LANG='ko';
+const dict={
+ ko:{bottom:'바닥 매집 (롱)', top:'천장 분배 (숏)', box:'박스폭', vol:'거래량', dwell:'체류', pos:'위치', cot:'세력 롱', flow:'수급', news:'뉴스', close:'종가', sl:'손절', tp:'익절', conf:'신뢰도', selected:'선정', source:'출처'},
+ en:{bottom:'BOTTOM ACCUMULATION (LONG)', top:'TOP DISTRIBUTION (SHORT)', box:'BOX RANGE', vol:'VOL MULT', dwell:'DWELL', pos:'POS', cot:'COT Long', flow:'FLOW', news:'NEWS', close:'CLOSE', sl:'SL', tp:'TP', conf:'CONFIDENCE', selected:'SELECTED', source:'SRC'}
+};
+function fmt(v){return v==null?'0':String(v)}
+function newsPill(src){
+ if(!src) return '';
+ const s = String(src).toLowerCase();
+ if(s.includes('finnhub')) return `<span class="pill finnhub">FINNHUB</span>`;
+ if(s.includes('gdelt')) return `<span class="pill gdelt">GDELT</span>`;
+ if(s.includes('fallback')||s.includes('error')||s.includes('none')) return `<span class="pill fallback">${src.toUpperCase()}</span>`;
+ return `<span class="pill fallback">${src}</span>`;
+}
+function cardHTML(item, isSelected){
+  const isShort = (item.side||'').toUpperCase().includes('SHORT') || (item.pos!=null && item.pos>0.6);
+  const sideClass = isShort?'short':'long';
+  const barClass = isShort?'short':'long';
+  const score = item.score||0;
+  const conf = Math.round(score*10);
+  const confText = `${conf}%`;
+  const boxRange = item.box_range!=null? `${item.box_range.toFixed?item.box_range.toFixed(2):item.box_range}%` : '-';
+  const lang = dict[LANG];
+  const newsScore = item.news_score!=null? item.news_score : item.news_sentiment;
+  const newsSrc = item.news_source || item.source || '';
+  return `<div class="card ${isSelected? (isShort?'short-sel':'long-sel'):''}">
+    <div class="score ${score>=7?'high':''}">${score.toFixed?score.toFixed(1):score}</div>
+    <div style="font-weight:bold;font-size:14px">${item.ticker} <span style="font-weight:normal;font-size:11px;color:#6a7a8a">${item.micro||item.name||''}</span> ${isSelected?`<span class="pill selected">${lang.selected} • ${isShort?'SHORT':'LONG'}</span>`:''} ${newsPill(newsSrc)}</div>
+    <div class="kv">
+      ${lang.box} <b>${boxRange}</b> (${item.box_low||'-'}~${item.box_high||'-'})<br>
+      ${lang.vol} <b>${fmt(item.vol_mult)}x</b> ${lang.dwell} <b>${fmt(item.dwell)}d</b> ${lang.pos} <b>${fmt(item.pos)}</b><br>
+      ${lang.cot} <b>${fmt(item.cot_pct||item.cot_long)}% Long</b> ${lang.flow} <b>${fmt(item.flow_m||item.etf_flow)}</b> ${lang.news} <b>${fmt(newsScore)}</b> ${lang.source}:<b>${fmt(newsSrc)}</b><br>
+      ${lang.close} <b>${fmt(item.close)}</b> | ${item.status||''} ${item.sentiment||''}<br>
+      <span style="color:${isShort?'var(--red)':'var(--green)'}">${item.micro||''} | ${lang.sl} ${item.sl} (${item.sl_pct}%) ${lang.tp} ${item.tp} (${item.tp_pct}%) ${isShort?'SHORT':'LONG'}</span>
+    </div>
+    <div class="newsline">NEWS Breakdown: Box ${item.breakdown?.box||'-'} COT ${item.breakdown?.cot||'-'} Flow ${item.breakdown?.flow||'-'} News ${item.breakdown?.news||newsScore} → Source: ${newsSrc}</div>
+    <div class="bar"><div class="${barClass}" style="width:${conf}%"></div></div>
+    <div class="conf ${sideClass}">${lang.conf}: <b>${confText}</b> ${isShort?`• ${lang.top}`:`• ${lang.bottom}`} ${isShort?`<span class="pill short">SHORT</span>`:`<span class="pill long">LONG</span>`}</div>
+  </div>`;
+}
 async function load(){
   try{
     const res = await fetch('./absorption.json?t='+Date.now());
+    if(!res.ok) throw new Error('fetch ./absorption.json failed, trying ../');
     const data = await res.json();
-    const macro = data.macro||{};
-    const bias = macro.bias||data.bias||'NEUTRAL';
-    document.getElementById('biasBadge').innerHTML = `<span class="badge badge-${bias}">${bias} • DXY ${macro.dxy} • US10Y ${macro.us10y}% • VIX ${macro.vix}</span>`;
-    document.getElementById('macro').innerHTML = `
-      <div>DATE <b>${data.date}</b></div>
-      <div>RUN <b>${data.kst_run||''}</b></div>
-      <div>DXY <b>${macro.dxy}</b> (${macro.dxy_date||''})</div>
-      <div>US10Y <b>${macro.us10y}%</b></div>
-      <div>VIX <b>${macro.vix}</b></div>
-      <div>BIAS <b>${bias}</b></div>
-      <div>BOTTOM <b style="color:#22c55e">${data.summary.bottom_count}</b> / TOP <b style="color:#ef4444">${data.summary.top_count}</b></div>
-    `;
-    document.getElementById('bottomCount').textContent = `${data.summary.bottom_count} TICKERS`;
-    document.getElementById('topCount').textContent = `${data.summary.top_count} TICKERS`;
-    function card(t, isSelected){
-      const isBottom = t.status==='BOTTOM';
-      const scoreClass = t.score>=7 ? 'score-high' : t.score<=4 ? 'score-low' : 'score-mid';
-      return `<div class="card ${t.status} ${isSelected?'selected':''}">
-        ${isSelected?'<div class="selected-label">SELECTED • '+t.side+'</div>':''}
-        <div class="card-header">
-          <div><span class="ticker">${t.ticker}</span> <span style="font-size:10px;color:#6b7280">${t.micro||''}</span></div>
-          <span class="score ${scoreClass}">${t.score}</span>
-        </div>
-        <div class="meta">
-          BOX RANGE <b>${t.box_range}%</b> (${t.box_low}~${t.box_high})<br>
-          VOL MULT <b>${t.vol_mult}x</b> DWELL <b>${t.dwell}d</b> POS <b>${t.pos}</b><br>
-          COT <b>${t.cot_pct}% Long</b> FLOW <b>${t.flow_m}m</b> NEWS <b>${t.news_sentiment}</b><br>
-          CLOSE <b>${t.close}</b> | ${t.status} ${t.sentiment}
-        </div>
-        <div class="micro">${t.micro} | SL ${t.sl} (${t.sl_pct}%) TP ${t.tp} (${t.tp_pct}%) ${t.side}</div>
-        <div class="bar"><div class="bar-fill bar-${t.status}" style="width:${t.score*10}%"></div></div>
-      </div>`;
+    render(data);
+  }catch(e1){
+    try{
+      const res2 = await fetch('../absorption.json?t='+Date.now());
+      const data2 = await res2.json();
+      render(data2);
+    }catch(e2){
+      document.getElementById('metaLine').textContent = 'absorption.json 로드 실패: '+e1+' / '+e2;
     }
-    const bottom = data.bottom||data.tickers.filter(x=>x.status==='BOTTOM');
-    const top = data.top||data.tickers.filter(x=>x.status==='TOP');
-    document.getElementById('bottomGrid').innerHTML = bottom.map(t=>card(t, data.selected?.some(s=>s.ticker===t.ticker))).join('') || '<div style="color:#4b5563">No BOTTOM this week</div>';
-    document.getElementById('topGrid').innerHTML = top.map(t=>card(t, data.selected?.some(s=>s.ticker===t.ticker))).join('') || '<div style="color:#4b5563">No TOP this week</div>';
-    document.getElementById('selectedGrid').innerHTML = (data.selected||[]).map(t=>card(t,true)).join('') || '<div style="color:#4b5563">NEUTRAL - Cash</div>';
-  }catch(e){
-    console.error(e);
-    document.getElementById('macro').textContent = 'Failed to load absorption.json - '+e;
   }
 }
+function render(data){
+    const macro = data.macro||{};
+    document.getElementById('macroBadge').textContent = `${macro.bias||'RISK_OFF'} • DXY ${macro.dxy||'-'} • US10Y ${macro.us10y||'-'}% • VIX ${macro.vix||'-'}`;
+    document.getElementById('metaLine').textContent = `DATE ${data.date||''} RUN SUN 21:00 KST DXY ${macro.dxy||''} (${macro.dxy_date||''}) US10Y ${macro.us10y||''}% VIX ${macro.vix||''} BIAS ${macro.bias||''} BOTTOM ${data.summary?.bottom_count||0} / TOP ${data.summary?.top_count||0} | News Hybrid: ${data.summary?.news_hybrid||'Finnhub+GDELT'}`;
+    const all = data.tickers||data.bottom?.concat(data.top||[])||[];
+    const b = data.bottom?.length? data.bottom : all.filter(x=> (x.status==='BOTTOM') || (x.pos!=null && x.pos<0.4)).slice(0,8);
+    const t = data.top?.length? data.top : all.filter(x=> (x.status==='TOP') || (x.pos!=null && x.pos>=0.6)).slice(0,8);
+    const sel = data.selected||[];
+    document.getElementById('bottomCount').textContent = `${b.length} TICKERS`;
+    document.getElementById('topCount').textContent = `${t.length} TICKERS`;
+    document.getElementById('bottomGrid').innerHTML = b.map(x=>cardHTML(x,false)).join('');
+    document.getElementById('topGrid').innerHTML = t.map(x=>cardHTML(x,false)).join('');
+    document.getElementById('selGrid').innerHTML = sel.map(x=>cardHTML(x,true)).join('') || '<div style="color:#5a6a7a;font-size:12px">No trade - NEUTRAL (신뢰도 낮음)</div>';
+}
+document.getElementById('langBtn').onclick=()=>{LANG=LANG==='ko'?'en':'ko'; load();};
 load();
 </script>
 </body>
