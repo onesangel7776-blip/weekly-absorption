@@ -2,7 +2,7 @@ name: 21 Ticker Command Center - News Hybrid
 
 on:
   schedule:
-    - cron: '0 12 * * 0'  # 매주 일요일 21:00 KST = 12:00 UTC
+    - cron: '0 12 * * 0'
   workflow_dispatch:
 
 jobs:
@@ -25,14 +25,20 @@ jobs:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          ls -R
           python scoring_engine.py
+          echo "=== absorption.json ==="
+          cat absorption.json | head -n 100
+          echo "=== docs/absorption.json ==="
+          ls -lh absorption.json docs/absorption.json
       - name: Commit and push
         run: |
           git config --local user.email "bot@commandcenter.local"
           git config --local user.name "command-bot"
-          git add absorption.json docs/absorption.json final_21_long_short/absorption.json || true
-          git diff --staged --quiet || git commit -m "21 ticker HYBRID update $(date +%Y-%m-%d) - Finnhub+GDELT News 0->real score"
+          git add absorption.json
+          git add docs/absorption.json
+          git add docs/index.html || true
+          git status
+          git diff --staged --quiet || git commit -m "21 ticker HYBRID $(date +%Y-%m-%d) Finnhub+GDELT NEWS real score + UI"
           git push
       - name: Discord notify - Hybrid
         if: env.DISCORD_WEBHOOK_URL != ''
@@ -46,6 +52,6 @@ jobs:
           sel = data.get('selected',[])
           sel_txt = ', '.join([f\"{s['ticker']} {s['side']} {s['score']} News:{s.get('news_source','?')}\" for s in sel]) if sel else 'No trade - NEUTRAL'
           macro = data.get('macro',{})
-          msg=f'''**21 COMMAND CENTER HYBRID {data[\"date\"]}** {macro.get(\"bias\")} DXY {macro.get(\"dxy\")} US10Y {macro.get(\"us10y\")}%\nBOTTOM {data[\"summary\"][\"bottom_count\"]} TOP {data[\"summary\"][\"top_count\"]}\nSELECTED: {sel_txt}\nNews: Finnhub Primary + GDELT Backup ACTIVE\nhttps://onesangel7776-blip.github.io/weekly-absorption/'''
+          msg=f'''**21 COMMAND CENTER HYBRID {data['date']}** {macro.get('bias')} DXY {macro.get('dxy')} US10Y {macro.get('us10y')}%\nBOTTOM {data['summary']['bottom_count']} TOP {data['summary']['top_count']}\nSELECTED: {sel_txt}\nNews: Finnhub Primary + GDELT Backup ACTIVE\nhttps://onesangel7776-blip.github.io/weekly-absorption/'''
           requests.post(os.getenv('DISCORD_WEBHOOK_URL'), json={'content': msg})
           "
