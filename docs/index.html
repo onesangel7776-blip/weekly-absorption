@@ -14,6 +14,8 @@ body{background:#0a0a0f;color:#e5e7eb;font-family:'JetBrains Mono',monospace;fon
 .badge-RISK_ON{background:#052e16;color:#4ade80;border:1px solid #16a34a}
 .badge-RISK_OFF{background:#450a0a;color:#f87171;border:1px solid #dc2626}
 .badge-NEUTRAL{background:#1f2937;color:#9ca3af}
+.btn{border:1px solid #2a3a4e;background:#141e2e;color:#c8d4e0;padding:6px 10px;border-radius:4px;cursor:pointer;font-size:12px;margin-right:8px}
+.btn:hover{background:#1a2a40}
 .macro{display:flex;gap:12px;padding:12px 20px;background:#111118;border-bottom:1px solid #1f2937;flex-wrap:wrap}
 .macro div{font-size:11px;color:#9ca3af}.macro b{color:#fff;font-size:13px}
 .section{padding:18px 20px}
@@ -29,9 +31,11 @@ body{background:#0a0a0f;color:#e5e7eb;font-family:'JetBrains Mono',monospace;fon
 .card.TOP{border-color:#dc262644;background:linear-gradient(180deg,#1f1010 0%,#12121a 100%)}
 .card.selected-LONG{outline:2px solid #22c55e;outline-offset:-2px;box-shadow:0 0 20px #22c55e22}
 .card.selected-SHORT{outline:2px solid #ef4444;outline-offset:-2px;box-shadow:0 0 20px #ef444422}
+/* 수정: selected일 때 헤더가 뱃지에 가리지 않게 위쪽 패딩 */
+.card.selected-LONG, .card.selected-SHORT{padding-top:32px}
 .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .ticker{font-size:15px;font-weight:800;color:#fff;letter-spacing:0.04em}
-.score{padding:2px 8px;border-radius:4px;font-size:11px;font-weight:800}
+.score{padding:2px 8px;border-radius:4px;font-size:11px;font-weight:800;min-width:32px;text-align:center}
 .score-high{background:#16a34a;color:#fff}
 .score-mid{background:#1f2937;color:#9ca3af}
 .score-low{background:#7f1d1d;color:#fca5a5}
@@ -43,7 +47,7 @@ body{background:#0a0a0f;color:#e5e7eb;font-family:'JetBrains Mono',monospace;fon
 .bar-TOP{background:#ef4444}
 .micro{margin-top:6px;font-size:10px;color:#22c55e}
 .sl{margin-top:4px;font-size:10px;color:#9ca3af}
-.selected-label{position:absolute;top:8px;right:8px;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px}
+.selected-label{position:absolute;top:0;right:0;font-size:9px;font-weight:800;padding:4px 8px;border-radius:0 8px 0 8px;z-index:2}
 .selected-label.LONG{background:#22c55e;color:#000}
 .selected-label.SHORT{background:#ef4444;color:#fff}
 .footer{padding:20px;text-align:center;color:#4b5563;font-size:10px;border-top:1px solid #1f2937;margin-top:20px}
@@ -58,7 +62,10 @@ body{background:#0a0a0f;color:#e5e7eb;font-family:'JetBrains Mono',monospace;fon
 <body>
 <div class="header">
 <h1>COMMAND CENTER - <span>21 TICKER REAL-TIME INFRA MONITOR - HYBRID</span> <span style="font-size:10px;color:#6b7280">Finnhub Primary + GDELT Backup</span></h1>
+<div style="display:flex;align-items:center">
+<button class="btn" id="langBtn">한/영</button>
 <div id="biasBadge"></div>
+</div>
 </div>
 <div class="macro" id="macro"></div>
 <div class="section">
@@ -74,10 +81,16 @@ body{background:#0a0a0f;color:#e5e7eb;font-family:'JetBrains Mono',monospace;fon
 <div class="grid" id="selectedGrid"></div>
 </div>
 <div class="footer">
-Strength Score: 40% Box Range(박스권) + 20% COT Long(세력) + 20% ETF Flow(수급) + 20% News(뉴스: Finnhub/GDELT) | 신뢰도 = LONG Score*10% / SHORT (10-Score)*10% | SL/TP: GLD 1%/2%, QQQ 0.8%/1.6%, IBIT 3%/6% | Micro: MGC/MNQ/M2K/MBT<br>
-NEWS HYBRID ACTIVE: Finnhub 1순위 + GDELT 2순위 + Fallback | DXY REAL ^DXY | CONFIDENTIAL - INSTITUTIONAL USE ONLY - REAL-TIME INFRA MONITOR - NO ADVICE
+<span id="footerKo">Strength Score: 40% Box Range(박스권) + 20% COT Long(세력) + 20% ETF Flow(수급) + 20% News(뉴스: Finnhub/GDELT) | 신뢰도 = LONG Score*10% / SHORT (10-Score)*10% | SL/TP: GLD 1%/2%, QQQ 0.8%/1.6%, IBIT 3%/6% | Micro: MGC/MNQ/M2K/MBT</span>
+<span id="footerEn" style="display:none">Strength Score: 40% Box Range + 20% COT Long + 20% ETF Flow + 20% News: Finnhub/GDELT | Confidence = LONG Score*10% / SHORT (10-Score)*10% | SL/TP: GLD 1%/2%, QQQ 0.8%/1.6%, IBIT 3%/6%</span>
+<br>NEWS HYBRID ACTIVE: Finnhub 1순위 + GDELT 2순위 + Fallback | DXY REAL ^DXY | CONFIDENTIAL - INSTITUTIONAL USE ONLY - REAL-TIME INFRA MONITOR - NO ADVICE
 </div>
 <script>
+let LANG='ko';
+const dict={
+ ko:{box:'박스폭', vol:'거래량', dwell:'체류', pos:'위치', cot:'세력', flow:'수급', news:'뉴스', close:'종가', sl:'손절', tp:'익절', conf:'신뢰도', bottom:'바닥 매집 (롱)', top:'천장 분배 (숏)', selected:'선정'},
+ en:{box:'BOX RANGE', vol:'VOL MULT', dwell:'DWELL', pos:'POS', cot:'COT Long', flow:'FLOW', news:'NEWS', close:'CLOSE', sl:'SL', tp:'TP', conf:'CONFIDENCE', bottom:'BOTTOM ACCUMULATION (LONG)', top:'TOP DISTRIBUTION (SHORT)', selected:'SELECTED'}
+};
 async function load(){
   try{
     const res = await fetch('./absorption.json?t='+Date.now());
@@ -101,27 +114,27 @@ async function load(){
       const isBottom = t.status==='BOTTOM';
       const isShort = t.side==='SHORT' || t.status==='TOP';
       const scoreClass = t.score>=7 ? 'score-high' : t.score<=4 ? 'score-low' : 'score-mid';
-      // 신뢰도 수정: LONG=score*10, SHORT=(10-score)*10
       const confidence = t.confidence != null ? t.confidence : (isShort ? Math.round((10 - t.score)*10) : Math.round(t.score*10));
-      const barWidth = confidence; // 신뢰도 기준 바
+      const barWidth = confidence;
       const selClass = isSelected ? (isShort ? 'selected-SHORT' : 'selected-LONG') : '';
       const newsBadge = t.news_source ? `<span class="pill ${t.news_source.toUpperCase().includes('FINN') ? 'FINNHUB' : 'GDELT'}">${t.news_source.toUpperCase()}</span>` : '';
+      const L = dict[LANG];
       return `<div class="card ${t.status} ${selClass}">
-        ${isSelected?`<div class="selected-label ${isShort?'SHORT':'LONG'}">SELECTED • ${t.side}</div>`:''}
+        ${isSelected?`<div class="selected-label ${isShort?'SHORT':'LONG'}">${L.selected} • ${t.side}</div>`:''}
         <div class="card-header">
           <div><span class="ticker">${t.ticker}</span> <span style="font-size:10px;color:#6b7280">${t.micro||''}</span> ${newsBadge}</div>
           <span class="score ${scoreClass}">${t.score}</span>
         </div>
         <div class="meta">
-          박스폭 <b>${t.box_range}%</b> (${t.box_low}~${t.box_high})<br>
-          거래량 <b>${t.vol_mult}x</b> 체류 <b>${t.dwell}d</b> 위치 <b>${t.pos}</b><br>
-          세력 <b>${t.cot_pct}% Long</b> 수급 <b>${t.flow_m}</b> 뉴스 <b>${t.news_score}</b> 출처:<b>${t.news_source||''}</b><br>
-          종가 <b>${t.close}</b> | ${t.status} ${t.sentiment}<br>
+          ${L.box} <b>${t.box_range}%</b> (${t.box_low}~${t.box_high})<br>
+          ${L.vol} <b>${t.vol_mult}x</b> ${L.dwell} <b>${t.dwell}d</b> ${L.pos} <b>${t.pos}</b><br>
+          ${L.cot} <b>${t.cot_pct}% Long</b> ${L.flow} <b>${t.flow_m}</b> ${L.news} <b>${t.news_score}</b> 출처:<b>${t.news_source||''}</b><br>
+          ${L.close} <b>${t.close}</b> | ${t.status}<br>
           <span style="font-size:9px;color:#4b5563">NEWS Breakdown: Box ${t.breakdown?.box} COT ${t.breakdown?.cot} Flow ${t.breakdown?.flow} News ${t.breakdown?.news} → Source: ${t.news_source}</span>
         </div>
-        <div class="micro">${t.micro} | 손절 ${t.sl} (${t.sl_pct}%) 익절 ${t.tp} (${t.tp_pct}%) ${t.side}</div>
+        <div class="micro">${t.micro} | ${L.sl} ${t.sl} (${t.sl_pct}%) ${L.tp} ${t.tp} (${t.tp_pct}%) ${t.side}</div>
         <div class="bar"><div class="bar-fill bar-${t.status}" style="width:${barWidth}%"></div></div>
-        <div class="conf ${isShort?'SHORT':'LONG'}">신뢰도: <b>${confidence}%</b> • ${isBottom ? '바닥 매집 (롱)' : '천장 분배 (숏)'} ${isShort ? '<span class="pill" style="background:#ef4444;color:#fff">SHORT</span>' : '<span class="pill" style="background:#22c55e;color:#000">LONG</span>'}</div>
+        <div class="conf ${isShort?'SHORT':'LONG'}">${L.conf}: <b>${confidence}%</b> • ${isBottom ? L.bottom : L.top} ${isShort ? '<span class="pill" style="background:#ef4444;color:#fff">SHORT</span>' : '<span class="pill" style="background:#22c55e;color:#000">LONG</span>'}</div>
       </div>`;
     }
     const bottom = data.bottom||data.tickers.filter(x=>x.status==='BOTTOM');
@@ -134,6 +147,12 @@ async function load(){
     document.getElementById('macro').textContent = 'Failed to load absorption.json - '+e;
   }
 }
+document.getElementById('langBtn').onclick=()=>{
+  LANG=LANG==='ko'?'en':'ko';
+  document.getElementById('footerKo').style.display = LANG==='ko' ? 'inline' : 'none';
+  document.getElementById('footerEn').style.display = LANG==='en' ? 'inline' : 'none';
+  load();
+};
 load();
 </script>
 </body>
