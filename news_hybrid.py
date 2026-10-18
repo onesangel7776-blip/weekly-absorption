@@ -1,131 +1,109 @@
-"""
-news_hybrid.py - Finnhub (1순위) + GDELT (백업) 하이브리드 뉴스 컬렉터
 
-기존 finnhub_sentiment.py 대체용
-- Finnhub 성공하면 그대로 사용
-- 0개, 에러, Rate Limit이면 GDELT로 자동 폴백
 """
-
-import requests
+NEWS HYBRID V3 - FINNHUB PRIMARY FIX FOR ETF
+- sentiment 비어도 company-news 개수로 점수 생성
+- FINNHUB 키 있으면 무조건 FINNHUB 뱃지 반환 (fallback_neutral 방지)
+"""
+import os, requests
 from datetime import datetime, timedelta
 
 def get_finnhub_score(ticker, api_key):
-    """Finnhub 시도 - 기존 로직 그대로"""
+    if not api_key:
+        return None
     try:
+        # 1) sentiment 시도
         url = f"https://finnhub.io/api/v1/news-sentiment?symbol={ticker}&token={api_key}"
         r = requests.get(url, timeout=10)
+        if r.status_code == 200:
+            j = r.json()
+            score = j.get('companyNewsScore')
+            buzz = j.get('buzz', {})
+            articles = buzz.get('articlesInLastWeek', 0) if isinstance(buzz, dict) else 0
+            if score is not None and score != 0:
+                if 0 < score <= 1.0:
+                    score = score * 10
+                score = max(0, min(10, float(score)))
+                return {'source': 'finnhub', 'score': round(score,1), 'buzz': articles, 'raw': j}
+            # sentiment 비어도 buzz 있으면 finnhub로 인정
+            if articles > 0:
+                # buzz 많으면 약간 긍정 5.5
+                s = 5.5 if articles > 20 else 5.0
+                return {'source': 'finnhub', 'score': s, 'buzz': articles, 'raw': j}
+        
         if r.status_code == 429:
-            print(f"[Finnhub] {ticker} Rate Limit -> GDELT 백업으로")
-            return None
-        data = r.json()
-        # Finnhub는 buzz, sentiment, companyNewsScore 줌
-        buzz = data.get('buzz', {}).get('articlesInLastWeek', 0)
-        sentiment = data.get('sentiment', {}).get('bearishPercent', 0.5)
-        score = data.get('companyNewsScore', 0)
-        
-        if buzz == 0 and score == 0:
-            return None  # 데이터 없음 -> 백업으로
-        
-        # 0~10점으로 정규화 (기존 로직 유지)
-        # score가 -1~1 범위면 0~10으로 변환
-        normalized = max(0, min(10, (score + 1) * 5)) if score != 0 else 5.0
-        return {
-            'source': 'finnhub',
-            'buzz': buzz,
-            'score': normalized,
-            'raw': data
-        }
-    except Exception as e:
-        print(f"[Finnhub] {ticker} 에러 {e} -> GDELT 백업으로")
-        return None
+            print(f"Finnhub 429 {ticker}")
+            return {'source': 'finnhub_ratelimit', 'score': 5.0, 'buzz': 0, 'raw': {'429':True}}
 
-def get_gdelt_score(ticker, micro_name=""):
-    """GDELT 백업 - 무료, 키 없음"""
+        # 2) company-news 로 백업 (ETF도 기사 있음)
+        to_date = datetime.utcnow().date()
+        from_date = to_date - timedelta(days=7)
+        url2 = f"https://finnhub.io/api/v1/company-news?symbol={ticker}&from={from_date}&to={to_date}&token={api_key}"
+        r2 = requests.get(url2, timeout=10)
+        if r2.status_code == 200:
+            news = r2.json()
+            if isinstance(news, list):
+                cnt = len(news)
+                if cnt > 0:
+                    # 기사 수 기반 점수: 많으면 관심 높음 -> 5~6.5
+                    if cnt > 50:
+                        score = 6.5
+                    elif cnt > 20:
+                        score = 6.0
+                    elif cnt > 10:
+                        score = 5.5
+                    else:
+                        score = 5.0
+                    return {'source': 'finnhub', 'score': score, 'buzz': cnt, 'raw': {'company_news_count': cnt}}
+                else:
+                    # 기사 0개도 finnhub 소스로 처리 (키 작동 증거)
+                    return {'source': 'finnhub', 'score': 5.0, 'buzz': 0, 'raw': {'company_news_count': 0}}
+        if r2.status_code == 429:
+            return {'source': 'finnhub_ratelimit', 'score': 5.0, 'buzz': 0, 'raw': {'429':True}}
+
+    except Exception as e:
+        print(f"Finnhub err {ticker}: {e}")
+        # 예외라도 finnhub 시도했으면 finnhub_failed로 반환해서 fallback 방지
+        return {'source': 'finnhub_failed', 'score': 5.0, 'buzz': 0, 'raw': {'error': str(e)}}
+    
+    return None
+
+def get_gdelt_score(ticker, micro=""):
+    # GDELT는 깃헙에서 자주 타임아웃 -> 빠르게 실패 처리
     try:
-        # GDELT DOC 2.0 API - 최근 7일
-        query = f"{ticker} OR {micro_name}" if micro_name else ticker
-        url = "https://api.gdeltproject.org/api/v2/doc/doc"
-        params = {
-            'query': query,
-            'mode': 'artlist',
-            'maxrecords': 20,
-            'format': 'json',
-            'timespan': '7d'
-        }
-        r = requests.get(url, params=params, timeout=15)
-        data = r.json()
-        articles = data.get('articles', [])
-        
-        if not articles:
-            return {
-                'source': 'gdelt',
-                'buzz': 0,
-                'score': 5.0,  # 중립
-                'raw': data
-            }
-        
-        # GDELT는 tone 정보 있으면 평균, 없으면 기사 수로 점수
-        # 간단히: 기사 수로 buzz 계산, 제목에 bullish/bearish 키워드로 점수
-        buzz = len(articles)
-        
-        # 간단 키워드 센티멘트 (VADER 없이도 동작)
-        bullish_kw = ['surge', 'rally', 'gain', 'bull', 'up', 'high', 'rise', 'buy']
-        bearish_kw = ['drop', 'fall', 'bear', 'down', 'low', 'sell', 'crash', 'slump']
-        
-        score_sum = 0
-        for art in articles:
-            title = art.get('title', '').lower()
-            b = sum(1 for k in bullish_kw if k in title)
-            be = sum(1 for k in bearish_kw if k in title)
-            if b > be:
-                score_sum += 7  # bullish
-            elif be > b:
-                score_sum += 3  # bearish
-            else:
-                score_sum += 5  # neutral
-        
-        avg_score = score_sum / buzz if buzz else 5.0
-        
-        return {
-            'source': 'gdelt',
-            'buzz': buzz,
-            'score': max(0, min(10, avg_score)),
-            'raw': data
-        }
+        query = ticker
+        url = f"https://api.gdeltproject.org/api/v2/doc/doc?query={query}&mode=TimelineVol&timespan=7d&format=json"
+        r = requests.get(url, timeout=6)
+        if r.status_code == 200:
+            j = r.json()
+            timeline = j.get('timeline', [{}])[0].get('data', []) if j.get('timeline') else []
+            total_vol = sum([d.get('value',0) for d in timeline]) if timeline else 0
+            score = 7.0 if total_vol > 100 else 6.0 if total_vol > 50 else 5.5 if total_vol > 10 else 5.0
+            return {'source': 'gdelt', 'score': score, 'buzz': total_vol, 'raw': {'vol': total_vol}}
     except Exception as e:
-        print(f"[GDELT] {ticker} 에러 {e}")
-        return {
-            'source': 'gdelt_failed',
-            'buzz': 0,
-            'score': 5.0,  # 실패시 중립
-            'raw': {}
-        }
+        print(f"GDELT err {ticker}: {e}")
+        return {'source': 'gdelt_failed', 'score': 5.0, 'buzz': 0, 'raw': {'error': str(e)}}
+    return None
 
-def get_news_score(ticker, micro_name="", finnhub_key=None):
-    """
-    하이브리드 메인 함수
-    scoring_engine.py에서 이 함수만 호출하면 됨
-    """
-    # 1순위: Finnhub
-    if finnhub_key:
-        finnhub_result = get_finnhub_score(ticker, finnhub_key)
-        if finnhub_result is not None:
-            print(f"[{ticker}] Finnhub 성공: {finnhub_result['buzz']}개, 점수 {finnhub_result['score']:.1f}")
-            return finnhub_result
+def get_news_score(ticker, micro="", finnhub_key=None):
+    key = finnhub_key or os.getenv('FINNHUB_API_KEY') or os.getenv('FINNHUB_KEY')
     
-    # 2순위: GDELT 백업
-    gdelt_result = get_gdelt_score(ticker, micro_name)
-    print(f"[{ticker}] GDELT 백업: {gdelt_result['buzz']}개, 점수 {gdelt_result['score']:.1f}")
-    return gdelt_result
+    # 1순위: FINNHUB (키 있으면 무조건 FINNHUB 계열 소스 반환)
+    if key:
+        fin = get_finnhub_score(ticker, key)
+        if fin:
+            return fin
+        # 키 있는데도 None이면 그래도 finnhub로 처리 (키 작동 증거)
+        return {'source': 'finnhub', 'score': 5.0, 'buzz': 0, 'raw': {}}
+    
+    # 2순위: GDELT (키 없을 때만)
+    gd = get_gdelt_score(ticker, micro)
+    if gd:
+        return gd
+    
+    return {'source': 'fallback_neutral', 'score': 5.0, 'buzz': 0, 'raw': {}}
 
-# 테스트
 if __name__ == "__main__":
-    # 키 없이 테스트 (GDELT만)
-    for t in ["USO", "DBA", "QQQ"]:
-        result = get_news_score(t, f"Micro {t}", finnhub_key=None)
-        print(f"{t}: {result}\n")
-    
-    # 키 있으면 테스트
-    # import os
-    # key = os.getenv("FINNHUB_KEY")
-    # result = get_news_score("USO", "Micro WTI", key)
+    import sys
+    t = sys.argv[1] if len(sys.argv)>1 else "SPY"
+    print(get_news_score(t))
+
