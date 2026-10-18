@@ -1,0 +1,29 @@
+name: V4 Daily Auto PnL
+
+on:
+  schedule:
+    - cron: '0 21 * * 1-5'
+   workflow_dispatch:
+
+jobs:
+  check-pnl:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install yfinance pandas requests
+      - name: Run daily PnL checker
+        run: python daily_pnl_checker.py
+      - name: Commit journal_data.json
+        run: |
+          git config user.name "v4-bot"
+          git config user.email "v4-bot@users.noreply.github.com"
+          git add docs/journal_data.json
+          git diff --cached --quiet || git commit -m "V4 auto PnL $(date -u +%Y-%m-%d)"
+          git push
