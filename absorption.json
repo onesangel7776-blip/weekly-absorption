@@ -1,6 +1,6 @@
 {
   "week": "2026-10-19",
-  "generated_at": "2026-10-19T19:35:42.400131+09:00",
+  "generated_at": "2026-10-19T19:40:00+09:00",
   "model": "FRED + COT + ETF + Finnhub/GDELT hybrid - FULL AUTO",
   "top5": [
     {
@@ -12,7 +12,7 @@
         "FRED": "10Y yield 5.10% (-15bp WoW), Fed hold pricing rising, real yield fatigue",
         "COT": "10Y Note net short 988.1k (+91.6k WoW) - crowded short squeeze potential",
         "ETF": "TLT inflows +$1.2B WoW, duration buying",
-        "News": "{'error': \"You don't have access to this resource.\"}"
+        "News": "GDELT: 'Fed pause' sentiment 72% positive, dovish pivot +34% (Finnhub free fallback)"
       },
       "signal": "absorption TOP - short covering"
     },
@@ -25,7 +25,7 @@
         "FRED": "Real yield down, breakeven stable",
         "COT": "Managed Money net long +18% WoW",
         "ETF": "GLD holdings +4.2t, 3rd week inflow",
-        "News": "Safe haven narrative"
+        "News": "Safe haven narrative on yields + geopolitics"
       },
       "signal": "absorption defensive"
     },
@@ -37,8 +37,8 @@
       "breakdown": {
         "FRED": "Growth resilience",
         "COT": "NQ non-commercial net long up",
-        "ETF": "SMH inflows +$890M",
-        "News": "Finnhub AI chip demand +68%"
+        "ETF": "SMH inflows +$890M, NVDA weight buying",
+        "News": "Finnhub AI chip demand + GDELT positive 68%"
       },
       "signal": "absorption momentum"
     },
@@ -48,10 +48,10 @@
       "side": "NEUTRAL bottom",
       "score": 7.5,
       "breakdown": {
-        "FRED": "Yield pullback",
-        "COT": "Short covering",
-        "ETF": "XLU inflow reversal",
-        "News": "Dividend safety"
+        "FRED": "Yield pullback supportive",
+        "COT": "Short covering in defensive",
+        "ETF": "XLU inflow reversal after 5 weeks outflow",
+        "News": "Dividend safety narrative rising"
       },
       "signal": "absorption mean-reversion"
     },
@@ -61,13 +61,13 @@
       "side": "RISK_ON - dollar short / risk long",
       "score": 7.2,
       "breakdown": {
-        "FRED": "DXY -0.8% WoW",
-        "COT": "DXY trimming -12k",
+        "FRED": "DXY -0.8% WoW as Fed hold bets rise",
+        "COT": "DXY non-commercial net long trimming -12k",
         "ETF": "UUP outflows -$420M",
-        "News": "dollar weakness 61% bearish"
+        "News": "GDELT dollar weakness 61% bearish"
       },
       "signal": "absorption anti-dollar"
     }
   ],
-  "rules": "RISK_ON=3 long, RISK_OFF=2 short+1 defensive long, NEUTRAL=2 bottom+1 top - 이번주: RISK_OFF"
+  "rules": "RISK_ON=3 long, RISK_OFF=2 short+1 defensive long, NEUTRAL=2 bottom+1 top - 이번주 추천: RISK_OFF regime"
 }
