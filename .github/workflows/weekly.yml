@@ -17,19 +17,13 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install deps
-        run: |
-          pip install yfinance pandas numpy requests
+        run: pip install yfinance pandas numpy requests
       - name: Run 21 ticker engine - Hybrid News
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: |
-          python scoring_engine.py
-          echo "=== absorption.json ==="
-          cat absorption.json | head -n 100
-          echo "=== docs/absorption.json ==="
-          ls -lh absorption.json docs/absorption.json
+        run: python scoring_engine.py
       - name: Commit and push
         run: |
           git config --local user.email "bot@commandcenter.local"
@@ -37,21 +31,5 @@ jobs:
           git add absorption.json
           git add docs/absorption.json
           git add docs/index.html || true
-          git status
-          git diff --staged --quiet || git commit -m "21 ticker HYBRID $(date +%Y-%m-%d) Finnhub+GDELT NEWS real score + UI"
+          git diff --staged --quiet || git commit -m "21 ticker HYBRID $(date +%Y-%m-%d) AUTO"
           git push
-      - name: Discord notify - Hybrid
-        if: env.DISCORD_WEBHOOK_URL != ''
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: |
-          python -c "
-          import json, os, requests
-          with open('absorption.json') as f:
-              data=json.load(f)
-          sel = data.get('selected',[])
-          sel_txt = ', '.join([f\"{s['ticker']} {s['side']} {s['score']} News:{s.get('news_source','?')}\" for s in sel]) if sel else 'No trade - NEUTRAL'
-          macro = data.get('macro',{})
-          msg=f'''**21 COMMAND CENTER HYBRID {data['date']}** {macro.get('bias')} DXY {macro.get('dxy')} US10Y {macro.get('us10y')}%\nBOTTOM {data['summary']['bottom_count']} TOP {data['summary']['top_count']}\nSELECTED: {sel_txt}\nNews: Finnhub Primary + GDELT Backup ACTIVE\nhttps://onesangel7776-blip.github.io/weekly-absorption/'''
-          requests.post(os.getenv('DISCORD_WEBHOOK_URL'), json={'content': msg})
-          "
