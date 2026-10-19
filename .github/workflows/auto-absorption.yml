@@ -1,0 +1,39 @@
+name: 21 Ticker Command Center - Full Auto V4
+
+on:
+  schedule:
+    - cron: '0 21 * * *'   # 매일 21:00 UTC = 미장 마감 후 청산 체크
+    - cron: '0 23 * * 0'   # 일요일 23:00 UTC = 월요일 08:00 KST 주간 absorption 생성
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  auto:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          pip install yfinance requests pandas
+
+      - name: Run Full Auto - Absorption + Journal
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          GDELT_API_KEY: ${{ secrets.GDELT_API_KEY }}
+        run: |
+          python scripts/weekly_auto.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "auto-bot"
+          git config user.email "auto@github.io"
+          git add absorption.json journal_data.json
+          git diff --staged --quiet && echo "No changes" || (git commit -m "auto: ${{ github.run_id }} $(date -u +%Y-%m-%d) absorption + journal" && git push)
