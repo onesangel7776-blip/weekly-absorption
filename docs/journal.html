@@ -33,12 +33,12 @@ table{width:100%;border-collapse:collapse;font-size:12px} th{color:var(--dim);te
 </div>
 <div class="grid3">
   <div class="card"><div class="row"><span class="k">자본</span><b id="capLabel">10,000,000원 / $7,407</b></div><div class="row"><span class="k">총 손익 KRW</span><span class="pnl" id="totalKrw">0원</span></div><div class="row"><span class="k">총 손익 USD</span><span class="pnl" id="totalUsd">$0.00</span></div><div class="row"><span class="k">승률</span><span id="winrate">0%</span></div><div class="small" style="margin-top:8px">주 3개 제한: RISK_ON=3롱, RISK_OFF=2숏+1방어롱, NEUTRAL=2바텀+1탑 준수<br>SL 0.8% / TP 1.6% / 1% 리스크</div></div>
-  <div class="card"><div class="small">운영 모드</div><div style="margin-top:6px;font-size:12px;line-height:1.7">✅ GitHub Action 매일 21:00 UTC (미장 마감) 자동 실행<br>• 고가≥TP → 자동 익절 +20만원<br>• 저가≤SL → 자동 손절 -10만원<br>• 금요일 21:00 UTC → 시간 청산<br>• journal_data.json 자동 커밋<br><br>→ journal.html은 읽기만 하면 실시간 P&L 표시!<br><br>나중에 Alpaca/IBKR: yfinance → 주문 API 1줄 교체</div></div>
+  <div class="card"><div class="small">운영 모드</div><div style="margin-top:6px;font-size:12px;line-height:1.7">✅ GitHub Action 매일 21:00 UTC (미장 마감) 자동 실행<br>• 고가≥TP → 자동 익절 +20만원<br>• 저가≤SL → 자동 손절 -10만원<br>• 금요일 21:00 UTC → 시간 청산<br>• journal_data.json 자동 커밋 (모든 주차 누적)<br><br>→ journal.html은 읽기만 하면 실시간 P&L 표시!<br><br>나중에 Alpaca/IBKR: yfinance → 주문 API 1줄 교체</div></div>
   <div class="card"><div class="small">현재 주</div><div id="weekInfo" style="font-size:12px;margin-top:6px"></div></div>
 </div>
 <h3 style="margin:18px 0 8px 0">이번 주 포지션 - 완전 자동 <span class="small" id="weekDate"></span></h3>
 <div class="grid3" id="cards"></div>
-<h3 style="margin:20px 0 8px 0">원장 (자동 + 수동 오버라이드 가능)</h3>
+<h3 style="margin:20px 0 8px 0">원장 (자동 + 수동 오버라이드 가능) - 전체 누적</h3>
 <table><thead><tr><th>WEEK</th><th>TICKER (MICRO)</th><th>SIDE</th><th>진입</th><th>SL</th><th>TP</th><th>수량</th><th>현재가/청산가</th><th>상태</th><th>KRW</th><th>USD</th></tr></thead><tbody id="ledger"></tbody></table>
 <script>
 let LANG='ko';
@@ -47,7 +47,6 @@ const fmtU=(n)=> (n>=0?'+$':'-$')+Math.abs(n).toFixed(2);
 async function fetchJson(url){try{const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw 0; return await r.json();}catch{return null;}}
 async function load(){
   document.getElementById('status').textContent='불러오는 중...';
-  // FIXED: Try all possible paths for Pages serving from docs vs root
   const absPaths = [
     'https://onesangel7776-blip.github.io/weekly-absorption/docs/absorption.json',
     'https://onesangel7776-blip.github.io/weekly-absorption/absorption.json',
@@ -74,12 +73,15 @@ async function load(){
     if(journal) break;
   }
   
-  const weekKey = abs?.date || Object.keys(journal?.weeks||{}).sort().pop() || new Date().toISOString().slice(0,10);
+  // 최신 주 키
+  const allWeekKeys = Object.keys(journal?.weeks||{}).sort();
+  const weekKey = abs?.date || allWeekKeys.pop() || new Date().toISOString().slice(0,10);
+  // 이번 주 데이터 (카드용)
   const weekData = journal?.weeks?.[weekKey] || (journal?.weeks ? Object.values(journal.weeks).sort((a,b)=>a.date.localeCompare(b.date)).pop() : null);
   
-  document.getElementById('status').textContent = journal ? `✅ 완전 자동: journal_data.json 로드 (${weekKey}) + absorption ${abs?.tickers?.length||abs?.selected?.length||0}개` : '⚠️ journal_data.json 없음 - 첫 주, 수동 또는 내일 자동 생성됨 (그래도 이번 주 티커는 표시됨)';
+  document.getElementById('status').textContent = journal ? `✅ 완전 자동: journal_data.json 로드 (전체 ${Object.keys(journal.weeks||{}).length}주, 최신 ${weekKey}) + absorption ${abs?.tickers?.length||abs?.selected?.length||0}개` : '⚠ journal_data.json 없음';
   document.getElementById('weekDate').textContent = weekKey;
-  // trades: from journal if exists else from absorption
+  // 이번 주 포지션 (카드)
   let trades=[];
   if(weekData?.trades) trades=weekData.trades;
   else if(abs?.selected) trades=abs.selected.map(s=>({ticker:s.ticker, micro:s.micro, side:s.side, score:s.score, entry:s.close||s.entry||0, sl:s.sl, tp:s.tp, sl_pct:s.sl_pct||0.8, tp_pct:s.tp_pct||1.6, shares:1, status:'OPEN', current:s.close||s.entry||0, exit:null, pnl_krw:0, pnl_usd:0}));
@@ -96,18 +98,36 @@ async function load(){
   }
   
   let cap=10000000, fx=1350;
-  document.getElementById('weekInfo').innerHTML = `DATE ${abs?.date||weekKey}<br>DXY ${abs?.macro?.dxy||''} (${abs?.macro?.dxy_date||''})<br>BIAS ${abs?.bias||abs?.macro?.bias||''}<br>GitHub Action: 매일 21UTC<br>주 3개 제한 준수 ✅<br><br>journal: ${journal?'있음':'없음 - fallback 표시'}`;
+  document.getElementById('weekInfo').innerHTML = `DATE ${abs?.date||weekKey}<br>DXY ${abs?.macro?.dxy||''} (${abs?.macro?.dxy_date||''})<br>BIAS ${abs?.bias||abs?.macro?.bias||''}<br>GitHub Action: 매일 21UTC<br>전체 ${Object.keys(journal?.weeks||{}).length}주 누적<br>journal: ${journal?'있음':'없음'}`;
   
   const cards=document.getElementById('cards'); cards.innerHTML='';
   const ledger=document.getElementById('ledger'); ledger.innerHTML='';
-  let totalK=0, totalU=0, wins=0, closed=0;
-  
+  // V4.3 FIX: 전체 누적 계산
+  let totalK=0, totalU=0, wins=0, closed=0, totalTrades=0;
+  if(journal?.weeks){
+    for(const wk of Object.keys(journal.weeks).sort()){
+      for(const t of journal.weeks[wk].trades){
+        totalTrades++;
+        totalK+=t.pnl_krw||0;
+        totalU+=t.pnl_usd||0;
+        if(t.status==='CLOSED'){
+          closed++;
+          if((t.pnl_krw||0)>0) wins++;
+        }
+      }
+    }
+  } else {
+    // fallback: 이번 주만
+    trades.forEach(t=>{
+      totalTrades++;
+      totalK+=t.pnl_krw||0; totalU+=t.pnl_usd||0;
+      if(t.status==='CLOSED'){ closed++; if((t.pnl_krw||0)>0) wins++; }
+    });
+  }
+  // 카드: 이번 주만
   trades.forEach(t=>{
     const entry=t.entry||t.close||0; const sl=t.sl||0; const tp=t.tp||0;
     const isClosed = t.status==='CLOSED';
-    if(isClosed){ totalK+=t.pnl_krw||0; totalU+=t.pnl_usd||0; closed++; if((t.pnl_krw||0)>0) wins++; }
-    else { totalK+=t.pnl_krw||0; totalU+=t.pnl_usd||0; }
-    
     const card=document.createElement('div');
     card.className='card '+(t.side==='LONG'?'long':'short');
     card.innerHTML=`
@@ -124,16 +144,35 @@ async function load(){
       <div class="small" style="margin-top:6px">${isClosed?'자동 청산됨 - GitHub Action':'GitHub Action이 매일 21UTC 시세 체크 → 자동 청산'}</div>
     `;
     cards.appendChild(card);
-    
-    const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${weekKey}</td><td><b>${t.ticker}</b> (${t.micro||''})</td><td><span class="badge ${t.side==='LONG'?'green':'red'}">${t.side}</span></td><td>${entry}</td><td style="color:var(--red)">${sl}</td><td style="color:var(--green)">${tp}</td><td>${t.shares||0}</td><td>${isClosed?t.exit+' ('+t.exit_reason+')':t.current||''}</td><td>${t.status}</td><td style="color:${(t.pnl_krw||0)>=0?'var(--green)':'var(--red)'}">${fmtK(t.pnl_krw||0)}</td><td>${fmtU(t.pnl_usd||0)}</td>`;
-    ledger.appendChild(tr);
   });
+  
+  // 원장: 전체 누적
+  if(journal?.weeks){
+    const sortedWeeks = Object.keys(journal.weeks).sort();
+    sortedWeeks.forEach(wk=>{
+      const wdata = journal.weeks[wk];
+      wdata.trades.forEach(t=>{
+        const entry=t.entry||t.close||0; const sl=t.sl||0; const tp=t.tp||0;
+        const isClosed = t.status==='CLOSED';
+        const tr=document.createElement('tr');
+        tr.innerHTML=`<td>${wk}</td><td><b>${t.ticker}</b> (${t.micro||''})</td><td><span class="badge ${t.side==='LONG'?'green':'red'}">${t.side}</span></td><td>${entry}</td><td style="color:var(--red)">${sl}</td><td style="color:var(--green)">${tp}</td><td>${t.shares||0}</td><td>${isClosed?t.exit+' ('+t.exit_reason+')':t.current||''}</td><td>${t.status}</td><td style="color:${(t.pnl_krw||0)>=0?'var(--green)':'var(--red)'}">${fmtK(t.pnl_krw||0)}</td><td>${fmtU(t.pnl_usd||0)}</td>`;
+        ledger.appendChild(tr);
+      });
+    });
+  } else {
+    // fallback
+    trades.forEach(t=>{
+      const entry=t.entry||0; const sl=t.sl||0; const tp=t.tp||0; const isClosed=t.status==='CLOSED';
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td>${weekKey}</td><td><b>${t.ticker}</b> (${t.micro||''})</td><td><span class="badge ${t.side==='LONG'?'green':'red'}">${t.side}</span></td><td>${entry}</td><td style="color:var(--red)">${sl}</td><td style="color:var(--green)">${tp}</td><td>${t.shares||0}</td><td>${isClosed?t.exit:t.current||''}</td><td>${t.status}</td><td>${fmtK(t.pnl_krw||0)}</td><td>${fmtU(t.pnl_usd||0)}</td>`;
+      ledger.appendChild(tr);
+    });
+  }
   
   document.getElementById('totalKrw').textContent=fmtK(totalK); document.getElementById('totalKrw').className='pnl '+(totalK>=0?'pos':'neg');
   document.getElementById('totalUsd').textContent=fmtU(totalU); document.getElementById('totalUsd').className='pnl '+(totalU>=0?'pos':'neg');
   document.getElementById('capLabel').textContent=`${Math.round(cap+totalK).toLocaleString()}원 / $${((cap+totalK)/fx).toFixed(2)}`;
-  document.getElementById('winrate').textContent=`${closed?Math.round(wins/closed*100):0}% (${wins}/${closed}) / 총 ${trades.length}개`;
+  document.getElementById('winrate').textContent=`${closed?Math.round(wins/closed*100):0}% (${wins}/${closed}) / 총 ${totalTrades}개`;
 }
 document.getElementById('lang').onclick=()=>{LANG=LANG==='ko'?'en':'ko'; document.getElementById('lang').textContent=LANG==='ko'?'한/영 KO':'KO/EN EN'; load();};
 load();
