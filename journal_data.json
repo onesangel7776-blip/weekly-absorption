@@ -84,12 +84,12 @@
           "tp_pct": 1.6,
           "shares": 231,
           "status": "OPEN",
-          "current": 39.56999969482422,
+          "current": 39.5,
           "exit": null,
           "exit_date": null,
           "exit_reason": null,
-          "pnl_krw": 21829.0,
-          "pnl_usd": 16.17,
+          "pnl_krw": 0,
+          "pnl_usd": 0.0,
           "last_check": "2026-10-19"
         },
         {
@@ -104,12 +104,12 @@
           "tp_pct": 1.6,
           "shares": 12,
           "status": "OPEN",
-          "current": 766.47998046875,
+          "current": 763.25,
           "exit": null,
           "exit_date": null,
           "exit_reason": null,
-          "pnl_krw": 52326.0,
-          "pnl_usd": 38.76,
+          "pnl_krw": 0,
+          "pnl_usd": 0.0,
           "last_check": "2026-10-19"
         },
         {
@@ -124,12 +124,12 @@
           "tp_pct": 1.6,
           "shares": 134,
           "status": "OPEN",
-          "current": 67.80000305175781,
+          "current": 68.24,
           "exit": null,
           "exit_date": null,
           "exit_reason": null,
-          "pnl_krw": 79595.0,
-          "pnl_usd": 58.96,
+          "pnl_krw": 0,
+          "pnl_usd": 0.0,
           "last_check": "2026-10-19"
         }
       ]
