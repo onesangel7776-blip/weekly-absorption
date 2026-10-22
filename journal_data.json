@@ -83,14 +83,14 @@
           "sl_pct": 0.8,
           "tp_pct": 1.6,
           "shares": 231,
-          "status": "OPEN",
-          "current": 39.540000915527344,
-          "exit": null,
-          "exit_date": null,
-          "exit_reason": null,
-          "pnl_krw": 12474.0,
-          "pnl_usd": 9.24,
-          "last_check": "2026-10-21"
+          "status": "CLOSED",
+          "current": 38.5099983215332,
+          "exit": 39.18,
+          "exit_date": "2026-10-22",
+          "exit_reason": "SL",
+          "pnl_krw": -99792.0,
+          "pnl_usd": -73.92,
+          "last_check": "2026-10-22"
         },
         {
           "ticker": "SPY",
@@ -104,13 +104,13 @@
           "tp_pct": 1.6,
           "shares": 12,
           "status": "OPEN",
-          "current": 773.0900268554688,
+          "current": 762.0,
           "exit": null,
           "exit_date": null,
           "exit_reason": null,
-          "pnl_krw": 159408.0,
-          "pnl_usd": 118.08,
-          "last_check": "2026-10-21"
+          "pnl_krw": -20250.0,
+          "pnl_usd": -15.0,
+          "last_check": "2026-10-22"
         },
         {
           "ticker": "XLE",
