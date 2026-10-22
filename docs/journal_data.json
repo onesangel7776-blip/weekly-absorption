@@ -104,12 +104,12 @@
           "tp_pct": 1.6,
           "shares": 12,
           "status": "OPEN",
-          "current": 762.0,
+          "current": 763.9600219726562,
           "exit": null,
           "exit_date": null,
           "exit_reason": null,
-          "pnl_krw": -20250.0,
-          "pnl_usd": -15.0,
+          "pnl_krw": 11502.0,
+          "pnl_usd": 8.52,
           "last_check": "2026-10-22"
         },
         {
