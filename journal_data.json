@@ -103,14 +103,14 @@
           "sl_pct": 0.8,
           "tp_pct": 1.6,
           "shares": 12,
-          "status": "OPEN",
-          "current": 763.9600219726562,
-          "exit": null,
-          "exit_date": null,
-          "exit_reason": null,
-          "pnl_krw": 11502.0,
-          "pnl_usd": 8.52,
-          "last_check": "2026-10-22"
+          "status": "CLOSED",
+          "current": 760.719970703125,
+          "exit": 760.719970703125,
+          "exit_date": "2026-10-23",
+          "exit_reason": "TIME_FRIDAY",
+          "pnl_krw": -40986.0,
+          "pnl_usd": -30.36,
+          "last_check": "2026-10-23"
         },
         {
           "ticker": "XLE",
