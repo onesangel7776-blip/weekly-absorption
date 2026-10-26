@@ -1,10 +1,11 @@
 """
-V4.3 ORIGINAL INTENT RESTORED
-- 21개 티커 -> 점수 높은 3개 뽑아서 월요일 아침 OPEN
-- fallback 삭제 (absorption.json 없으면 에러로 멈춤)
-- 경로는 docs/absorption.json 하나만 사용
-- week_key = absorption date 기준 월요일 주차 (ISO week) -> 월요일이면 무조건 새 주차 생성
-- 기존 주차 CLOSED는 절대 삭제 안 함
+V4.4 STABLE - 3주째 주말 버그 완전 제거
+- OPEN=0 재 생성 로직 삭제 (중복 주차 원인)
+- JSON 깨지면 초기화하지 않고 즉시 실패 (이전 주차 증발 방지)
+- week_key는 무조건 월요일 기준으로만 생성
+  - absorption이 토/일이면 -> 다음 월요일
+  - absorption이 평일이면 -> 그 주의 월요일
+- 이미 존재하는 주차는 절대 다시 생성하지 않음
 """
 import json, os, sys
 from datetime import datetime, timezone, timedelta
@@ -39,15 +40,17 @@ MICRO_MAP = {
     "BITO": "MBT proxy",
 }
 
-def load_json(path):
+def load_json_strict(path):
     if not os.path.exists(path):
         return None
     try:
         with open(path,'r',encoding='utf-8') as f:
-            return json.load(f)
+            data = json.load(f)
+        return data
     except Exception as e:
-        print(f"load_json {path} fail {e}")
-        return None
+        print(f"CRITICAL: {path} JSON 파싱 실패 - 절대 초기화하지 않고 종료함. 에러: {e}")
+        print("GitHub에서 파일 끝 }} 가 잘렸는지 확인하세요. 복구 파일로 덮어쓰세요.")
+        sys.exit(1)
 
 def get_price(ticker):
     if not HAS_YF:
@@ -69,23 +72,21 @@ def get_price(ticker):
         return None
 
 def main():
-    print(f"=== V4.3 ORIGINAL INTENT {datetime.now(timezone.utc)} ===")
+    print(f"=== V4.4 STABLE {datetime.now(timezone.utc)} ===")
     
-    # 1. absorption load - 오직 docs/absorption.json 하나만, 없으면 에러
+    # 1. absorption load - 하나만
     abs_path = "docs/absorption.json"
-    absorption = load_json(abs_path)
+    absorption = load_json_strict(abs_path)
     if not absorption:
-        print(f"ERROR: {abs_path} 없음. 21개 스캐너가 먼저 돌아야 함. fallback 안 씀.")
+        print(f"ERROR: {abs_path} 없음. 21개 스캐너 먼저 실행 필요.")
         sys.exit(1)
 
-    # 21개 중에 3개 뽑기 - selected가 있으면 그걸 쓰고, 없으면 점수순으로
     selected = absorption.get('selected')
     if not selected:
         tickers = absorption.get('tickers', [])
         if not tickers or len(tickers) < 3:
-            print(f"ERROR: tickers가 21개가 아님. 현재 {len(tickers)}개")
+            print(f"ERROR: tickers가 21개 미만. 현재 {len(tickers)}개")
             sys.exit(1)
-        # 점수 높은 3개 = 원래 의도
         sorted_t = sorted(tickers, key=lambda x: x.get('score',0), reverse=True)
         selected = []
         for t in sorted_t[:3]:
@@ -101,50 +102,39 @@ def main():
                 "tp_pct": 1.6
             })
     
-    print(f"Selected 3 from 21: {[s['ticker'] for s in selected]} from {abs_path}")
+    print(f"Selected 3: {[s['ticker'] for s in selected]}")
 
-    # 2. journal load
+    # 2. journal load - 절대 빈 dict로 초기화하지 않음, 실패하면 종료
     journal_path = "docs/journal_data.json"
-    journal = load_json(journal_path) or {"weeks": {}}
+    journal = load_json_strict(journal_path)
+    if journal is None:
+        # 파일이 아예 없으면 새로 시작 (최초 1회만)
+        journal = {"weeks": {}}
+        print("journal_data.json 없음 -> 새로 생성")
     if "weeks" not in journal:
         journal["weeks"] = {}
 
-    # week_key = 다음 월요일 날짜 (일요일 스캔 -> 월요일 포지션 = 원래 의도)
-    # absorption date가 일요일이면 +1일 해서 월요일로
+    # 3. week_key = 월요일 기준, 토/일은 다음 월요일로
     abs_date_str = (absorption.get('date') or absorption.get('generated_at','')[:10])
     try:
         abs_date = datetime.strptime(abs_date_str[:10], "%Y-%m-%d")
-        # 일요일이면 월요일로, 그 외도 월요일 기준으로
-        if abs_date.weekday() == 6: # Sunday
+        wd = abs_date.weekday()
+        if wd == 5: # Saturday
+            week_key_date = abs_date + timedelta(days=2)
+        elif wd == 6: # Sunday
             week_key_date = abs_date + timedelta(days=1)
-        else:
-            # 이번 주 월요일로 정규화
-            week_key_date = abs_date - timedelta(days=abs_date.weekday())
+        else: # Mon-Fri -> 그 주의 월요일
+            week_key_date = abs_date - timedelta(days=wd)
         week_key = week_key_date.strftime("%Y-%m-%d")
-    except:
+    except Exception as e:
+        print(f"week_key 파싱 실패 {e}, absorption date 그대로 사용")
         week_key = abs_date_str[:10]
 
     print(f"week_key = {week_key} (absorption {abs_date_str} -> Monday)")
 
-    # 3. 새 주차 생성 - 월요일이면 무조건 새로, 같은 주라도 OPEN이 0개면 새로
-    should_create_new = False
+    # 4. 새 주차 생성 - week_key가 없을 때만, OPEN=0 로직 완전 삭제
     if week_key not in journal["weeks"]:
-        should_create_new = True
-    else:
-        # 기존 주차에 OPEN이 하나도 없으면 새로 만들어야 함 (지난 주 다 CLOSED)
-        open_cnt = sum(1 for t in journal["weeks"][week_key]["trades"] if t["status"] == "OPEN")
-        if open_cnt == 0:
-            # 날짜를 하루 더 밀어서 새 키로 (중복 방지)
-            # 실제로는 다음 주 월요일로 가야 하지만, 여기서는 강제 재생성
-            print(f"Week {week_key} exists but OPEN=0 -> will recreate")
-            should_create_new = True
-            # 기존 CLOSED는 유지, trades 비우고 다시 채울지? 여기서는 새로 덮지 않고, 기존 유지 + 새 주차로
-            # 간단히 week_key를 오늘 날짜로 변경해서 새 주차 생성
-            if datetime.now(timezone.utc).weekday() == 0: # Monday
-                week_key = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-                should_create_new = True
-
-    if should_create_new and week_key not in journal["weeks"]:
+        print(f"NEW WEEK 생성: {week_key}")
         journal["weeks"][week_key] = {
             "date": week_key,
             "bias": absorption.get('bias') or absorption.get('macro',{}).get('bias',''),
@@ -195,14 +185,13 @@ def main():
                 "pnl_usd": 0,
                 "last_check": None
             })
-        print(f"NEW WEEK {week_key} created with {[t['ticker'] for t in journal['weeks'][week_key]['trades']]}")
     else:
-        print(f"Week {week_key} already exists with OPEN, keeping it")
+        print(f"Week {week_key} 이미 존재 -> 새로 만들지 않음, P&L만 갱신")
 
-    # 4. P&L update - OPEN만 갱신
+    # 5. P&L update - OPEN만 갱신
     today = datetime.now(timezone.utc)
     weekday = today.weekday()
-    for wk, wdata in journal["weeks"].items():
+    for wk, wdata in list(journal["weeks"].items()):
         for trade in wdata["trades"]:
             if trade["status"] != "OPEN":
                 continue
@@ -224,6 +213,7 @@ def main():
                     trade["exit"] = sl; trade["exit_reason"] = "SL"; exited = True
                 elif low <= tp:
                     trade["exit"] = tp; trade["exit_reason"] = "TP"; exited = True
+            # 금요일 청산은 해당 주차(week_key)일 때만
             if not exited and wk == week_key and weekday == 4:
                 trade["exit"] = close
                 trade["exit_reason"] = "TIME_FRIDAY"
@@ -236,15 +226,27 @@ def main():
                 trade["pnl_usd"] = round(pnl_usd,2)
                 trade["pnl_krw"] = round(pnl_usd * 1350,0)
 
-    # 5. 저장
+    # 6. 저장 - 백업도 함께
     os.makedirs("docs", exist_ok=True)
+    # 저장 전 검증
+    if len(journal["weeks"]) == 0:
+        print("CRITICAL: weeks가 0개 -> 저장하지 않고 종료 (데이터 증발 방지)")
+        sys.exit(1)
+    
+    # 백업
+    try:
+        with open("docs/journal_data_backup.json", "w", encoding="utf-8") as f:
+            json.dump(journal, f, ensure_ascii=False, indent=2)
+    except:
+        pass
+
     for out_path in ["docs/journal_data.json", "journal_data.json"]:
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(journal, f, ensure_ascii=False, indent=2)
 
     total_closed = sum(1 for w in journal["weeks"].values() for t in w["trades"] if t["status"]=="CLOSED")
     total_open = sum(1 for w in journal["weeks"].values() for t in w["trades"] if t["status"]=="OPEN")
-    print(f"TOTAL {len(journal['weeks'])} weeks, CLOSED {total_closed}, OPEN {total_open} - V4.3 DONE")
+    print(f"TOTAL {len(journal['weeks'])} weeks, CLOSED {total_closed}, OPEN {total_open} - V4.4 DONE")
 
 if __name__ == "__main__":
     main()
