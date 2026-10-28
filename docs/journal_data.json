@@ -150,14 +150,14 @@
           "sl_pct": 0.8,
           "tp_pct": 1.6,
           "shares": 12,
-          "status": "OPEN",
-          "current": NaN,
-          "exit": null,
-          "exit_date": null,
-          "exit_reason": null,
-          "pnl_krw": 118746.0,
-          "pnl_usd": 87.96,
-          "last_check": "2026-10-27"
+          "status": "CLOSED",
+          "current": 771.2000122070312,
+          "exit": 772.13,
+          "exit_date": "2026-10-28",
+          "exit_reason": "TP",
+          "pnl_krw": 196992.0,
+          "pnl_usd": 145.92,
+          "last_check": "2026-10-28"
         },
         {
           "ticker": "DBA",
@@ -190,14 +190,14 @@
           "sl_pct": 0.8,
           "tp_pct": 1.6,
           "shares": 134,
-          "status": "OPEN",
-          "current": NaN,
-          "exit": null,
-          "exit_date": null,
-          "exit_reason": null,
-          "pnl_krw": -0.0,
-          "pnl_usd": -0.0,
-          "last_check": "2026-10-27"
+          "status": "CLOSED",
+          "current": 68.76499938964844,
+          "exit": 68.22,
+          "exit_date": "2026-10-28",
+          "exit_reason": "TP",
+          "pnl_krw": 200799.0,
+          "pnl_usd": 148.74,
+          "last_check": "2026-10-28"
         }
       ]
     }
