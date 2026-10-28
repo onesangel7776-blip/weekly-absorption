@@ -134,8 +134,8 @@
         }
       ]
     },
-    "2026-10-25": {
-      "date": "2026-10-25",
+    "2026-10-26": {
+      "date": "2026-10-26",
       "bias": "NEUTRAL",
       "dxy": 101.81,
       "trades": [
@@ -151,7 +151,7 @@
           "tp_pct": 1.6,
           "shares": 12,
           "status": "OPEN",
-          "current": 769.2999877929688,
+          "current": NaN,
           "exit": null,
           "exit_date": null,
           "exit_reason": null,
@@ -190,80 +190,13 @@
           "sl_pct": 0.8,
           "tp_pct": 1.6,
           "shares": 134,
-          "status": "CLOSED",
-          "current": 68.24500274658203,
-          "exit": 68.22,
-          "exit_date": "2026-10-27",
-          "exit_reason": "TP",
-          "pnl_krw": 200799.0,
-          "pnl_usd": 148.74,
-          "last_check": "2026-10-27"
-        }
-      ]
-    },
-    "2026-10-26": {
-      "date": "2026-10-26",
-      "bias": "NEUTRAL",
-      "dxy": 101.81,
-      "trades": [
-        {
-          "ticker": "SPY",
-          "micro": "MES (Micro S&P)",
-          "side": "LONG",
-          "score": 7.2,
-          "entry": 759.97,
-          "sl": 753.89,
-          "tp": 772.13,
-          "sl_pct": 0.8,
-          "tp_pct": 1.6,
-          "shares": 12,
           "status": "OPEN",
-          "current": 769.2999877929688,
+          "current": NaN,
           "exit": null,
           "exit_date": null,
           "exit_reason": null,
-          "pnl_krw": 0,
-          "pnl_usd": 0,
-          "last_check": "2026-10-27"
-        },
-        {
-          "ticker": "DBA",
-          "micro": "ETF only",
-          "side": "LONG",
-          "score": 6.7,
-          "entry": 27.87,
-          "sl": 27.65,
-          "tp": 28.32,
-          "sl_pct": 0.8,
-          "tp_pct": 1.6,
-          "shares": 336,
-          "status": "CLOSED",
-          "current": 27.385000228881836,
-          "exit": 27.65,
-          "exit_date": "2026-10-27",
-          "exit_reason": "SL",
-          "pnl_krw": -99792.0,
-          "pnl_usd": -73.92,
-          "last_check": "2026-10-27"
-        },
-        {
-          "ticker": "XLE",
-          "micro": "MCL proxy",
-          "side": "SHORT",
-          "score": 2.8,
-          "entry": 69.33,
-          "sl": 69.88,
-          "tp": 68.22,
-          "sl_pct": 0.8,
-          "tp_pct": 1.6,
-          "shares": 134,
-          "status": "CLOSED",
-          "current": 68.24500274658203,
-          "exit": 68.22,
-          "exit_date": "2026-10-27",
-          "exit_reason": "TP",
-          "pnl_krw": 200799.0,
-          "pnl_usd": 148.74,
+          "pnl_krw": -0.0,
+          "pnl_usd": -0.0,
           "last_check": "2026-10-27"
         }
       ]
