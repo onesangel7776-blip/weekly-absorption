@@ -200,6 +200,33 @@
           "last_check": "2026-10-28"
         }
       ]
+    },
+    "2026-11-02": {
+      "date": "2026-11-02",
+      "bias": "NEUTRAL",
+      "dxy": 101.88,
+      "trades": [
+        {
+          "ticker": "XLE",
+          "micro": "MCL proxy",
+          "side": "SHORT",
+          "score": 2.8,
+          "entry": 70.02,
+          "sl": 70.58,
+          "tp": 68.9,
+          "sl_pct": 0.8,
+          "tp_pct": 1.6,
+          "shares": 132,
+          "status": "CLOSED",
+          "current": 67.25,
+          "exit": 68.9,
+          "exit_date": "2026-11-02",
+          "exit_reason": "TP",
+          "pnl_krw": 199584.0,
+          "pnl_usd": 147.84,
+          "last_check": "2026-11-02"
+        }
+      ]
     }
   }
 }
