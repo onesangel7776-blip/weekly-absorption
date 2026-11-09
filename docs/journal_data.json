@@ -227,6 +227,53 @@
           "last_check": "2026-11-02"
         }
       ]
+    },
+    "2026-11-09": {
+      "date": "2026-11-09",
+      "bias": "RISK_OFF",
+      "dxy": 102.3,
+      "trades": [
+        {
+          "ticker": "GDX",
+          "micro": "MGC proxy",
+          "side": "SHORT",
+          "score": 2.7,
+          "entry": 87.6,
+          "sl": 88.48,
+          "tp": 85.85,
+          "sl_pct": 1.0,
+          "tp_pct": 2.0,
+          "shares": 84,
+          "status": "CLOSED",
+          "current": 91.45999908447266,
+          "exit": 88.48,
+          "exit_date": "2026-11-09",
+          "exit_reason": "SL",
+          "pnl_krw": -99792.0,
+          "pnl_usd": -73.92,
+          "last_check": "2026-11-09"
+        },
+        {
+          "ticker": "TLT",
+          "micro": "10Y Micro Treasury",
+          "side": "SHORT",
+          "score": 4.9,
+          "entry": 81.92,
+          "sl": 82.58,
+          "tp": 80.61,
+          "sl_pct": 0.8,
+          "tp_pct": 1.6,
+          "shares": 112,
+          "status": "OPEN",
+          "current": 81.95999908447266,
+          "exit": null,
+          "exit_date": null,
+          "exit_reason": null,
+          "pnl_krw": 0,
+          "pnl_usd": 0,
+          "last_check": "2026-11-09"
+        }
+      ]
     }
   }
 }
