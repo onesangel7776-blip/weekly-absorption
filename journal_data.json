@@ -264,14 +264,14 @@
           "sl_pct": 0.8,
           "tp_pct": 1.6,
           "shares": 112,
-          "status": "OPEN",
-          "current": 81.95999908447266,
-          "exit": null,
-          "exit_date": null,
-          "exit_reason": null,
-          "pnl_krw": 0,
-          "pnl_usd": 0,
-          "last_check": "2026-11-09"
+          "status": "CLOSED",
+          "current": 80.87999725341797,
+          "exit": 80.61,
+          "exit_date": "2026-11-10",
+          "exit_reason": "TP",
+          "pnl_krw": 198072.0,
+          "pnl_usd": 146.72,
+          "last_check": "2026-11-10"
         }
       ]
     }
