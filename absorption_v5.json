@@ -1,0 +1,195 @@
+{
+  "date": "2026-11-15",
+  "run": "V5 MA DELTA DIVERGENCE",
+  "tickers": [
+    {
+      "ticker": "MGC",
+      "location": "D-100% VAL",
+      "delta_badge": "+4428",
+      "daemok": 15133,
+      "cvd_now": 7632,
+      "score": 87,
+      "go": true
+    },
+    {
+      "ticker": "MNG",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "SIL",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "M2K",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "MES",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "MNQ",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "MBT",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "MYM",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "MCL",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "M6E",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "M6B",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "M6A",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "M2K2",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "MES2",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "MYM2",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "GDX",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "TLT",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "IWM",
+      "location": "D-100% VAL",
+      "delta_badge": "+4428",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 87,
+      "go": true
+    },
+    {
+      "ticker": "XLE",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "SPY",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    },
+    {
+      "ticker": "DBA",
+      "location": "D50% W0%",
+      "delta_badge": "+835",
+      "daemok": 691,
+      "cvd_now": 7632,
+      "score": 42,
+      "go": false
+    }
+  ]
+}
