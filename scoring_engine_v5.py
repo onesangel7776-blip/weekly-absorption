@@ -1,110 +1,141 @@
-"""
-Command Center V5 - Scoring Engine
-MA Convergence + Delta Divergence + CVD Flip + Location + Daemok
-기존 V4는 건들지 않음, V5 전용
-"""
-import json
-from datetime import datetime
 
-TICKERS_21 = [
-    "MGC","MNG","SIL","M2K","MES","MNQ","MBT","MYM",
-    "MCL","M6E","M6B","M6A","MNQ2","MES2","MYM2",
-    "GDX","TLT","IWM","XLE","SPY","DBA"
-]
+"""
+이평봇 V5 - MA + Delta + Divergence + Ichimoku
+유로봇 V9.30 SAFE CORE에서 뽑은 매매금지 필터 포함
 
-def calc_ma_converge(ma2, ma4, ma8, ma16):
-    """이평 수렴 0.15% 이내 체크 - 사진의 MA(2,4,8,16) 겹친 자리"""
-    mas = [ma2, ma4, ma8, ma16]
-    spread = (max(mas) - min(mas)) / min(mas) * 100
+유로봇 원본 필터:
+- UseDailyLossLimit $700, UseDailyProfitCap $800 (CanOpenNewPosition, UpdateTradingDayAndDailyLimits)
+- UseMffuTimeFilter 18:00-16:10 EST, PreClose 60분, BlockWeekend (IsSessionExitTime)
+- Close-then-Reverse, Close-in-flight flag
+
+이평봇 추가:
+- Judas 15:30-16:15 / 21:00-21:45 KST 차단 (프랍 21 Ticker 보드에 있던거)
+- News 고영향 ±30분 차단
+- Zombie 0.7x + CVD 횡보 차단
+- 23:50 강제청산
+- 일일 최대이익 $500 신규
+- WEEK -> DATE 일일매매
+"""
+from datetime import datetime, time
+import pytz
+
+# === 1. 유로봇에서 뽑은 일일 손실/이익 ===
+class DailyLimit:
+    def __init__(self, loss_limit=700, profit_cap=500):
+        self.loss_limit = loss_limit
+        self.profit_cap = profit_cap
+        self.start_balance = None
+        self.day = None
+        self.loss_reached = False
+        self.profit_reached = False
+
+    def update_day(self, est_time, current_balance):
+        # EST 기준 자정 넘기면 day 리셋 - 유로봇 UpdateTradingDayAndDailyLimits 로직
+        day = est_time.date()
+        if self.day != day:
+            self.day = day
+            self.start_balance = current_balance
+            self.loss_reached = False
+            self.profit_reached = False
+        if self.start_balance is None:
+            return
+        if self.start_balance - current_balance >= self.loss_limit:
+            self.loss_reached = True
+        if current_balance - self.start_balance >= self.profit_cap:
+            self.profit_reached = True
+
+    def can_open(self):
+        return not (self.loss_reached or self.profit_reached)
+
+# === 2. 유로봇 세션 필터 ===
+def is_session_exit(est_time, start_est="18:00", end_est="16:10", pre_close_min=60, block_weekend=True):
+    if block_weekend and est_time.weekday() >= 5:  # 토,일
+        return True
+    def to_minutes(t):
+        h,m = map(int, t.split(":"))
+        return h*60+m
+    s = to_minutes(start_est)
+    e = to_minutes(end_est)
+    cur = est_time.hour*60+est_time.minute
+    pre = (e - pre_close_min) % (24*60)
+    # 오버나잇 세션 18:00->16:10
+    if s <= e:
+        if cur < s or cur > e:
+            return True
+        return pre <= cur <= e
+    else:
+        if not (cur >= s or cur <= e):
+            return True
+        return pre <= cur <= e
+
+# === 3. 프랍 5개 필터 (기존 21 Ticker 보드) ===
+def is_judas(kst_time):
+    # 15:30-16:15 / 21:00-21:45 KST 차단
+    m = kst_time.hour*60 + kst_time.minute
+    return (930 <= m <= 975) or (1260 <= m <= 1305)
+
+def is_news_block(kst_time, news_times=[]):
+    # 고영향 뉴스 ±30분 - Finnhub/GDELT에서 가져옴
+    for nt in news_times:
+        if abs((kst_time - nt).total_seconds()) <= 30*60:
+            return True
+    return False
+
+def is_zombie(vol_mult, cvd_sideways):
+    # 거래량 0.7x + CVD 횡보
+    return vol_mult < 0.7 and cvd_sideways
+
+def is_eod_close(kst_time):
+    # 23:50 강제청산
+    return kst_time.hour==23 and kst_time.minute>=50
+
+# === 4. 이평봇 4기둥 ===
+def check_ma_converge(mas):
+    # mas = [ma2, ma4, ma8, ma16]
+    spread = (max(mas)-min(mas))/min(mas)*100
     return 15 if spread < 0.15 else 0, spread
 
-def calc_location_score(location_str):
-    """VAL, D-100%, W-75% 극단자리 20점 - 같은 +4000이어도 가는 자리"""
-    extreme = ["VAL","D-100","D-75","W-75","W-100"]
-    for e in extreme:
-        if e in location_str:
-            return 20
+def check_location(loc_str):
+    extreme = ["VAL","D-100","D-75","W-75","W-100","POC"]
+    return 20 if any(e in loc_str for e in extreme) else 0
+
+def check_daemok(delta_detail, daemok):
+    if "대목" in delta_detail and daemok>=4000:
+        return 20
     return 0
 
-def calc_daemok_score(delta_detail, daemok_val):
-    """대목롱 +15133 같이 세력 물량 동반 20점"""
-    if "대목" in delta_detail and daemok_val >= 4000:
-        return 20
-    if daemok_val >= 10000:
-        return 20
-    if delta_detail.count("Buy") and daemok_val >= 4000:
-        return 10
-    return 0
-
-def calc_cvd_flip_score(cvd_prev, cvd_now):
-    """CVD -14287 -> +7632 플립 15점"""
-    if cvd_prev < 0 and cvd_now > 0 and cvd_now > 7000:
+def check_cvd_flip(prev, now):
+    if prev<0 and now>7000:
         return 15
-    if cvd_prev < 0 and cvd_now > 0:
-        return 10
     return 0
 
-def calc_vwap_score(close, vwap, side):
-    """VWAP 돌파 10점"""
-    if side == "LONG" and close > vwap:
-        return 10
-    if side == "SHORT" and close < vwap:
-        return 10
+def check_vol(vol, vol_ma):
+    return 10 if vol >= vol_ma*1.8 else 0
+
+def check_vwap(close, vwap, side):
+    if side=="LONG" and close>vwap: return 10
+    if side=="SHORT" and close<vwap: return 10
     return 0
 
-def calc_score_15vs5(score_long, score_short):
-    """Score 15 vs 5 같은 AI 브리핑 10점"""
-    if abs(score_long - score_short) >= 10:
-        return 10
-    return 0
+def total_score_v5(ticker_data, est_time, kst_time, daily, news_times, vol_ma):
+    # 유로봇 일일 필터 먼저
+    daily.update_day(est_time, ticker_data["balance"])
+    if not daily.can_open():
+        return {"ticker":ticker_data["ticker"],"total":0,"go":False,"reason":"Daily Limit"}
+    if is_session_exit(est_time):
+        return {"ticker":ticker_data["ticker"],"total":0,"go":False,"reason":"Session Exit"}
+    if is_judas(kst_time): return {"ticker":ticker_data["ticker"],"total":0,"go":False,"reason":"Judas"}
+    if is_news_block(kst_time, news_times): return {"ticker":ticker_data["ticker"],"total":0,"go":False,"reason":"News"}
+    if is_zombie(ticker_data["vol"]/vol_ma, ticker_data["cvd_sideways"]): return {"ticker":ticker_data["ticker"],"total":0,"go":False,"reason":"Zombie"}
+    if is_eod_close(kst_time): return {"ticker":ticker_data["ticker"],"total":0,"go":False,"reason":"EOD 23:50"}
 
-def calc_vol_score(vol, vol_ma20):
-    """Vol 1.8배 폭발 10점 - 사진 Vol(BTC) 34.3 같은"""
-    if vol >= vol_ma20 * 1.8:
-        return 10
-    return 0
-
-def total_score(ticker_data):
-    loc = calc_location_score(ticker_data["location"])
-    daemok = calc_daemok_score(ticker_data["delta_detail"], ticker_data["daemok"])
-    cvd = calc_cvd_flip_score(ticker_data["cvd_prev"], ticker_data["cvd_now"])
-    _, ma_spread = calc_ma_converge(ticker_data["ma2"], ticker_data["ma4"], ticker_data["ma8"], ticker_data["ma16"])
-    ma_score = 15 if ma_spread < 0.15 else 0
-    vwap = calc_vwap_score(ticker_data["close"], ticker_data["vwap"], ticker_data["side"])
-    score155 = calc_score_15vs5(ticker_data["score_long"], ticker_data["score_short"])
-    vol = calc_vol_score(ticker_data["vol"], ticker_data["vol_ma20"])
-
-    total = loc + daemok + cvd + ma_score + vwap + score155 + vol
-    return {
-        "ticker": ticker_data["ticker"],
-        "location": loc,
-        "daemok": daemok,
-        "cvd_flip": cvd,
-        "ma_converge": ma_score,
-        "ma_spread": round(ma_spread,4),
-        "vwap": vwap,
-        "score155": score155,
-        "vol": vol,
-        "total": total,
-        "go": total >= 80,
-        "delta_badge": ticker_data["delta_badge"],
-        "cvd_now": ticker_data["cvd_now"]
-    }
-
-# Mock run for test
-if __name__ == "__main__":
-    sample = {
-        "ticker": "MGC",
-        "location": "VAL D-100%",
-        "delta_detail": "Buy 4.5K / Sell 0K 대목롱 +15133",
-        "daemok": 15133,
-        "cvd_prev": -14287,
-        "cvd_now": 7632,
-        "ma2": 64871, "ma4": 64910, "ma8": 64935, "ma16": 64891,
-        "close": 64950, "vwap": 63787,
-        "side": "LONG",
-        "score_long": 15, "score_short": 5,
-        "vol": 34.3, "vol_ma20": 18,
-        "delta_badge": "+4428"
-    }
-    print(json.dumps(total_score(sample), ensure_ascii=False, indent=2))
+    # 4기둥 점수
+    loc = check_location(ticker_data["location"])
+    dae = check_daemok(ticker_data["delta_detail"], ticker_data["daemok"])
+    cvd = check_cvd_flip(ticker_data["cvd_prev"], ticker_data["cvd_now"])
+    ma_s, _ = check_ma_converge([ticker_data["ma2"],ticker_data["ma4"],ticker_data["ma8"],ticker_data["ma16"]])
+    vol_s = check_vol(ticker_data["vol"], vol_ma)
+    vwap_s = check_vwap(ticker_data["close"], ticker_data["vwap"], ticker_data["side"])
+    score155 = 10 if abs(ticker_data["score_long"]-ticker_data["score_short"])>=10 else 0
+    total = loc+dae+cvd+ma_s+vol_s+vwap_s+score155
+    return {"ticker":ticker_data["ticker"],"loc":loc,"daemok":dae,"cvd":cvd,"ma":ma_s,"vol":vol_s,"vwap":vwap_s,"score155":score155,"total":total,"go":total>=80}
