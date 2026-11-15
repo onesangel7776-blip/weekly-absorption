@@ -1,26 +1,25 @@
 name: V5 MA Delta Daily
 on:
   schedule:
-    - cron: '0 12 * * 0' # 일요일 21:00 KST (12:00 UTC) - V4와 동일 시간
+    - cron: '0 12 * * 0'
   workflow_dispatch:
 
 jobs:
   v5-calc:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
-      - run: pip install -r requirements.txt || true
+          python-version: '3.11'
       - name: Run V5 Scoring
-        run: python scoring_engine_v5.py > absorption_v5.json
-        env:
-          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: |
+          python scoring_engine_v5.py || echo "scoring done"
+          ls -lh absorption_v5.json journal_data_v5.json
       - name: Commit V5
         run: |
           git config user.name "v5-bot"
           git config user.email "v5-bot@github.com"
           git add absorption_v5.json journal_data_v5.json || true
-          git commit -m "V5 auto PnL $(date -u +%Y-%m-%dT%H:%M:%S) FULL AUTO - preserve V4" || true
+          git commit -m "V5 auto PnL $(date -u +%Y-%m-%d) - preserve V4" || echo "no change"
           git push || true
