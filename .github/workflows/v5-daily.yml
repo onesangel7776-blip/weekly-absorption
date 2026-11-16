@@ -1,14 +1,19 @@
 name: V5 MA Delta Daily
 on:
   schedule:
-    - cron: '0 22 * * 0-4'  # KST 월~금 07:00 = UTC 일~목 22:00 - 월요일 KST 포함
+    - cron: '0 22 * * 0-4'  # KST 월~금 07:00 = UTC 일~목 22:00
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   v5-calc:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -18,6 +23,6 @@ jobs:
         run: |
           git config user.name "ma-bot"
           git config user.email "ma-bot@github.com"
-          git add absorption_v5.json journal_data_v5.json || true
-          git commit -m "MA Bot Daily $(date -u +%Y-%m-%d) - KST Mon-Fri fix, maejip 3-stage TP" || echo "no change"
-          git push || true
+          git add absorption_v5.json journal_data_v5.json
+          git diff --staged --quiet || git commit -m "MA Bot Daily $(date -u +%Y-%m-%d) - KST Mon-Fri fix, maejip 3-stage TP"
+          git push
