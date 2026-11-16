@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "version": "V5 MA DELTA 3x3",
+    "assets_krw": 10849447,
+    "pnl_krw": 849447,
+    "family": [
+      "Father 1m",
+      "Son 2m",
+      "Daughter 3m"
+    ]
+  },
+  "positions": [
+    {
+      "week": "2026-11-15",
+      "ticker": "MGC (Micro Gold)",
+      "side": "LONG",
+      "entry": 61956.3,
+      "sl": 61700,
+      "tp": 62500,
+      "qty": 1,
+      "family": "Father",
+      "timeframe": "1m",
+      "score": 87,
+      "delta": "+4428 + 대목 +15133",
+      "location": "VAL D-100%",
+      "status": "OPEN"
+    },
+    {
+      "week": "2026-11-15",
+      "ticker": "IWM (M2K Micro Russell)",
+      "side": "LONG",
+      "entry": 278.05,
+      "sl": 275,
+      "tp": 285,
+      "qty": 2,
+      "family": "Son",
+      "timeframe": "2m",
+      "score": 84,
+      "delta": "+4509 + 대목 +2637",
+      "location": "W-75% VAL",
+      "status": "OPEN"
+    }
+  ],
+  "date": "2026-11-16",
+  "datetime_kst": "2026-11-16 20:51:03 KST"
+}

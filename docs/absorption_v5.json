@@ -1,0 +1,543 @@
+{
+  "date": "2026-11-16",
+  "datetime_kst": "2026-11-16 20:51:03 KST",
+  "run": "V5 MA DELTA - 매집 확정 (대목->매집) - 발산 vs 매집 구분 - KST DAILY - 75/25 2패널",
+  "naming": {
+    "balsan": "발산 +4428 = 하루 전체 Buy/Sell 차이 (전체 흐름) - 발산 롱 하늘 +12,400 / 발산 숏 귤색 -9,870",
+    "maejip": "매집 +15133 = 특정 가격에 세력이 15K 계약 매집 (개미 불가, 4.7톤 금) - 롱매집 초록 +15133 / 숏매집 노랑 -15133",
+    "cvd": "Bull CVD 롱매집 하늘 vs Bear CVD 숏매집 귤색 - 골크/데크 - FLIP -14,287->+7,632"
+  },
+  "filters": {
+    "daily_loss": 700,
+    "daily_profit": 500,
+    "prop_locked": true
+  },
+  "layout": "75% 메인 (MA10+VWAP 보라+일목 구름+매집 초록/노랑) / 25% 통합 (거래량 1.8x + Bull 하늘 + Bear 귤색 + Net 초록빨강 + 골크데크 + FLIP)",
+  "tickers": [
+    {
+      "ticker": "MGC",
+      "location": "D-100% VAL",
+      "balsan": "+4428",
+      "maejip": "+15133",
+      "maejip_raw": 15133,
+      "balsan_raw": 4428,
+      "threshold": 2000,
+      "score": 96,
+      "go": true,
+      "reason": "MA10 0.15% 수렴 + D-100% VAL + 매집 +15133 + 발산 +4428 + CVD -14287->+7632 + FLIP + 골크/데크",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "MNG",
+      "location": "D50% W0%",
+      "balsan": "+2478",
+      "maejip": "+6187",
+      "maejip_raw": 6187,
+      "balsan_raw": 2478,
+      "threshold": 1500,
+      "score": 44,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "SIL",
+      "location": "D50% W0%",
+      "balsan": "+670",
+      "maejip": "+6899",
+      "maejip_raw": 6899,
+      "balsan_raw": 670,
+      "threshold": 2500,
+      "score": 70,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "M2K",
+      "location": "D50% W0%",
+      "balsan": "+1836",
+      "maejip": "+3839",
+      "maejip_raw": 3839,
+      "balsan_raw": 1836,
+      "threshold": 6000,
+      "score": 69,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "MES",
+      "location": "D50% W0%",
+      "balsan": "+3124",
+      "maejip": "+6770",
+      "maejip_raw": 6770,
+      "balsan_raw": 3124,
+      "threshold": 5000,
+      "score": 69,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "MNQ",
+      "location": "W-75%",
+      "balsan": "+3593",
+      "maejip": "+1256",
+      "maejip_raw": 1256,
+      "balsan_raw": 3593,
+      "threshold": 8000,
+      "score": 67,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "MYM",
+      "location": "VAL",
+      "balsan": "+2137",
+      "maejip": "+2502",
+      "maejip_raw": 2502,
+      "balsan_raw": 2137,
+      "threshold": 4000,
+      "score": 33,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "MCL",
+      "location": "D-75%",
+      "balsan": "+700",
+      "maejip": "+5172",
+      "maejip_raw": 5172,
+      "balsan_raw": 700,
+      "threshold": 3000,
+      "score": 43,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "MBT",
+      "location": "POC",
+      "balsan": "+2798",
+      "maejip": "+4693",
+      "maejip_raw": 4693,
+      "balsan_raw": 2798,
+      "threshold": 2000,
+      "score": 72,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "MET",
+      "location": "D-100%",
+      "balsan": "+1091",
+      "maejip": "+6989",
+      "maejip_raw": 6989,
+      "balsan_raw": 1091,
+      "threshold": 2500,
+      "score": 67,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "M6E",
+      "location": "D-75%",
+      "balsan": "+986",
+      "maejip": "+3508",
+      "maejip_raw": 3508,
+      "balsan_raw": 986,
+      "threshold": 2000,
+      "score": 55,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "M6B",
+      "location": "VAL",
+      "balsan": "+860",
+      "maejip": "+4651",
+      "maejip_raw": 4651,
+      "balsan_raw": 860,
+      "threshold": 2000,
+      "score": 48,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "M6A",
+      "location": "VAL",
+      "balsan": "+3570",
+      "maejip": "+4520",
+      "maejip_raw": 4520,
+      "balsan_raw": 3570,
+      "threshold": 2000,
+      "score": 61,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "MJY",
+      "location": "W-100%",
+      "balsan": "+4719",
+      "maejip": "+5042",
+      "maejip_raw": 5042,
+      "balsan_raw": 4719,
+      "threshold": 2000,
+      "score": 60,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "MSF",
+      "location": "POC",
+      "balsan": "+438",
+      "maejip": "+5541",
+      "maejip_raw": 5541,
+      "balsan_raw": 438,
+      "threshold": 2000,
+      "score": 45,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "MHG",
+      "location": "D-50%",
+      "balsan": "+4006",
+      "maejip": "+4106",
+      "maejip_raw": 4106,
+      "balsan_raw": 4006,
+      "threshold": 2500,
+      "score": 36,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "M10Y",
+      "location": "W-75%",
+      "balsan": "+2960",
+      "maejip": "+3240",
+      "maejip_raw": 3240,
+      "balsan_raw": 2960,
+      "threshold": 2000,
+      "score": 47,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "M30Y",
+      "location": "D-75%",
+      "balsan": "+2933",
+      "maejip": "+4800",
+      "maejip_raw": 4800,
+      "balsan_raw": 2933,
+      "threshold": 2000,
+      "score": 47,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "M2KY",
+      "location": "D-100%",
+      "balsan": "+1422",
+      "maejip": "+7267",
+      "maejip_raw": 7267,
+      "balsan_raw": 1422,
+      "threshold": 6000,
+      "score": 66,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "MGCQ",
+      "location": "W-50%",
+      "balsan": "+3700",
+      "maejip": "+2693",
+      "maejip_raw": 2693,
+      "balsan_raw": 3700,
+      "threshold": 2000,
+      "score": 73,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    },
+    {
+      "ticker": "MNGQ",
+      "location": "VAL",
+      "balsan": "+4176",
+      "maejip": "+2466",
+      "maejip_raw": 2466,
+      "balsan_raw": 4176,
+      "threshold": 1500,
+      "score": 64,
+      "go": false,
+      "reason": "임계값 미달",
+      "prop": {
+        "judas": false,
+        "news": false,
+        "zombie": false,
+        "daily_loss": false,
+        "daily_profit": false,
+        "block_weekend": false
+      },
+      "tp": {
+        "tp1": "기준선 Kijun 50% 데크+본절",
+        "tp2": "선행1 SenkouA 25% 구름터치",
+        "tp3": "선행2 SenkouB 25% 이탈"
+      }
+    }
+  ]
+}
