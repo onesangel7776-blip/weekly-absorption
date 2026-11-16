@@ -274,6 +274,73 @@
           "last_check": "2026-11-10"
         }
       ]
+    },
+    "2026-11-16": {
+      "date": "2026-11-16",
+      "bias": "RISK_OFF",
+      "dxy": 103.41,
+      "trades": [
+        {
+          "ticker": "UNG",
+          "micro": "MNG (Micro NatGas)",
+          "side": "SHORT",
+          "score": 3.1,
+          "entry": 10.15,
+          "sl": 10.23,
+          "tp": 9.99,
+          "sl_pct": 0.8,
+          "tp_pct": 1.6,
+          "shares": 925,
+          "status": "CLOSED",
+          "current": 9.819999694824219,
+          "exit": 9.99,
+          "exit_date": "2026-11-16",
+          "exit_reason": "TP",
+          "pnl_krw": 199800.0,
+          "pnl_usd": 148.0,
+          "last_check": "2026-11-16"
+        },
+        {
+          "ticker": "XLF",
+          "micro": "MES proxy",
+          "side": "SHORT",
+          "score": 4.0,
+          "entry": 58.68,
+          "sl": 59.15,
+          "tp": 57.74,
+          "sl_pct": 0.8,
+          "tp_pct": 1.6,
+          "shares": 157,
+          "status": "OPEN",
+          "current": 58.18000030517578,
+          "exit": null,
+          "exit_date": null,
+          "exit_reason": null,
+          "pnl_krw": 0,
+          "pnl_usd": 0,
+          "last_check": "2026-11-16"
+        },
+        {
+          "ticker": "TLT",
+          "micro": "10Y Micro Treasury",
+          "side": "LONG",
+          "score": 6.7,
+          "entry": 79.38,
+          "sl": 78.74,
+          "tp": 80.65,
+          "sl_pct": 0.8,
+          "tp_pct": 1.6,
+          "shares": 115,
+          "status": "OPEN",
+          "current": 79.37999725341797,
+          "exit": null,
+          "exit_date": null,
+          "exit_reason": null,
+          "pnl_krw": 0,
+          "pnl_usd": 0,
+          "last_check": "2026-11-16"
+        }
+      ]
     }
   }
 }
