@@ -1,7 +1,7 @@
 name: V5 MA Delta Daily
 on:
   schedule:
-    - cron: '0 22 * * 1-5'
+    - cron: '0 22 * * 0-4'  # KST 월~금 07:00 = UTC 일~목 22:00 - 월요일 KST 포함
   workflow_dispatch:
 
 jobs:
@@ -12,12 +12,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Run MA Bot Scoring
+      - name: Run MA Bot Scoring (DATE daily, maejip rename, 3-stage TP)
         run: python scoring_engine_v5.py
-      - name: Commit MA Bot Daily
+      - name: Commit MA Bot Daily - KST Mon-Fri
         run: |
           git config user.name "ma-bot"
           git config user.email "ma-bot@github.com"
           git add absorption_v5.json journal_data_v5.json || true
-          git commit -m "MA Bot Daily $(date -u +%Y-%m-%d)" || true
+          git commit -m "MA Bot Daily $(date -u +%Y-%m-%d) - KST Mon-Fri fix, maejip 3-stage TP" || echo "no change"
           git push || true
