@@ -23,6 +23,10 @@ jobs:
         run: |
           git config user.name "ma-bot"
           git config user.email "ma-bot@github.com"
-          git add absorption_v5.json journal_data_v5.json
-          git diff --staged --quiet || git commit -m "MA Bot Daily $(date -u +%Y-%m-%d) - KST Mon-Fri fix, maejip 3-stage TP"
+          cp absorption_v5.json docs/absorption_v5.json || true
+          cp absorption_v5.json docs/v5-ma-delta/absorption_v5.json || true
+          cp journal_data_v5.json docs/v5-ma-delta/journal_data_v5.json || true
+          cp journal_data_v5.json docs/journal_data_v5.json || true
+          git add absorption_v5.json journal_data_v5.json docs/absorption_v5.json docs/v5-ma-delta/absorption_v5.json docs/v5-ma-delta/journal_data_v5.json docs/journal_data_v5.json
+          git diff --staged --quiet || git commit -m "MA Bot Daily $(date -u +%Y-%m-%d) - KST Mon-Fri fix, maejip 3-stage TP + docs copy"
           git push
