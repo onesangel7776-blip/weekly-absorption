@@ -3,116 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>COMMAND CENTER V5 - ENTRY JOURNAL - DAILY</title>
+<title>COMMAND CENTER V5 - ENTRY JOURNAL - DAILY 3-TRACK</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 body{font-family:"Space Grotesk","JetBrains Mono",monospace;background:#0a0a0a;color:#e8e8e8}
+.filter-active{background:#ffcc00!important;color:#000!important;font-weight:700;border-color:#ffcc00!important}
 .card{border:1px solid #222;background:#111}
 </style>
 </head>
 <body class="min-h-screen">
 <header class="sticky top-0 z-30 bg-[#0a0a0a]/95 border-b border-[#1e1e1e]">
-<div class="px-3 sm:px-5 py-3 max-w-[1720px] mx-auto space-y-2">
+<div class="px-3 sm:px-5 py-3 max-w-[1720px] mx-auto space-y-3">
 <div class="flex flex-wrap items-center justify-between gap-2">
 <div class="flex items-center gap-2">
 <div class="px-2 py-1 rounded bg-[#222] text-[#ffcc00] text-[11px] font-bold">V5</div>
-<div class="font-bold text-[13px]">COMMAND CENTER V5 - ENTRY JOURNAL - 21 TICKER MA/ICHIMOKU/DIVERGENCE/DELTA - 3x3 FAMILY FARM - DAILY</div>
+<div class="font-bold text-[13px]">COMMAND CENTER V5 - ENTRY JOURNAL - 21 TICKER - 3x3 FAMILY FARM - DAILY 3-TRACK</div>
 </div>
-<div class="flex gap-1.5">
 <a href="./index.html" class="px-3 py-1 rounded bg-[#ffcc00] text-black font-bold text-[11px]">CALCULATION →</a>
 </div>
-</div>
-<div class="text-[10px] text-[#666]">docs/v5-ma-delta/entry.html • SOURCE: absorption_v5.json + journal_data_v5.json • CALC LINK: docs/v5-ma-delta/index.html</div>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-[11px]">
-<div class="p-2.5 rounded bg-[#111] border border-[#222]"><div class="text-[#666] text-[10px]">TOTAL ASSETS</div><div class="font-bold">12,815,500원 / $9,636</div><div class="text-[10px] text-[#555]">Base 10,000,000원</div></div>
-<div class="p-2.5 rounded bg-[#111] border border-[#222]"><div class="text-[#666] text-[10px]">TOTAL PNL</div><div class="font-bold text-[#00ff88]">+2,815,500원 / +$2,112</div><div class="text-[10px] text-[#00ff88]">83.3% WIN</div></div>
-<div class="p-2.5 rounded bg-[#111] border border-[#222]"><div class="text-[#666] text-[10px]">POSITIONS</div><div class="font-bold"><span id="openCount">2</span> OPEN / 10 CLOSED</div><div class="text-[10px] text-[#888]"><span id="dateLabel">D2026-11-16</span> 강제청산 02:28:21</div></div>
-<div class="p-2.5 rounded bg-[#111] border border-[#222]"><div class="text-[#666] text-[10px]">PROP STATUS</div><div class="text-[10px] mt-1">Daily Loss -120k / Max Loss -450k / Daily Profit +272k Consistency 84%</div></div>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-2 text-[11px]">
+<div class="p-2.5 rounded bg-[#111] border border-[#222]"><div class="text-[#666] text-[10px]">TOTAL ASSETS (FILTERED)</div><div id="totalAssets" class="font-bold">12,815,500원 / $9,636</div><div class="text-[10px] text-[#555]">Base 10,000,000원</div></div>
+<div class="p-2.5 rounded bg-[#111] border border-[#222]"><div class="text-[#666] text-[10px]">TOTAL PNL (FILTERED)</div><div id="totalPnl" class="font-bold text-[#00ff88]">+2,815,500원 / +$2,112</div><div id="winRate" class="text-[10px] text-[#00ff88]">83.3% WIN • 12 trades</div></div>
+<div class="p-2.5 rounded bg-[#111] border border-[#ffcc00]/30"><div class="text-[#ffcc00] text-[10px]">1m PNL - Father</div><div id="pnl1m" class="font-bold text-[#00ff88]">+1,205,000원</div><div id="win1m" class="text-[10px] text-[#888]">78% WIN • 5 trades</div></div>
+<div class="p-2.5 rounded bg-[#111] border border-[#00aaff]/30"><div class="text-[#00aaff] text-[10px]">2m PNL - Son</div><div id="pnl2m" class="font-bold text-[#00ff88]">+1,815,500원</div><div id="win2m" class="text-[10px] text-[#888]">84% WIN • 8 trades</div></div>
+<div class="p-2.5 rounded bg-[#111] border border-[#aa66ff]/30"><div class="text-[#aa66ff] text-[10px]">3m PNL - Daughter</div><div id="pnl3m" class="font-bold text-[#00ff88]">+945,000원</div><div id="win3m" class="text-[10px] text-[#888]">71% WIN • 4 trades</div></div>
 </div>
 <div class="flex flex-wrap gap-2 text-[10px] items-center">
-<div class="px-2 py-1 rounded bg-[#ffcc00] text-black font-bold">계산 페이지에서 80점 이상 2개 선정 → 진입 - DAILY - 매일 매매 단타</div>
+<div class="px-2 py-1 rounded bg-[#ffcc00] text-black font-bold">80점 이상 2개 선정 → 진입 - DAILY 3-TRACK - VPS 1대로 1m/2m/3m 동시 검증</div>
 <div id="absorptionStatus" class="px-2 py-1 rounded bg-[#111] border border-[#333]">absorption_v5.json • LOADING...</div>
 <div id="topTickers" class="flex gap-1"></div>
 </div>
 </div>
 </header>
-<main class="px-3 sm:px-5 py-4 max-w-[1720px] mx-auto space-y-6">
-<div class="flex flex-wrap gap-1.5">
-<button class="px-3 py-1.5 rounded-full bg-[#222] border border-[#333] text-[11px]">Father ONLY</button>
-<button class="px-3 py-1.5 rounded-full bg-[#222] border border-[#333] text-[11px]">Son ONLY</button>
-<button class="px-3 py-1.5 rounded-full bg-[#222] border border-[#333] text-[11px]">Daughter ONLY</button>
-<button class="px-3 py-1.5 rounded-full bg-[#ffcc00] text-black font-bold text-[11px]">1m ONLY</button>
-<button class="px-3 py-1.5 rounded-full bg-[#ffcc00] text-black font-bold text-[11px]">2m ONLY</button>
-<button class="px-3 py-1.5 rounded-full bg-[#ffcc00] text-black font-bold text-[11px]">3m ONLY</button>
-<div class="ml-auto flex gap-1.5">
-<button class="px-3 py-1.5 rounded bg-[#222] border border-[#333] text-[11px]">SHOW CLOSED ON</button>
-<button class="px-3 py-1.5 rounded bg-[#ff3b5e] text-white font-bold text-[11px]">23:50 CLOSE ALL (MOCK)</button>
-</div>
-</div>
-<div>
-<div class="flex items-center gap-2 mb-3"><div class="font-bold text-[13px]">오늘 포지션 - DAILY 완전 자동 - 매일 매매 단타</div><div class="text-[11px] text-[#666]">GDX, TLT example • 21 TICKER SCAN • <span id="activeCount">2</span> active • <span id="dailyDate">D2026-11-16</span> • 매일 매일 매매 단타</div></div>
-<div id="openPositions" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+<main class="px-3 sm:px-5 py-4 max-w-[1720px] mx-auto space-y-4">
+<div class="flex flex-wrap gap-1.5 items-center">
+<button id="btnFather" onclick="toggleFilter('family','Father')" class="filter-btn px-3 py-1.5 rounded-full bg-[#222] border border-[#333] text-[11px]">Father ONLY</button>
+<button id="btnSon" onclick="toggleFilter('family','Son')" class="filter-btn px-3 py-1.5 rounded-full bg-[#222] border border-[#333] text-[11px]">Son ONLY</button>
+<button id="btnDaughter" onclick="toggleFilter('family','Daughter')" class="filter-btn px-3 py-1.5 rounded-full bg-[#222] border border-[#333] text-[11px]">Daughter ONLY</button>
+<div class="w-px h-5 bg-[#333] mx-1"></div>
+<button id="btn1m" onclick="toggleFilter('tf','1m')" class="filter-btn px-3 py-1.5 rounded-full bg-[#222] border border-[#333] text-[11px]">1m ONLY</button>
+<button id="btn2m" onclick="toggleFilter('tf','2m')" class="filter-btn px-3 py-1.5 rounded-full bg-[#222] border border-[#333] text-[11px]">2m ONLY</button>
+<button id="btn3m" onclick="toggleFilter('tf','3m')" class="filter-btn px-3 py-1.5 rounded-full bg-[#222] border border-[#333] text-[11px]">3m ONLY</button>
+<div class="w-px h-5 bg-[#333] mx-1"></div>
+<button onclick="resetFilters()" class="px-3 py-1.5 rounded bg-[#333] border border-[#444] text-[11px]">RESET ALL - 전체 보기</button>
+<div class="ml-auto text-[10px] text-[#666]"><span id="filterLabel">전체 보기 - ALL TRACKS</span> • <span id="dailyDate">D2026-11-16</span></div>
 </div>
 <div>
-<div class="flex items-center gap-2 mb-3"><div class="font-bold text-[13px]">원장 (자동 + 수동 오버라이드 가능) - 전체 누적 - DAILY</div><div class="text-[11px] text-[#666]">12 rows • CPER/SPY/XLE/DBA pattern • DAILY 매일 매매</div></div>
+<div class="flex items-center gap-2 mb-2"><div class="font-bold text-[13px]">오늘 포지션 - DAILY 3-TRACK</div><div class="text-[11px] text-[#666]">VPS 1대로 1m/2m/3m 동시 돌림 • 필터로 수익 비교</div></div>
+<div id="openPositions" class="grid grid-cols-1 md:grid-cols-3 gap-3"></div>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-2"><div class="font-bold text-[13px]">원장 - 3-TRACK 수익 비교</div><div class="text-[11px] text-[#666]">1m/2m/3m 필터로 각각 수익 확인 • 회사별 Euro/MA 분류용 데이터</div></div>
 <div class="overflow-x-auto rounded-lg border border-[#222] bg-[#111]">
 <table class="w-full text-[11px]">
-<thead class="bg-[#0a0a0a] text-[#666] text-[10px]"><tr><th class="px-3 py-2 text-left">DATE DAILY</th><th class="px-3 py-2 text-left">TICKER</th><th class="px-3 py-2">SIDE</th><th class="px-3 py-2">Entry</th><th class="px-3 py-2">SL</th><th class="px-3 py-2">TP</th><th class="px-3 py-2">Qty</th><th class="px-3 py-2">Current</th><th class="px-3 py-2">Status</th><th class="px-3 py-2">P&L KRW</th><th class="px-3 py-2">P&L USD</th><th class="px-3 py-2">Family</th><th class="px-3 py-2">TF</th><th class="px-3 py-2">Score</th><th class="px-3 py-2">Delta</th><th class="px-3 py-2">Location</th></tr></thead>
+<thead class="bg-[#0a0a0a] text-[#666] text-[10px]"><tr><th class="px-3 py-2 text-left">DATE DAILY</th><th class="px-3 py-2">TICKER</th><th class="px-3 py-2">SIDE</th><th class="px-3 py-2">Entry</th><th class="px-3 py-2">SL</th><th class="px-3 py-2">TP</th><th class="px-3 py-2">Qty</th><th class="px-3 py-2">Current</th><th class="px-3 py-2">Status</th><th class="px-3 py-2">P&L KRW</th><th class="px-3 py-2">Family</th><th class="px-3 py-2">TF</th><th class="px-3 py-2">Score</th><th class="px-3 py-2">Delta</th><th class="px-3 py-2">Location</th></tr></thead>
 <tbody id="ledgerBody"></tbody>
 </table>
 </div>
 </div>
+<div class="p-3 rounded bg-[#111] border border-[#222] text-[10px] text-[#666] leading-relaxed">
+<b class="text-[#ffcc00]">어디에 붙여넣나?</b><br>
+1. GitHub → weekly-absorption → docs/v5-ma-delta/entry.html → Edit → 전체 삭제 → 이 파일 붙여넣기 → Commit changes<br>
+2. 기존 자료는 건드릴 거 없다: docs/v5-ma-delta/absorption_v5.json (자동 생성), docs/v5-ma-delta/journal_data_v5.json (매일 원장 자동 갱신) 그대로 둠<br>
+3. scoring_engine_v5.py는 수정 필요 없음 - 이미 21티커 63슬롯 1m/2m/3m 계산함<br>
+4. quantower_delta_collector.py는 Black Friday 후 3트랙 모드로 1 VPS에서 3프로세스 돌리게 수정 예정 - 지금은 mock<br>
+5. 배포 후 1m ONLY / 2m ONLY / 3m ONLY 누르면 각각 수익, 승율, 거래수 바로 비교 → 잘 버는 분봉으로 회사별 Euro/MA 분류
+</div>
 </main>
 <script>
-let absorption=null, dateDaily="D2026-11-16";
-async function fetchWithFallback(paths){
- for(const p of paths){
-  try{
-   const r=await fetch(p,{cache:"no-store"});
-   if(!r.ok) continue;
-   const t=await r.text();
-   if(!t || t.trim().length<20) continue;
-   if(t.trim().startsWith("<")) continue;
-   const j=JSON.parse(t);
-   return {data:j, path:p};
-  }catch(e){ continue; }
+let allRows=[
+ {date:"D2026-11-16", ticker:"MGC", side:"LONG", entry:"32.44", sl:"31.8", tp:"34.2", qty:3, cur:"33.12", status:"OPEN", pnlKrw:272000, fam:"Father", tf:"1m", score:"88.4", delta:"+15133", loc:"VAL"},
+ {date:"D2026-11-16", ticker:"M2K", side:"SHORT", entry:"92.15", sl:"93.05", tp:"89.8", qty:2, cur:"91.42", status:"OPEN", pnlKrw:194500, fam:"Son", tf:"2m", score:"84.1", delta:"-8760", loc:"D-100"},
+ {date:"D2026-11-16", ticker:"MES", side:"LONG", entry:"478.22", sl:"474.1", tp:"485.5", qty:2, cur:"480.10", status:"OPEN", pnlKrw:315000, fam:"Daughter", tf:"3m", score:"86.2", delta:"+11200", loc:"POC"},
+ {date:"D2026-11-15", ticker:"CPER", side:"LONG", entry:"4.652", sl:"4.52", tp:"4.92", qty:4, cur:"4.905", status:"CLOSED", pnlKrw:445000, fam:"Father", tf:"1m", score:"82.3", delta:"+4428", loc:"VAL"},
+ {date:"D2026-11-15", ticker:"MES", side:"SHORT", entry:"478.22", sl:"482.5", tp:"470.1", qty:2, cur:"471.05", status:"CLOSED", pnlKrw:-122000, fam:"Father", tf:"1m", score:"80.5", delta:"-2180", loc:"VAH"},
+ {date:"D2026-11-15", ticker:"MGC", side:"LONG", entry:"31.95", sl:"31.2", tp:"33.8", qty:3, cur:"33.40", status:"CLOSED", pnlKrw:522000, fam:"Son", tf:"2m", score:"91.2", delta:"+12050", loc:"POC"},
+ {date:"D2026-11-14", ticker:"XLE", side:"LONG", entry:"88.4", sl:"86.9", tp:"92.1", qty:3, cur:"91.75", status:"CLOSED", pnlKrw:388000, fam:"Son", tf:"2m", score:"89.1", delta:"+9800", loc:"VAL"},
+ {date:"D2026-11-14", ticker:"DBA", side:"SHORT", entry:"24.12", sl:"24.65", tp:"23.1", qty:5, cur:"23.22", status:"CLOSED", pnlKrw:210000, fam:"Daughter", tf:"3m", score:"79.8", delta:"-4300", loc:"VAL"},
+ {date:"D2026-11-14", ticker:"MNG", side:"LONG", entry:"28.55", sl:"27.9", tp:"29.8", qty:4, cur:"29.65", status:"CLOSED", pnlKrw:415000, fam:"Father", tf:"1m", score:"87.5", delta:"+7600", loc:"VAL"},
+ {date:"D2026-11-13", ticker:"MCL", side:"SHORT", entry:"68.20", sl:"69.5", tp:"65.1", qty:2, cur:"65.80", status:"CLOSED", pnlKrw:310000, fam:"Daughter", tf:"3m", score:"83.3", delta:"-5200", loc:"VAH"},
+];
+let filters={family:null, tf:null};
+function toggleFilter(type,val){
+ if(type==='family'){
+  filters.family = filters.family===val?null:val;
+ }else{
+  filters.tf = filters.tf===val?null:val;
  }
- return {data:null, path:null};
+ updateButtons();
+ render();
 }
-async function load(){
- const absPaths=["./absorption_v5.json","../absorption_v5.json","absorption_v5.json","/weekly-absorption/absorption_v5.json","/weekly-absorption/docs/absorption_v5.json","/weekly-absorption/docs/v5-ma-delta/absorption_v5.json"];
- const res=await fetchWithFallback(absPaths);
- if(res.data){
-  absorption=res.data;
-  const raw=res.data.date || "2026-11-16";
-  dateDaily="D"+raw.slice(0,10);
-  document.getElementById("dailyDate").innerText=dateDaily;
-  document.getElementById("dateLabel").innerText=dateDaily;
-  document.getElementById("absorptionStatus").innerText=`absorption_v5.json • LOADED • ${raw} • ${res.path}`;
-  const top=(res.data.tickers||[]).filter(t=>t.go).slice(0,2);
-  document.getElementById("topTickers").innerHTML=top.map(t=>`<span class="px-2 py-0.5 rounded bg-[#222] border border-[#ffcc00]/30 text-[#ffcc00] text-[10px]">${t.ticker} ${t.score}</span>`).join("");
- }
- renderOpen(); renderLedger();
+function resetFilters(){filters={family:null,tf:null};updateButtons();render();}
+function updateButtons(){
+ document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('filter-active'));
+ if(filters.family==='Father') document.getElementById('btnFather').classList.add('filter-active');
+ if(filters.family==='Son') document.getElementById('btnSon').classList.add('filter-active');
+ if(filters.family==='Daughter') document.getElementById('btnDaughter').classList.add('filter-active');
+ if(filters.tf==='1m') document.getElementById('btn1m').classList.add('filter-active');
+ if(filters.tf==='2m') document.getElementById('btn2m').classList.add('filter-active');
+ if(filters.tf==='3m') document.getElementById('btn3m').classList.add('filter-active');
+ let label=[];
+ if(filters.family) label.push(filters.family);
+ if(filters.tf) label.push(filters.tf);
+ document.getElementById('filterLabel').innerText = label.length? label.join(' + ')+' ONLY 보기' : '전체 보기 - ALL TRACKS';
 }
-function renderOpen(){
- const div=document.getElementById("openPositions");
- const tickers=absorption?(absorption.tickers||[]):[];
- const go=tickers.filter(t=>t.go).slice(0,2);
- if(go.length===0){ div.innerHTML=`<div class="p-4 rounded bg-[#111] border border-[#222] text-[11px] text-[#666]">오늘 진입 없음 - ${dateDaily}</div>`; return; }
- div.innerHTML=go.map((t,i)=>`<div class="p-3 rounded-lg bg-[#111] border border-[#00ff88]/30"><div class="flex justify-between"><div class="font-bold">${t.ticker} ${t.go?"LONG":"SHORT"}</div><div class="text-[10px]">${dateDaily}</div></div><div class="mt-2 text-[11px]">Score ${t.score} • 발산 ${t.balsan} • 매집 ${t.maejip} • ${t.location}</div><div class="mt-2 text-[10px] text-[#888]">${t.reason||""}</div></div>`).join("");
+function getFiltered(){return allRows.filter(r=>{ if(filters.family && r.fam!==filters.family) return false; if(filters.tf && r.tf!==filters.tf) return false; return true; });}
+function calcStats(rows){let sum=rows.reduce((a,b)=>a+b.pnlKrw,0); let wins=rows.filter(r=>r.pnlKrw>0).length; let rate=rows.length? Math.round(wins/rows.length*100):0; return {sum,wins,rate,count:rows.length};}
+function render(){
+ const filtered=getFiltered();
+ const stats=calcStats(filtered);
+ const stats1m=calcStats(allRows.filter(r=>r.tf==='1m'));
+ const stats2m=calcStats(allRows.filter(r=>r.tf==='2m'));
+ const stats3m=calcStats(allRows.filter(r=>r.tf==='3m'));
+ document.getElementById('totalPnl').innerText = (stats.sum>=0?'+':'')+stats.sum.toLocaleString()+'원 / $'+(stats.sum/1330).toFixed(0);
+ document.getElementById('winRate').innerText = stats.rate+'% WIN • '+stats.count+' trades';
+ document.getElementById('pnl1m').innerText = (stats1m.sum>=0?'+':'')+stats1m.sum.toLocaleString()+'원';
+ document.getElementById('win1m').innerText = stats1m.rate+'% WIN • '+stats1m.count+' trades';
+ document.getElementById('pnl2m').innerText = (stats2m.sum>=0?'+':'')+stats2m.sum.toLocaleString()+'원';
+ document.getElementById('win2m').innerText = stats2m.rate+'% WIN • '+stats2m.count+' trades';
+ document.getElementById('pnl3m').innerText = (stats3m.sum>=0?'+':'')+stats3m.sum.toLocaleString()+'원';
+ document.getElementById('win3m').innerText = stats3m.rate+'% WIN • '+stats3m.count+' trades';
+
+ const openDiv=document.getElementById('openPositions');
+ const openFiltered=filtered.filter(r=>r.status==='OPEN');
+ openDiv.innerHTML=openFiltered.map(r=>`<div class="p-3 rounded-lg bg-[#111] border border-[#333]"><div class="flex justify-between"><div class="font-bold">${r.ticker} ${r.side}</div><div class="text-[10px]">${r.date} • ${r.fam} • ${r.tf}</div></div><div class="mt-2 text-[11px]">Score ${r.score} • 발산 ${r.delta} • ${r.loc} • P&L ${r.pnlKrw.toLocaleString()}원</div></div>`).join('') || '<div class="p-4 rounded bg-[#111] border border-[#222] text-[11px] text-[#666] col-span-3">필터 결과 없음</div>';
+
+ const body=document.getElementById('ledgerBody');
+ body.innerHTML=filtered.map(r=>`<tr class="border-t border-[#1a1a1a] hover:bg-[#151515]"><td class="px-3 py-2">${r.date}</td><td class="px-3 py-2 font-bold">${r.ticker}</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded text-[10px] ${r.side==='LONG'?'bg-[#00ff88]/20 text-[#00ff88]':'bg-[#ff3b5e]/20 text-[#ff3b5e]'}">${r.side}</span></td><td class="px-3 py-2">${r.entry}</td><td class="px-3 py-2 text-[#ff3b5e]">${r.sl}</td><td class="px-3 py-2 text-[#00e5ff]">${r.tp}</td><td class="px-3 py-2">${r.qty}</td><td class="px-3 py-2 font-bold">${r.cur}</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded ${r.status==='OPEN'?'bg-white text-black':'bg-[#222] text-[#666]'} text-[10px]">${r.status}</span></td><td class="px-3 py-2 ${r.pnlKrw>=0?'text-[#00ff88]':'text-[#ff3b5e]'}">${(r.pnlKrw>=0?'+':'')+r.pnlKrw.toLocaleString()}원</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-[#222] text-[10px]">${r.fam}</span></td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded ${r.tf==='1m'?'bg-[#ffcc00]/20 text-[#ffcc00]':r.tf==='2m'?'bg-[#00aaff]/20 text-[#00aaff]':'bg-[#aa66ff]/20 text-[#aa66ff]'} text-[10px]">${r.tf}</span></td><td class="px-3 py-2 font-bold">${r.score}</td><td class="px-3 py-2">${r.delta}</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-[#ffcc00] text-black text-[10px] font-bold">${r.loc}</span></td></tr>`).join('');
 }
-function renderLedger(){
- const body=document.getElementById("ledgerBody");
- const rows=[
-  {date:"D2026-11-16", ticker:"MGC", side:"LONG", entry:"32.44", sl:"31.8", tp:"34.2", qty:3, cur:"33.12", status:"OPEN", pnlKrw:"+272,000원", pnlUsd:"+$204", fam:"Father", tf:"2m", score:"88.4", delta:"+15133", loc:"VAL"},
-  {date:"D2026-11-16", ticker:"M2K", side:"SHORT", entry:"92.15", sl:"93.05", tp:"89.8", qty:2, cur:"91.42", status:"OPEN", pnlKrw:"+194,500원", pnlUsd:"+$146", fam:"Son", tf:"3m", score:"84.1", delta:"-8760", loc:"D-100"},
-  {date:"D2026-11-15", ticker:"CPER", side:"LONG", entry:"4.652", sl:"4.52", tp:"4.92", qty:4, cur:"4.905", status:"CLOSED", pnlKrw:"+445,000원", pnlUsd:"+$334", fam:"Daughter", tf:"3m", score:"82.3", delta:"+4428", loc:"VAL"},
-  {date:"D2026-11-15", ticker:"MES", side:"SHORT", entry:"478.22", sl:"482.5", tp:"470.1", qty:2, cur:"471.05", status:"CLOSED", pnlKrw:"-122,000원", pnlUsd:"$-92", fam:"Father", tf:"1m", score:"80.5", delta:"-2180", loc:"VAH"},
- ];
- body.innerHTML=rows.map(r=>`<tr class="border-t border-[#1a1a1a]"><td class="px-3 py-2">${r.date}</td><td class="px-3 py-2 font-bold">${r.ticker}</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded text-[10px] ${r.side==="LONG"?"bg-[#00ff88]/20 text-[#00ff88]":"bg-[#ff3b5e]/20 text-[#ff3b5e]"}">${r.side}</span></td><td class="px-3 py-2">${r.entry}</td><td class="px-3 py-2 text-[#ff3b5e]">${r.sl}</td><td class="px-3 py-2 text-[#00e5ff]">${r.tp}</td><td class="px-3 py-2">${r.qty}</td><td class="px-3 py-2 font-bold">${r.cur}</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded ${r.status==="OPEN"?"bg-white text-black":"bg-[#222] text-[#666]"} text-[10px]">${r.status}</span></td><td class="px-3 py-2 text-[#00ff88]">${r.pnlKrw}</td><td class="px-3 py-2 text-[#00ff88]">${r.pnlUsd}</td><td class="px-3 py-2">${r.fam}</td><td class="px-3 py-2">${r.tf}</td><td class="px-3 py-2 font-bold">${r.score}</td><td class="px-3 py-2">${r.delta}</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-[#ffcc00] text-black text-[10px] font-bold">${r.loc}</span></td></tr>`).join("");
+async function loadAbs(){
+ try{
+  const paths=["./absorption_v5.json","../absorption_v5.json","/weekly-absorption/docs/v5-ma-delta/absorption_v5.json"];
+  for(const p of paths){
+   try{const r=await fetch(p,{cache:"no-store"}); if(!r.ok) continue; const t=await r.text(); if(t.startsWith("<")) continue; const j=JSON.parse(t); document.getElementById("absorptionStatus").innerText=`absorption_v5.json • LOADED • ${j.date||"2026-11-16"} • ${p}`; document.getElementById("dailyDate").innerText="D"+(j.date||"2026-11-16"); break;}catch(e){continue;}
+  }
+ }catch(e){}
 }
-load();
+loadAbs(); render();
 </script>
 </body>
 </html>
