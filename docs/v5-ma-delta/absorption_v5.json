@@ -1,543 +1,911 @@
 {
   "date": "2026-11-16",
-  "datetime_kst": "2026-11-16 20:51:03 KST",
-  "run": "V5 MA DELTA - 매집 확정 (대목->매집) - 발산 vs 매집 구분 - KST DAILY - 75/25 2패널",
-  "naming": {
-    "balsan": "발산 +4428 = 하루 전체 Buy/Sell 차이 (전체 흐름) - 발산 롱 하늘 +12,400 / 발산 숏 귤색 -9,870",
-    "maejip": "매집 +15133 = 특정 가격에 세력이 15K 계약 매집 (개미 불가, 4.7톤 금) - 롱매집 초록 +15133 / 숏매집 노랑 -15133",
-    "cvd": "Bull CVD 롱매집 하늘 vs Bear CVD 숏매집 귤색 - 골크/데크 - FLIP -14,287->+7,632"
-  },
-  "filters": {
-    "daily_loss": 700,
-    "daily_profit": 500,
-    "prop_locked": true
-  },
-  "layout": "75% 메인 (MA10+VWAP 보라+일목 구름+매집 초록/노랑) / 25% 통합 (거래량 1.8x + Bull 하늘 + Bear 귤색 + Net 초록빨강 + 골크데크 + FLIP)",
+  "datetime_kst": "2026-11-16T22:59:48.690904+09:00",
+  "datetime_utc": "2026-11-16T13:59:48.691578+00:00",
   "tickers": [
     {
-      "ticker": "MGC",
-      "location": "D-100% VAL",
-      "balsan": "+4428",
-      "maejip": "+15133",
-      "maejip_raw": 15133,
-      "balsan_raw": 4428,
-      "threshold": 2000,
-      "score": 96,
-      "go": true,
-      "reason": "MA10 0.15% 수렴 + D-100% VAL + 매집 +15133 + 발산 +4428 + CVD -14287->+7632 + FLIP + 골크/데크",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
-    },
-    {
       "ticker": "MNG",
-      "location": "D50% W0%",
-      "balsan": "+2478",
-      "maejip": "+6187",
-      "maejip_raw": 6187,
-      "balsan_raw": 2478,
+      "score": 100,
+      "go": true,
+      "balsan": -6307,
+      "maejip": -5617,
+      "maejip_raw": -6307,
+      "delta": -6307,
+      "location": "D-100",
+      "cvd": -6307,
+      "flip": "-10538→12665",
+      "reason": "매집 확정 DAILY",
       "threshold": 1500,
-      "score": 44,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
-    },
-    {
-      "ticker": "SIL",
-      "location": "D50% W0%",
-      "balsan": "+670",
-      "maejip": "+6899",
-      "maejip_raw": 6899,
-      "balsan_raw": 670,
-      "threshold": 2500,
-      "score": 70,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
-    },
-    {
-      "ticker": "M2K",
-      "location": "D50% W0%",
-      "balsan": "+1836",
-      "maejip": "+3839",
-      "maejip_raw": 3839,
-      "balsan_raw": 1836,
-      "threshold": 6000,
-      "score": 69,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
     },
     {
       "ticker": "MES",
-      "location": "D50% W0%",
-      "balsan": "+3124",
-      "maejip": "+6770",
-      "maejip_raw": 6770,
-      "balsan_raw": 3124,
+      "score": 100,
+      "go": true,
+      "balsan": -571,
+      "maejip": -18721,
+      "maejip_raw": -571,
+      "delta": -571,
+      "location": "VAL",
+      "cvd": -571,
+      "flip": "-8063→10110",
+      "reason": "매집 확정 DAILY",
       "threshold": 5000,
-      "score": 69,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
     },
     {
       "ticker": "MNQ",
-      "location": "W-75%",
-      "balsan": "+3593",
-      "maejip": "+1256",
-      "maejip_raw": 1256,
-      "balsan_raw": 3593,
+      "score": 100,
+      "go": true,
+      "balsan": 8828,
+      "maejip": 13880,
+      "maejip_raw": 8828,
+      "delta": 8828,
+      "location": "D-100",
+      "cvd": 8828,
+      "flip": "-14321→13909",
+      "reason": "매집 확정 DAILY",
       "threshold": 8000,
-      "score": 67,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
-    },
-    {
-      "ticker": "MYM",
-      "location": "VAL",
-      "balsan": "+2137",
-      "maejip": "+2502",
-      "maejip_raw": 2502,
-      "balsan_raw": 2137,
-      "threshold": 4000,
-      "score": 33,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
     },
     {
       "ticker": "MCL",
-      "location": "D-75%",
-      "balsan": "+700",
-      "maejip": "+5172",
-      "maejip_raw": 5172,
-      "balsan_raw": 700,
+      "score": 100,
+      "go": true,
+      "balsan": -4680,
+      "maejip": -4416,
+      "maejip_raw": -4680,
+      "delta": -4680,
+      "location": "VAL",
+      "cvd": -4680,
+      "flip": "-10080→12460",
+      "reason": "매집 확정 DAILY",
       "threshold": 3000,
-      "score": 43,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
-    },
-    {
-      "ticker": "MBT",
-      "location": "POC",
-      "balsan": "+2798",
-      "maejip": "+4693",
-      "maejip_raw": 4693,
-      "balsan_raw": 2798,
-      "threshold": 2000,
-      "score": 72,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
     },
     {
       "ticker": "MET",
-      "location": "D-100%",
-      "balsan": "+1091",
-      "maejip": "+6989",
-      "maejip_raw": 6989,
-      "balsan_raw": 1091,
+      "score": 100,
+      "go": true,
+      "balsan": -5093,
+      "maejip": -8557,
+      "maejip_raw": -5093,
+      "delta": -5093,
+      "location": "D-100",
+      "cvd": -5093,
+      "flip": "-12844→12281",
+      "reason": "매집 확정 DAILY",
       "threshold": 2500,
-      "score": 67,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
     },
     {
       "ticker": "M6E",
-      "location": "D-75%",
-      "balsan": "+986",
-      "maejip": "+3508",
-      "maejip_raw": 3508,
-      "balsan_raw": 986,
+      "score": 100,
+      "go": true,
+      "balsan": 8305,
+      "maejip": 5895,
+      "maejip_raw": 8305,
+      "delta": 8305,
+      "location": "D-100",
+      "cvd": 8305,
+      "flip": "-5906→9097",
+      "reason": "매집 확정 DAILY",
       "threshold": 2000,
-      "score": 55,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
     },
     {
       "ticker": "M6B",
-      "location": "VAL",
-      "balsan": "+860",
-      "maejip": "+4651",
-      "maejip_raw": 4651,
-      "balsan_raw": 860,
+      "score": 100,
+      "go": true,
+      "balsan": -1124,
+      "maejip": -4122,
+      "maejip_raw": -1124,
+      "delta": -1124,
+      "location": "D+100",
+      "cvd": -1124,
+      "flip": "-11888→9684",
+      "reason": "매집 확정 DAILY",
       "threshold": 2000,
-      "score": 48,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
     },
     {
-      "ticker": "M6A",
+      "ticker": "MGA",
+      "score": 100,
+      "go": true,
+      "balsan": -8765,
+      "maejip": -4078,
+      "maejip_raw": -8765,
+      "delta": -8765,
       "location": "VAL",
-      "balsan": "+3570",
-      "maejip": "+4520",
-      "maejip_raw": 4520,
-      "balsan_raw": 3570,
+      "cvd": -8765,
+      "flip": "-8092→11313",
+      "reason": "매집 확정 DAILY",
       "threshold": 2000,
-      "score": 61,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
     },
     {
       "ticker": "MJY",
-      "location": "W-100%",
-      "balsan": "+4719",
-      "maejip": "+5042",
-      "maejip_raw": 5042,
-      "balsan_raw": 4719,
+      "score": 100,
+      "go": true,
+      "balsan": -7517,
+      "maejip": -4500,
+      "maejip_raw": -7517,
+      "delta": -7517,
+      "location": "VAH",
+      "cvd": -7517,
+      "flip": "-6829→5734",
+      "reason": "매집 확정 DAILY",
       "threshold": 2000,
-      "score": 60,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
     },
     {
       "ticker": "MSF",
-      "location": "POC",
-      "balsan": "+438",
-      "maejip": "+5541",
-      "maejip_raw": 5541,
-      "balsan_raw": 438,
+      "score": 100,
+      "go": true,
+      "balsan": -2091,
+      "maejip": -5707,
+      "maejip_raw": -2091,
+      "delta": -2091,
+      "location": "W-100",
+      "cvd": -2091,
+      "flip": "-10932→13269",
+      "reason": "매집 확정 DAILY",
       "threshold": 2000,
-      "score": 45,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
     },
     {
-      "ticker": "MHG",
-      "location": "D-50%",
-      "balsan": "+4006",
-      "maejip": "+4106",
-      "maejip_raw": 4106,
-      "balsan_raw": 4006,
-      "threshold": 2500,
-      "score": 36,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
-    },
-    {
-      "ticker": "M10Y",
-      "location": "W-75%",
-      "balsan": "+2960",
-      "maejip": "+3240",
-      "maejip_raw": 3240,
-      "balsan_raw": 2960,
-      "threshold": 2000,
-      "score": 47,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
-    },
-    {
-      "ticker": "M30Y",
-      "location": "D-75%",
-      "balsan": "+2933",
-      "maejip": "+4800",
-      "maejip_raw": 4800,
-      "balsan_raw": 2933,
-      "threshold": 2000,
-      "score": 47,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
-    },
-    {
-      "ticker": "M2KY",
-      "location": "D-100%",
-      "balsan": "+1422",
-      "maejip": "+7267",
-      "maejip_raw": 7267,
-      "balsan_raw": 1422,
-      "threshold": 6000,
-      "score": 66,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
-    },
-    {
-      "ticker": "MGCQ",
-      "location": "W-50%",
-      "balsan": "+3700",
-      "maejip": "+2693",
-      "maejip_raw": 2693,
-      "balsan_raw": 3700,
-      "threshold": 2000,
-      "score": 73,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
-      }
-    },
-    {
-      "ticker": "MNGQ",
-      "location": "VAL",
-      "balsan": "+4176",
-      "maejip": "+2466",
-      "maejip_raw": 2466,
-      "balsan_raw": 4176,
+      "ticker": "MING",
+      "score": 100,
+      "go": true,
+      "balsan": -7168,
+      "maejip": -2775,
+      "maejip_raw": -7168,
+      "delta": -7168,
+      "location": "VAH",
+      "cvd": -7168,
+      "flip": "-12613→13101",
+      "reason": "매집 확정 DAILY",
       "threshold": 1500,
-      "score": 64,
-      "go": false,
-      "reason": "임계값 미달",
-      "prop": {
-        "judas": false,
-        "news": false,
-        "zombie": false,
-        "daily_loss": false,
-        "daily_profit": false,
-        "block_weekend": false
-      },
-      "tp": {
-        "tp1": "기준선 Kijun 50% 데크+본절",
-        "tp2": "선행1 SenkouA 25% 구름터치",
-        "tp3": "선행2 SenkouB 25% 이탈"
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
+    },
+    {
+      "ticker": "SIL",
+      "score": 100,
+      "go": true,
+      "balsan": -7115,
+      "maejip": -3968,
+      "maejip_raw": -7115,
+      "delta": -7115,
+      "location": "D-100",
+      "cvd": -7115,
+      "flip": "-9439→7689",
+      "reason": "매집 확정 DAILY",
+      "threshold": 2500,
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
+    },
+    {
+      "ticker": "CPER",
+      "score": 100,
+      "go": true,
+      "balsan": 2826,
+      "maejip": 12939,
+      "maejip_raw": 2826,
+      "delta": 2826,
+      "location": "POC",
+      "cvd": 2826,
+      "flip": "-5860→5907",
+      "reason": "매집 확정 DAILY",
+      "threshold": 4428,
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
+    },
+    {
+      "ticker": "XLE",
+      "score": 100,
+      "go": true,
+      "balsan": 6977,
+      "maejip": 15048,
+      "maejip_raw": 6977,
+      "delta": 6977,
+      "location": "W-100",
+      "cvd": 6977,
+      "flip": "-7348→11873",
+      "reason": "매집 확정 DAILY",
+      "threshold": 5000,
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
+    },
+    {
+      "ticker": "DBA",
+      "score": 100,
+      "go": true,
+      "balsan": 1313,
+      "maejip": 3178,
+      "maejip_raw": 1313,
+      "delta": 1313,
+      "location": "D-100",
+      "cvd": 1313,
+      "flip": "-12602→12541",
+      "reason": "매집 확정 DAILY",
+      "threshold": 2000,
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
+    },
+    {
+      "ticker": "MCL",
+      "score": 100,
+      "go": true,
+      "balsan": 2188,
+      "maejip": 10497,
+      "maejip_raw": 2188,
+      "delta": 2188,
+      "location": "W-100",
+      "cvd": 2188,
+      "flip": "-6200→9839",
+      "reason": "매집 확정 DAILY",
+      "threshold": 3000,
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
+    },
+    {
+      "ticker": "MYM",
+      "score": 100,
+      "go": true,
+      "balsan": 6437,
+      "maejip": 10220,
+      "maejip_raw": 6437,
+      "delta": 6437,
+      "location": "POC",
+      "cvd": 6437,
+      "flip": "-8694→10171",
+      "reason": "매집 확정 DAILY",
+      "threshold": 4000,
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
+    },
+    {
+      "ticker": "MBT",
+      "score": 97.8,
+      "go": true,
+      "balsan": 6421,
+      "maejip": 2330,
+      "maejip_raw": 6421,
+      "delta": 6421,
+      "location": "VAH",
+      "cvd": 6421,
+      "flip": "-14946→6181",
+      "reason": "매집 확정 DAILY",
+      "threshold": 2000,
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
+    },
+    {
+      "ticker": "M2K",
+      "score": 86.9,
+      "go": true,
+      "balsan": -1550,
+      "maejip": -6475,
+      "maejip_raw": -1550,
+      "delta": -1550,
+      "location": "POC",
+      "cvd": -1550,
+      "flip": "-7504→8296",
+      "reason": "매집 확정 DAILY",
+      "threshold": 6000,
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
+    },
+    {
+      "ticker": "MGC",
+      "score": 85.5,
+      "go": true,
+      "balsan": -523,
+      "maejip": -2078,
+      "maejip_raw": -523,
+      "delta": -523,
+      "location": "VAL",
+      "cvd": -523,
+      "flip": "-14199→5398",
+      "reason": "매집 확정 DAILY",
+      "threshold": 2000,
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
+    },
+    {
+      "ticker": "MYM",
+      "score": 85.1,
+      "go": true,
+      "balsan": -5962,
+      "maejip": -4446,
+      "maejip_raw": -5962,
+      "delta": -5962,
+      "location": "POC",
+      "cvd": -5962,
+      "flip": "-9103→5641",
+      "reason": "매집 확정 DAILY",
+      "threshold": 4000,
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
+    }
+  ],
+  "top2_today": [
+    {
+      "ticker": "MNG",
+      "score": 100,
+      "go": true,
+      "balsan": -6307,
+      "maejip": -5617,
+      "maejip_raw": -6307,
+      "delta": -6307,
+      "location": "D-100",
+      "cvd": -6307,
+      "flip": "-10538→12665",
+      "reason": "매집 확정 DAILY",
+      "threshold": 1500,
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
+    },
+    {
+      "ticker": "MES",
+      "score": 100,
+      "go": true,
+      "balsan": -571,
+      "maejip": -18721,
+      "maejip_raw": -571,
+      "delta": -571,
+      "location": "VAL",
+      "cvd": -571,
+      "flip": "-8063→10110",
+      "reason": "매집 확정 DAILY",
+      "threshold": 5000,
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0
+    }
+  ],
+  "same_ticker_across_tf": true,
+  "prop_per_family": {
+    "Father": {
+      "tf": "1m",
+      "capital": 50000,
+      "daily_loss": 700,
+      "daily_profit": 500,
+      "color": "#ffcc00",
+      "owner": "나"
+    },
+    "Son": {
+      "tf": "2m",
+      "capital": 50000,
+      "daily_loss": 700,
+      "daily_profit": 500,
+      "color": "#00aaff",
+      "owner": "아들"
+    },
+    "Daughter": {
+      "tf": "3m",
+      "capital": 50000,
+      "daily_loss": 700,
+      "daily_profit": 500,
+      "color": "#aa66ff",
+      "owner": "딸"
+    }
+  },
+  "best_tf_per_ticker": {
+    "MGC": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "MNG": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "M2K": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "MES": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "MNQ": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "MYM": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "MCL": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "MBT": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "MET": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "M6E": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "M6B": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "MGA": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "MJY": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "MSF": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "MING": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "SIL": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "CPER": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "XLE": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
+      }
+    },
+    "DBA": {
+      "best_tf": "1m",
+      "best_pnl": 0,
+      "best_win_rate": 0,
+      "stats": {
+        "1m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "2m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        },
+        "3m": {
+          "pnl": 0,
+          "wins": 0,
+          "count": 0,
+          "win_rate": 0
+        }
       }
     }
+  },
+  "prop_locked": true,
+  "total_slots": 63,
+  "family_tracks": [
+    "Father 1m",
+    "Son 2m",
+    "Daughter 3m"
   ]
 }
