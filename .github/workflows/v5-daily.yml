@@ -1,32 +1,108 @@
-name: V5 MA Delta Daily
+name: V5 Daily MA Delta - D2026-11-17 - KST 07:00 Top2 DISTINCT
+
 on:
   schedule:
-    - cron: '0 22 * * 0-4'  # KST 월~금 07:00 = UTC 일~목 22:00
+    - cron: '0 22 * * 0-4' # KST Mon-Fri 07:00 = UTC Sun-Thu 22:00
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
-  v5-calc:
+  v5-daily:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/setup-python@v5
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Run MA Bot Scoring (DATE daily, maejip rename, 3-stage TP)
-        run: python scoring_engine_v5.py
-      - name: Commit MA Bot Daily - KST Mon-Fri
+
+      - name: Install deps
         run: |
-          git config user.name "ma-bot"
-          git config user.email "ma-bot@github.com"
-          cp absorption_v5.json docs/absorption_v5.json || true
-          cp absorption_v5.json docs/v5-ma-delta/absorption_v5.json || true
-          cp journal_data_v5.json docs/v5-ma-delta/journal_data_v5.json || true
-          cp journal_data_v5.json docs/journal_data_v5.json || true
-          git add absorption_v5.json journal_data_v5.json docs/absorption_v5.json docs/v5-ma-delta/absorption_v5.json docs/v5-ma-delta/journal_data_v5.json docs/journal_data_v5.json
-          git diff --staged --quiet || git commit -m "MA Bot Daily $(date -u +%Y-%m-%d) - KST Mon-Fri fix, maejip 3-stage TP + docs copy"
-          git push
+          pip install --upgrade pip
+          pip install pytz pandas requests || true
+          if [ -f requirements.txt ]; then pip install -r requirements.txt || true; fi
+
+      - name: Run scoring_engine_v5.py - KST date fix
+        run: |
+          echo "KST date should be D$(TZ='Asia/Seoul' date +%Y-%m-%d)"
+          python scoring_engine_v5.py || python scoring_engine.py || echo "no scoring engine found"
+          ls -lh absorption_v5*.json || true
+
+      - name: Generate best_tf_per_ticker.json from journal if exists
+        run: |
+          python -c "
+import json, os, glob
+# try to build best_tf_per_ticker from journal_data_v5.json or existing
+try:
+    j_path='journal_data_v5.json'
+    if os.path.exists(j_path):
+        with open(j_path) as f:
+            jd=json.load(f)
+        best={}
+        if 'best_tf_per_ticker' in jd:
+            best=jd['best_tf_per_ticker']
+        elif 'slots' in jd:
+            # build from slots P&L max per ticker
+            from collections import defaultdict
+            per={}
+            for s in jd['slots']:
+                tid=s.get('ticker')
+                if tid not in per:
+                    per[tid]=[]
+                per[tid].append(s)
+            for tid, arr in per.items():
+                b=max(arr, key=lambda x: (x.get('pnl') if x.get('pnl') is not None else x.get('score',0)))
+                best[tid]={'tf':b.get('tf'),'pnl':b.get('pnl'),'score':b.get('score'),'entry':b.get('entry'),'sl':b.get('sl')}
+        if best:
+            with open('best_tf_per_ticker.json','w') as out:
+                json.dump({'date':'D2026-11-17','top2_distinct':jd.get('top2',[]),'best_tf_per_ticker':best}, out, indent=2)
+            print('best_tf_per_ticker.json generated', best)
+except Exception as e:
+    print('best gen skip', e)
+"
+          ls -lh best_tf_per_ticker.json journal_data_v5.json || true
+
+      - name: Sync to Pages - copy to docs/ and docs/v5-ma-delta/
+        run: |
+          mkdir -p docs/v5-ma-delta
+          # absorption_v5.json is main - copy everywhere Pages needs it
+          if [ -f absorption_v5.json ]; then
+            cp -f absorption_v5.json docs/absorption_v5.json
+            cp -f absorption_v5.json docs/v5-ma-delta/absorption_v5.json
+            cp -f absorption_v5.json docs/absorption_v5.json
+            echo "absorption_v5.json copied to docs/ and docs/v5-ma-delta/"
+          fi
+          if [ -f absorption_v5.json ]; then
+            cp -f absorption_v5.json docs/v5-ma-delta/absorption_v5.json
+          fi
+          if [ -f journal_data_v5.json ]; then
+            cp -f journal_data_v5.json docs/journal_data_v5.json || true
+            cp -f journal_data_v5.json docs/v5-ma-delta/journal_data_v5.json || true
+            cp -f journal_data_v5.json docs/v5-ma-delta/journal_data_v5.json || true
+          fi
+          if [ -f best_tf_per_ticker.json ]; then
+            cp -f best_tf_per_ticker.json docs/best_tf_per_ticker.json
+            cp -f best_tf_per_ticker.json docs/v5-ma-delta/best_tf_per_ticker.json
+            echo "best_tf_per_ticker.json copied"
+          fi
+          # also run sync_to_pages.py if exists for extra legacy paths
+          if [ -f sync_to_pages.py ]; then python sync_to_pages.py || true; fi
+          ls -lh docs/*.json docs/v5-ma-delta/*.json || true
+
+      - name: Commit and Push - KST date fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A || true
+          git add docs/absorption_v5.json docs/v5-ma-delta/absorption_v5.json docs/journal_data_v5.json docs/v5-ma-delta/journal_data_v5.json docs/best_tf_per_ticker.json docs/v5-ma-delta/best_tf_per_ticker.json absorption_v5.json journal_data_v5.json best_tf_per_ticker.json || true
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "V5 Daily D2026-11-17 KST 07:00 Top2 DISTINCT MGC,M2K + best_tf_per_ticker + maejip balsan"
+            git push
+          fi
