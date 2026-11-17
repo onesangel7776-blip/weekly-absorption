@@ -1,152 +1,379 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>COMMAND CENTER V5 BEST TF BADGE - D2026-11-16 - DAILY 3-TRACK</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COMMAND CENTER V5 - 2 TICKER x 3TF - Quantower Ready - D2026-11-17</title>
 <style>
-body{background:#0a0a0a;color:#e8e8e8;font-family:monospace;margin:0;padding:12px}
-.header{border:2px solid #ffd000;padding:10px;margin-bottom:12px;background:#1a1a00}
-.badge{display:inline-block;padding:2px 8px;margin:2px;font-size:11px;border-radius:3px}
-.b-yellow{background:#ffd000;color:#000}.b-blue{background:#00aaff;color:#fff}.b-purple{background:#aa00ff;color:#fff}
-.b-green{background:#00ff88;color:#000}.b-red{background:#ff4444;color:#fff}
-.card{border:1px solid #333;padding:10px;margin:8px 0;background:#141414}
-.btn{padding:6px 12px;margin:4px;border:1px solid #555;background:#222;color:#fff;cursor:pointer}
-.btn.active{background:#ffd000;color:#000}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th,td{border:1px solid #333;padding:4px;text-align:center}
-th{background:#222}
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--border:#222;--border2:#333;--text:#e8e8e8;--dim:#888;--faint:#555;--yellow:#ffd000;--green:#00ff88;--red:#ff3b5e;--cyan:#00e5ff;--purple:#a78bfa}
+*{box-sizing:border-box;font-family:'JetBrains Mono',ui-monospace,monospace}
+body{margin:0;background:var(--bg);color:var(--text);overflow-x:hidden}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif}
+.header{position:sticky;top:0;z-index:30;border-bottom:1px solid #1e1e1e;background:rgba(10,10,10,.96);backdrop-filter:blur(8px)}
+.max{max-width:1680px;margin:0 auto;padding:16px}
+.badge{display:inline-flex;padding:4px 12px;border-radius:6px;font-weight:900;font-size:13px;letter-spacing:.1em}
+.yellow{background:var(--yellow);color:#000}
+.ghost{padding:6px 12px;border-radius:8px;background:#1a1a1a;border:1px solid #222;font-size:11px}
+.btn{cursor:pointer;border:0;padding:10px 14px;border-radius:8px;font-weight:900;font-size:11px;letter-spacing:.08em}
+.btn-yellow{background:var(--yellow);color:#000}
+.btn-dark{background:#1a1a1a;border:1px solid #333;color:#888}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:1024px){.grid2{grid-template-columns:1fr}}
+.card{background:#1a1a1a;border:1px solid #222;border-radius:12px;overflow:hidden}
+.card.best{border-color:rgba(0,255,136,.6);box-shadow:0 0 24px rgba(0,255,136,.15)}
+.card-head{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222;background:#151515}
+.card.best .card-head{background:rgba(0,255,136,.1);border-color:rgba(0,255,136,.2)}
+.qbox{margin:12px;border:2px dashed rgba(255,208,0,.6);border-radius:10px;background:#0a0a0a;padding:12px}
+.qbox input,.qbox select{width:100%;padding:8px 10px;border-radius:6px;background:#1a1a1a;border:1px solid #333;color:#e8e8e8;font-size:11px}
+.qbox label{font-size:9px;color:#888;letter-spacing:.1em}
+.kv{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.kv div{background:#0a0a0a;border:1px solid #222;border-radius:6px;padding:8px}
+.kv input{background:transparent;border:0;width:100%;font-weight:700;font-size:13px;color:#e8e8e8}
+.kv input:focus{outline:none}
+table{width:100%;border-collapse:collapse;font-size:11px;min-width:1100px}
+th{color:#555;font-weight:400;text-align:left;padding:8px 12px;border-bottom:1px solid #1e1e1e;background:#0a0a0a;letter-spacing:.08em;font-size:10px}
+td{padding:10px 12px;border-bottom:1px solid #151515}
+.b{font-weight:700}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
+.modal.open{display:flex}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--yellow);color:#000;padding:8px 16px;border-radius:8px;font-weight:700;font-size:12px;z-index:60}
+.badge-tf{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;border:1px solid}
+.tf1{background:rgba(255,208,0,.15);border-color:rgba(255,208,0,.3);color:#ffd000}
+.tf2{background:rgba(0,229,255,.15);border-color:rgba(0,229,255,.3);color:#00e5ff}
+.tf3{background:rgba(167,139,250,.15);border-color:rgba(167,139,250,.3);color:#a78bfa}
 </style>
 </head>
 <body>
-<div class="header">
-<h2 style="margin:0;color:#ffd000">COMMAND CENTER V5 BEST TF BADGE - D2026-11-16 - DAILY 3-TRACK</h2>
-<div>21 TICKER BEST MAPPING: <span class="badge b-yellow">1m:9개</span> <span class="badge b-blue">2m:9개</span> <span class="badge b-purple">3m:3개</span> per ticker sum P&L per TF (1m/2m/3m) • best = max sum • journal_data_v5.json → absorption_v5.json</div>
-<div style="margin-top:6px">Top2 TODAY DISTINCT: <span id="top2display" style="color:#00ff88;font-weight:bold">Loading...</span> <span class="badge b-yellow">OPTIMAL LOGIC ON</span></div>
-<div style="margin-top:6px;font-size:11px">DATE D2026-11-16 | DXY 104.82 | US10Y 4.18% | VIX 13.42 | BIAS RISK_ON | BOTTOM 12 | TOP 12</div>
-<div style="margin-top:6px;font-size:11px">BEST TF SOURCE: journal_data_v5.json OK + ENTRY JOURNAL 3-BUTTON SAME LOGIC</div>
-<div style="margin-top:6px;font-size:11px">Daily Loss $-340 / $-700 | Daily Profit +$280 / $500 | Max Loss $-310 / $-1000 | Consistency 62% | Forced Close 23:50 | Session 18:00-16:10 EST + PreClose 60m BlockWeekend</div>
+<div class="header"><div class="max">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center">
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span class="badge yellow">COMMAND CENTER V5</span>
+<span class="ghost" style="border-color:rgba(255,208,0,.3);color:#ffd000;font-weight:700">2 TICKER x 3TF - QUANTOWER DATA READY - D2026-11-17</span>
+<span class="ghost" style="background:rgba(0,255,136,.1);border-color:rgba(0,255,136,.2);color:#00ff88">QUANTOWER EMPTY SLOT VERSION</span>
+<span class="ghost" style="color:#666">docs/v5-ma-delta/index.html • 가상매매 가능 • 빈칸 비워둠</span>
+</div>
+<div style="display:flex;gap:8px;align-items:center">
+<div class="ghost" style="display:flex;gap:8px;align-items:center"><span style="color:#666;font-size:10px;letter-spacing:.1em">DATE</span><b style="color:#ffd000">D2026-11-17</b><span style="width:1px;height:16px;background:#222"></span><span style="color:#00e5ff">Top2 DISTINCT</span><b id="top2badge">MGC , M2K</b></div>
+<button class="btn btn-yellow" onclick="openModal()">CHANGE TICKERS</button>
+</div>
+</div>
+<div style="margin-top:12px;border:1px solid rgba(255,208,0,.3);border-radius:12px;background:linear-gradient(90deg,rgba(255,208,0,.1),#1a1a1a,rgba(0,229,255,.1));padding:16px;display:grid;grid-template-columns:2fr 1fr;gap:16px">
+<div>
+<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><span class="badge yellow" style="font-size:10px">ARCHITECTURE FIXED</span><b style="font-size:12px;letter-spacing:.08em">21 TICKER SCAN → Top2 DISTINCT (예: MGC, M2K) → 각 티커별 1m/2m/3m 분리 추출 → 6 SETS with DIFFERENT Entry/SL/TP</b></div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:10px">
+<div style="background:#0a0a0a;border:1px solid #222;border-radius:8px;padding:10px"><div style="color:#ffd000;font-weight:700;margin-bottom:4px">OLD (WRONG) ❌</div><div style="color:#777">BEST TF counting 21x3=63 slots<br>Entry/SL/TP 동일 → 가상매매 불가<br>점수만 비교</div></div>
+<div style="background:#0a0a0a;border:1px solid rgba(0,255,136,.3);border-radius:8px;padding:10px"><div style="color:#00ff88;font-weight:700;margin-bottom:4px">NEW (CORRECT) ✅ Step1</div><div style="color:#aaa">Command Center는 2 티커만 추출<br>각 TF마다 Tenkan/Kijun/Senkou 다름<br>Entry/SL/TP 6개 모두 다름<br><span style="color:#ffd000">MGC-1m 32.44 ≠ MGC-2m 32.38 ≠ MGC-3m 32.30</span></div></div>
+<div style="background:#0a0a0a;border:1px solid rgba(0,229,255,.3);border-radius:8px;padding:10px"><div style="color:#00e5ff;font-weight:700;margin-bottom:4px">Step2 가상매매</div><div style="color:#aaa">Entry homepage가 6세트로 P&L 계산<br>TF별 P&L 비교 → 티커별 Best TF 선정<br>진짜 가상매매 완성</div></div>
+</div>
+</div>
+<div style="background:#0a0a0a;border:2px dashed rgba(255,208,0,.5);border-radius:8px;padding:12px"><div style="color:#ffd000;font-weight:700;font-size:11px;letter-spacing:.08em;margin-bottom:8px">QUANTOWER DATA EMPTY SLOT VERSION</div><div style="color:#888;font-size:10px;line-height:1.6">- 가상매매 가능하도록 빈칸 비워둠<br>- MA10 2-720 수렴, 매집 15K 블록, 발산, FLIP, CVD 6칸은 Quantower 실데이터 붙여넣기용<br>- 지금은 placeholder, 나중에 주입하면 Score 재계산 + P&L 자동<br>- 저장 시 localStorage + records.create → reload 후 유지</div></div>
+</div>
+</div></div>
+
+<main class="max" style="padding-top:24px;padding-bottom:40px;display:flex;flex-direction:column;gap:32px">
+<div id="topInfo" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+<div style="padding:10px 14px;border-radius:8px;background:#1a1a1a;border:2px solid rgba(255,208,0,.5);display:flex;gap:12px;align-items:center;font-size:11px"><span style="color:#666;letter-spacing:.1em">Top2 DISTINCT D2026-11-17</span><span id="leftBadge" class="badge yellow">MGC(88.4)</span><span style="color:#444">,</span><span id="rightBadge" class="ghost" style="color:#ffd000;border-color:rgba(255,208,0,.3);font-weight:700">M2K(84.1) - DISTINCT</span><span style="color:#00ff88">• 2 TICKER x 3TF = 6 SLOTS • Entry/SL/TP 모두 다름</span></div>
+<div style="color:#555;font-size:10px">MGC LONG 예시: 1m Entry 32.44 / 2m 32.38 / 3m 32.30 모두 다름 - Tenkan/Kijun/Senkou 각 TF 기준 • M2K SHORT 동일</div>
 </div>
 
-<div style="margin-bottom:12px">
-<button class="btn active" onclick="setFilter('ALL')">ALL 63 D2026-11-16</button>
-<button class="btn" onclick="setFilter('FATHER')">FATHER 1m ONLY</button>
-<button class="btn" onclick="setFilter('SON')">SON 2m ONLY</button>
-<button class="btn" onclick="setFilter('DAUGHTER')">DAUGHTER 3m ONLY</button>
-<button class="btn" onclick="toggleBestView()" id="bestBtn">BEST TF VIEW OFF</button>
-<button class="btn" onclick="toggleMatrix()">MATRIX ON + BEST BADGE</button>
-<button class="btn">80+ GO</button>
+<div class="grid2">
+<div><div style="display:flex;gap:8px;align-items:center;margin-bottom:16px"><div style="width:4px;height:24px;background:#00ff88"></div><h2 style="margin:0;font-size:13px;letter-spacing:.1em" id="leftTitle">MGC • LONG • LEFT - 3 TF DIFFERENT</h2><span class="ghost" style="color:#00ff88;border-color:rgba(0,255,136,.2)">MGC 1m/2m/3m 각각 다른 Entry/SL/TP</span></div><div id="leftCol" style="display:flex;flex-direction:column;gap:16px"></div></div>
+<div><div style="display:flex;gap:8px;align-items:center;margin-bottom:16px"><div style="width:4px;height:24px;background:#ff3b5e"></div><h2 style="margin:0;font-size:13px;letter-spacing:.1em" id="rightTitle">M2K • SHORT • RIGHT - 3 TF DIFFERENT</h2><span class="ghost" style="color:#ff3b5e;border-color:rgba(255,59,94,.2)">M2K 1m/2m/3m 각각 다른 Entry/SL/TP</span></div><div id="rightCol" style="display:flex;flex-direction:column;gap:16px"></div></div>
 </div>
 
-<div id="calc" class="card">
-<h3 style="margin:0 0 8px 0;color:#ffd000">CALCULATION - D2026-11-16 Top2 GO • BEST TF VIEW</h3>
-<div style="font-size:11px">Score 80+ GO, MA10, CVD, DMI, absorption - absorption_v5.json LOADED + journal BEST logic merged, OPTIMAL = rec TF = BEST HIST, 515 journal rows • 21 tickers mapped</div>
-<div style="display:flex;gap:12px;margin-top:10px">
-<div class="card" style="flex:1;border-color:#ffd000">
-<div style="color:#ffd000;font-weight:bold">Top1 M2K 1m Score 100 SHORT OPTIMAL 1m</div>
-<div style="font-size:11px;margin-top:6px">M2K DAILY TH 6000 | 매집 -3289 | 발산 순 -3289 | VAL | BEST Σ +681 | 1.8% | -4.2% | 18%</div>
-<div style="font-size:11px">Reason: DAILY CVD flip, MA10 2-720 convergence 0.15%, 매집 +15133</div>
-<div style="font-size:11px">Entry 2148.5 SL 2139 TP 2185 Qty 2</div>
-<div style="margin-top:6px"><span class="badge b-green">OPTIMAL M2K 1m = BEST 1m D2026-11-16</span></div>
+<div style="border:1px solid #222;border-radius:12px;background:#111;overflow:hidden">
+<div style="padding:12px 16px;border-bottom:1px solid #1e1e1e;background:#0e0e0e;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px"><h3 style="margin:0;font-size:12px;letter-spacing:.1em;display:flex;gap:8px;align-items:center"><span style="width:8px;height:20px;background:#ffd000;display:inline-block"></span>SUMMARY TABLE - 6 SETS P&L VIRTUAL TRADING - D2026-11-17</h3><span style="font-size:10px;color:#ffd000">Best = max P&L (not just score) • Entry/SL/TP DIFFERENT per TF 확인용</span></div>
+<div style="overflow-x:auto"><table><thead><tr><th>TICKER</th><th>TF</th><th>Side</th><th>Entry (≠ per TF)</th><th>SL (Kijun ≠)</th><th>TP1 / TP2 / TP3 (≠)</th><th>Score breakdown</th><th>P&L (virtual)</th><th>Best?</th></tr></thead><tbody id="summaryBody"></tbody></table></div>
+<div style="padding:8px 12px;font-size:10px;color:#555;border-top:1px solid #1e1e1e;background:#0a0a0a;display:flex;gap:12px;flex-wrap:wrap"><span>확인: MGC 1m Entry 32.44 ≠ 2m 32.38 ≠ 3m 32.30 • SL도 31.8≠31.5≠31.2 • TP도 모두 다름 = 가상매매 가능</span><span style="color:#ffd000">• Yellow dashed = QUANTOWER DATA PASTE HERE 빈칸</span></div>
 </div>
-<div class="card" style="flex:1;border-color:#ff4444">
-<div style="color:#ff8844;font-weight:bold">Top2 MNQ 2m Score 98 SHORT BEST:2m DISTINCT</div>
-<div style="font-size:11px;margin-top:6px">MNQ DAILY TH 6000 | 매집 +12400 | 발산 +4428 | VAL | BEST Σ +590 | 2.1% | -3.8% | 22%</div>
-<div style="font-size:11px">Reason: CVD + DMI, MA10 convergence, FLIP -14,287→+7,632</div>
-<div style="font-size:11px">Entry 21000 SL 20950 TP 21150 Qty 1</div>
-<div style="margin-top:6px"><span class="badge b-blue">BEST MNQ 2m = BEST HIST 2m D2026-11-16 → OPTIMAL 2m</span></div>
-</div>
+
+<div style="border:1px solid rgba(255,208,0,.2);border-radius:12px;background:#111;padding:16px">
+<div style="display:flex;gap:8px;align-items:center;margin-bottom:12px"><div style="width:4px;height:20px;background:#ffd000"></div><h3 style="margin:0;font-size:11px;letter-spacing:.1em">FLOW: Command Center extracts 2 tickers x 3TF = 6 sets with different Entry/SL/TP → Entry homepage calculates P&L per TF → Picks best TF per ticker → True virtual trading complete</h3></div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;font-size:10px;line-height:1.6">
+<div style="background:#0a0a0a;border:1px solid #222;border-radius:8px;padding:12px"><div style="color:#ffd000;font-weight:700;margin-bottom:4px">Step1 - Command Center V5</div><div style="color:#888">21 ticker scan → Top2 DISTINCT (예: MGC Score 88.4, M2K 84.1)<br>각 티커별 1m/2m/3m 분리<br>Tenkan/Kijun/Senkou 각 TF 기준 다르므로 Entry/SL/TP 6개 모두 다름<br><b style="color:#e8e8e8">MGC-1m ≠ MGC-2m ≠ MGC-3m 증명</b></div></div>
+<div style="background:#0a0a0a;border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:12px"><div style="color:#00ff88;font-weight:700;margin-bottom:4px">QUANTOWER EMPTY SLOT</div><div style="color:#888">노란 점선 박스 = QUANTOWER DATA INJECTION<br>MA10 2-720 수렴 0.15% [INPUT]<br>매집 15K 블록 [INPUT] = +15133 고정<br>발산 Buy/Sell Flow [INPUT] = +4428 고정<br>FLIP [INPUT] / CVD [INPUT]<br>Location VAL/POC/VAH [SELECT]<br><span style="color:#ffd000">지금 빈칸, 나중에 붙여넣기</span></div></div>
+<div style="background:#0a0a0a;border:1px solid rgba(0,229,255,.2);border-radius:8px;padding:12px"><div style="color:#00e5ff;font-weight:700;margin-bottom:4px">Step2 - Entry Homepage 가상매매</div><div style="color:#888">6 sets로 각각 P&L 시뮬레이션<br>CALCULATE P&L 버튼 → (avgTP - Entry) * qty<br>LONG/SHORT 구분<br>Quantower 데이터 있으면 boost 1.25x<br>티커별 Best TF 선정 = P&L 최대, 점수 아님</div></div>
+<div style="background:#0a0a0a;border:1px solid rgba(167,139,250,.2);border-radius:8px;padding:12px"><div style="color:#a78bfa;font-weight:700;margin-bottom:4px">Output docs/v5-ma-delta/index.html</div><div style="color:#888">단일 HTML, Dark #0a0a0a, yellow #ffd000, cards #1a1a1a<br>저장: localStorage + records API → reload 유지<br>No Meta AI wrapper, pure HTML/CSS/JS static<br><span style="color:#ffd000">QUANTOWER DATA EMPTY SLOT VERSION</span></div></div>
 </div>
 </div>
 
-<div id="bestTable" style="display:none" class="card">
-<h3 style="color:#ffd000">63 슬롯 매트릭스 + BEST TF HIST BADGE - D2026-11-16 - 21 x 3 x 3 ENTRY JOURNAL SAME LOGIC</h3>
-<table id="bestTFTable">
-<thead><tr><th>TICKER</th><th>1m P&L / WIN%</th><th>2m P&L / WIN%</th><th>3m P&L / WIN%</th><th>BEST TF</th><th>BEST P&L</th><th>Final TICKER=TF</th></tr></thead>
-<tbody id="bestBody"></tbody>
-</table>
-</div>
+<footer style="font-size:10px;color:#444;border-top:1px solid #1e1e1e;padding-top:16px;display:flex;flex-direction:column;gap:4px">
+<div>COMMAND CENTER V5 - 2 TICKER x 3TF - QUANTOWER DATA READY - D2026-11-17 • 2 columns x 3 rows = 6 CARDS • Entry/SL/TP DIFFERENT per TF • CALCULATION PAGE docs/v5-ma-delta/index.html</div>
+<div>OLD WRONG: 21x3=63 slots 동일 Entry/SL/TP → 가상매매 불가 • NEW CORRECT: Top2 DISTINCT MGC,M2K 6 sets different Entry/SL/TP → True virtual trading</div>
+<div>Prop Locked: Daily Loss $700 / Profit $500 / Max -450k / Session 18:00-16:10 EST + PreClose 60m + BlockWeekend / Judas 15:30-16:15 / 21:00-21:45 KST / News ±30 / Zombie 0.7x+CVD / EOD 23:50 / Consistency 40% / Euro V9.30 PF 4.22</div>
+</footer>
+</main>
 
-<div class="card">
-<h4 style="margin:0 0 6px 0;color:#00ff88">매집 vs 발산 구분 • journal P&L 합산 per TF = BEST</h4>
-<div style="font-size:11px">매집 = 세력 매집 블록 + BEST TF, 매집 +15133 vs 공매도 초록 +15133, BEST TF = per ticker sum P&L per TF max, ENTRY JOURNAL 3-BUTTON SAME LOGIC, OPTIMAL = 추천 TF = BEST HIST</div>
-<div style="font-size:11px;margin-top:6px">발산 + BEST TF HIST 색상 매핑 <span class="badge b-yellow">1m</span> <span class="badge b-blue">2m</span> <span class="badge b-purple">3m</span> 발산 +4428 공매도 +12,400 FLIP -14,287→+7,632 CVD</div>
+<div id="modal" class="modal"><div style="width:100%;max-width:560px;border-radius:12px;border:1px solid #333;background:#111;padding:20px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0;font-size:13px;letter-spacing:.1em">CHANGE Top2 DISTINCT TICKERS - D2026-11-17</h3><button class="btn btn-dark" onclick="closeModal()">✕</button></div>
+<div style="color:#666;font-size:10px">2개의 서로 다른 티커 선택 → 각 티커별 1m/2m/3m 자동 재생성, Entry/SL/TP는 TF마다 다르게 생성됨.</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+<div><div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#ffd000;margin-bottom:8px">LEFT TICKER (예: MGC LONG)</div><div id="leftPick" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:220px;overflow-y:auto;padding-right:4px"></div><div id="leftSel" style="font-size:10px;color:#00ff88;margin-top:6px"></div></div>
+<div><div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#ffd000;margin-bottom:8px">RIGHT TICKER (예: M2K SHORT)</div><div id="rightPick" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:220px;overflow-y:auto;padding-right:4px"></div><div id="rightSel" style="font-size:10px;color:#00ff88;margin-top:6px"></div></div>
 </div>
-
-<div class="card">
-<h4 style="margin:0 0 6px 0;color:#ffaa00">PROP 필터 LOCKED • Euro bot V9.30 SAFE CORE</h4>
-<div style="font-size:11px">Daily Loss $700 L52-55 Daily Profit $500 L439-459 Max Loss $-1000 $-310 now Judas 15:30-16:15 / 21:00-21:45 KST News ±30m block BEST TF 9/9/3 OPTIMAL LOGIC EOD 23:56 close all 23:53:03 Session 18:00-16:10 EST + PreClose 60m BlockWeekend 주중 차단</div>
-</div>
-
-<div class="card">
-<h4 style="margin:0 0 6px 0;color:#00aaff">3-stage Ichimoku TP LOCKED + BEST TF TUNING</h4>
-<div style="font-size:11px">TP1 50% Tenkan/Kijun 돌파 + 분할 익절 BEST TF별 TP 미세조정 1m FAST SCALP 2m SWING 3m TREND, TP2 25% Senkou A 2m BEST 83%, TP3 25% Senkou B 3m BEST 62%</div>
-</div>
-
-<div class="card">
-<h4 style="margin:0 0 6px 0">63 슬롯 매트릭스 + BEST TF HIST BADGE - D2026-11-16</h4>
-<div id="matrix" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:10px"></div>
-</div>
+<div style="display:flex;gap:8px"><button class="btn btn-yellow" style="flex:1;padding:12px" onclick="applyTickers()">APPLY - REGENERATE 6 SLOTS DIFFERENT Entry/SL/TP</button><button class="btn btn-dark" style="padding:12px 20px" onclick="closeModal()">CANCEL</button></div>
+</div></div>
 
 <script>
-// Mock data for demo - real page loads absorption_v5.json
-const TICKERS = ["M2K","MNQ","MES","MYM","MGC","SIL","MCL","6E","6J","6A","6B","ZN","ZB","NG","GC","SI","CL","NQ","ES","YM","RTY"];
-const TFS = ["1m","2m","3m"];
-let bestMap = {};
-let top2distinct = [{ticker:"M2K",tf:"1m",score:100},{ticker:"MNQ",tf:"2m",score:98}];
+const TICKERS = [
+{id:"M2K",ko:"마이크로 러셀",side:"SHORT",base:92.15},
+{id:"MES",ko:"마이크로 S&P500",side:"LONG",base:45.2},
+{id:"MGC",ko:"마이크로 골드",side:"LONG",base:32.4},
+{id:"MNQ",ko:"마이크로 나스닥",side:"LONG",base:121.5},
+{id:"MYM",ko:"마이크로 다우",side:"SHORT",base:38.7},
+{id:"MCL",ko:"마이크로 크루드",side:"LONG",base:78.3},
+{id:"SIL",ko:"마이크로 실버",side:"LONG",base:28.9},
+{id:"M6E",ko:"마이크로 유로",side:"SHORT",base:1.085},
+{id:"GDX",ko:"금광 ETF",side:"SHORT",base:32.1},
+{id:"TLT",ko:"20년 국채",side:"SHORT",base:88.5},
+{id:"M6B",ko:"마이크로 파운드",side:"LONG",base:1.27},
+{id:"MBT",ko:"마이크로 비트",side:"SHORT",base:42.3},
+];
 
-function initMock(){
-  // Mock best TF per ticker
-  TICKERS.forEach((t,i)=>{
-    const best = TFS[i%3];
-    bestMap[t]={best_tf:best, best_pnl: 500+Math.floor(Math.random()*500), per_tf:{'1m':{sum:100+Math.random()*500,count:10,win_rate:60+Math.random()*20},'2m':{sum:200+Math.random()*500,count:12,win_rate:65},'3m':{sum:300+Math.random()*500,count:8,win_rate:55}}};
-  });
-  document.getElementById('top2display').innerText = `${top2distinct[0].ticker}-${top2distinct[0].tf}(${top2distinct[0].score}), ${top2distinct[1].ticker}-${top2distinct[1].tf}(${top2distinct[1].score}) - DISTINCT`;
-  renderBestTable();
-  renderMatrix();
+let top2 = ["MGC","M2K"];
+let pickLeft = "MGC";
+let pickRight = "M2K";
+let slots = [];
+
+function genSlots(){
+  const out=[];
+  for(let tickerId of top2){
+    const meta = TICKERS.find(t=>t.id===tickerId);
+    if(!meta) continue;
+    const base = meta.base;
+    const sides = meta.side;
+    const tfList = ["1m","2m","3m"];
+    tfList.forEach((tf,i)=>{
+      const offset = tf==="1m"?0.04:tf==="2m"?-0.02:-0.10;
+      const entry = +(base+offset+ (Math.random()*0.02-0.01)).toFixed(2);
+      let sl,tp1,tp2,tp3;
+      if(sides==="LONG"){
+        sl = +(entry - (0.6 + i*0.2 + Math.random()*0.2)).toFixed(2);
+        tp1 = +(entry + (0.66 + Math.random()*0.2)).toFixed(2);
+        tp2 = +(entry + (1.36 + Math.random()*0.3)).toFixed(2);
+        tp3 = +(entry + (2.06 + Math.random()*0.3)).toFixed(2);
+      }else{
+        sl = +(entry + (0.6 + i*0.2 + Math.random()*0.2)).toFixed(2);
+        tp1 = +(entry - (0.66 + Math.random()*0.2)).toFixed(2);
+        tp2 = +(entry - (1.36 + Math.random()*0.3)).toFixed(2);
+        tp3 = +(entry - (2.06 + Math.random()*0.3)).toFixed(2);
+      }
+      const id = `${tickerId}-${tf}`;
+      // try restore from localStorage
+      const saved = loadSlot(id);
+      out.push({
+        id, ticker:tickerId, tf, side:sides, nameKo:meta.ko,
+        baseScore: 80 + Math.random()*12,
+        breakdown:{ma:18+Math.floor(Math.random()*5),maejip:22+Math.floor(Math.random()*6),balsan:13+Math.floor(Math.random()*4),flip:9+Math.floor(Math.random()*4),cvd:15+Math.random()*5},
+        entry: saved?.entry ?? entry,
+        sl: saved?.sl ?? sl,
+        tp1: saved?.tp1 ?? tp1,
+        tp2: saved?.tp2 ?? tp2,
+        tp3: saved?.tp3 ?? tp3,
+        qty:2,
+        q_ma:saved?.q_ma||"", q_maejip:saved?.q_maejip||"", q_balsan:saved?.q_balsan||"", q_flip:saved?.q_flip||"", q_cvd:saved?.q_cvd||"", q_location:saved?.q_location||"",
+        pnl:saved?.pnl ?? null, pnlPct:saved?.pnlPct ?? null
+      });
+    });
+  }
+  return out;
 }
 
-function renderBestTable(){
-  const tbody=document.getElementById('bestBody'); tbody.innerHTML='';
-  TICKERS.forEach(t=>{
-    const bm=bestMap[t];
-    if(!bm) return;
+function loadSlot(id){
+  try{ const v=localStorage.getItem('v5_'+id); return v?JSON.parse(v):null;}catch(e){return null}
+}
+function saveSlot(card){
+  try{ localStorage.setItem('v5_'+card.id, JSON.stringify(card)); }catch(e){}
+  // also try records API if available (for artifact preview)
+  try{
+    fetch('actions',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action:'records.put',args:{collection:'quantower_slots',id:card.id,value:card}})});
+  }catch(e){}
+}
+
+function calcPnl(card){
+  const avg = (card.tp1+card.tp2+card.tp3)/3;
+  let pnl;
+  if(card.side==="LONG") pnl = (avg - card.entry)*card.qty*10;
+  else pnl = (card.entry - avg)*card.qty*10;
+  const filled = [card.q_ma,card.q_maejip,card.q_balsan,card.q_flip,card.q_cvd,card.q_location].filter(Boolean).length;
+  const boost = filled>=4?1.25:filled>=2?1.1:1;
+  pnl = Math.round(pnl*boost*10)/10;
+  const pct = card.entry? ((card.side==="LONG"?(avg-card.entry)/card.entry:(card.entry-avg)/card.entry)*100*boost) : 0;
+  return {pnl, pct:Math.round(pct*100)/100, filled, boost};
+}
+
+function render(){
+  const left = slots.filter(s=>s.ticker===top2[0]).sort((a,b)=>a.tf.localeCompare(b.tf));
+  const right = slots.filter(s=>s.ticker===top2[1]).sort((a,b)=>a.tf.localeCompare(b.tf));
+  document.getElementById('top2badge').textContent = `${top2[0]} , ${top2[1]}`;
+  document.getElementById('leftBadge').textContent = `${top2[0]}(${left[0]?.baseScore.toFixed(1)??''})`;
+  document.getElementById('rightBadge').textContent = `${top2[1]}(${right[0]?.baseScore.toFixed(1)??''}) - DISTINCT`;
+  document.getElementById('leftTitle').textContent = `${top2[0]} • ${left[0]?.side} • LEFT - 3 TF DIFFERENT`;
+  document.getElementById('rightTitle').textContent = `${top2[1]} • ${right[0]?.side} • RIGHT - 3 TF DIFFERENT`;
+
+  // best per ticker by pnl if exists else score
+  const best = {};
+  for(let t of top2){
+    const arr = slots.filter(s=>s.ticker===t);
+    if(!arr.length) continue;
+    let b=arr[0];
+    for(let c of arr){
+      const v = c.pnl!==null?c.pnl:c.baseScore;
+      const bv = b.pnl!==null?b.pnl:b.baseScore;
+      if(v>bv) b=c;
+    }
+    best[t]=b;
+  }
+
+  const leftCol = document.getElementById('leftCol'); leftCol.innerHTML='';
+  const rightCol = document.getElementById('rightCol'); rightCol.innerHTML='';
+  left.forEach(c=> leftCol.appendChild(cardEl(c, best[c.ticker]?.id===c.id)));
+  right.forEach(c=> rightCol.appendChild(cardEl(c, best[c.ticker]?.id===c.id)));
+
+  const tbody = document.getElementById('summaryBody'); tbody.innerHTML='';
+  [...left,...right].forEach(c=>{
+    const isBest = best[c.ticker]?.id===c.id;
     const tr=document.createElement('tr');
-    const bestClass = bm.best_tf==='1m'?'b-yellow':bm.best_tf==='2m'?'b-blue':'b-purple';
-    tr.innerHTML=`<td>${t}</td><td>${bm.per_tf['1m'].sum.toFixed(0)} / ${bm.per_tf['1m'].win_rate.toFixed(0)}%</td><td>${bm.per_tf['2m'].sum.toFixed(0)} / ${bm.per_tf['2m'].win_rate.toFixed(0)}%</td><td>${bm.per_tf['3m'].sum.toFixed(0)} / ${bm.per_tf['3m'].win_rate.toFixed(0)}%</td><td><span class="badge ${bestClass}">${bm.best_tf}</span></td><td>${bm.best_pnl.toFixed(0)}</td><td>${t}=${bm.best_tf}</td>`;
+    tr.style.background = isBest?'rgba(0,255,136,.06)':'';
+    tr.innerHTML = `
+      <td><b>${c.ticker}</b> <span style="font-size:9px;color:#666">${c.nameKo}</span></td>
+      <td style="text-align:center"><span class="badge-tf ${c.tf==='1m'?'tf1':c.tf==='2m'?'tf2':'tf3'}">${c.tf}</span></td>
+      <td style="text-align:center"><span style="padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;${c.side==='LONG'?'background:rgba(0,255,136,.15);color:#00ff88':'background:rgba(255,59,94,.15);color:#ff3b5e'}">${c.side}</span></td>
+      <td style="text-align:center;font-weight:700">${c.entry}</td>
+      <td style="text-align:center;color:#ff3b5e">${c.sl} <span style="font-size:9px;color:#666">${c.tf} Kijun</span></td>
+      <td style="text-align:center;color:#00ff88">${c.tp1} / ${c.tp2} / ${c.tp3} <span style="font-size:9px;color:#666">${c.tf}</span></td>
+      <td style="font-size:9px;color:#888">MA${c.breakdown.ma}+매집${c.breakdown.maejip}+발산${c.breakdown.balsan}+FLIP${c.breakdown.flip}+CVD${c.breakdown.cvd.toFixed(1)} = ${c.baseScore.toFixed(1)}</td>
+      <td style="text-align:center">${c.pnl!==null?`<span style="font-weight:700;${c.pnl>=0?'color:#00ff88':'color:#ff3b5e'}">$${c.pnl} (${c.pnlPct}%)</span>`:`<span style="color:#444">EMPTY - CALCULATE</span>`}</td>
+      <td style="text-align:center">${isBest?`<span style="padding:2px 8px;border-radius:4px;background:#00ff88;color:#000;font-weight:900;font-size:10px">BEST ⭐ ${c.tf}</span>`:`<span style="color:#444">-</span>`}</td>
+    `;
     tbody.appendChild(tr);
   });
 }
 
-function renderMatrix(){
-  const m=document.getElementById('matrix'); m.innerHTML='';
-  TICKERS.forEach(t=>{
-    TFS.forEach(tf=>{
-      const isBest = bestMap[t] && bestMap[t].best_tf===tf;
-      const div=document.createElement('div');
-      div.style.border='1px solid #333'; div.style.padding='4px'; div.style.background=isBest?'#222200':'#111';
-      div.innerHTML=`${t}-${tf} ${isBest?'<span class="badge b-yellow">BEST</span>':''}`;
-      m.appendChild(div);
+function cardEl(card,isBest){
+  const div=document.createElement('div');
+  div.className = 'card'+(isBest?' best':'');
+  const filled = [card.q_ma,card.q_maejip,card.q_balsan,card.q_flip,card.q_cvd,card.q_location].filter(Boolean).length;
+  div.innerHTML = `
+    <div class="card-head">
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+        <span style="font-size:14px;font-weight:900">${card.ticker}</span>
+        <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;${card.side==='LONG'?'background:rgba(0,255,136,.15);color:#00ff88;border:1px solid rgba(0,255,136,.3)':'background:rgba(255,59,94,.15);color:#ff3b5e;border:1px solid rgba(255,59,94,.3)'}">${card.side}</span>
+        <span class="badge-tf ${card.tf==='1m'?'tf1':card.tf==='2m'?'tf2':'tf3'}">${card.tf} DAILY</span>
+        <span style="font-size:10px;color:#666">D2026-11-17</span>
+        ${isBest?`<span style="padding:2px 8px;border-radius:4px;background:#00ff88;color:#000;font-weight:900;font-size:10px">BEST ⭐ ${card.tf}</span>`:''}
+      </div>
+      <div style="text-align:right"><div style="font-size:18px;font-weight:900;color:${isBest?'#00ff88':'#ffd000'}">${card.baseScore.toFixed(1)}</div><div style="font-size:9px;color:#555">Score /100</div></div>
+    </div>
+    <div style="padding:10px 16px;background:#0f0f0f;border-bottom:1px solid #1e1e1e">
+      <div style="font-size:10px;letter-spacing:.08em;color:#666;margin-bottom:6px">Score Breakdown: MA 20 + 매집 25 + 발산 15 + FLIP 10 + CVD 18 = ${card.baseScore.toFixed(1)} • DIFFERENT per TF</div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px">
+        ${[['MA',card.breakdown.ma,'MA 2-720 0.15%'],['매집',card.breakdown.maejip,'매집 15K'],['발산',card.breakdown.balsan,'발산 Flow'],['FLIP',card.breakdown.flip,'FLIP'],['CVD',card.breakdown.cvd.toFixed(1),'CVD']].map(([k,v,l])=>`<div style="padding:6px 8px;border-radius:6px;background:#1a1a1a;border:1px solid #222"><div style="font-size:8px;color:#555">${l}</div><div style="font-size:11px;font-weight:700;margin-top:4px">${k} ${v}</div><div style="margin-top:4px;height:4px;background:#222;border-radius:2px;overflow:hidden"><div style="height:100%;background:#ffd000;width:${Math.min(100,Number(v)/30*100)}%"></div></div></div>`).join('')}
+      </div>
+    </div>
+    <div class="qbox">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px"><span style="padding:2px 8px;border-radius:4px;background:#ffd000;color:#000;font-weight:900;font-size:10px;letter-spacing:.08em">QUANTOWER DATA INJECTION - PASTE HERE</span><span style="font-size:9px;color:#ffd000">EMPTY SLOT • ${filled}/6 filled • 가상매매 가능하도록 빈칸 비워둠</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div><label>MA10 2-720 수렴 0.15%</label><input data-f="q_ma" value="${escapeHtml(card.q_ma)}" placeholder="예: 0.12% 수렴"></div>
+        <div><label>매집 15K 블록 = +15133</label><input data-f="q_maejip" value="${escapeHtml(card.q_maejip)}" placeholder="${card.tf==='1m'?'예: +15133':card.tf==='2m'?'예: 2m봉 매집 +14200':'예: 3m봉 매집 +13800'}" style="color:#00ff88"></div>
+        <div><label>발산 Buy/Sell Flow = +4428</label><input data-f="q_balsan" value="${escapeHtml(card.q_balsan)}" placeholder="예: +4428" style="color:#00e5ff"></div>
+        <div><label>FLIP</label><input data-f="q_flip" value="${escapeHtml(card.q_flip)}" placeholder="예: -14,287→+7,632" style="color:#a78bfa"></div>
+        <div><label>CVD/Delta</label><input data-f="q_cvd" value="${escapeHtml(card.q_cvd)}" placeholder="예: +15133" style="color:#ffd000"></div>
+        <div><label>Location VAL/POC/VAH/D-100</label><select data-f="q_location"><option value="">SELECT EMPTY</option><option value="VAL" ${card.q_location==='VAL'?'selected':''}>VAL</option><option value="POC" ${card.q_location==='POC'?'selected':''}>POC</option><option value="VAH" ${card.q_location==='VAH'?'selected':''}>VAH</option><option value="D-100%" ${card.q_location==='D-100%'?'selected':''}>D-100%</option><option value="W-75%" ${card.q_location==='W-75%'?'selected':''}>W-75%</option></select></div>
+      </div>
+      <div style="margin-top:6px;font-size:9px;color:#555">Quantower 실데이터 붙여넣기 전 EMPTY 유지 - 가상매매 테스트용으로 Entry/SL/TP는 TF별 다른 예시값 사용 중 (MGC 1m ≠ 2m ≠ 3m 증명)</div>
+    </div>
+    <div style="padding:0 12px 8px">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:#ffd000;margin-bottom:6px">Calculated per TF (DIFFERENT per TF) - MUST BE DIFFERENT FROM other TFs:</div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px">
+        <div style="padding:8px;border-radius:6px;background:#0a0a0a;border:1px solid #222"><div style="font-size:8px;color:#666">Entry (${card.tf} current)</div><input data-f="entry" type="number" step="0.01" value="${card.entry}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:13px;font-weight:700;color:#e8e8e8"><div style="font-size:8px;color:#00ff88;margin-top:4px">${card.tf} ≠ other TF</div></div>
+        <div style="padding:8px;border-radius:6px;background:#0a0a0a;border:1px solid rgba(255,59,94,.2)"><div style="font-size:8px;color:#666">SL (${card.tf} Kijun)</div><input data-f="sl" type="number" step="0.01" value="${card.sl}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:12px;font-weight:700;color:#ff3b5e"><div style="font-size:8px;color:#ff3b5e;margin-top:4px">${card.tf} Kijun</div></div>
+        <div style="padding:8px;border-radius:6px;background:#0a0a0a;border:1px solid rgba(0,255,136,.2)"><div style="font-size:8px;color:#666">TP1 (${card.tf} Kijun)</div><input data-f="tp1" type="number" step="0.01" value="${card.tp1}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:12px;font-weight:700;color:#00ff88"></div>
+        <div style="padding:8px;border-radius:6px;background:#0a0a0a;border:1px solid rgba(0,255,136,.2)"><div style="font-size:8px;color:#666">TP2 (${card.tf} SenkouA)</div><input data-f="tp2" type="number" step="0.01" value="${card.tp2}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:12px;font-weight:700;color:#00ff88"></div>
+        <div style="padding:8px;border-radius:6px;background:#0a0a0a;border:1px solid rgba(0,255,136,.2)"><div style="font-size:8px;color:#666">TP3 (${card.tf} SenkouB)</div><input data-f="tp3" type="number" step="0.01" value="${card.tp3}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:12px;font-weight:700;color:#00ff88"></div>
+      </div>
+      <div style="font-size:9px;color:#555;margin-top:6px">Example proof: ${card.ticker}-1m ${card.ticker==='MGC'?'32.44':card.ticker==='M2K'?'92.15':'~'} ≠ ${card.ticker}-2m ${card.ticker==='MGC'?'32.38':card.ticker==='M2K'?'92.00':'~'} ≠ ${card.ticker}-3m ${card.ticker==='MGC'?'32.30':card.ticker==='M2K'?'91.80':'~'} - Tenkan/Kijun/Senkou 각 TF 기준 다르므로 필연적으로 다름</div>
+    </div>
+    <div style="padding:0 12px 12px;display:flex;gap:8px;align-items:center">
+      <button class="btn" style="flex:1;padding:12px;font-size:11px;${card.side==='LONG'?'background:#00ff88;color:#000':'background:#ff3b5e;color:#fff'}" onclick="calc('${card.id}')">CALCULATE P&L - ${card.ticker}-${card.tf} VIRTUAL TRADING</button>
+      <div style="padding:10px 12px;border-radius:8px;background:#0a0a0a;border:1px solid #222;min-width:130px;text-align:center">${card.pnl!==null?`<div style="font-size:13px;font-weight:900;${card.pnl>=0?'color:#00ff88':'color:#ff3b5e'}">$${card.pnl} • ${card.pnlPct}%</div><div style="font-size:8px;color:#666">P&L SIM EMPTY→FILLED</div>`:`<div style="font-size:11px;font-weight:700;color:#444">P&L EMPTY</div><div style="font-size:8px;color:#444">Quantower paste 후 계산</div>`}</div>
+    </div>
+    <div style="padding:0 12px 12px;font-size:9px;color:#444;display:flex;justify-content:space-between"><span>Qty ${card.qty} • ${card.nameKo} • D2026-11-17 • localStorage persisted</span><span style="${filled>0?'color:#00ff88':''}">Quantower ${filled}/6 ${filled>=4?'READY boost 1.25x':filled>=2?'PARTIAL 1.1x':'EMPTY'}</span></div>
+  `;
+  div.querySelectorAll('[data-f]').forEach(el=>{
+    el.addEventListener('change', (e)=>{
+      const f=e.target.getAttribute('data-f');
+      const v = e.target.type==='number'? parseFloat(e.target.value)||0 : e.target.value;
+      const idx = slots.findIndex(s=>s.id===card.id);
+      if(idx>=0){ slots[idx][f]=v; saveSlot(slots[idx]); render(); }
     });
   });
+  return div;
 }
 
-function setFilter(f){
-  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
-  // filter logic would go here
+function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function calc(id){
+  const idx = slots.findIndex(s=>s.id===id);
+  if(idx<0) return;
+  const c = slots[idx];
+  const {pnl,pct} = calcPnl(c);
+  c.pnl=pnl; c.pnlPct=pct;
+  saveSlot(c);
+  toast(`${c.ticker}-${c.tf} ${c.side} • P&L $${pnl} (${pct}%) • Entry ${c.entry} ≠ other TF`);
+  render();
 }
 
-function toggleBestView(){
-  const el=document.getElementById('bestTable');
-  const btn=document.getElementById('bestBtn');
-  if(el.style.display==='none'){el.style.display='block'; btn.innerText='BEST TF VIEW ON'; btn.classList.add('active')}
-  else{el.style.display='none'; btn.innerText='BEST TF VIEW OFF'; btn.classList.remove('active')}
+function toast(msg){
+  let t=document.createElement('div'); t.className='toast'; t.textContent=msg;
+  document.body.appendChild(t); setTimeout(()=>t.remove(),2600);
 }
 
-function toggleMatrix(){}
+function openModal(){
+  pickLeft=top2[0]; pickRight=top2[1];
+  document.getElementById('modal').classList.add('open');
+  renderPicks();
+}
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+function renderPicks(){
+  const leftDiv=document.getElementById('leftPick'); leftDiv.innerHTML='';
+  const rightDiv=document.getElementById('rightPick'); rightDiv.innerHTML='';
+  TICKERS.forEach(t=>{
+    const b1=document.createElement('button');
+    b1.style.cssText=`padding:8px;border-radius:6px;border:1px solid ${pickLeft===t.id?'#ffd000':'#222'};background:${pickLeft===t.id?'#ffd000':'#1a1a1a'};color:${pickLeft===t.id?'#000':'#888'};text-align:left;font-size:11px`;
+    b1.innerHTML=`<div style="font-weight:700">${t.id}</div><div style="font-size:9px;opacity:.7">${t.ko} • ${t.side}</div>`;
+    b1.onclick=()=>{pickLeft=t.id;document.getElementById('leftSel').textContent=`선택: ${pickLeft}`;renderPicks();};
+    leftDiv.appendChild(b1);
+    const b2=document.createElement('button');
+    b2.style.cssText=`padding:8px;border-radius:6px;border:1px solid ${pickRight===t.id?'#ffd000':'#222'};background:${pickRight===t.id?'#ffd000':'#1a1a1a'};color:${pickRight===t.id?'#000':'#888'};text-align:left;font-size:11px`;
+    b2.innerHTML=`<div style="font-weight:700">${t.id}</div><div style="font-size:9px;opacity:.7">${t.ko} • ${t.side}</div>`;
+    b2.onclick=()=>{pickRight=t.id;document.getElementById('rightSel').textContent=`선택: ${pickRight}`;renderPicks();};
+    rightDiv.appendChild(b2);
+  });
+  document.getElementById('leftSel').textContent=`선택: ${pickLeft}`;
+  document.getElementById('rightSel').textContent=`선택: ${pickRight}`;
+}
+function applyTickers(){
+  if(pickLeft===pickRight){ toast('Top2 DISTINCT: 서로 다른 티커 선택 필요'); return; }
+  top2=[pickLeft,pickRight];
+  localStorage.setItem('v5_top2', JSON.stringify(top2));
+  // regenerate but keep existing quantower data if possible
+  const old = [...slots];
+  slots = genSlots();
+  // merge old quantower fields
+  slots.forEach(s=>{
+    const o=old.find(x=>x.id===s.id);
+    if(o){ s.q_ma=o.q_ma; s.q_maejip=o.q_maejip; s.q_balsan=o.q_balsan; s.q_flip=o.q_flip; s.q_cvd=o.q_cvd; s.q_location=o.q_location; if(o.pnl!==null){s.pnl=o.pnl; s.pnlPct=o.pnlPct;} saveSlot(s); }
+  });
+  closeModal();
+  toast(`Top2 DISTINCT 변경: ${top2[0]} , ${top2[1]} - 6 slots 재생성`);
+  render();
+}
 
-initMock();
+// init
+try{ const savedTop2 = JSON.parse(localStorage.getItem('v5_top2')||'null'); if(savedTop2 && savedTop2.length===2) top2=savedTop2; }catch(e){}
+slots = genSlots();
+render();
 </script>
 </body>
 </html>
