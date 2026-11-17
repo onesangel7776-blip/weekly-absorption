@@ -2,318 +2,180 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ENTRY JOURNAL V5 - DAILY 3-TRACK - D2026-11-17 - Father 1m / Son 2m / Daughter 3m</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V5 Entry Journal V5 - 5 TICKER 15 CARD DETAILED</title>
 <style>
-:root{--bg:#0a0a0a;--bg2:#111;--card:#1a1a1a;--b:#222;--t:#e8e8e8;--dim:#888;--y:#ffd000;--g:#00ff88;--r:#ff3b5e;--c:#00e5ff;--p:#a78bfa}
-*{box-sizing:border-box;font-family:'JetBrains Mono',monospace}
-body{margin:0;background:var(--bg);color:var(--t)}
-.max{max-width:1680px;margin:0 auto;padding:16px}
-.badge{padding:4px 12px;border-radius:6px;font-weight:900;font-size:12px;letter-spacing:.1em}
-.y{background:var(--y);color:#000}
-.ghost{padding:6px 12px;border-radius:8px;background:#1a1a1a;border:1px solid #222;font-size:11px}
-.btn{cursor:pointer;border:0;padding:10px 14px;border-radius:8px;font-weight:900;font-size:11px;letter-spacing:.08em}
-.btn-y{background:var(--y);color:#000}
-.btn-d{background:#1a1a1a;border:1px solid #333;color:#888}
-.btn-g{background:var(--g);color:#000}
-.btn-r{background:var(--r);color:#fff}
-.btn.active{outline:2px solid var(--y);color:#fff;background:#2a2a0a}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:1024px){.grid2{grid-template-columns:1fr}}
-.card{background:var(--card);border:1px solid var(--b);border-radius:12px;overflow:hidden}
-.card.father{border-left:3px solid var(--y)}
-.card.son{border-left:3px solid var(--c)}
-.card.daughter{border-left:3px solid var(--p)}
-.card.best{box-shadow:0 0 0 1px rgba(0,255,136,.5),0 0 24px rgba(0,255,136,.15)}
-.card-head{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;background:#151515;border-bottom:1px solid #222}
-.qbox{margin:12px;border:2px dashed rgba(255,208,0,.5);border-radius:10px;background:#0a0a0a;padding:12px}
-.qbox input,.qbox select{width:100%;padding:8px;border-radius:6px;background:#1a1a1a;border:1px solid #333;color:#e8e8e8;font-size:11px}
-.qbox label{font-size:9px;color:#888;letter-spacing:.1em}
-table{width:100%;border-collapse:collapse;font-size:11px;min-width:1200px}
-th{color:#555;padding:8px 10px;border-bottom:1px solid #1e1e1e;background:#0a0a0a;font-size:10px;letter-spacing:.06em;text-align:left}
-td{padding:8px 10px;border-bottom:1px solid #151515}
-.tf{padding:2px 8px;border-radius:4px;font-weight:700;font-size:10px;border:1px solid}
-.tf1{background:rgba(255,208,0,.15);border-color:rgba(255,208,0,.3);color:#ffd000}
-.tf2{background:rgba(0,229,255,.15);border-color:rgba(0,229,255,.3);color:#00e5ff}
-.tf3{background:rgba(167,139,250,.15);border-color:rgba(167,139,250,.3);color:#a78bfa}
-.family{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:900}
-.f1{background:rgba(255,208,0,.2);color:#ffd000;border:1px solid rgba(255,208,0,.4)}
-.f2{background:rgba(0,229,255,.2);color:#00e5ff;border:1px solid rgba(0,229,255,.4)}
-.f3{background:rgba(167,139,250,.2);color:#a78bfa;border:1px solid rgba(167,139,250,.4)}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
-.modal.open{display:flex}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--y);color:#000;padding:8px 16px;border-radius:8px;font-weight:700;font-size:12px;z-index:60}
+:root { --bg:#0a0e1a; --card:#121827; --card2:#1a2340; --border:#1e2d50; --text:#e2e8f0; --muted:#94a3b8; --accent:#3b82f6; --long:#10b981; --short:#ef4444; --gold:#f59e0b; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard',system-ui,sans-serif;padding:16px}
+.header{background:linear-gradient(135deg,#0f172a,#1e293b);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px}
+.header h1{font-size:20px;font-weight:800}
+.sub{color:var(--muted);font-size:12px;margin-top:6px;line-height:1.5}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:12px}
+.summary div{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;font-size:12px}
+.summary b{color:var(--gold)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;position:sticky;top:10px;z-index:10;background:rgba(10,14,26,0.9);backdrop-filter:blur(8px);padding:8px;border-radius:12px;border:1px solid var(--border)}
+.filters button{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer}
+.filters button.active{background:var(--accent);border-color:var(--accent);color:white}
+.topN{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.badge{background:var(--card2);border:1px solid var(--border);padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;position:relative}
+.card.LONG{border-left:3px solid var(--long)} .card.SHORT{border-left:3px solid var(--short)}
+.card .head{display:flex;justify-content:space-between;align-items:center}
+.ticker{font-size:18px;font-weight:900} .tf{font-size:11px;background:var(--card2);padding:3px 8px;border-radius:999px;border:1px solid var(--border)}
+.family{font-size:10px;color:var(--muted);margin-left:6px}
+.side{font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px}
+.LONG .side{background:#064e3b;color:#34d399} .SHORT .side{background:#7f1d1d;color:#fca5a5}
+.detail{font-size:13px;margin:8px 0;line-height:1.7}
+.detail b{font-weight:900}
+.diff{color:var(--gold);font-size:11px;font-weight:800}
+.ichi{background:#0f172a;border:1px solid #1e293b;border-radius:8px;padding:8px;margin-top:8px;font-size:11px;color:#cbd5e1;line-height:1.6}
+.qslots{background:#0f172a;border:1px dashed #334155;border-radius:10px;padding:8px;margin-top:8px;font-size:11px;color:var(--muted)}
+.qslots b{color:#60a5fa}
+.breakdown{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+.breakdown span{background:var(--card2);border:1px solid var(--border);padding:3px 7px;border-radius:6px;font-size:10px}
+.best-table{width:100%;border-collapse:collapse;font-size:12px}
+.best-table th,.best-table td{border:1px solid var(--border);padding:8px;text-align:left}
+.best-table th{background:var(--card2)}
+.hidden{display:none}
+.pnl-pos{color:#10b981;font-weight:800} .pnl-neg{color:#ef4444;font-weight:800}
 </style>
 </head>
 <body>
-<div style="position:sticky;top:0;z-index:30;background:rgba(10,10,10,.96);backdrop-filter:blur(8px);border-bottom:1px solid #1e1e1e"><div class="max">
-<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center">
-<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-<span class="badge y">ENTRY JOURNAL V5</span>
-<span class="ghost" style="border-color:rgba(255,208,0,.3);color:#ffd000;font-weight:700">DAILY 3-TRACK - FATHER 1m / SON 2m / DAUGHTER 3m - D2026-11-17</span>
-<span class="ghost" style="color:#00ff88;border-color:rgba(0,255,136,.2)">6 CARDS DETAILED - Entry/SL/TP DIFFERENT</span>
-</div>
-<div style="display:flex;gap:8px;align-items:center">
-<span class="ghost"><span style="color:#666">DATE</span> <b style="color:#ffd000">D2026-11-17 KST</b> • <b id="top2">MGC , M2K</b></span>
-<button class="btn btn-y" onclick="location.href='index.html'">← COMMAND CENTER</button>
-</div>
-</div>
-<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#111;border:1px solid #222;border-radius:10px;padding:10px">
-<div style="font-size:10px;color:#666;letter-spacing:.1em">MERGED FILTER:</div>
-<button class="btn btn-d active" id="b_all" onclick="setFilter('ALL')">ALL 6 CARDS</button>
-<button class="btn btn-d" id="b_f" onclick="setFilter('FATHER')">Father 1m ONLY</button>
-<button class="btn btn-d" id="b_s" onclick="setFilter('SON')">Son 2m ONLY</button>
-<button class="btn btn-d" id="b_d" onclick="setFilter('DAUGHTER')">Daughter 3m ONLY</button>
-<span style="width:1px;height:20px;background:#222"></span>
-<button class="btn btn-d" id="b_best" onclick="toggleBest()">BEST TF VIEW</button>
-<span style="font-size:10px;color:#666">Top2 DISTINCT는 index.html의 localStorage v5_top2 자동 동기화 • 각 카드 Entry/SL/TP는 TF별 다른 값</span>
-</div>
-<div style="margin-top:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-<div style="background:#1a1a1a;border:1px solid rgba(255,208,0,.3);border-radius:8px;padding:10px"><div style="font-size:10px;font-weight:900;color:#ffd000">FATHER 1m • 50K PROP</div><div style="font-size:11px;margin-top:4px">DailyLoss $700 / Profit $500 LOCKED</div><div style="font-size:10px;color:#888">Balance: <b id="bal_f" style="color:#ffd000">$50,000</b> • Today P&L <b id="pnl_f">$0</b></div></div>
-<div style="background:#1a1a1a;border:1px solid rgba(0,229,255,.3);border-radius:8px;padding:10px"><div style="font-size:10px;font-weight:900;color:#00e5ff">SON 2m • 50K PROP</div><div style="font-size:11px;margin-top:4px">DailyLoss $700 / Profit $500 LOCKED</div><div style="font-size:10px;color:#888">Balance: <b id="bal_s" style="color:#00e5ff">$50,000</b> • Today P&L <b id="pnl_s">$0</b></div></div>
-<div style="background:#1a1a1a;border:1px solid rgba(167,139,250,.3);border-radius:8px;padding:10px"><div style="font-size:10px;font-weight:900;color:#a78bfa">DAUGHTER 3m • 50K PROP</div><div style="font-size:11px;margin-top:4px">DailyLoss $700 / Profit $500 LOCKED</div><div style="font-size:10px;color:#888">Balance: <b id="bal_d" style="color:#a78bfa">$50,000</b> • Today P&L <b id="pnl_d">$0</b></div></div>
-</div>
-</div></div>
-
-<main class="max" style="padding-top:20px;padding-bottom:40px;display:flex;flex-direction:column;gap:20px">
-<div id="bestView" style="display:none;border:1px solid rgba(0,255,136,.3);border-radius:12px;background:#111;padding:16px">
-<h3 style="margin:0 0 12px;font-size:12px;letter-spacing:.1em"><span style="width:8px;height:16px;background:#00ff88;display:inline-block;margin-right:8px"></span>BEST TF VIEW - per-ticker P&L/WIN per TF</h3>
-<div style="overflow-x:auto"><table><thead><tr><th>TICKER</th><th>1m P&L / WIN</th><th>2m P&L / WIN</th><th>3m P&L / WIN</th><th>BEST TF</th><th>Reason</th></tr></thead><tbody id="bestBody"></tbody></table></div>
+<div class="header">
+<h1>Entry Journal V5 - 6 Cards Detailed → 15 Cards REAL READY (5 TICKER x 3TF)</h1>
+<div class="sub" id="sub">Loading journal_data_v5.json ... Father 1m ONLY / Son 2m ONLY / Daughter 3m ONLY + BEST TF VIEW | Entry/SL/TP different per TF | maejip +15133 / balsan +4428 per TF different | PROP $700/$500 LOCK | Quantower empty slots for real data injection</div>
+<div class="summary" id="summary"></div>
+<div class="topN" id="topN"></div>
 </div>
 
-<div class="grid2" id="cards"></div>
-
-<div style="border:1px solid #222;border-radius:12px;background:#111;overflow:hidden">
-<div style="padding:12px 16px;background:#0e0e0e;border-bottom:1px solid #1e1e1e;display:flex;justify-content:space-between"><h3 style="margin:0;font-size:12px">JOURNAL TABLE - 6 SETS VIRTUAL TRADING LOG - D2026-11-17</h3><button class="btn btn-d" onclick="exportJson()">EXPORT journal_data_v5.json</button></div>
-<div style="overflow-x:auto"><table><thead><tr><th>DATE</th><th>FAMILY</th><th>TICKER</th><th>TF</th><th>Side</th><th>Entry ≠</th><th>SL (Kijun ≠)</th><th>TP1/2/3 ≠</th><th>Result</th><th>P&L</th><th>Score breakdown</th><th>Best TF?</th></tr></thead><tbody id="journalBody"></tbody></table></div>
+<div class="filters">
+<button class="active" data-filter="ALL">ALL 15 CARDS</button>
+<button data-filter="FATHER">Father 1m ONLY (5)</button>
+<button data-filter="SON">Son 2m ONLY (5)</button>
+<button data-filter="DAUGHTER">Daughter 3m ONLY (5)</button>
+<button data-filter="BEST">BEST TF VIEW (5)</button>
 </div>
 
-<footer style="font-size:10px;color:#444;border-top:1px solid #1e1e1e;padding-top:12px">
-<div>ENTRY JOURNAL V5 DAILY 3-TRACK • Father 1m / Son 2m / Daughter 3m 각 50K 독립 • Top2 DISTINCT 6포지션 하루 1회만 진입으로 PROP AI 탐지 회피 • D2026-11-17 KST • docs/v5-ma-delta/entry.html</div>
-<div>3-stage Ichimoku TP: TP1 Kijun 50% 데크+본절, TP2 SenkouA 25%, TP3 SenkouB 25% • Prop Locked: DailyLoss $700 / Profit $500 / Max -450k / Session 18:00-16:10 EST + PreClose 60m + BlockWeekend / Judas 15:30-16:15 / 21:00-21:45 KST / News ±30 / Zombie 0.7x+CVD / EOD 23:50 / Consistency 40%</div>
-</footer>
-</main>
+<div id="bestView" class="hidden">
+<div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px">
+<h3 style="font-size:14px;margin-bottom:10px">BEST TF per Ticker - P&L MAX - 5 TICKER REAL READY</h3>
+<table class="best-table" id="bestTable"><thead><tr><th>TICKER</th><th>BEST TF</th><th>FAMILY</th><th>Entry != other TF</th><th>SL per TF</th><th>TP1/TP2/TP3 per TF</th><th>P&L</th><th>Reason</th></tr></thead><tbody></tbody></table>
+</div>
+</div>
+
+<div class="grid" id="grid"></div>
 
 <script>
-const TICKERS_META = {
-M2K:{ko:"마이크로 러셀",side:"SHORT",base:92.15},
-MES:{ko:"마이크로 S&P500",side:"LONG",base:45.2},
-MGC:{ko:"마이크로 골드",side:"LONG",base:32.4},
-MNQ:{ko:"마이크로 나스닥",side:"LONG",base:121.5},
-MYM:{ko:"마이크로 다우",side:"SHORT",base:38.7},
-MCL:{ko:"마이크로 크루드",side:"LONG",base:78.3},
-SIL:{ko:"마이크로 실버",side:"LONG",base:28.9},
-M6E:{ko:"마이크로 유로",side:"SHORT",base:1.085},
-GDX:{ko:"금광 ETF",side:"SHORT",base:32.1},
-TLT:{ko:"20년 국채",side:"SHORT",base:88.5},
-M6B:{ko:"마이크로 파운드",side:"LONG",base:1.27},
-MBT:{ko:"마이크로 비트",side:"SHORT",base:42.3},
-};
-let top2 = ["MGC","M2K"];
-try{ const s=JSON.parse(localStorage.getItem('v5_top2')||'null'); if(s&&s.length===2) top2=s; }catch(e){}
-document.getElementById('top2').textContent = `${top2[0]} , ${top2[1]}`;
-let slots = [];
-let filter = 'ALL';
-let showBest = false;
-let journal = [];
-try{ journal = JSON.parse(localStorage.getItem('v5_journal')||'[]'); }catch(e){ journal=[]; }
+let journal=null, absorption=null, bestMap=null;
+async function loadJSON(p){ try{ const r=await fetch(p+'?t='+Date.now()); if(!r.ok) throw 0; return await r.json(); }catch{return null;} }
+async function init(){
+ journal = await loadJSON('../journal_data_v5.json') || await loadJSON('journal_data_v5.json') || await loadJSON('./journal_data_v5.json');
+ absorption = await loadJSON('../absorption_v5.json') || await loadJSON('absorption_v5.json') || journal;
+ bestMap = (await loadJSON('../best_tf_per_ticker.json')) || (await loadJSON('best_tf_per_ticker.json')) || journal?.best_tf_per_ticker || absorption?.best_tf_per_ticker || {};
+ if(journal && journal.best_tf_per_ticker && !journal.best_tf_per_ticker.MGC){ bestMap = journal.best_tf_per_ticker; } // if wrapped
+ if(bestMap && bestMap.best_tf_per_ticker) bestMap = bestMap.best_tf_per_ticker;
+ if(!journal){ document.getElementById('sub').innerText='journal_data_v5.json not found - run quantower_delta_collector_v5_3TRACK.py'; return; }
 
-function gen(){
-  const out=[];
-  for(let tid of top2){
-    const meta=TICKERS_META[tid]||{ko:tid,side:"LONG",base:50};
-    ['1m','2m','3m'].forEach((tf,i)=>{
-      const id=`${tid}-${tf}`;
-      const offset=tf==='1m'?0.04:tf==='2m'?-0.02:-0.10;
-      const base = meta.base+offset + (Math.random()*0.04-0.02);
-      const entry=+(base).toFixed(2);
-      let sl,tp1,tp2,tp3;
-      if(meta.side==='LONG'){
-        sl=+(entry-(0.6+i*0.2+Math.random()*0.2)).toFixed(2);
-        tp1=+(entry+(0.66+Math.random()*0.2)).toFixed(2);
-        tp2=+(entry+(1.36+Math.random()*0.3)).toFixed(2);
-        tp3=+(entry+(2.06+Math.random()*0.3)).toFixed(2);
-      }else{
-        sl=+(entry+(0.6+i*0.2+Math.random()*0.2)).toFixed(2);
-        tp1=+(entry-(0.66+Math.random()*0.2)).toFixed(2);
-        tp2=+(entry-(1.36+Math.random()*0.3)).toFixed(2);
-        tp3=+(entry-(2.06+Math.random()*0.3)).toFixed(2);
-      }
-      const saved = loadSlot(id);
-      const family = tf==='1m'?'FATHER':tf==='2m'?'SON':'DAUGHTER';
-      out.push({
-        id, ticker:tid, tf, family, side:meta.side, nameKo:meta.ko,
-        entry:saved?.entry??entry, sl:saved?.sl??sl, tp1:saved?.tp1??tp1, tp2:saved?.tp2??tp2, tp3:saved?.tp3??tp3,
-        qty:2,
-        breakdown:{ma:18+Math.floor(Math.random()*5),maejip:22+Math.floor(Math.random()*6),balsan:13+Math.floor(Math.random()*4),flip:9+Math.floor(Math.random()*4),cvd:15+Math.random()*5},
-        score:80+Math.random()*12,
-        q_ma:saved?.q_ma||'', q_maejip:saved?.q_maejip||'', q_balsan:saved?.q_balsan||'', q_flip:saved?.q_flip||'', q_cvd:saved?.q_cvd||'', q_location:saved?.q_location||'',
-        status:saved?.status||'OPEN', pnl:saved?.pnl??null, pnlPct:saved?.pnlPct??null
-      });
-    });
-  }
-  return out;
-}
-function loadSlot(id){ try{ const v=localStorage.getItem('v5_entry_'+id); return v?JSON.parse(v):null;}catch(e){return null} }
-function saveSlot(c){ try{ localStorage.setItem('v5_entry_'+c.id, JSON.stringify(c)); }catch(e){} try{ fetch('actions',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action:'records.put',args:{collection:'journal_entries',id:c.id,value:c}})}); }catch(e){} }
+ const bal = journal.balance || absorption?.balance || 50000;
+ const maxT = journal.max_tickers || absorption?.max_tickers || 5;
+ const topN = journal.topN_distinct || journal.topN || absorption?.topN_distinct || absorption?.top2_distinct || ['MGC','M2K','MCL','TLT','MHG'];
+ const slots = journal.slots || absorption?.slots || [];
 
-function calcPnl(c){
-  const avg=(c.tp1+c.tp2+c.tp3)/3;
-  let pnl=c.side==='LONG'?(avg-c.entry)*c.qty*10:(c.entry-avg)*c.qty*10;
-  const filled=[c.q_ma,c.q_maejip,c.q_balsan,c.q_flip,c.q_cvd,c.q_location].filter(Boolean).length;
-  const boost=filled>=4?1.25:filled>=2?1.1:1;
-  pnl=Math.round(pnl*boost*10)/10;
-  const pct=c.entry?((c.side==='LONG'?(avg-c.entry)/c.entry:(c.entry-avg)/c.entry)*100*boost):0;
-  return {pnl, pct:Math.round(pct*100)/100, filled, boost};
+ document.getElementById('sub').innerText = `D${journal.date||absorption?.date||''} KST Balance $${bal} -> ${maxT} TICKERS x 3TF = ${slots.length} SLOTS | Top${maxT} DISTINCT ${topN.join(',')} | PROP LOCKED DailyLoss $700 Profit $500 Judas 15:30-16:15/21:00-21:45 News ±30m EOD 23:50 | Entry/SL/TP different per TF Tenkan/Kijun/Senkou per TF | Quantower REAL_READY Lucid L1/L2 hdMain[1].VolumeAnalysisData.Total.Delta`;
+
+ const summ=document.getElementById('summary'); summ.innerHTML='';
+ const families=journal.families||{};
+ Object.entries(families).forEach(([k,v])=>{
+  const d=document.createElement('div');
+  const cls = v.daily_pnl<=-700?'pnl-neg':v.daily_pnl>=500?'pnl-pos':'';
+  d.innerHTML=`<b>${k}</b> ${v.label||''}<br>Balance $${v.balance||bal} Daily <span class="${cls}">$${v.daily_pnl||0}</span>`;
+  summ.appendChild(d);
+ });
+ if(!Object.keys(families).length){
+  summ.innerHTML=`<div><b>Balance</b> $${bal}</div><div><b>MaxTickers</b> ${maxT} -> ${maxT*3} slots</div><div><b>TopN</b> ${topN.join(',')}</div>`;
+ }
+
+ const topNdiv=document.getElementById('topN'); topNdiv.innerHTML='';
+ topN.forEach((tid,i)=>{ const b=document.createElement('div'); b.className='badge'; b.innerText=`${i<2?'★ ':''}${tid}`; topNdiv.appendChild(b); });
+
+ renderGrid(slots);
+ renderBest(bestMap, slots);
 }
 
-function setFilter(f){
-  filter=f;
-  document.querySelectorAll('[id^=b_]').forEach(b=>b.classList.remove('active'));
-  const map={ALL:'b_all',FATHER:'b_f',SON:'b_s',DAUGHTER:'b_d'};
-  if(map[f]) document.getElementById(map[f]).classList.add('active');
-  render();
-}
-function toggleBest(){
-  showBest=!showBest;
-  document.getElementById('bestView').style.display=showBest?'block':'none';
-  document.getElementById('b_best').classList.toggle('active',showBest);
-  if(showBest) renderBest();
+function renderGrid(slots){
+ const grid=document.getElementById('grid'); grid.innerHTML='';
+ slots.forEach(s=>{
+  const card=document.createElement('div'); card.className=`card ${s.side}`; card.dataset.family=s.family|| (s.tf=='1m'?'FATHER':s.tf=='2m'?'SON':'DAUGHTER'); card.dataset.tf=s.tf;
+  const ichi=s.ichimoku||{}; const br=s.breakdown||{};
+  const q = s;
+  card.innerHTML=`
+   <div class="head"><div><span class="ticker">${s.ticker}</span> <span class="tf">${s.tf}</span><span class="family">${s.family||''}</span></div><span class="side">${s.side}</span></div>
+   <div class="detail">
+     <b>Entry ${s.entry}</b> <span class="diff">!= other TF (Tenkan per TF ${ichi.tenkan||''})</span><br>
+     SL ${s.sl} <span style="font-size:11px;color:#94a3b8">Kijun per TF ${ichi.kijun||''}</span><br>
+     TP1 ${s.tp1} / TP2 ${s.tp2} / TP3 ${s.tp3} <span style="font-size:11px;color:#94a3b8">SenkouA/B per TF</span><br>
+     Qty ${s.qty||2} | Score ${s.score||''} | P&L <b class="${(s.pnl||0)>=0?'pnl-pos':'pnl-neg'}">$${s.pnl||0}</b> (${s.pnl_pct||''}%)
+   </div>
+   <div class="ichi">
+     <b>Ichimoku per TF Different</b><br>
+     Tenkan ${ichi.tenkan||'-'} Kijun ${ichi.kijun||'-'} SenkouA ${ichi.senkouA||'-'} SenkouB ${ichi.senkouB||'-'}<br>
+     Entry=Tenkan per TF / SL=Kijun per TF / TP=Senkou per TF + 0.04s offset for AI detection avoidance
+   </div>
+   <div class="qslots">
+     <b>Quantower REAL SLOTS (블프때 자동 채움 - empty slots left)</b><br>
+     q_ma: ${q.q_ma||'empty'} ma convergence ≤0.15<br>
+     q_maejip: ${q.q_maejip||'empty'} +15133 map ${q.q_delta||''} hdMain[1].VolumeAnalysisData.Total.Delta<br>
+     q_balsan: ${q.q_balsan||'empty'} +4428<br>
+     q_flip: ${q.q_flip||'empty'} FLIP -14287 / +7632<br>
+     q_cvd: ${q.q_cvd||'empty'} CVD ${q.q_location||''} VAL/POC/VAH<br>
+     q_vwap: ${q.q_vwap||''} q_volume_x: ${q.q_volume_x||''} Location D-100% W-75%
+   </div>
+   <div class="breakdown">
+     ${br.ma!==undefined?`<span>ma ${br.ma} ${br.ma_pct||''}% ${br.ma_ok?'OK':''}</span>`:''}
+     ${br.maejip!==undefined?`<span>maejip ${br.maejip} val ${br.maejip_val||''}</span>`:''}
+     ${br.balsan!==undefined?`<span>balsan ${br.balsan} val ${br.balsan_val||''}</span>`:''}
+     ${br.flip!==undefined?`<span>flip ${br.flip} ${br.flip_val||''}</span>`:''}
+     ${br.cvd!==undefined?`<span>cvd ${br.cvd} ${br.cvd_val||''}</span>`:''}
+     ${br.vwap!==undefined?`<span>vwap ${br.vwap} ${br.vwap_loc||''}</span>`:''}
+   </div>
+  `;
+  grid.appendChild(card);
+ });
 }
 
-function render(){
-  const cont=document.getElementById('cards'); cont.innerHTML='';
-  let list=[...slots];
-  if(filter==='FATHER') list=list.filter(s=>s.tf==='1m');
-  if(filter==='SON') list=list.filter(s=>s.tf==='2m');
-  if(filter==='DAUGHTER') list=list.filter(s=>s.tf==='3m');
-  // best per ticker
-  const best={};
-  for(let t of top2){
-    const arr=slots.filter(s=>s.ticker===t);
-    let b=arr[0]; if(!b) continue;
-    for(let c of arr){ const v=c.pnl!==null?c.pnl:c.score; const bv=b.pnl!==null?b.pnl:b.score; if(v>bv) b=c; }
-    best[t]=b;
-  }
-  list.sort((a,b)=>a.ticker.localeCompare(b.ticker)||a.tf.localeCompare(b.tf)).forEach(c=>{
-    const isBest=best[c.ticker]?.id===c.id;
-    const d=document.createElement('div'); d.className=`card ${c.family.toLowerCase()}${isBest?' best':''}`;
-    const filled=[c.q_ma,c.q_maejip,c.q_balsan,c.q_flip,c.q_cvd,c.q_location].filter(Boolean).length;
-    d.innerHTML=`
-      <div class="card-head">
-        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-          <span style="font-weight:900;font-size:14px">${c.ticker}</span>
-          <span class="family ${c.family==='FATHER'?'f1':c.family==='SON'?'f2':'f3'}">${c.family} ${c.tf}</span>
-          <span class="tf ${c.tf==='1m'?'tf1':c.tf==='2m'?'tf2':'tf3'}">${c.tf}</span>
-          <span style="padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;${c.side==='LONG'?'background:rgba(0,255,136,.15);color:#00ff88':'background:rgba(255,59,94,.15);color:#ff3b5e'}">${c.side}</span>
-          ${isBest?`<span style="padding:2px 8px;border-radius:4px;background:#00ff88;color:#000;font-weight:900;font-size:10px">BEST ⭐ ${c.tf}</span>`:''}
-          <span style="font-size:9px;color:#666">D2026-11-17</span>
-        </div>
-        <div style="text-align:right"><div style="font-size:16px;font-weight:900;color:${isBest?'#00ff88':'#ffd000'}">${c.score.toFixed(1)}</div><div style="font-size:8px;color:#555">${c.status}</div></div>
-      </div>
-      <div style="padding:10px 12px;background:#0f0f0f;border-bottom:1px solid #1e1e1e">
-        <div style="font-size:9px;color:#666;margin-bottom:6px">MA 20 + 매집 25 + 발산 15 + FLIP 10 + CVD 18 = ${c.score.toFixed(1)} • Tenkan/Kijun/Senkou ${c.tf} 기준 다름</div>
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px">
-          ${[['MA',c.breakdown.ma],['매집',c.breakdown.maejip],['발산',c.breakdown.balsan],['FLIP',c.breakdown.flip],['CVD',c.breakdown.cvd.toFixed(1)]].map(([k,v])=>`<div style="padding:4px 6px;border-radius:6px;background:#1a1a1a;border:1px solid #222"><div style="font-size:8px;color:#555">${k}</div><div style="font-size:10px;font-weight:700;margin-top:2px">${v}</div></div>`).join('')}
-        </div>
-      </div>
-      <div class="qbox">
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="padding:2px 8px;border-radius:4px;background:#ffd000;color:#000;font-weight:900;font-size:9px">QUANTOWER DATA PASTE HERE</span><span style="font-size:9px;color:#ffd000">${filled}/6 ${filled>=4?'READY 1.25x':filled>=2?'PARTIAL 1.1x':'EMPTY'}</span></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-          <div><label>MA10 2-720 수렴 0.15%</label><input data-f="q_ma" value="${esc(c.q_ma)}" placeholder="0.12%"></div>
-          <div><label>매집 15K = +15133</label><input data-f="q_maejip" value="${esc(c.q_maejip)}" placeholder="${c.tf==='1m'?'+15133':c.tf==='2m'?'+14200':'+13800'}" style="color:#00ff88"></div>
-          <div><label>발산 = +4428</label><input data-f="q_balsan" value="${esc(c.q_balsan)}" placeholder="+4428" style="color:#00e5ff"></div>
-          <div><label>FLIP</label><input data-f="q_flip" value="${esc(c.q_flip)}" placeholder="-14287→+7632"></div>
-          <div><label>CVD/Delta</label><input data-f="q_cvd" value="${esc(c.q_cvd)}" placeholder="+15133"></div>
-          <div><label>Location VAL/POC/VAH</label><select data-f="q_location"><option value="">EMPTY</option>${['VAL','POC','VAH','D-100%','W-75%'].map(v=>`<option value="${v}" ${c.q_location===v?'selected':''}>${v}</option>`).join('')}</select></div>
-        </div>
-      </div>
-      <div style="padding:0 12px 8px">
-        <div style="font-size:9px;font-weight:700;letter-spacing:.08em;color:#ffd000;margin-bottom:6px">Per TF DIFFERENT - ${c.ticker}-${c.tf} ≠ other TFs:</div>
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px">
-          <div style="padding:6px;border-radius:6px;background:#0a0a0a;border:1px solid #222"><div style="font-size:8px;color:#666">Entry ${c.tf}</div><input data-f="entry" type="number" step="0.01" value="${c.entry}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:12px;font-weight:700;color:#e8e8e8"><div style="font-size:8px;color:#00ff88">${c.tf}≠other</div></div>
-          <div style="padding:6px;border-radius:6px;background:#0a0a0a;border:1px solid rgba(255,59,94,.2)"><div style="font-size:8px;color:#666">SL Kijun ${c.tf}</div><input data-f="sl" type="number" step="0.01" value="${c.sl}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:12px;font-weight:700;color:#ff3b5e"></div>
-          <div style="padding:6px;border-radius:6px;background:#0a0a0a;border:1px solid rgba(0,255,136,.2)"><div style="font-size:8px;color:#666">TP1 Kijun 50%</div><input data-f="tp1" type="number" step="0.01" value="${c.tp1}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:11px;font-weight:700;color:#00ff88"></div>
-          <div style="padding:6px;border-radius:6px;background:#0a0a0a;border:1px solid rgba(0,255,136,.2)"><div style="font-size:8px;color:#666">TP2 SenkouA 25%</div><input data-f="tp2" type="number" step="0.01" value="${c.tp2}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:11px;font-weight:700;color:#00ff88"></div>
-          <div style="padding:6px;border-radius:6px;background:#0a0a0a;border:1px solid rgba(0,255,136,.2)"><div style="font-size:8px;color:#666">TP3 SenkouB 25%</div><input data-f="tp3" type="number" step="0.01" value="${c.tp3}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:11px;font-weight:700;color:#00ff88"></div>
-        </div>
-      </div>
-      <div style="padding:0 12px 12px;display:flex;gap:6px">
-        <button class="btn ${c.side==='LONG'?'btn-g':'btn-r'}" style="flex:1;padding:10px" onclick="trade('${c.id}','WIN')">WIN - TP HIT</button>
-        <button class="btn btn-d" style="flex:1;padding:10px" onclick="trade('${c.id}','LOSS')">LOSS - SL HIT</button>
-        <div style="min-width:110px;padding:8px 10px;border-radius:8px;background:#0a0a0a;border:1px solid #222;text-align:center">${c.pnl!==null?`<div style="font-size:12px;font-weight:900;${c.pnl>=0?'color:#00ff88':'color:#ff3b5e'}">$${c.pnl} ${c.pnlPct}%</div><div style="font-size:8px;color:#666">${c.status}</div>`:`<div style="font-size:10px;color:#444">P&L EMPTY</div>`}</div>
-      </div>
-    `;
-    d.querySelectorAll('[data-f]').forEach(el=>el.addEventListener('change',e=>{
-      const f=e.target.getAttribute('data-f'); const v=e.target.type==='number'?parseFloat(e.target.value)||0:e.target.value;
-      const idx=slots.findIndex(s=>s.id===c.id); if(idx>=0){ slots[idx][f]=v; saveSlot(slots[idx]); renderJournal(); }
-    }));
-    cont.appendChild(d);
-  });
-  renderJournal();
-  updateBalances();
-}
-function trade(id,result){
-  const idx=slots.findIndex(s=>s.id===id); if(idx<0) return;
-  const c=slots[idx];
-  const {pnl,pct}=calcPnl(c);
-  const finalPnl = result==='WIN'?Math.abs(pnl):-Math.abs(pnl*0.6);
-  c.pnl = Math.round(finalPnl*10)/10;
-  c.pnlPct = result==='WIN'?Math.abs(pct):-Math.abs(pct*0.6);
-  c.status = result;
-  saveSlot(c);
-  const entry={date:'D2026-11-17',family:c.family,ticker:c.ticker,tf:c.tf,side:c.side,entry:c.entry,sl:c.sl,tp:`${c.tp1}/${c.tp2}/${c.tp3}`,result,pnl:c.pnl,score:`MA${c.breakdown.ma}+매집${c.breakdown.maejip}+발산${c.breakdown.balsan}+FLIP${c.breakdown.flip}+CVD${c.breakdown.cvd.toFixed(1)}=${c.score.toFixed(1)}`,isBest:false};
-  journal.unshift(entry);
-  localStorage.setItem('v5_journal',JSON.stringify(journal.slice(0,200)));
-  toast(`${c.family} ${c.ticker}-${c.tf} ${result} $${c.pnl}`);
-  render();
-  if(showBest) renderBest();
-}
-function renderJournal(){
-  const tb=document.getElementById('journalBody'); tb.innerHTML='';
-  const best={}; for(let t of top2){ const arr=slots.filter(s=>s.ticker===t); let b=arr[0]; if(!b) continue; for(let c of arr){ const v=c.pnl!==null?c.pnl:c.score; const bv=b.pnl!==null?b.pnl:b.score; if(v>bv) b=c; } best[t]=b; }
-  journal.slice(0,50).forEach(j=>{
-    const isBest = best[j.ticker]?.tf===j.tf;
-    const tr=document.createElement('tr'); tr.style.background=isBest?'rgba(0,255,136,.06)':'';
-    tr.innerHTML=`<td>${j.date}</td><td><span class="family ${j.family==='FATHER'?'f1':j.family==='SON'?'f2':'f3'}">${j.family}</span></td><td><b>${j.ticker}</b></td><td><span class="tf ${j.tf==='1m'?'tf1':j.tf==='2m'?'tf2':'tf3'}">${j.tf}</span></td><td><span style="padding:2px 6px;border-radius:4px;font-size:9px;${j.side==='LONG'?'background:rgba(0,255,136,.15);color:#00ff88':'background:rgba(255,59,94,.15);color:#ff3b5e'}">${j.side}</span></td><td style="font-weight:700">${j.entry}</td><td style="color:#ff3b5e">${j.sl}</td><td style="color:#00ff88;font-size:10px">${j.tp}</td><td><span style="padding:2px 6px;border-radius:4px;font-weight:700;${j.result==='WIN'?'background:#00ff88;color:#000':'background:#ff3b5e;color:#fff'}">${j.result}</span></td><td style="font-weight:700;${j.pnl>=0?'color:#00ff88':'color:#ff3b5e'}">$${j.pnl}</td><td style="font-size:9px;color:#888">${j.score}</td><td>${isBest?'<span style="padding:2px 6px;border-radius:4px;background:#00ff88;color:#000;font-weight:900;font-size:9px">BEST</span>':'-'}</td>`;
-    tb.appendChild(tr);
-  });
-}
-function renderBest(){
-  const tb=document.getElementById('bestBody'); tb.innerHTML='';
-  for(let t of top2){
-    const arr=slots.filter(s=>s.ticker===t);
-    const m={}; arr.forEach(c=>{ m[c.tf]=c; });
-    let bestTf='1m'; let maxPnl=-99999;
-    for(let tf of ['1m','2m','3m']){ const c=m[tf]; if(!c) continue; const v=c.pnl!==null?c.pnl:c.score; if(v>maxPnl){maxPnl=v; bestTf=tf;} }
+function renderBest(bestMap, allSlots){
+ const tbody=document.querySelector('#bestTable tbody'); tbody.innerHTML='';
+ Object.entries(bestMap||{}).forEach(([tid,v])=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><b>${tid}</b></td><td>${v.tf||''}</td><td>${v.family||''}</td><td>${v.entry||''} <span style="color:#f59e0b">!=other TF</span></td><td>${v.sl||''}</td><td>${v.tp1||''}/${v.tp2||''}/${v.tp3||''}</td><td style="color:#f59e0b">$${v.pnl||v.score||''}</td><td>${v.reason||''}</td>`;
+  tbody.appendChild(tr);
+ });
+ if(!Object.keys(bestMap||{}).length && allSlots){
+   // fallback compute best per ticker by pnl
+   const map={};
+   allSlots.forEach(s=>{ if(!map[s.ticker] || (s.pnl||0)>(map[s.ticker].pnl||-9999)) map[s.ticker]=s; });
+   Object.entries(map).forEach(([tid,s])=>{
     const tr=document.createElement('tr');
-    const getPnl = (tf)=>{ const c=m[tf]; if(!c) return '-'; return c.pnl!==null?`$${c.pnl} / ${c.status}`:`Score ${c.score.toFixed(1)} / OPEN`; };
-    tr.innerHTML=`<td><b>${t}</b> ${TICKERS_META[t]?.ko||''}</td><td>${getPnl('1m')}</td><td>${getPnl('2m')}</td><td>${getPnl('3m')}</td><td><span style="padding:4px 10px;border-radius:6px;background:#00ff88;color:#000;font-weight:900">BEST ${bestTf} ⭐</span></td><td style="font-size:10px;color:#888">P&L max = Best TF (not score only) • ${t}-${bestTf} Entry ${m[bestTf]?.entry} ≠ other TF</td>`;
-    tb.appendChild(tr);
-  }
+    tr.innerHTML=`<td><b>${tid}</b></td><td>${s.tf}</td><td>${s.family}</td><td>${s.entry} !=other</td><td>${s.sl}</td><td>${s.tp1}/${s.tp2}/${s.tp3}</td><td>$${s.pnl}</td><td>P&L max per TF</td>`;
+    tbody.appendChild(tr);
+   });
+ }
 }
-function updateBalances(){
-  const sum=(tf)=> slots.filter(s=>s.tf===tf).reduce((acc,c)=>acc+(c.pnl||0),0);
-  const f=sum('1m'), s=sum('2m'), d=sum('3m');
-  document.getElementById('pnl_f').textContent=`$${f}`; document.getElementById('pnl_f').style.color=f>=0?'#00ff88':'#ff3b5e';
-  document.getElementById('pnl_s').textContent=`$${s}`; document.getElementById('pnl_s').style.color=s>=0?'#00ff88':'#ff3b5e';
-  document.getElementById('pnl_d').textContent=`$${d}`; document.getElementById('pnl_d').style.color=d>=0?'#00ff88':'#ff3b5e';
-  document.getElementById('bal_f').textContent=`$${(50000+f).toFixed(0)}`; document.getElementById('bal_s').textContent=`$${(50000+s).toFixed(0)}`; document.getElementById('bal_d').textContent=`$${(50000+d).toFixed(0)}`;
-}
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function toast(m){ let t=document.createElement('div'); t.className='toast'; t.textContent=m; document.body.appendChild(t); setTimeout(()=>t.remove(),2500); }
-function exportJson(){
-  const data={date:'D2026-11-17',top2,slots,journal, best_tf_per_ticker:{}};
-  for(let t of top2){
-    const arr=slots.filter(s=>s.ticker===t);
-    let best=arr[0]; for(let c of arr){ const v=c.pnl!==null?c.pnl:c.score; const bv=best.pnl!==null?best.pnl:best.score; if(v>bv) best=c; }
-    if(best) data.best_tf_per_ticker[t]={tf:best.tf,pnl:best.pnl,score:best.score,entry:best.entry,sl:best.sl,tp1:best.tp1,tp2:best.tp2,tp3:best.tp3};
-  }
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='journal_data_v5.json'; a.click(); URL.revokeObjectURL(url);
-  toast('journal_data_v5.json exported - includes best_tf_per_ticker');
-}
-slots=gen(); render();
+
+document.querySelectorAll('.filters button').forEach(btn=>{
+ btn.addEventListener('click',()=>{
+  document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  const f=btn.dataset.filter;
+  const grid=document.getElementById('grid'); const bestView=document.getElementById('bestView');
+  if(f==='ALL'){ grid.classList.remove('hidden'); bestView.classList.add('hidden'); document.querySelectorAll('.card').forEach(c=>c.classList.remove('hidden')); }
+  else if(f==='BEST'){ grid.classList.add('hidden'); bestView.classList.remove('hidden'); }
+  else { grid.classList.remove('hidden'); bestView.classList.add('hidden'); document.querySelectorAll('.card').forEach(c=>{ c.classList.toggle('hidden', c.dataset.family!==f); }); }
+ });
+});
+
+init();
 </script>
 </body>
 </html>
