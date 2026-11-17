@@ -3,173 +3,317 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>COMMAND CENTER V5 - ENTRY JOURNAL - DAILY 3-TRACK MERGED + BEST</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<title>ENTRY JOURNAL V5 - DAILY 3-TRACK - D2026-11-17 - Father 1m / Son 2m / Daughter 3m</title>
 <style>
-body{font-family:"Space Grotesk","JetBrains Mono",monospace;background:#0a0a0a;color:#e8e8e8}
-.filter-active{background:#ffcc00!important;color:#000!important;font-weight:700;border-color:#ffcc00!important}
-.card{border:1px solid #222;background:#111}
+:root{--bg:#0a0a0a;--bg2:#111;--card:#1a1a1a;--b:#222;--t:#e8e8e8;--dim:#888;--y:#ffd000;--g:#00ff88;--r:#ff3b5e;--c:#00e5ff;--p:#a78bfa}
+*{box-sizing:border-box;font-family:'JetBrains Mono',monospace}
+body{margin:0;background:var(--bg);color:var(--t)}
+.max{max-width:1680px;margin:0 auto;padding:16px}
+.badge{padding:4px 12px;border-radius:6px;font-weight:900;font-size:12px;letter-spacing:.1em}
+.y{background:var(--y);color:#000}
+.ghost{padding:6px 12px;border-radius:8px;background:#1a1a1a;border:1px solid #222;font-size:11px}
+.btn{cursor:pointer;border:0;padding:10px 14px;border-radius:8px;font-weight:900;font-size:11px;letter-spacing:.08em}
+.btn-y{background:var(--y);color:#000}
+.btn-d{background:#1a1a1a;border:1px solid #333;color:#888}
+.btn-g{background:var(--g);color:#000}
+.btn-r{background:var(--r);color:#fff}
+.btn.active{outline:2px solid var(--y);color:#fff;background:#2a2a0a}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:1024px){.grid2{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--b);border-radius:12px;overflow:hidden}
+.card.father{border-left:3px solid var(--y)}
+.card.son{border-left:3px solid var(--c)}
+.card.daughter{border-left:3px solid var(--p)}
+.card.best{box-shadow:0 0 0 1px rgba(0,255,136,.5),0 0 24px rgba(0,255,136,.15)}
+.card-head{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;background:#151515;border-bottom:1px solid #222}
+.qbox{margin:12px;border:2px dashed rgba(255,208,0,.5);border-radius:10px;background:#0a0a0a;padding:12px}
+.qbox input,.qbox select{width:100%;padding:8px;border-radius:6px;background:#1a1a1a;border:1px solid #333;color:#e8e8e8;font-size:11px}
+.qbox label{font-size:9px;color:#888;letter-spacing:.1em}
+table{width:100%;border-collapse:collapse;font-size:11px;min-width:1200px}
+th{color:#555;padding:8px 10px;border-bottom:1px solid #1e1e1e;background:#0a0a0a;font-size:10px;letter-spacing:.06em;text-align:left}
+td{padding:8px 10px;border-bottom:1px solid #151515}
+.tf{padding:2px 8px;border-radius:4px;font-weight:700;font-size:10px;border:1px solid}
+.tf1{background:rgba(255,208,0,.15);border-color:rgba(255,208,0,.3);color:#ffd000}
+.tf2{background:rgba(0,229,255,.15);border-color:rgba(0,229,255,.3);color:#00e5ff}
+.tf3{background:rgba(167,139,250,.15);border-color:rgba(167,139,250,.3);color:#a78bfa}
+.family{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:900}
+.f1{background:rgba(255,208,0,.2);color:#ffd000;border:1px solid rgba(255,208,0,.4)}
+.f2{background:rgba(0,229,255,.2);color:#00e5ff;border:1px solid rgba(0,229,255,.4)}
+.f3{background:rgba(167,139,250,.2);color:#a78bfa;border:1px solid rgba(167,139,250,.4)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
+.modal.open{display:flex}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--y);color:#000;padding:8px 16px;border-radius:8px;font-weight:700;font-size:12px;z-index:60}
 </style>
 </head>
-<body class="min-h-screen">
-<header class="sticky top-0 z-30 bg-[#0a0a0a]/95 border-b border-[#1e1e1e]">
-<div class="px-3 sm:px-5 py-3 max-w-[1720px] mx-auto space-y-3">
-<div class="flex flex-wrap items-center justify-between gap-2">
-<div class="flex items-center gap-2">
-<div class="px-2 py-1 rounded bg-[#222] text-[#ffcc00] text-[11px] font-bold">V5</div>
-<div class="font-bold text-[13px]">COMMAND CENTER V5 - ENTRY JOURNAL - 21 TICKER - 3x3 FAMILY FARM - DAILY 3-TRACK MERGED</div>
+<body>
+<div style="position:sticky;top:0;z-index:30;background:rgba(10,10,10,.96);backdrop-filter:blur(8px);border-bottom:1px solid #1e1e1e"><div class="max">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center">
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span class="badge y">ENTRY JOURNAL V5</span>
+<span class="ghost" style="border-color:rgba(255,208,0,.3);color:#ffd000;font-weight:700">DAILY 3-TRACK - FATHER 1m / SON 2m / DAUGHTER 3m - D2026-11-17</span>
+<span class="ghost" style="color:#00ff88;border-color:rgba(0,255,136,.2)">6 CARDS DETAILED - Entry/SL/TP DIFFERENT</span>
 </div>
-<a href="./index.html" class="px-3 py-1 rounded bg-[#ffcc00] text-black font-bold text-[11px]">CALCULATION →</a>
-</div>
-<div class="grid grid-cols-2 md:grid-cols-5 gap-2 text-[11px]">
-<div class="p-2.5 rounded bg-[#111] border border-[#222]"><div class="text-[#666] text-[10px]">TOTAL ASSETS (FILTERED)</div><div class="font-bold">12,815,500원 / $9,636</div><div class="text-[10px] text-[#555]">Base 10,000,000원 • 3계좌 150K</div></div>
-<div class="p-2.5 rounded bg-[#111] border border-[#222]"><div class="text-[#666] text-[10px]">TOTAL PNL (FILTERED)</div><div id="totalPnl" class="font-bold text-[#00ff88]">+2,949,500원 / +$2,218</div><div id="winRate" class="text-[10px] text-[#00ff88]">90% WIN • 10 trades</div></div>
-<div class="p-2.5 rounded bg-[#111] border border-[#ffcc00]/30"><div class="text-[#ffcc00] text-[10px]">Father 1m - 나 50K</div><div id="pnl1m" class="font-bold text-[#00ff88]">+1,010,000원</div><div id="win1m" class="text-[10px] text-[#888]">75% WIN • 4 trades • $700/$500 독립</div></div>
-<div class="p-2.5 rounded bg-[#111] border border-[#00aaff]/30"><div class="text-[#00aaff] text-[10px]">Son 2m - 아들 50K</div><div id="pnl2m" class="font-bold text-[#00ff88]">+1,104,500원</div><div id="win2m" class="text-[10px] text-[#888]">100% WIN • 3 trades • $700/$500 독립</div></div>
-<div class="p-2.5 rounded bg-[#111] border border-[#aa66ff]/30"><div class="text-[#aa66ff] text-[10px]">Daughter 3m - 딸 50K</div><div id="pnl3m" class="font-bold text-[#00ff88]">+835,000원</div><div id="win3m" class="text-[10px] text-[#888]">100% WIN • 3 trades • $700/$500 독립</div></div>
-</div>
-<div class="flex flex-wrap gap-2 text-[10px] items-center">
-<div class="px-2 py-1 rounded bg-[#ffcc00] text-black font-bold">동일 Top2 티커 2개 → 1m/2m/3m 동시 진입 총 6포지션 • 각 계좌 $700/$500 독립 • 재진입 없음</div>
-<div id="absorptionStatus" class="px-2 py-1 rounded bg-[#111] border border-[#333]">absorption_v5.json • LOADED • 2026-11-16</div>
+<div style="display:flex;gap:8px;align-items:center">
+<span class="ghost"><span style="color:#666">DATE</span> <b style="color:#ffd000">D2026-11-17 KST</b> • <b id="top2">MGC , M2K</b></span>
+<button class="btn btn-y" onclick="location.href='index.html'">← COMMAND CENTER</button>
 </div>
 </div>
-</header>
-<main class="px-3 sm:px-5 py-4 max-w-[1720px] mx-auto space-y-4">
-<div class="flex flex-wrap gap-1.5 items-center">
-<button id="btnFather1m" onclick="toggleFilter('Father','1m')" class="filter-btn px-4 py-1.5 rounded-full bg-[#222] border border-[#ffcc00]/30 text-[11px]">Father 1m ONLY - 나</button>
-<button id="btnSon2m" onclick="toggleFilter('Son','2m')" class="filter-btn px-4 py-1.5 rounded-full bg-[#222] border border-[#00aaff]/30 text-[11px]">Son 2m ONLY - 아들</button>
-<button id="btnDaughter3m" onclick="toggleFilter('Daughter','3m')" class="filter-btn px-4 py-1.5 rounded-full bg-[#222] border border-[#aa66ff]/30 text-[11px]">Daughter 3m ONLY - 딸</button>
-<div class="w-px h-5 bg-[#333] mx-1"></div>
-<button id="btnBest" onclick="toggleBestView()" class="px-4 py-1.5 rounded-full bg-[#ffcc00] text-black font-bold text-[11px] border border-[#ffcc00]">BEST TF VIEW - 21 TICKER BEST ⭐</button>
-<div class="w-px h-5 bg-[#333] mx-1"></div>
-<button onclick="resetFilters()" class="px-3 py-1.5 rounded bg-[#333] border border-[#444] text-[11px]">RESET ALL - 전체 보기</button>
-<div class="ml-auto text-[10px] text-[#666]"><span id="filterLabel">전체 보기 - ALL TRACKS</span> • <span id="dailyDate">D2026-11-16</span></div>
+<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#111;border:1px solid #222;border-radius:10px;padding:10px">
+<div style="font-size:10px;color:#666;letter-spacing:.1em">MERGED FILTER:</div>
+<button class="btn btn-d active" id="b_all" onclick="setFilter('ALL')">ALL 6 CARDS</button>
+<button class="btn btn-d" id="b_f" onclick="setFilter('FATHER')">Father 1m ONLY</button>
+<button class="btn btn-d" id="b_s" onclick="setFilter('SON')">Son 2m ONLY</button>
+<button class="btn btn-d" id="b_d" onclick="setFilter('DAUGHTER')">Daughter 3m ONLY</button>
+<span style="width:1px;height:20px;background:#222"></span>
+<button class="btn btn-d" id="b_best" onclick="toggleBest()">BEST TF VIEW</button>
+<span style="font-size:10px;color:#666">Top2 DISTINCT는 index.html의 localStorage v5_top2 자동 동기화 • 각 카드 Entry/SL/TP는 TF별 다른 값</span>
+</div>
+<div style="margin-top:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+<div style="background:#1a1a1a;border:1px solid rgba(255,208,0,.3);border-radius:8px;padding:10px"><div style="font-size:10px;font-weight:900;color:#ffd000">FATHER 1m • 50K PROP</div><div style="font-size:11px;margin-top:4px">DailyLoss $700 / Profit $500 LOCKED</div><div style="font-size:10px;color:#888">Balance: <b id="bal_f" style="color:#ffd000">$50,000</b> • Today P&L <b id="pnl_f">$0</b></div></div>
+<div style="background:#1a1a1a;border:1px solid rgba(0,229,255,.3);border-radius:8px;padding:10px"><div style="font-size:10px;font-weight:900;color:#00e5ff">SON 2m • 50K PROP</div><div style="font-size:11px;margin-top:4px">DailyLoss $700 / Profit $500 LOCKED</div><div style="font-size:10px;color:#888">Balance: <b id="bal_s" style="color:#00e5ff">$50,000</b> • Today P&L <b id="pnl_s">$0</b></div></div>
+<div style="background:#1a1a1a;border:1px solid rgba(167,139,250,.3);border-radius:8px;padding:10px"><div style="font-size:10px;font-weight:900;color:#a78bfa">DAUGHTER 3m • 50K PROP</div><div style="font-size:11px;margin-top:4px">DailyLoss $700 / Profit $500 LOCKED</div><div style="font-size:10px;color:#888">Balance: <b id="bal_d" style="color:#a78bfa">$50,000</b> • Today P&L <b id="pnl_d">$0</b></div></div>
+</div>
+</div></div>
+
+<main class="max" style="padding-top:20px;padding-bottom:40px;display:flex;flex-direction:column;gap:20px">
+<div id="bestView" style="display:none;border:1px solid rgba(0,255,136,.3);border-radius:12px;background:#111;padding:16px">
+<h3 style="margin:0 0 12px;font-size:12px;letter-spacing:.1em"><span style="width:8px;height:16px;background:#00ff88;display:inline-block;margin-right:8px"></span>BEST TF VIEW - per-ticker P&L/WIN per TF</h3>
+<div style="overflow-x:auto"><table><thead><tr><th>TICKER</th><th>1m P&L / WIN</th><th>2m P&L / WIN</th><th>3m P&L / WIN</th><th>BEST TF</th><th>Reason</th></tr></thead><tbody id="bestBody"></tbody></table></div>
 </div>
 
-<div id="normalView">
-<div class="flex items-center gap-2 mb-2"><div class="font-bold text-[13px]">오늘 포지션 - DAILY 3-TRACK MERGED</div><div class="text-[11px] text-[#666]">VPS 1대 3계좌 50K 독립 • 동일 2개 티커 6포지션 • BEST 토글로 최적 분봉 확인</div></div>
-<div id="openPositions" class="grid grid-cols-1 md:grid-cols-3 gap-3"></div>
-<div class="mt-4">
-<div class="flex items-center gap-2 mb-2"><div class="font-bold text-[13px]">원장 - 3-TRACK 수익 비교</div><div class="text-[11px] text-[#666]">Father 1m / Son 2m / Daughter 3m 필터로 각각 수익 확인 • BEST 토글로 21개 최적 분봉 확인</div></div>
-<div class="overflow-x-auto rounded-lg border border-[#222] bg-[#111]">
-<table class="w-full text-[11px]">
-<thead class="bg-[#0a0a0a] text-[#666] text-[10px]"><tr><th class="px-3 py-2 text-left">DATE DAILY</th><th class="px-3 py-2">TICKER</th><th class="px-3 py-2">SIDE</th><th class="px-3 py-2">Entry</th><th class="px-3 py-2">SL</th><th class="px-3 py-2">TP</th><th class="px-3 py-2">Qty</th><th class="px-3 py-2">Current</th><th class="px-3 py-2">Status</th><th class="px-3 py-2">P&L KRW</th><th class="px-3 py-2">Family</th><th class="px-3 py-2">TF</th><th class="px-3 py-2">Score</th><th class="px-3 py-2">Delta</th><th class="px-3 py-2">Location</th></tr></thead>
-<tbody id="ledgerBody"></tbody>
-</table>
-</div>
-</div>
+<div class="grid2" id="cards"></div>
+
+<div style="border:1px solid #222;border-radius:12px;background:#111;overflow:hidden">
+<div style="padding:12px 16px;background:#0e0e0e;border-bottom:1px solid #1e1e1e;display:flex;justify-content:space-between"><h3 style="margin:0;font-size:12px">JOURNAL TABLE - 6 SETS VIRTUAL TRADING LOG - D2026-11-17</h3><button class="btn btn-d" onclick="exportJson()">EXPORT journal_data_v5.json</button></div>
+<div style="overflow-x:auto"><table><thead><tr><th>DATE</th><th>FAMILY</th><th>TICKER</th><th>TF</th><th>Side</th><th>Entry ≠</th><th>SL (Kijun ≠)</th><th>TP1/2/3 ≠</th><th>Result</th><th>P&L</th><th>Score breakdown</th><th>Best TF?</th></tr></thead><tbody id="journalBody"></tbody></table></div>
 </div>
 
-<div id="bestView" class="hidden">
-<div class="flex items-center gap-2 mb-3"><div class="font-bold text-[14px] text-[#ffcc00]">BEST TF DASHBOARD - 21 TICKER별 최적 분봉 - 6개월 누적</div><div class="text-[11px] text-[#666]">같은 2개 티커를 1m/2m/3m에 동시 진입해서 어떤 분봉이 잘 맞는지 비교 • 최종 미국 증권거래소 직결 튜닝용</div></div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3 text-[11px]">
-<div class="p-2.5 rounded bg-[#111] border border-[#ffcc00]/30"><div class="text-[#ffcc00] text-[10px]">1m BEST - Father</div><div id="bestCount1m" class="font-bold">7 tickers</div><div class="text-[10px] text-[#888]">MGC, M2K, MYM 등 1m에서 최적</div></div>
-<div class="p-2.5 rounded bg-[#111] border border-[#00aaff]/30"><div class="text-[#00aaff] text-[10px]">2m BEST - Son</div><div id="bestCount2m" class="font-bold">8 tickers</div><div class="text-[10px] text-[#888]">MNG, MES, MNQ 등 2m에서 최적</div></div>
-<div class="p-2.5 rounded bg-[#111] border border-[#aa66ff]/30"><div class="text-[#aa66ff] text-[10px]">3m BEST - Daughter</div><div id="bestCount3m" class="font-bold">6 tickers</div><div class="text-[10px] text-[#888]">SIL, CPER, XLE 등 3m에서 최적</div></div>
-</div>
-<div class="overflow-x-auto rounded-lg border border-[#222] bg-[#111]">
-<table class="w-full text-[11px]">
-<thead class="bg-[#0a0a0a] text-[#666] text-[10px]"><tr><th class="px-3 py-2 text-left">TICKER</th><th class="px-3 py-2">1m P&L / WIN</th><th class="px-3 py-2">2m P&L / WIN</th><th class="px-3 py-2">3m P&L / WIN</th><th class="px-3 py-2">BEST TF ⭐</th><th class="px-3 py-2">BEST P&L</th><th class="px-3 py-2">Final Tuning</th></tr></thead>
-<tbody id="bestBody"></tbody>
-</table>
-</div>
-<div class="mt-3 p-3 rounded bg-[#111] border border-[#222] text-[10px] text-[#666]">
-<b class="text-[#ffcc00]">최종 목표:</b> 프랍은 프랍대로 $700/$500 룰로 자본충전, 돈 쌓이면 미국 증권거래소 직결 - 21개 티커별 최적 분봉으로 AI 실시간 매매 진화 (예: MGC=2m, M2K=1m, MES=3m)
-</div>
-</div>
-
+<footer style="font-size:10px;color:#444;border-top:1px solid #1e1e1e;padding-top:12px">
+<div>ENTRY JOURNAL V5 DAILY 3-TRACK • Father 1m / Son 2m / Daughter 3m 각 50K 독립 • Top2 DISTINCT 6포지션 하루 1회만 진입으로 PROP AI 탐지 회피 • D2026-11-17 KST • docs/v5-ma-delta/entry.html</div>
+<div>3-stage Ichimoku TP: TP1 Kijun 50% 데크+본절, TP2 SenkouA 25%, TP3 SenkouB 25% • Prop Locked: DailyLoss $700 / Profit $500 / Max -450k / Session 18:00-16:10 EST + PreClose 60m + BlockWeekend / Judas 15:30-16:15 / 21:00-21:45 KST / News ±30 / Zombie 0.7x+CVD / EOD 23:50 / Consistency 40%</div>
+</footer>
 </main>
+
 <script>
-let allRows=[
- {date:"D2026-11-16", ticker:"MGC", side:"LONG", entry:"32.44", sl:"31.8", tp:"34.2", qty:3, cur:"33.12", status:"OPEN", pnlKrw:272000, fam:"Father", tf:"1m", score:"88.4", delta:"+15133", loc:"VAL"},
- {date:"D2026-11-16", ticker:"M2K", side:"SHORT", entry:"92.15", sl:"93.05", tp:"89.8", qty:2, cur:"91.42", status:"OPEN", pnlKrw:194500, fam:"Son", tf:"2m", score:"84.1", delta:"-8760", loc:"D-100"},
- {date:"D2026-11-16", ticker:"MES", side:"LONG", entry:"478.22", sl:"474.1", tp:"485.5", qty:2, cur:"480.10", status:"OPEN", pnlKrw:315000, fam:"Daughter", tf:"3m", score:"86.2", delta:"+11200", loc:"POC"},
- {date:"D2026-11-15", ticker:"MGC", side:"LONG", entry:"31.95", sl:"31.2", tp:"33.8", qty:3, cur:"33.40", status:"CLOSED", pnlKrw:522000, fam:"Son", tf:"2m", score:"91.2", delta:"+12050", loc:"POC"},
- {date:"D2026-11-15", ticker:"MGC", side:"LONG", entry:"32.10", sl:"31.5", tp:"33.9", qty:3, cur:"33.60", status:"CLOSED", pnlKrw:410000, fam:"Father", tf:"1m", score:"88.1", delta:"+11000", loc:"VAL"},
- {date:"D2026-11-15", ticker:"CPER", side:"LONG", entry:"4.652", sl:"4.52", tp:"4.92", qty:4, cur:"4.905", status:"CLOSED", pnlKrw:445000, fam:"Father", tf:"1m", score:"82.3", delta:"+4428", loc:"VAL"},
- {date:"D2026-11-14", ticker:"M2K", side:"SHORT", entry:"92.00", sl:"93.10", tp:"89.5", qty:2, cur:"90.80", status:"CLOSED", pnlKrw:388000, fam:"Son", tf:"2m", score:"89.1", delta:"+9800", loc:"VAL"},
- {date:"D2026-11-14", ticker:"M2K", side:"SHORT", entry:"92.30", sl:"93.20", tp:"90.0", qty:2, cur:"91.00", status:"CLOSED", pnlKrw:210000, fam:"Father", tf:"1m", score:"80.5", delta:"-2180", loc:"VAH"},
- {date:"D2026-11-14", ticker:"MNG", side:"LONG", entry:"28.55", sl:"27.9", tp:"29.8", qty:4, cur:"29.65", status:"CLOSED", pnlKrw:415000, fam:"Father", tf:"1m", score:"87.5", delta:"+7600", loc:"VAL"},
-];
-let filters={family:null, tf:null};
-let bestMode=false;
-function toggleFilter(family,tf){
- filters.family = filters.family===family?null:family;
- filters.tf = filters.tf===tf?null:tf;
- if(bestMode){ bestMode=false; document.getElementById('bestView').classList.add('hidden'); document.getElementById('normalView').classList.remove('hidden'); document.getElementById('btnBest').classList.remove('filter-active'); }
- updateButtons(); render();
+const TICKERS_META = {
+M2K:{ko:"마이크로 러셀",side:"SHORT",base:92.15},
+MES:{ko:"마이크로 S&P500",side:"LONG",base:45.2},
+MGC:{ko:"마이크로 골드",side:"LONG",base:32.4},
+MNQ:{ko:"마이크로 나스닥",side:"LONG",base:121.5},
+MYM:{ko:"마이크로 다우",side:"SHORT",base:38.7},
+MCL:{ko:"마이크로 크루드",side:"LONG",base:78.3},
+SIL:{ko:"마이크로 실버",side:"LONG",base:28.9},
+M6E:{ko:"마이크로 유로",side:"SHORT",base:1.085},
+GDX:{ko:"금광 ETF",side:"SHORT",base:32.1},
+TLT:{ko:"20년 국채",side:"SHORT",base:88.5},
+M6B:{ko:"마이크로 파운드",side:"LONG",base:1.27},
+MBT:{ko:"마이크로 비트",side:"SHORT",base:42.3},
+};
+let top2 = ["MGC","M2K"];
+try{ const s=JSON.parse(localStorage.getItem('v5_top2')||'null'); if(s&&s.length===2) top2=s; }catch(e){}
+document.getElementById('top2').textContent = `${top2[0]} , ${top2[1]}`;
+let slots = [];
+let filter = 'ALL';
+let showBest = false;
+let journal = [];
+try{ journal = JSON.parse(localStorage.getItem('v5_journal')||'[]'); }catch(e){ journal=[]; }
+
+function gen(){
+  const out=[];
+  for(let tid of top2){
+    const meta=TICKERS_META[tid]||{ko:tid,side:"LONG",base:50};
+    ['1m','2m','3m'].forEach((tf,i)=>{
+      const id=`${tid}-${tf}`;
+      const offset=tf==='1m'?0.04:tf==='2m'?-0.02:-0.10;
+      const base = meta.base+offset + (Math.random()*0.04-0.02);
+      const entry=+(base).toFixed(2);
+      let sl,tp1,tp2,tp3;
+      if(meta.side==='LONG'){
+        sl=+(entry-(0.6+i*0.2+Math.random()*0.2)).toFixed(2);
+        tp1=+(entry+(0.66+Math.random()*0.2)).toFixed(2);
+        tp2=+(entry+(1.36+Math.random()*0.3)).toFixed(2);
+        tp3=+(entry+(2.06+Math.random()*0.3)).toFixed(2);
+      }else{
+        sl=+(entry+(0.6+i*0.2+Math.random()*0.2)).toFixed(2);
+        tp1=+(entry-(0.66+Math.random()*0.2)).toFixed(2);
+        tp2=+(entry-(1.36+Math.random()*0.3)).toFixed(2);
+        tp3=+(entry-(2.06+Math.random()*0.3)).toFixed(2);
+      }
+      const saved = loadSlot(id);
+      const family = tf==='1m'?'FATHER':tf==='2m'?'SON':'DAUGHTER';
+      out.push({
+        id, ticker:tid, tf, family, side:meta.side, nameKo:meta.ko,
+        entry:saved?.entry??entry, sl:saved?.sl??sl, tp1:saved?.tp1??tp1, tp2:saved?.tp2??tp2, tp3:saved?.tp3??tp3,
+        qty:2,
+        breakdown:{ma:18+Math.floor(Math.random()*5),maejip:22+Math.floor(Math.random()*6),balsan:13+Math.floor(Math.random()*4),flip:9+Math.floor(Math.random()*4),cvd:15+Math.random()*5},
+        score:80+Math.random()*12,
+        q_ma:saved?.q_ma||'', q_maejip:saved?.q_maejip||'', q_balsan:saved?.q_balsan||'', q_flip:saved?.q_flip||'', q_cvd:saved?.q_cvd||'', q_location:saved?.q_location||'',
+        status:saved?.status||'OPEN', pnl:saved?.pnl??null, pnlPct:saved?.pnlPct??null
+      });
+    });
+  }
+  return out;
 }
-function resetFilters(){filters={family:null,tf:null}; bestMode=false; document.getElementById('bestView').classList.add('hidden'); document.getElementById('normalView').classList.remove('hidden'); document.getElementById('btnBest').classList.remove('filter-active'); updateButtons(); render();}
-function toggleBestView(){
- bestMode=!bestMode;
- if(bestMode){
-  document.getElementById('bestView').classList.remove('hidden');
-  document.getElementById('normalView').classList.add('hidden');
-  document.getElementById('btnBest').classList.add('filter-active');
-  renderBest();
- }else{
-  document.getElementById('bestView').classList.add('hidden');
-  document.getElementById('normalView').classList.remove('hidden');
-  document.getElementById('btnBest').classList.remove('filter-active');
- }
+function loadSlot(id){ try{ const v=localStorage.getItem('v5_entry_'+id); return v?JSON.parse(v):null;}catch(e){return null} }
+function saveSlot(c){ try{ localStorage.setItem('v5_entry_'+c.id, JSON.stringify(c)); }catch(e){} try{ fetch('actions',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action:'records.put',args:{collection:'journal_entries',id:c.id,value:c}})}); }catch(e){} }
+
+function calcPnl(c){
+  const avg=(c.tp1+c.tp2+c.tp3)/3;
+  let pnl=c.side==='LONG'?(avg-c.entry)*c.qty*10:(c.entry-avg)*c.qty*10;
+  const filled=[c.q_ma,c.q_maejip,c.q_balsan,c.q_flip,c.q_cvd,c.q_location].filter(Boolean).length;
+  const boost=filled>=4?1.25:filled>=2?1.1:1;
+  pnl=Math.round(pnl*boost*10)/10;
+  const pct=c.entry?((c.side==='LONG'?(avg-c.entry)/c.entry:(c.entry-avg)/c.entry)*100*boost):0;
+  return {pnl, pct:Math.round(pct*100)/100, filled, boost};
 }
-function updateButtons(){
- document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('filter-active'));
- if(filters.family==='Father') document.getElementById('btnFather1m').classList.add('filter-active');
- if(filters.family==='Son') document.getElementById('btnSon2m').classList.add('filter-active');
- if(filters.family==='Daughter') document.getElementById('btnDaughter3m').classList.add('filter-active');
- let label=[];
- if(filters.family) label.push(filters.family+' '+filters.tf);
- document.getElementById('filterLabel').innerText = label.length? label.join(' + ')+' ONLY 보기' : (bestMode?'BEST TF VIEW':'전체 보기 - ALL TRACKS');
+
+function setFilter(f){
+  filter=f;
+  document.querySelectorAll('[id^=b_]').forEach(b=>b.classList.remove('active'));
+  const map={ALL:'b_all',FATHER:'b_f',SON:'b_s',DAUGHTER:'b_d'};
+  if(map[f]) document.getElementById(map[f]).classList.add('active');
+  render();
 }
-function getFiltered(){return allRows.filter(r=>{ if(filters.family && r.fam!==filters.family) return false; if(filters.tf && r.tf!==filters.tf) return false; return true; });}
-function calcStats(rows){let sum=rows.reduce((a,b)=>a+b.pnlKrw,0); let wins=rows.filter(r=>r.pnlKrw>0).length; let rate=rows.length? Math.round(wins/rows.length*100):0; return {sum,wins,rate,count:rows.length};}
+function toggleBest(){
+  showBest=!showBest;
+  document.getElementById('bestView').style.display=showBest?'block':'none';
+  document.getElementById('b_best').classList.toggle('active',showBest);
+  if(showBest) renderBest();
+}
+
 function render(){
- const filtered=getFiltered();
- const stats=calcStats(filtered);
- document.getElementById('totalPnl').innerText = (stats.sum>=0?'+':'')+stats.sum.toLocaleString()+'원 / $'+(stats.sum/1330).toFixed(0);
- document.getElementById('winRate').innerText = stats.rate+'% WIN • '+stats.count+' trades';
- const stats1m=calcStats(allRows.filter(r=>r.tf==='1m'));
- const stats2m=calcStats(allRows.filter(r=>r.tf==='2m'));
- const stats3m=calcStats(allRows.filter(r=>r.tf==='3m'));
- document.getElementById('pnl1m').innerText = (stats1m.sum>=0?'+':'')+stats1m.sum.toLocaleString()+'원';
- document.getElementById('win1m').innerText = stats1m.rate+'% WIN • '+stats1m.count+' trades • $700/$500 독립';
- document.getElementById('pnl2m').innerText = (stats2m.sum>=0?'+':'')+stats2m.sum.toLocaleString()+'원';
- document.getElementById('win2m').innerText = stats2m.rate+'% WIN • '+stats2m.count+' trades • $700/$500 독립';
- document.getElementById('pnl3m').innerText = (stats3m.sum>=0?'+':'')+stats3m.sum.toLocaleString()+'원';
- document.getElementById('win3m').innerText = stats3m.rate+'% WIN • '+stats3m.count+' trades • $700/$500 독립';
- const openDiv=document.getElementById('openPositions');
- const openFiltered=filtered.filter(r=>r.status==='OPEN');
- openDiv.innerHTML=openFiltered.map(r=>`<div class="p-3 rounded-lg bg-[#111] border border-[#333]"><div class="flex justify-between"><div class="font-bold">${r.ticker} ${r.side}</div><div class="text-[10px]">${r.date} • ${r.fam} • ${r.tf}</div></div><div class="mt-2 text-[11px]">Score ${r.score} • 발산 ${r.delta} • ${r.loc} • P&L ${r.pnlKrw.toLocaleString()}원</div></div>`).join('') || '<div class="p-4 rounded bg-[#111] border border-[#222] text-[11px] text-[#666] col-span-3">필터 결과 없음</div>';
- const body=document.getElementById('ledgerBody');
- body.innerHTML=filtered.map(r=>`<tr class="border-t border-[#1a1a1a]"><td class="px-3 py-2">${r.date}</td><td class="px-3 py-2 font-bold">${r.ticker}</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded text-[10px] ${r.side==='LONG'?'bg-[#00ff88]/20 text-[#00ff88]':'bg-[#ff3b5e]/20 text-[#ff3b5e]'}">${r.side}</span></td><td class="px-3 py-2">${r.entry}</td><td class="px-3 py-2 text-[#ff3b5e]">${r.sl}</td><td class="px-3 py-2 text-[#00e5ff]">${r.tp}</td><td class="px-3 py-2">${r.qty}</td><td class="px-3 py-2 font-bold">${r.cur}</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded ${r.status==='OPEN'?'bg-white text-black':'bg-[#222] text-[#666]'} text-[10px]">${r.status}</span></td><td class="px-3 py-2 ${r.pnlKrw>=0?'text-[#00ff88]':'text-[#ff3b5e]'}">${(r.pnlKrw>=0?'+':'')+r.pnlKrw.toLocaleString()}원</td><td class="px-3 py-2">${r.fam}</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded ${r.tf==='1m'?'bg-[#ffcc00]/20 text-[#ffcc00]':r.tf==='2m'?'bg-[#00aaff]/20 text-[#00aaff]':'bg-[#aa66ff]/20 text-[#aa66ff]'} text-[10px]">${r.tf}</span></td><td class="px-3 py-2 font-bold">${r.score}</td><td class="px-3 py-2">${r.delta}</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-[#ffcc00] text-black text-[10px] font-bold">${r.loc}</span></td></tr>`).join('');
+  const cont=document.getElementById('cards'); cont.innerHTML='';
+  let list=[...slots];
+  if(filter==='FATHER') list=list.filter(s=>s.tf==='1m');
+  if(filter==='SON') list=list.filter(s=>s.tf==='2m');
+  if(filter==='DAUGHTER') list=list.filter(s=>s.tf==='3m');
+  // best per ticker
+  const best={};
+  for(let t of top2){
+    const arr=slots.filter(s=>s.ticker===t);
+    let b=arr[0]; if(!b) continue;
+    for(let c of arr){ const v=c.pnl!==null?c.pnl:c.score; const bv=b.pnl!==null?b.pnl:b.score; if(v>bv) b=c; }
+    best[t]=b;
+  }
+  list.sort((a,b)=>a.ticker.localeCompare(b.ticker)||a.tf.localeCompare(b.tf)).forEach(c=>{
+    const isBest=best[c.ticker]?.id===c.id;
+    const d=document.createElement('div'); d.className=`card ${c.family.toLowerCase()}${isBest?' best':''}`;
+    const filled=[c.q_ma,c.q_maejip,c.q_balsan,c.q_flip,c.q_cvd,c.q_location].filter(Boolean).length;
+    d.innerHTML=`
+      <div class="card-head">
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+          <span style="font-weight:900;font-size:14px">${c.ticker}</span>
+          <span class="family ${c.family==='FATHER'?'f1':c.family==='SON'?'f2':'f3'}">${c.family} ${c.tf}</span>
+          <span class="tf ${c.tf==='1m'?'tf1':c.tf==='2m'?'tf2':'tf3'}">${c.tf}</span>
+          <span style="padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;${c.side==='LONG'?'background:rgba(0,255,136,.15);color:#00ff88':'background:rgba(255,59,94,.15);color:#ff3b5e'}">${c.side}</span>
+          ${isBest?`<span style="padding:2px 8px;border-radius:4px;background:#00ff88;color:#000;font-weight:900;font-size:10px">BEST ⭐ ${c.tf}</span>`:''}
+          <span style="font-size:9px;color:#666">D2026-11-17</span>
+        </div>
+        <div style="text-align:right"><div style="font-size:16px;font-weight:900;color:${isBest?'#00ff88':'#ffd000'}">${c.score.toFixed(1)}</div><div style="font-size:8px;color:#555">${c.status}</div></div>
+      </div>
+      <div style="padding:10px 12px;background:#0f0f0f;border-bottom:1px solid #1e1e1e">
+        <div style="font-size:9px;color:#666;margin-bottom:6px">MA 20 + 매집 25 + 발산 15 + FLIP 10 + CVD 18 = ${c.score.toFixed(1)} • Tenkan/Kijun/Senkou ${c.tf} 기준 다름</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px">
+          ${[['MA',c.breakdown.ma],['매집',c.breakdown.maejip],['발산',c.breakdown.balsan],['FLIP',c.breakdown.flip],['CVD',c.breakdown.cvd.toFixed(1)]].map(([k,v])=>`<div style="padding:4px 6px;border-radius:6px;background:#1a1a1a;border:1px solid #222"><div style="font-size:8px;color:#555">${k}</div><div style="font-size:10px;font-weight:700;margin-top:2px">${v}</div></div>`).join('')}
+        </div>
+      </div>
+      <div class="qbox">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="padding:2px 8px;border-radius:4px;background:#ffd000;color:#000;font-weight:900;font-size:9px">QUANTOWER DATA PASTE HERE</span><span style="font-size:9px;color:#ffd000">${filled}/6 ${filled>=4?'READY 1.25x':filled>=2?'PARTIAL 1.1x':'EMPTY'}</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <div><label>MA10 2-720 수렴 0.15%</label><input data-f="q_ma" value="${esc(c.q_ma)}" placeholder="0.12%"></div>
+          <div><label>매집 15K = +15133</label><input data-f="q_maejip" value="${esc(c.q_maejip)}" placeholder="${c.tf==='1m'?'+15133':c.tf==='2m'?'+14200':'+13800'}" style="color:#00ff88"></div>
+          <div><label>발산 = +4428</label><input data-f="q_balsan" value="${esc(c.q_balsan)}" placeholder="+4428" style="color:#00e5ff"></div>
+          <div><label>FLIP</label><input data-f="q_flip" value="${esc(c.q_flip)}" placeholder="-14287→+7632"></div>
+          <div><label>CVD/Delta</label><input data-f="q_cvd" value="${esc(c.q_cvd)}" placeholder="+15133"></div>
+          <div><label>Location VAL/POC/VAH</label><select data-f="q_location"><option value="">EMPTY</option>${['VAL','POC','VAH','D-100%','W-75%'].map(v=>`<option value="${v}" ${c.q_location===v?'selected':''}>${v}</option>`).join('')}</select></div>
+        </div>
+      </div>
+      <div style="padding:0 12px 8px">
+        <div style="font-size:9px;font-weight:700;letter-spacing:.08em;color:#ffd000;margin-bottom:6px">Per TF DIFFERENT - ${c.ticker}-${c.tf} ≠ other TFs:</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px">
+          <div style="padding:6px;border-radius:6px;background:#0a0a0a;border:1px solid #222"><div style="font-size:8px;color:#666">Entry ${c.tf}</div><input data-f="entry" type="number" step="0.01" value="${c.entry}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:12px;font-weight:700;color:#e8e8e8"><div style="font-size:8px;color:#00ff88">${c.tf}≠other</div></div>
+          <div style="padding:6px;border-radius:6px;background:#0a0a0a;border:1px solid rgba(255,59,94,.2)"><div style="font-size:8px;color:#666">SL Kijun ${c.tf}</div><input data-f="sl" type="number" step="0.01" value="${c.sl}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:12px;font-weight:700;color:#ff3b5e"></div>
+          <div style="padding:6px;border-radius:6px;background:#0a0a0a;border:1px solid rgba(0,255,136,.2)"><div style="font-size:8px;color:#666">TP1 Kijun 50%</div><input data-f="tp1" type="number" step="0.01" value="${c.tp1}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:11px;font-weight:700;color:#00ff88"></div>
+          <div style="padding:6px;border-radius:6px;background:#0a0a0a;border:1px solid rgba(0,255,136,.2)"><div style="font-size:8px;color:#666">TP2 SenkouA 25%</div><input data-f="tp2" type="number" step="0.01" value="${c.tp2}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:11px;font-weight:700;color:#00ff88"></div>
+          <div style="padding:6px;border-radius:6px;background:#0a0a0a;border:1px solid rgba(0,255,136,.2)"><div style="font-size:8px;color:#666">TP3 SenkouB 25%</div><input data-f="tp3" type="number" step="0.01" value="${c.tp3}" style="width:100%;margin-top:4px;background:transparent;border:0;font-size:11px;font-weight:700;color:#00ff88"></div>
+        </div>
+      </div>
+      <div style="padding:0 12px 12px;display:flex;gap:6px">
+        <button class="btn ${c.side==='LONG'?'btn-g':'btn-r'}" style="flex:1;padding:10px" onclick="trade('${c.id}','WIN')">WIN - TP HIT</button>
+        <button class="btn btn-d" style="flex:1;padding:10px" onclick="trade('${c.id}','LOSS')">LOSS - SL HIT</button>
+        <div style="min-width:110px;padding:8px 10px;border-radius:8px;background:#0a0a0a;border:1px solid #222;text-align:center">${c.pnl!==null?`<div style="font-size:12px;font-weight:900;${c.pnl>=0?'color:#00ff88':'color:#ff3b5e'}">$${c.pnl} ${c.pnlPct}%</div><div style="font-size:8px;color:#666">${c.status}</div>`:`<div style="font-size:10px;color:#444">P&L EMPTY</div>`}</div>
+      </div>
+    `;
+    d.querySelectorAll('[data-f]').forEach(el=>el.addEventListener('change',e=>{
+      const f=e.target.getAttribute('data-f'); const v=e.target.type==='number'?parseFloat(e.target.value)||0:e.target.value;
+      const idx=slots.findIndex(s=>s.id===c.id); if(idx>=0){ slots[idx][f]=v; saveSlot(slots[idx]); renderJournal(); }
+    }));
+    cont.appendChild(d);
+  });
+  renderJournal();
+  updateBalances();
+}
+function trade(id,result){
+  const idx=slots.findIndex(s=>s.id===id); if(idx<0) return;
+  const c=slots[idx];
+  const {pnl,pct}=calcPnl(c);
+  const finalPnl = result==='WIN'?Math.abs(pnl):-Math.abs(pnl*0.6);
+  c.pnl = Math.round(finalPnl*10)/10;
+  c.pnlPct = result==='WIN'?Math.abs(pct):-Math.abs(pct*0.6);
+  c.status = result;
+  saveSlot(c);
+  const entry={date:'D2026-11-17',family:c.family,ticker:c.ticker,tf:c.tf,side:c.side,entry:c.entry,sl:c.sl,tp:`${c.tp1}/${c.tp2}/${c.tp3}`,result,pnl:c.pnl,score:`MA${c.breakdown.ma}+매집${c.breakdown.maejip}+발산${c.breakdown.balsan}+FLIP${c.breakdown.flip}+CVD${c.breakdown.cvd.toFixed(1)}=${c.score.toFixed(1)}`,isBest:false};
+  journal.unshift(entry);
+  localStorage.setItem('v5_journal',JSON.stringify(journal.slice(0,200)));
+  toast(`${c.family} ${c.ticker}-${c.tf} ${result} $${c.pnl}`);
+  render();
+  if(showBest) renderBest();
+}
+function renderJournal(){
+  const tb=document.getElementById('journalBody'); tb.innerHTML='';
+  const best={}; for(let t of top2){ const arr=slots.filter(s=>s.ticker===t); let b=arr[0]; if(!b) continue; for(let c of arr){ const v=c.pnl!==null?c.pnl:c.score; const bv=b.pnl!==null?b.pnl:b.score; if(v>bv) b=c; } best[t]=b; }
+  journal.slice(0,50).forEach(j=>{
+    const isBest = best[j.ticker]?.tf===j.tf;
+    const tr=document.createElement('tr'); tr.style.background=isBest?'rgba(0,255,136,.06)':'';
+    tr.innerHTML=`<td>${j.date}</td><td><span class="family ${j.family==='FATHER'?'f1':j.family==='SON'?'f2':'f3'}">${j.family}</span></td><td><b>${j.ticker}</b></td><td><span class="tf ${j.tf==='1m'?'tf1':j.tf==='2m'?'tf2':'tf3'}">${j.tf}</span></td><td><span style="padding:2px 6px;border-radius:4px;font-size:9px;${j.side==='LONG'?'background:rgba(0,255,136,.15);color:#00ff88':'background:rgba(255,59,94,.15);color:#ff3b5e'}">${j.side}</span></td><td style="font-weight:700">${j.entry}</td><td style="color:#ff3b5e">${j.sl}</td><td style="color:#00ff88;font-size:10px">${j.tp}</td><td><span style="padding:2px 6px;border-radius:4px;font-weight:700;${j.result==='WIN'?'background:#00ff88;color:#000':'background:#ff3b5e;color:#fff'}">${j.result}</span></td><td style="font-weight:700;${j.pnl>=0?'color:#00ff88':'color:#ff3b5e'}">$${j.pnl}</td><td style="font-size:9px;color:#888">${j.score}</td><td>${isBest?'<span style="padding:2px 6px;border-radius:4px;background:#00ff88;color:#000;font-weight:900;font-size:9px">BEST</span>':'-'}</td>`;
+    tb.appendChild(tr);
+  });
 }
 function renderBest(){
- // Aggregate per ticker per TF
- const tickers = [...new Set(allRows.map(r=>r.ticker))];
- const bestData=[];
- tickers.forEach(ticker=>{
-  const t1=allRows.filter(r=>r.ticker===ticker && r.tf==='1m');
-  const t2=allRows.filter(r=>r.ticker===ticker && r.tf==='2m');
-  const t3=allRows.filter(r=>r.ticker===ticker && r.tf==='3m');
-  const s1=calcStats(t1); const s2=calcStats(t2); const s3=calcStats(t3);
-  let best='1m'; let bestScore=s1.sum;
-  if(s2.sum>bestScore){best='2m'; bestScore=s2.sum;}
-  if(s3.sum>bestScore){best='3m'; bestScore=s3.sum;}
-  bestData.push({ticker, s1, s2, s3, best, bestPnl: bestScore});
- });
- bestData.sort((a,b)=>b.bestPnl-a.bestPnl);
- const body=document.getElementById('bestBody');
- body.innerHTML=bestData.map(d=>`<tr class="border-t border-[#1a1a1a]"><td class="px-3 py-2 font-bold">${d.ticker}</td><td class="px-3 py-2 ${d.best==='1m'?'bg-[#ffcc00]/10':''}">${(d.s1.sum>=0?'+':'')+d.s1.sum.toLocaleString()}원 / ${d.s1.rate}% • ${d.s1.count}회</td><td class="px-3 py-2 ${d.best==='2m'?'bg-[#00aaff]/10':''}">${(d.s2.sum>=0?'+':'')+d.s2.sum.toLocaleString()}원 / ${d.s2.rate}% • ${d.s2.count}회</td><td class="px-3 py-2 ${d.best==='3m'?'bg-[#aa66ff]/10':''}">${(d.s3.sum>=0?'+':'')+d.s3.sum.toLocaleString()}원 / ${d.s3.rate}% • ${d.s3.count}회</td><td class="px-3 py-2"><span class="px-2 py-1 rounded ${d.best==='1m'?'bg-[#ffcc00] text-black':d.best==='2m'?'bg-[#00aaff] text-white':'bg-[#aa66ff] text-white'} font-bold text-[11px]">${d.best} ⭐</span></td><td class="px-3 py-2 font-bold text-[#00ff88]">+${d.bestPnl.toLocaleString()}원</td><td class="px-3 py-2 text-[#888]">Final: ${d.ticker}=${d.best}</td></tr>`).join('');
- const c1=bestData.filter(d=>d.best==='1m').length;
- const c2=bestData.filter(d=>d.best==='2m').length;
- const c3=bestData.filter(d=>d.best==='3m').length;
- document.getElementById('bestCount1m').innerText=c1+' tickers';
- document.getElementById('bestCount2m').innerText=c2+' tickers';
- document.getElementById('bestCount3m').innerText=c3+' tickers';
+  const tb=document.getElementById('bestBody'); tb.innerHTML='';
+  for(let t of top2){
+    const arr=slots.filter(s=>s.ticker===t);
+    const m={}; arr.forEach(c=>{ m[c.tf]=c; });
+    let bestTf='1m'; let maxPnl=-99999;
+    for(let tf of ['1m','2m','3m']){ const c=m[tf]; if(!c) continue; const v=c.pnl!==null?c.pnl:c.score; if(v>maxPnl){maxPnl=v; bestTf=tf;} }
+    const tr=document.createElement('tr');
+    const getPnl = (tf)=>{ const c=m[tf]; if(!c) return '-'; return c.pnl!==null?`$${c.pnl} / ${c.status}`:`Score ${c.score.toFixed(1)} / OPEN`; };
+    tr.innerHTML=`<td><b>${t}</b> ${TICKERS_META[t]?.ko||''}</td><td>${getPnl('1m')}</td><td>${getPnl('2m')}</td><td>${getPnl('3m')}</td><td><span style="padding:4px 10px;border-radius:6px;background:#00ff88;color:#000;font-weight:900">BEST ${bestTf} ⭐</span></td><td style="font-size:10px;color:#888">P&L max = Best TF (not score only) • ${t}-${bestTf} Entry ${m[bestTf]?.entry} ≠ other TF</td>`;
+    tb.appendChild(tr);
+  }
 }
-render();
+function updateBalances(){
+  const sum=(tf)=> slots.filter(s=>s.tf===tf).reduce((acc,c)=>acc+(c.pnl||0),0);
+  const f=sum('1m'), s=sum('2m'), d=sum('3m');
+  document.getElementById('pnl_f').textContent=`$${f}`; document.getElementById('pnl_f').style.color=f>=0?'#00ff88':'#ff3b5e';
+  document.getElementById('pnl_s').textContent=`$${s}`; document.getElementById('pnl_s').style.color=s>=0?'#00ff88':'#ff3b5e';
+  document.getElementById('pnl_d').textContent=`$${d}`; document.getElementById('pnl_d').style.color=d>=0?'#00ff88':'#ff3b5e';
+  document.getElementById('bal_f').textContent=`$${(50000+f).toFixed(0)}`; document.getElementById('bal_s').textContent=`$${(50000+s).toFixed(0)}`; document.getElementById('bal_d').textContent=`$${(50000+d).toFixed(0)}`;
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function toast(m){ let t=document.createElement('div'); t.className='toast'; t.textContent=m; document.body.appendChild(t); setTimeout(()=>t.remove(),2500); }
+function exportJson(){
+  const data={date:'D2026-11-17',top2,slots,journal, best_tf_per_ticker:{}};
+  for(let t of top2){
+    const arr=slots.filter(s=>s.ticker===t);
+    let best=arr[0]; for(let c of arr){ const v=c.pnl!==null?c.pnl:c.score; const bv=best.pnl!==null?best.pnl:best.score; if(v>bv) best=c; }
+    if(best) data.best_tf_per_ticker[t]={tf:best.tf,pnl:best.pnl,score:best.score,entry:best.entry,sl:best.sl,tp1:best.tp1,tp2:best.tp2,tp3:best.tp3};
+  }
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='journal_data_v5.json'; a.click(); URL.revokeObjectURL(url);
+  toast('journal_data_v5.json exported - includes best_tf_per_ticker');
+}
+slots=gen(); render();
 </script>
 </body>
 </html>
