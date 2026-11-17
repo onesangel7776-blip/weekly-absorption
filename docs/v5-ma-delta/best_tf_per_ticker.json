@@ -1,0 +1,27 @@
+{
+  "date": "D2026-11-17",
+  "best_tf_per_ticker": {
+    "MNG": {
+      "tf": "1m",
+      "family": "FATHER",
+      "pnl": 5.67,
+      "score": 112.6,
+      "entry": 2.88,
+      "sl": 2.55,
+      "reason": "P&L max $5.67 - Entry 2.88 != other TF - Delta 15356"
+    },
+    "SIL": {
+      "tf": "3m",
+      "family": "DAUGHTER",
+      "pnl": 0.0,
+      "score": 99.7,
+      "entry": 28.77,
+      "sl": 28.19,
+      "reason": "P&L max $0.0 - Entry 28.77 != other TF - Delta 13994"
+    }
+  },
+  "top2_distinct": [
+    "MNG",
+    "SIL"
+  ]
+}
