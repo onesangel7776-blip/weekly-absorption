@@ -1,8 +1,8 @@
-name: V5 Daily Auto - 21 Ticker Top2 DISTINCT 3TF
+name: v5-daily
 
 on:
   schedule:
-    - cron: '0 22 * * 0-4'
+    - cron: '0 22 * * 0-4'  # KST 07:00 (UTC 22:00) Sun-Thu -> Mon-Fri KST
   workflow_dispatch:
 
 permissions:
@@ -12,41 +12,45 @@ jobs:
   v5-daily:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
       - name: Install deps
-        run: |
-          pip install --upgrade pip
-          pip install pytz || true
+        run: pip install --quiet --no-input -r requirements.txt || true
 
-      - name: Run scoring_engine_v5
+      - name: Run scoring_engine_v5 REAL READY 50K 5TICKER 60K 6TICKER
         run: |
           python scoring_engine_v5.py
           ls -lh absorption_v5.json best_tf_per_ticker.json || true
+          cat absorption_v5.json | head -n 30 || true
 
-      - name: Run quantower collector 3TRACK
+      - name: Run quantower_delta_collector_v5_3TRACK REAL READY
         run: |
-          python quantower_delta_collector_v5_3TRACK.py || python data_collectors/quantower_delta_collector_v5_3TRACK.py || python quantower_delta_collector.py || echo "collector not found skip"
-          ls -lh journal_data_v5.json || true
+          python data_collectors/quantower_delta_collector_v5_3TRACK.py || python quantower_delta_collector_v5_3TRACK.py || python quantower_delta_collector.py || echo "collector fallback"
+          ls -lh journal_data_v5.json best_tf_per_ticker.json || true
 
-      - name: Sync to Pages docs
+      - name: Sync to Pages 404 fix - copy to docs and docs/v5-ma-delta
         run: |
-          python sync_to_pages.py
-          ls -lh docs/absorption_v5.json docs/v5-ma-delta/absorption_v5.json || true
-          ls -lh docs/journal_data_v5.json docs/v5-ma-delta/journal_data_v5.json || true
+          python sync_to_pages.py || echo "sync_to_pages.py not found, manual copy"
+          mkdir -p docs docs/v5-ma-delta
+          cp -f absorption_v5.json docs/absorption_v5.json || true
+          cp -f absorption_v5.json docs/v5-ma-delta/absorption_v5.json || true
+          cp -f journal_data_v5.json docs/journal_data_v5.json || true
+          cp -f journal_data_v5.json docs/v5-ma-delta/journal_data_v5.json || true
+          cp -f best_tf_per_ticker.json docs/best_tf_per_ticker.json || true
+          cp -f best_tf_per_ticker.json docs/v5-ma-delta/best_tf_per_ticker.json || true
+          ls -lh docs/*.json docs/v5-ma-delta/*.json || true
 
-      - name: Commit and push if changed
+      - name: Commit and push
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config user.name "actions-user"
+          git config user.email "actions@github.com"
           git add -A
-          git diff --staged --quiet && echo "No changes to commit" || git commit -m "Update V5 DAILY D2026-11-17 Top2 DISTINCT MGC M2K 6 slots"
-          git push || echo "Push failed or no changes"
+          git commit -m "Update V5 DAILY D$(date +%Y-%m-%d) Top5 DISTINCT 5 TICKER x 3TF = 15 SLOTS REAL READY - $50000 5개 $60000 6개 동적 - $(date -d '+9 hours' +'%Y-%m-%d %H:%M KST' || date)" || echo "nothing to commit"
+          git push
