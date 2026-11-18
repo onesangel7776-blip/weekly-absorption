@@ -1,59 +1,59 @@
 {
-  "date": "D2026-11-17",
-  "balance": 49982.83,
+  "date": "D2026-11-18",
+  "balance": 50003.17,
   "max_tickers": 5,
   "best_tf_per_ticker": {
-    "MNG": {
+    "TLT": {
       "tf": "2m",
       "family": "SON",
-      "pnl": -0.83,
-      "score": 115.2,
-      "entry": 2.79,
-      "sl": 2.41,
-      "reason": "P&L max $-0.83 - Entry 2.79 != other TF - Delta 13977"
+      "pnl": -0.0,
+      "score": 110.6,
+      "entry": 88.41,
+      "sl": 88.92,
+      "reason": "P&L max $-0.0 - Entry 88.41 != other TF - Delta 13938"
     },
-    "MNQ": {
-      "tf": "1m",
-      "family": "FATHER",
-      "pnl": 4.75,
-      "score": 101.8,
-      "entry": 121.6,
-      "sl": 121.21,
-      "reason": "P&L max $4.75 - Entry 121.6 != other TF - Delta 15153"
-    },
-    "MHG": {
+    "M6J": {
       "tf": "2m",
       "family": "SON",
-      "pnl": -0.67,
-      "score": 112.2,
-      "entry": 4.16,
-      "sl": 3.61,
-      "reason": "P&L max $-0.67 - Entry 4.16 != other TF - Delta 13965"
-    },
-    "M6B": {
-      "tf": "3m",
-      "family": "DAUGHTER",
-      "pnl": -3.58,
-      "score": 97.2,
-      "entry": 1.12,
-      "sl": 0.56,
-      "reason": "P&L max $-3.58 - Entry 1.12 != other TF - Delta 13988"
+      "pnl": 0.75,
+      "score": 115.9,
+      "entry": 0.02,
+      "sl": 0.43,
+      "reason": "P&L max $0.75 - Entry 0.02 != other TF - Delta 14447"
     },
     "M6E": {
+      "tf": "3m",
+      "family": "DAUGHTER",
+      "pnl": 4.0,
+      "score": 102.8,
+      "entry": 0.95,
+      "sl": 1.57,
+      "reason": "P&L max $4.0 - Entry 0.95 != other TF - Delta 13841"
+    },
+    "M2K2": {
       "tf": "1m",
       "family": "FATHER",
-      "pnl": -2.25,
-      "score": 104.7,
-      "entry": 1.12,
-      "sl": 1.48,
-      "reason": "P&L max $-2.25 - Entry 1.12 != other TF - Delta 15185"
+      "pnl": 3.17,
+      "score": 108.4,
+      "entry": 18.85,
+      "sl": 19.35,
+      "reason": "P&L max $3.17 - Entry 18.85 != other TF - Delta 14839"
+    },
+    "SIL": {
+      "tf": "1m",
+      "family": "FATHER",
+      "pnl": 1.33,
+      "score": 106.0,
+      "entry": 29.01,
+      "sl": 28.45,
+      "reason": "P&L max $1.33 - Entry 29.01 != other TF - Delta 15002"
     }
   },
   "topN_distinct": [
-    "MNG",
-    "MNQ",
-    "MHG",
-    "M6B",
-    "M6E"
+    "TLT",
+    "M6J",
+    "M6E",
+    "M2K2",
+    "SIL"
   ]
 }

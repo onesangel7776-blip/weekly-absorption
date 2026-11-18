@@ -311,14 +311,14 @@
           "sl_pct": 0.8,
           "tp_pct": 1.6,
           "shares": 157,
-          "status": "OPEN",
-          "current": 58.18000030517578,
-          "exit": null,
-          "exit_date": null,
-          "exit_reason": null,
-          "pnl_krw": 0,
-          "pnl_usd": 0,
-          "last_check": "2026-11-16"
+          "status": "CLOSED",
+          "current": 57.06999969482422,
+          "exit": 57.74,
+          "exit_date": "2026-11-17",
+          "exit_reason": "TP",
+          "pnl_krw": 199233.0,
+          "pnl_usd": 147.58,
+          "last_check": "2026-11-17"
         },
         {
           "ticker": "TLT",
@@ -332,13 +332,13 @@
           "tp_pct": 1.6,
           "shares": 115,
           "status": "OPEN",
-          "current": 79.37999725341797,
+          "current": 79.55000305175781,
           "exit": null,
           "exit_date": null,
           "exit_reason": null,
           "pnl_krw": 0,
           "pnl_usd": 0,
-          "last_check": "2026-11-16"
+          "last_check": "2026-11-17"
         }
       ]
     }
