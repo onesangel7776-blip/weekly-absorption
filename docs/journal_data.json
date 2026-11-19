@@ -1,11 +1,11 @@
 {
-  "balance_krw": 67473567,
-  "balance_usd": 49980.42,
+  "balance_krw": 10000000,
+  "balance_usd": 7407.41,
   "date": "2026-11-15",
   "dxy": 103.41,
   "bias": "RISK_OFF",
-  "max_tickers": 8,
-  "formula": "max_tickers = 3 + floor((balance - 10000000)/10000000) = 8개",
+  "max_tickers": 3,
+  "formula": "10M=3 고정 (원래 버전)",
   "ledger": [
     {
       "week": "2026-10-04",
