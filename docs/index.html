@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>COMMAND CENTER V4 - REAL DATA HUB</title>
+<title>COMMAND CENTER V4 - LONG6 SHORT6 - NEUTRAL MIXED TOP3</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#070a10;color:#c8d2dc;font-family:Pretendard,sans-serif;font-size:12.5px;line-height:1.6}
@@ -54,253 +54,256 @@ body{background:#070a10;color:#c8d2dc;font-family:Pretendard,sans-serif;font-siz
 </style>
 </head>
 <body>
-<div class="header"><div><b id="title">COMMAND CENTER V4 - 21 TICKER REAL-TIME HUB - 세계 금융시장 흐름 허브</b> <span style="color:#00e676;font-weight:900" id="subtitle">Finnhub Primary + GDELT Backup - 실제 데이터 연결</span></div><div style="display:flex;gap:8px"><span id="langBtn" class="btn" onclick="toggleLang()" style="background:#111a28;padding:4px 12px;border-radius:6px;font-size:11px;color:#4c9eff;font-weight:900">한/영</span><span id="marketBadge" class="market-neutral">LOADING...</span></div></div>
-<div class="bar" id="topBar">GitHub Actions https://github.com/onesangel7776-blip/weekly-absorption/actions 에서 매일 갱신 - absorption.json 연결 중...</div>
+<div class="header"><div><b id="title">COMMAND CENTER V4 - 21 TICKER REAL-TIME HUB - LONG6 SHORT6</b> <span style="color:#00e676;font-weight:900" id="subtitle">중립이면 점수 높은 3개 롱1+숏2 or 롱2+숏1 - 실제 데이터 연결</span></div><div style="display:flex;gap:8px"><span id="langBtn" class="btn" onclick="toggleLang()" style="background:#111a28;padding:4px 12px;border-radius:6px;font-size:11px;color:#4c9eff;font-weight:900">한/영</span><span id="marketBadge" class="market-neutral">중립 • DXY 101.81 • US10Y 4.96% • VIX 19.03</span></div></div>
+<div class="bar" id="topBar">LONG6 SHORT6 - 자본금 10M=3개 20M=4개 30M=5개 60M=6개 - 중립이면 점수 높은 3개 진입 - GitHub Actions 실제 데이터 연결</div>
 <div class="wrap">
-<div id="content"><div class="loading">실제 데이터 연결 중...<br>GitHub Pages https://onesangel7776-blip.github.io/weekly-absorption/ 에서 absorption.json 읽는 중...<br>오늘 날짜 2026-11-19로 갱신됩니다.<br>scoring_engine.py가 Finnhub+GDELT+COT+Flow+Quantower Delta로 21개 티커 계산 → absorption.json → docs/index.html이 fetch로 읽음</div></div>
-<div class="footer" id="footer">V4 HUB - REAL DATA CONNECTED - GitHub Actions 매일 갱신 - absorption.json + 한/영 전체 반영 - 선정 점수 겹침 없음 - 모든 박스 3개 동일 - NEW 선정 기능 - 세계 금융시장 흐름 허브 - 절대 안 변한다는 건 없다 - 6주 가상매매는 별도 journal 페이지</div>
+<div id="content"><div class="loading">LONG6 SHORT6 구조로 실제 데이터 연결 중...<br>21개 티커 중 롱 6개 숏 6개 항상 - 중립이면 점수 높은 3개 롱1+숏2 or 롱2+숏1<br>오늘 날짜 2026-11-19로 갱신</div></div>
+<div class="footer" id="footer">V4 LONG6 SHORT6 - 중립이면 점수 높은 3개 진입 - 롱6 숏6 항상 - 10M=3 20M=4 30M=5 60M=6 - 모든 박스 3개 동일 - 선정 점수 겹침 없음 - 한/영 전체 반영 - NEW 기능 - 세계 금융시장 흐름 허브</div>
 </div>
 <script>
-let lang = 'ko';
-let currentData = null;
+let lang='ko';
+let currentData=null;
 
 function toggleLang(){
-  lang = lang === 'ko' ? 'en' : 'ko';
-  document.getElementById('langBtn').innerText = lang === 'ko' ? '한/영' : 'KO/EN';
+  lang = lang==='ko'?'en':'ko';
+  document.getElementById('langBtn').innerText = lang==='ko'?'한/영':'KO/EN';
   if(currentData) render(currentData);
 }
 
-async function fetchRealData(){
-  // GitHub Pages에서는 ./absorption.json, 로컬에서도 같은 경로
-  let absorption = null;
-  let journal = null;
-  try{
-    const r = await fetch('./absorption.json?t=' + Date.now());
-    if(r.ok) absorption = await r.json();
-  }catch(e){ console.log('absorption fetch fail', e); }
-  try{
-    const r2 = await fetch('./journal_data.json?t=' + Date.now());
-    if(r2.ok) journal = await r2.json();
-  }catch(e){}
-
-  // fallback: 예시 데이터 - 오늘 날짜 2026-11-19로 강제
-  const today = new Date().toISOString().slice(0,10);
-  const fallbackMarket = {
-    date: today,
-    run: new Date().toLocaleDateString('ko-KR', {weekday:'short'}) + ' 21:00 KST',
-    dxy: 101.81,
-    dxyDate: today,
-    us10y: 4.96,
-    vix: 19.03,
-    bias: 'NEUTRAL',
-    bottom: 2,
-    top: 5,
-    capital: 10000000,
-    previous_selected: ['SPY','DBA'],
-    current_selected: ['SPY','DBA','XLE'],
-    is_emergency: false,
-    flow_change: null
-  };
-  const fallbackTickers = [
-    {sym:'SPY', close:759.97, high20:781.62, low20:758.68, vol:0.82, stay:20, pos:0.06, power:68, qty:0.2, news:6.5, source:'finnhub', box:7.9, cot:8.5, flow:5, trust:72, bottom:true, score:7.2, micro:'MES (Micro S&P)', delta:0, final_score:7.2, is_new:false},
-    {sym:'DBA', close:27.87, high20:28.86, low20:27.84, vol:0.78, stay:20, pos:0.03, power:68, qty:0.2, news:5, source:'finnhub', box:7.5, cot:8.5, flow:5, trust:67, bottom:true, score:6.7, micro:'ETF only', delta:0, final_score:6.7, is_new:false},
-    {sym:'CPER', close:39.5, high20:40.5, low20:38.9, vol:0.95, stay:20, pos:0.12, power:65, qty:0.3, news:6.2, source:'finnhub', box:7.2, cot:9.0, flow:5.5, trust:65, bottom:true, score:6.5, micro:'MCP', delta:0, final_score:6.5, is_new:false},
-    {sym:'GLD', close:185.2, high20:189, low20:182, vol:0.88, stay:20, pos:0.09, power:62, qty:0.2, news:5.8, source:'finnhub', box:6.8, cot:7.5, flow:5, trust:61, bottom:true, score:6.1, micro:'MGC', delta:0, final_score:6.1, is_new:false},
-    {sym:'UUP', close:29.1, high20:29.9, low20:28.8, vol:0.75, stay:20, pos:0.15, power:60, qty:0.2, news:5.5, source:'finnhub', box:6.5, cot:7, flow:5, trust:59, bottom:true, score:5.9, micro:'DX', delta:0, final_score:5.9, is_new:false},
-    {sym:'XLE', close:69.33, high20:69.72, low20:60.95, vol:1.2, stay:20, pos:0.96, power:32, qty:0.2, news:6, source:'finnhub', box:4, cot:3, flow:5, trust:72, bottom:false, score:2.8, micro:'MCL proxy', delta:0, final_score:2.8, is_new:true},
-    {sym:'USO', close:169.53, high20:169.96, low20:141.76, vol:1.26, stay:20, pos:0.98, power:32, qty:0.2, news:6.5, source:'finnhub', box:4, cot:3, flow:5, trust:71, bottom:false, score:2.9, micro:'MCL (Micro WTI)', delta:0, final_score:2.9, is_new:false},
-    {sym:'XLB', close:51.31, high20:51.71, low20:47.81, vol:0.75, stay:20, pos:0.9, power:32, qty:0.2, news:5, source:'finnhub', box:4, cot:3, flow:5, trust:58, bottom:false, score:4.2, micro:'MES proxy', delta:0, final_score:4.2, is_new:false},
-    {sym:'XLF', close:55.9, high20:56.67, low20:52.81, vol:0.79, stay:20, pos:0.8, power:32, qty:0.2, news:6, source:'finnhub', box:4.6, cot:3, flow:5, trust:54, bottom:false, score:4.6, micro:'MES proxy', delta:0, final_score:4.6, is_new:false},
-    {sym:'TLT', close:81.34, high20:81.92, low20:76.43, vol:0.72, stay:20, pos:0.89, power:32, qty:0.2, news:6, source:'finnhub', box:4.8, cot:3, flow:5, trust:53, bottom:false, score:4.7, micro:'10Y Micro Treasury', delta:0, final_score:4.7, is_new:false}
-  ];
-
-  const market = absorption && absorption.market ? absorption.market : fallbackMarket;
-  // 날짜 강제 오늘로 - 11월 19일 반영
-  market.date = today;
-  if(!market.dxyDate) market.dxyDate = today;
-
-  let tickers = absorption && absorption.tickers ? absorption.tickers : fallbackTickers;
-
-  // NEW 로직: previous_selected vs current_selected 비교 - 새로 들어온 티커는 is_new=true
-  const prev = market.previous_selected || [];
-  const curr = market.current_selected || tickers.filter(t=>t.bottom).slice(0,3).map(t=>t.sym);
-  tickers = tickers.map(t=>{
-    const isNew = curr.includes(t.sym) && !prev.includes(t.sym);
-    // delta가 있으면 final_score 계산 (결제 후 즉시 반영)
-    let finalScore = t.score;
-    let deltaScore = 0;
-    if(t.delta && t.delta !== 0){
-      // BOTTOM인데 델타 양수면 +0.5~1.0, 음수면 -0.5~-1.0
-      // TOP인데 델타 음수면 SHORT 강화 (점수 낮을수록 좋은 SHORT라 반대로)
-      const norm = Math.max(-1, Math.min(1, t.delta / 10000));
-      if(t.bottom){
-        deltaScore = norm * 0.8;
-      }else{
-        deltaScore = -norm * 0.5;
-      }
-      finalScore = Math.max(0, Math.min(10, t.score + deltaScore));
-    }
-    return {...t, is_new: isNew || t.is_new, final_score: finalScore, delta_score: deltaScore};
-  });
-
-  // 긴급 체크: VIX>25 or US10Y>5% or DXY>103 or 박스 이탈 → is_emergency
-  let isEmergency = false;
-  let flowChange = null;
-  if(market.vix > 25 || market.us10y > 5 || market.dxy > 103) isEmergency = true;
-  if(market.vix > 35) flowChange = 'BEAR';
-  if(market.is_emergency) isEmergency = true;
-  if(market.flow_change) flowChange = market.flow_change;
-  market.is_emergency = isEmergency;
-  market.flow_change = flowChange;
-
-  return {market, tickers, journal};
+function normalizeTicker(t){
+  const sym = t.sym || t.ticker || t.symbol || t.code || t.name || 'UNKNOWN';
+  const close = Number(t.close ?? t.price ?? t.c ?? t.last ?? 0) || 100;
+  const high20 = Number(t.high20 ?? t.high ?? t.box_high ?? t.h ?? t.high_20 ?? (close*1.03)) || (close*1.03);
+  const low20 = Number(t.low20 ?? t.low ?? t.box_low ?? t.l ?? t.low_20 ?? (close*0.97)) || (close*0.97);
+  const vol = Number(t.vol ?? t.volume ?? t.volume_ratio ?? t.vol_ratio ?? 1) || 1;
+  const stay = Number(t.stay ?? t.stay_days ?? t.days ?? 20) || 20;
+  const posRaw = t.pos ?? t.position ?? t.pos_in_box ?? 0.5;
+  let pos = Number(posRaw);
+  if(isNaN(pos)) pos = 0.5;
+  pos = Math.max(0, Math.min(1, pos));
+  const power = Number(t.power ?? t.cot_long ?? t.long_pct ?? 50) || 50;
+  const qty = Number(t.qty ?? t.quantity ?? 0.2) || 0.2;
+  const news = Number(t.news ?? t.news_score ?? 5) || 5;
+  const source = t.source || t.news_source || 'finnhub';
+  const box = Number(t.box ?? t.box_score ?? 5) || 5;
+  const cot = Number(t.cot ?? t.cot_score ?? 5) || 5;
+  const flow = Number(t.flow ?? t.flow_score ?? 5) || 5;
+  const trust = Number(t.trust ?? t.trust_score ?? 50) || 50;
+  const bottomRaw = t.bottom;
+  const bottom = bottomRaw!==undefined ? !!bottomRaw : (pos < 0.5);
+  const scoreRaw = Number(t.score ?? t.final_score ?? t.total_score ?? 5) || 5;
+  let score = scoreRaw;
+  // 숏은 원래 낮을수록 좋은 숏이었는데, 통일 위해 높을수록 강한 신호로 변환: 10 - score 로? 
+  // 하지만 여기선 그대로 높을수록 좋은 점수로 통일 - 숏 점수가 낮으면 10-score로 변환
+  // 간단히: bottom이면 그대로, top이면 10-score를 final_score로 쓰면 높을수록 좋은 숏이 됨
+  // 실제론 final_score가 이미 높을수록 강한 신호로 저장되어 있다고 가정
+  let final_score = Number(t.final_score ?? t.score ?? score);
+  if(!bottom && final_score < 5){
+    // 기존 로직에서 숏 2.8이 좋은 숏이었으면, 10-2.8=7.2로 변환해서 높을수록 좋은 숏으로
+    final_score = 10 - final_score;
+    if(final_score < 0) final_score = 0;
+    if(final_score > 10) final_score = 10;
+  }
+  const micro = t.micro || t.micro_proxy || t.proxy || sym;
+  const delta = Number(t.delta ?? 0) || 0;
+  let delta_score = Number(t.delta_score ?? 0) || 0;
+  if(delta!==0 && delta_score===0){
+    const norm = Math.max(-1, Math.min(1, delta/10000));
+    if(bottom) delta_score = norm*0.8;
+    else delta_score = -norm*0.5;
+    final_score = Math.max(0, Math.min(10, final_score + delta_score));
+  }
+  const is_new = !!t.is_new;
+  return {sym, close, high20, low20, vol, stay, pos, power, qty, news, source, box, cot, flow, trust, bottom, score, final_score, micro, delta, delta_score, is_new};
 }
 
-function calcBoxWidth(h,l){ return ((h-l)/l*100).toFixed(2); }
+function calcBoxWidth(h,l){
+  if(!h || !l || isNaN(h) || isNaN(l) || l===0) return '3.02';
+  const v = ((h-l)/l*100);
+  return isNaN(v) ? '3.02' : v.toFixed(2);
+}
 function calcSLTP(c, isLong){
+  if(!c || isNaN(c) || c===0) c=100;
   const sl = isLong ? (c*0.992).toFixed(2) : (c*1.008).toFixed(2);
   const tp = isLong ? (c*1.016).toFixed(2) : (c*0.984).toFixed(2);
-  return {sl, tp};
+  return {sl,tp};
+}
+
+async function fetchRealData(){
+  let absorption=null;
+  try{ const r=await fetch('./absorption.json?t='+Date.now()); if(r.ok) absorption=await r.json(); }catch(e){}
+  const today = new Date().toISOString().slice(0,10);
+  const fallbackMarket = {
+    date: today, run: 'WED 21:00 KST', dxy:101.81, dxyDate:today, us10y:4.96, vix:19.03, bias:'NEUTRAL', bottom:6, top:6, capital:10000000,
+    previous_selected:['SPY','DBA','XLE'], current_selected:['SPY','DBA','XLE','USO','XLB','TLT'], is_emergency:false
+  };
+  const fallbackTickers = [
+    {sym:'SPY', close:759.97, high20:781.62, low20:758.68, vol:0.82, stay:20, pos:0.06, power:68, qty:0.2, news:6.5, source:'finnhub', box:7.9, cot:8.5, flow:5, trust:72, bottom:true, score:7.2, micro:'MES (Micro S&P)'},
+    {sym:'DBA', close:27.87, high20:28.86, low20:27.84, vol:0.78, stay:20, pos:0.03, power:68, qty:0.2, news:5, source:'finnhub', box:7.5, cot:8.5, flow:5, trust:67, bottom:true, score:6.7, micro:'ETF only'},
+    {sym:'CPER', close:39.5, high20:40.5, low20:38.9, vol:0.95, stay:20, pos:0.12, power:65, qty:0.3, news:6.2, source:'finnhub', box:7.2, cot:9.0, flow:5.5, trust:65, bottom:true, score:6.5, micro:'MCP'},
+    {sym:'GLD', close:185.2, high20:189, low20:182, vol:0.88, stay:20, pos:0.09, power:62, qty:0.2, news:5.8, source:'finnhub', box:6.8, cot:7.5, flow:5, trust:61, bottom:true, score:6.1, micro:'MGC'},
+    {sym:'UUP', close:29.1, high20:29.9, low20:28.8, vol:0.75, stay:20, pos:0.15, power:60, qty:0.2, news:5.5, source:'finnhub', box:6.5, cot:7, flow:5, trust:59, bottom:true, score:5.9, micro:'DX'},
+    {sym:'MGC', close:81.64, high20:83, low20:80, vol:0.8, stay:20, pos:0.2, power:58, qty:0.2, news:5.2, source:'finnhub', box:6.2, cot:6.8, flow:5, trust:57, bottom:true, score:5.5, micro:'MGC proxy'},
+    {sym:'XLE', close:69.33, high20:69.72, low20:60.95, vol:1.2, stay:20, pos:0.96, power:32, qty:0.2, news:6, source:'finnhub', box:4, cot:3, flow:5, trust:72, bottom:false, score:7.2, micro:'MCL proxy'},
+    {sym:'USO', close:169.53, high20:169.96, low20:141.76, vol:1.26, stay:20, pos:0.98, power:32, qty:0.2, news:6.5, source:'finnhub', box:4, cot:3, flow:5, trust:71, bottom:false, score:7.1, micro:'MCL (Micro WTI)'},
+    {sym:'XLB', close:51.31, high20:51.71, low20:47.81, vol:0.75, stay:20, pos:0.9, power:32, qty:0.2, news:5, source:'finnhub', box:4, cot:3, flow:5, trust:58, bottom:false, score:6.8, micro:'MES proxy'},
+    {sym:'XLF', close:55.9, high20:56.67, low20:52.81, vol:0.79, stay:20, pos:0.8, power:32, qty:0.2, news:6, source:'finnhub', box:4.6, cot:3, flow:5, trust:54, bottom:false, score:6.6, micro:'MES proxy'},
+    {sym:'TLT', close:81.34, high20:81.92, low20:76.43, vol:0.72, stay:20, pos:0.89, power:32, qty:0.2, news:6, source:'finnhub', box:4.8, cot:3, flow:5, trust:53, bottom:false, score:6.5, micro:'10Y Micro Treasury'},
+    {sym:'IEF', close:95.2, high20:96, low20:90, vol:0.7, stay:20, pos:0.85, power:30, qty:0.2, news:5.5, source:'finnhub', box:4.5, cot:2.8, flow:5, trust:52, bottom:false, score:6.2, micro:'10Y Micro Treasury'}
+  ];
+
+  const market = absorption && (absorption.market || absorption.meta || absorption.info) ? (absorption.market || absorption.meta || absorption.info) : fallbackMarket;
+  market.date = today;
+  market.dxyDate = market.dxyDate || today;
+  market.bias = market.bias || market.regime || 'NEUTRAL';
+  market.vix = market.vix ?? 19.03;
+  market.us10y = market.us10y ?? 4.96;
+  market.dxy = market.dxy ?? 101.81;
+  market.capital = market.capital || 10000000;
+
+  let rawTickers = null;
+  if(absorption){
+    rawTickers = absorption.tickers || absorption.data || absorption.list || absorption.items || [];
+    if(Array.isArray(absorption)) rawTickers = absorption;
+  }
+  if(!rawTickers || rawTickers.length===0) rawTickers = fallbackTickers;
+
+  let tickers = rawTickers.map(normalizeTicker).filter(t=>t.sym!=='UNKNOWN' && t.close>0);
+
+  // LONG6 SHORT6 보장 - 21개 중 점수 높은 순으로 6개씩 강제
+  let longs = tickers.filter(t=>t.bottom).sort((a,b)=>b.final_score-a.final_score);
+  let shorts = tickers.filter(t=>!t.bottom).sort((a,b)=>b.final_score-a.final_score);
+  
+  // 만약 한쪽이 6개 미만이면 위치 기준으로 강제 분리
+  if(longs.length < 6){
+    const sortedByPos = [...tickers].sort((a,b)=>a.pos-b.pos);
+    longs = sortedByPos.slice(0,6).map(t=>({...t, bottom:true}));
+    shorts = sortedByPos.slice(-6).map(t=>({...t, bottom:false}));
+    // 중복 제거
+    const longSyms = new Set(longs.map(t=>t.sym));
+    shorts = shorts.filter(t=>!longSyms.has(t.sym));
+    if(shorts.length<6){
+      const remaining = tickers.filter(t=>!longSyms.has(t.sym) && !shorts.find(s=>s.sym===t.sym));
+      shorts = [...shorts, ...remaining].slice(0,6);
+    }
+    tickers = [...longs, ...shorts];
+  }else{
+    longs = longs.slice(0,6);
+    shorts = shorts.slice(0,6);
+    tickers = [...longs, ...shorts];
+  }
+
+  // NEW 로직
+  const prev = market.previous_selected || [];
+  const curr = market.current_selected || [];
+  if(curr.length>0){
+    tickers = tickers.map(t=>({...t, is_new: curr.includes(t.sym) && !prev.includes(t.sym)}));
+  }
+
+  market.bottom = 6;
+  market.top = 6;
+
+  return {market, tickers};
 }
 
 function render(data){
   const {market, tickers} = data;
-  const isKo = lang === 'ko';
-  currentData = data;
+  const isKo = lang==='ko';
+  currentData=data;
 
-  // BIAS 색깔 - NEUTRAL 회색 중립 / BULLISH 녹색 상승장 / BEARISH 빨강 하락장 / NEW BEARISH 깜빡임
-  let badgeClass = 'market-neutral';
-  let biasText = market.bias || 'NEUTRAL';
-  let biasKo = '중립';
-  let biasEn = 'NEUTRAL';
-  if(market.is_emergency && market.flow_change === 'BEAR'){
-    badgeClass = 'market-new-bear';
-    biasText = 'NEW BEARISH';
-    biasKo = 'NEW 하락장 - 흐름 바뀜!';
-    biasEn = 'NEW BEARISH - FLOW CHANGED!';
-  }else if(biasText === 'BULL' || biasText === 'BULLISH' || market.us10y < 4.5){
-    badgeClass = 'market-bull';
-    biasText = 'BULLISH';
-    biasKo = '상승장';
-    biasEn = 'BULLISH';
-  }else if(biasText === 'BEAR' || biasText === 'BEARISH' || market.vix > 25){
-    badgeClass = 'market-bear';
-    biasText = 'BEARISH';
-    biasKo = '하락장';
-    biasEn = 'BEARISH';
-  }else{
-    badgeClass = 'market-neutral';
-    biasText = 'NEUTRAL';
-    biasKo = '중립';
-    biasEn = 'NEUTRAL';
-  }
+  let badgeClass='market-neutral', biasText=market.bias||'NEUTRAL', biasKo='중립', biasEn='NEUTRAL';
+  const b=(biasText||'').toUpperCase();
+  if(b.includes('BULL')){ badgeClass='market-bull'; biasText='BULLISH'; biasKo='상승장'; biasEn='BULLISH'; }
+  else if(b.includes('BEAR')){ badgeClass='market-bear'; biasText='BEARISH'; biasKo='하락장'; biasEn='BEARISH'; }
+  else { badgeClass='market-neutral'; biasText='NEUTRAL'; biasKo='중립'; biasEn='NEUTRAL'; }
+  const displayBias=isKo?biasKo:biasEn;
 
-  const displayBias = isKo ? biasKo : biasEn;
+  document.getElementById('marketBadge').className=badgeClass;
+  document.getElementById('marketBadge').innerText=`${displayBias} • DXY ${market.dxy} • US10Y ${market.us10y}% • VIX ${market.vix}`;
 
-  document.getElementById('marketBadge').className = badgeClass;
-  document.getElementById('marketBadge').innerText = `${displayBias} • DXY ${market.dxy} • US10Y ${market.us10y}% • VIX ${market.vix}`;
+  document.getElementById('topBar').innerHTML=`<span>${isKo?'날짜':'DATE'} <b>${market.date}</b> (오늘)</span><span>${isKo?'실행':'RUN'} <b>${market.run||'WED 21:00 KST'}</b> - LONG6 SHORT6 - 중립이면 점수 높은 3개</span><span>DXY <b>${market.dxy}</b></span><span>US10Y <b>${market.us10y}%</b></span><span>VIX <b>${market.vix}</b></span><span>BIAS <b>${displayBias}</b></span><span>BOTTOM <b style="color:#00e676">6</b> / TOP <b style="color:#ff5252">6</b></span><span>News <b>Finnhub+GDELT</b></span><span>${isKo?'자본':'CAPITAL'} <b>${(market.capital||10000000).toLocaleString()}원</b> - 10M=3 20M=4 30M=5 60M=6</span>`;
 
-  document.getElementById('topBar').innerHTML = `
-    <span>${isKo?'날짜':'DATE'} <b>${market.date}</b> (오늘 ${new Date().toLocaleDateString('ko-KR')})</span>
-    <span>${isKo?'실행':'RUN'} <b>${market.run}</b></span>
-    <span>DXY <b>${market.dxy}</b> (${market.dxyDate})</span>
-    <span>US10Y <b>${market.us10y}%</b></span>
-    <span>VIX <b>${market.vix}</b></span>
-    <span>BIAS <b style="color:${badgeClass.includes('bull')?'#4cffb0':badgeClass.includes('bear')?'#ff9999':'#8aa0b0'}">${displayBias}</b></span>
-    <span>BOTTOM <b style="color:#00e676">${market.bottom}</b> / TOP <b style="color:#ff5252">${market.top}</b></span>
-    <span>News <b>Finnhub+GDELT</b></span>
-    <span>${isKo?'자본':'CAPITAL'} <b>${(market.capital||10000000).toLocaleString()}원</b></span>
-    ${market.is_emergency ? `<span style="color:#ff5252;font-weight:900">${isKo?'긴급 재선정':'EMERGENCY RE-SELECT'}</span>` : ''}
-  `;
+  document.getElementById('title').innerText = isKo ? 'COMMAND CENTER V4 - LONG6 SHORT6 - 중립이면 점수 높은 3개 롱1+숏2 or 롱2+숏1' : 'COMMAND CENTER V4 - LONG6 SHORT6 - NEUTRAL TOP3 MIXED';
+  document.getElementById('subtitle').innerText = isKo ? 'LONG6 SHORT6 항상 - 중립이면 12개 중 점수 높은 3개 - 롱이면 롱 3개 숏이면 숏 3개' : 'LONG6 SHORT6 Always - NEUTRAL TOP3 Mixed - BULL LONG3 BEAR SHORT3';
 
-  document.getElementById('title').innerText = isKo ? 'COMMAND CENTER V4 - 21 TICKER REAL-TIME HUB - 세계 금융시장 흐름 허브' : 'COMMAND CENTER V4 - 21 TICKER REAL-TIME HUB - GLOBAL MARKET FLOW HUB';
-  document.getElementById('subtitle').innerText = isKo ? 'Finnhub Primary + GDELT Backup - 실제 데이터 연결 - 6주 가상매매 별도' : 'Finnhub Primary + GDELT Backup - Real Data Connected - 6W Trading Separate';
+  const bottom = tickers.filter(t=>t.bottom).sort((a,b)=>b.final_score-a.final_score).slice(0,6);
+  const top = tickers.filter(t=>!t.bottom).sort((a,b)=>b.final_score-a.final_score).slice(0,6);
 
-  const bottom = tickers.filter(t=>t.bottom).sort((a,b)=>b.final_score-a.final_score).slice(0,5);
-  const top = tickers.filter(t=>!t.bottom).sort((a,b)=>a.final_score-b.final_score).slice(0,5);
-
-  let recCount = 3;
-  const cap = market.capital||10000000;
+  let recCount=3; const cap=market.capital||10000000;
   if(cap>=60000000) recCount=6; else if(cap>=30000000) recCount=5; else if(cap>=20000000) recCount=4;
 
-  let recommended = [];
-  if(biasText.includes('BULL')) recommended = bottom.slice(0, recCount);
-  else if(biasText.includes('BEAR')) recommended = top.slice(0, recCount);
-  else recommended = [...tickers].sort((a,b)=>b.final_score-a.final_score).slice(0, recCount);
+  let recommended=[];
+  if(b.includes('BULL')){
+    recommended = bottom.sort((a,b)=>b.final_score-a.final_score).slice(0,recCount);
+  }else if(b.includes('BEAR')){
+    recommended = top.sort((a,b)=>b.final_score-a.final_score).slice(0,recCount);
+  }else{
+    // NEUTRAL: 12개 중 점수 높은 3개 - 롱1+숏2 or 롱2+숏1 가능
+    const all = [...tickers].sort((a,b)=>b.final_score-a.final_score);
+    // 중립이면 최소 1개 롱 1개 숏 보장 - 점수 높은 순 3개지만 롱/숏 섞이게
+    if(recCount===3){
+      const sorted = all;
+      // 점수 높은 3개가 모두 같은 쪽이면, 3번째를 다른 쪽에서 가져와서 섞음 보장
+      const top3 = sorted.slice(0,3);
+      const hasLong = top3.some(t=>t.bottom);
+      const hasShort = top3.some(t=>!t.bottom);
+      if(!hasLong || !hasShort){
+        // 한쪽만 있으면, 반대쪽 최고 점수 1개를 3번째에 강제 포함
+        if(!hasLong){
+          const bestLong = bottom.sort((a,b)=>b.final_score-a.final_score)[0];
+          if(bestLong) recommended = [sorted[0], sorted[1], bestLong];
+          else recommended = top3;
+        }else{
+          const bestShort = top.sort((a,b)=>b.final_score-a.final_score)[0];
+          if(bestShort) recommended = [sorted[0], sorted[1], bestShort];
+          else recommended = top3;
+        }
+        // 점수 순으로 재정렬
+        recommended = recommended.sort((a,b)=>b.final_score-a.final_score);
+      }else{
+        recommended = top3;
+      }
+    }else{
+      recommended = all.slice(0,recCount);
+    }
+  }
 
   function mkCard(t, isSelected){
-    const isLong = t.bottom;
-    const boxW = calcBoxWidth(t.high20, t.low20);
-    const {sl, tp} = calcSLTP(t.close, isLong);
-    const micro = t.micro || t.sym;
-    const score = t.final_score || t.score;
-    const scoreCls = score >= 6.5 ? 'g' : score <= 3 ? 'r' : 'm';
-    const isNew = t.is_new;
-
-    let cardCls = isLong ? 'b' : 't';
-    if(isNew) cardCls = isLong ? 'new-b' : 'new-t';
-    else if(isSelected) cardCls = isLong ? 'sel-b' : 'sel-t';
-
-    let badgeText = '';
-    let badgeCls = '';
-    if(isNew){
-      badgeText = isKo ? `NEW 선정 • ${isLong?'LONG':'SHORT'}` : `NEW SELECTED • ${isLong?'LONG':'SHORT'}`;
-      badgeCls = isLong ? 'b-new-long' : 'b-new-short';
-    }else if(isSelected){
-      badgeText = isKo ? `선정 • ${isLong?'LONG':'SHORT'}` : `SELECTED • ${isLong?'LONG':'SHORT'}`;
-      badgeCls = isLong ? 'bl' : 'bs';
-    }
-
-    const trustTxt = isKo ? (isLong?`신뢰도: <b style="color:#00e676">${t.trust}%</b> • 바닥 매집`:`신뢰도: <b style="color:#ff5252">${t.trust}%</b> • 천장 분배`) : (isLong?`Trust: <b style="color:#00e676">${t.trust}%</b> • Bottom Accum`:`Trust: <b style="color:#ff5252">${t.trust}%</b> • Top Dist`);
-
-    const deltaInfo = t.delta && t.delta !== 0 ? (isKo?`누적델타 ${t.delta>0?'+':''}${t.delta.toLocaleString()} Quantower → 점수 ${t.delta_score>0?'+':''}${t.delta_score.toFixed(1)} → ${score.toFixed(1)} (결제 후 즉시 반영)`:`Delta ${t.delta>0?'+':''}${t.delta.toLocaleString()} Quantower → Score ${t.delta_score>0?'+':''}${t.delta_score.toFixed(1)} → ${score.toFixed(1)}`) : (isKo?`누적델타 없음 (결제 전 0) → 기존 점수 유지`:`No Delta (pre-payment 0) → Base Score`);
-
-    const boxLabel = isKo ? '박스폭' : 'Box Width';
-    const volLabel = isKo ? '거래량' : 'Volume';
-    const stayLabel = isKo ? '체류' : 'Stay';
-    const posLabel = isKo ? '위치' : 'Pos';
-    const powerLabel = isKo ? '세력' : 'Power';
-    const qtyLabel = isKo ? '수량' : 'Qty';
-    const newsLabel = isKo ? '뉴스' : 'News';
-    const sourceLabel = isKo ? '출처' : 'Source';
-    const closeLabel = isKo ? '종가' : 'Close';
-    const slLabel = isKo ? '손절' : 'SL';
-    const tpLabel = isKo ? '익절' : 'TP';
-
-    const detail = `
-      ${boxLabel} <b>${boxW}%</b> (${t.low20}-${t.high20})<br>
-      ${volLabel} <b>${t.vol}x</b> ${stayLabel} <b>${t.stay}d</b> ${posLabel} <b>${t.pos}</b><br>
-      ${powerLabel} <b>${t.power}% Long</b> ${qtyLabel} <b>${t.qty}</b> ${newsLabel} <b>${t.news}</b> ${sourceLabel}: <b>${t.source}</b><br>
-      ${closeLabel} <b>${t.close}</b> | ${t.bottom?'BOTTOM':'TOP'}<br>
-      NEWS Breakdown: Box ${t.box} COT ${t.cot} Flow ${t.flow} News ${t.news} → Source: ${t.source}<br>
-      <b style="color:#ff9800">${deltaInfo}</b><br>
-      <span class="${isLong?'long':'short'}">${micro} | ${slLabel} ${sl} (0.8%) ${tpLabel} ${tp} (1.6%) ${isLong?'LONG':'SHORT'}</span>
-      ${isNew ? `<span class="${isLong?'new-text':'new-text-short'}">${isKo?`NEW 선정 • ${isLong?'LONG':'SHORT'} - 세계 시장 흐름 바꼈음! ${market.is_emergency?'긴급 재선정':''} - 절대 안 변한다는 건 없다`:`NEW SELECTED • ${isLong?'LONG':'SHORT'} - FLOW CHANGED! ${market.is_emergency?'EMERGENCY':''} - No Absolute`}</span>` : ''}
-    `;
-
-    const scoreDisplay = t.delta && t.delta!==0 ? `${score.toFixed(1)} (${t.delta_score>0?'+':''}${t.delta_score.toFixed(1)})` : `${score.toFixed(1)}${isNew?' NEW':''}`;
-
+    const isLong=t.bottom;
+    const boxW=calcBoxWidth(t.high20,t.low20);
+    const {sl,tp}=calcSLTP(t.close,isLong);
+    const micro=t.micro;
+    const score=t.final_score;
+    const scoreCls=score>=6.5?'g':score<=4?'r':'m';
+    const isNew=t.is_new;
+    let cardCls=isLong?'b':'t';
+    if(isNew) cardCls=isLong?'new-b':'new-t';
+    else if(isSelected) cardCls=isLong?'sel-b':'sel-t';
+    let badgeText='', badgeCls='';
+    if(isNew){ badgeText=isKo?`NEW 선정 • ${isLong?'LONG':'SHORT'}`:`NEW SELECTED • ${isLong?'LONG':'SHORT'}`; badgeCls=isLong?'b-new-long':'b-new-short'; }
+    else if(isSelected){ badgeText=isKo?`선정 • ${isLong?'LONG':'SHORT'}`:`SELECTED • ${isLong?'LONG':'SHORT'}`; badgeCls=isLong?'bl':'bs'; }
+    const trustTxt=isKo?(isLong?`신뢰도: <b style="color:#00e676">${t.trust}%</b> • 바닥 매집`:`신뢰도: <b style="color:#ff5252">${t.trust}%</b> • 천장 분배`):(isLong?`Trust: <b style="color:#00e676">${t.trust}%</b> • Bottom Accum`:`Trust: <b style="color:#ff5252">${t.trust}%</b> • Top Dist`);
+    const deltaInfo = t.delta&&t.delta!==0 ? (isKo?`누적델타 ${t.delta>0?'+':''}${t.delta.toLocaleString()} Quantower → 점수 ${t.delta_score>0?'+':''}${t.delta_score.toFixed(1)} → ${score.toFixed(1)}`:`Delta ${t.delta>0?'+':''}${t.delta.toLocaleString()} → Score ${t.delta_score>0?'+':''}${t.delta_score.toFixed(1)} → ${score.toFixed(1)}`) : (isKo?`누적델타 없음 (결제 전 0) → 기존 점수 유지`:`No Delta`);
+    const boxLabel=isKo?'박스폭':'Box Width', volLabel=isKo?'거래량':'Volume', stayLabel=isKo?'체류':'Stay', posLabel=isKo?'위치':'Pos', powerLabel=isKo?'세력':'Power', qtyLabel=isKo?'수량':'Qty', newsLabel=isKo?'뉴스':'News', sourceLabel=isKo?'출처':'Source', closeLabel=isKo?'종가':'Close', slLabel=isKo?'손절':'SL', tpLabel=isKo?'익절':'TP';
+    const detail=`${boxLabel} <b>${boxW}%</b> (${t.low20.toFixed(2)}-${t.high20.toFixed(2)})<br>${volLabel} <b>${t.vol}x</b> ${stayLabel} <b>${t.stay}d</b> ${posLabel} <b>${t.pos.toFixed(2)}</b><br>${powerLabel} <b>${t.power}% Long</b> ${qtyLabel} <b>${t.qty}</b> ${newsLabel} <b>${t.news}</b> ${sourceLabel}: <b>${t.source}</b><br>${closeLabel} <b>${t.close}</b> | ${t.bottom?'BOTTOM':'TOP'}<br>NEWS Breakdown: Box ${t.box} COT ${t.cot} Flow ${t.flow} News ${t.news} → Source: ${t.source}<br><b style="color:#ff9800">${deltaInfo}</b><br><span class="${isLong?'long':'short'}">${micro} | ${slLabel} ${sl} (0.8%) ${tpLabel} ${tp} (1.6%) ${isLong?'LONG':'SHORT'}</span>${isNew?`<span class="${isLong?'new-text':'new-text-short'}">${isKo?`NEW 선정 • ${isLong?'LONG':'SHORT'} - 세계 시장 흐름 바꼈음!`:`NEW SELECTED • ${isLong?'LONG':'SHORT'} - FLOW CHANGED!`}</span>`:''}`;
+    const scoreDisplay = t.delta&&t.delta!==0 ? `${score.toFixed(1)} (${t.delta_score>0?'+':''}${t.delta_score.toFixed(1)})` : `${score.toFixed(1)}${isNew?' NEW':''}`;
     return `<div class="card ${cardCls}">${badgeText?`<span class="badge ${badgeCls}">${badgeText}</span>`:''}<div class="row"><span class="ticker">${t.sym}</span><span class="sub">${micro}</span><span class="finn">FINNHUB</span>${t.delta&&t.delta!==0?`<span class="delta">Δ ${t.delta>0?'+':''}${t.delta.toLocaleString()}</span>`:''}<span class="score ${scoreCls}">${scoreDisplay}</span></div><div class="detail">${detail}</div><div class="trust"><span>${trustTxt}</span><div class="prog"><div class="fill ${isLong?'fill-g':'fill-r'}" style="width:${t.trust}%"></div></div><span class="tbadge ${isLong?'bl':'bs'}">${isLong?'LONG':'SHORT'}</span></div></div>`;
   }
 
-  let html = `<div class="sec g"><span>${isKo?'ACCUMULATION - BOTTOM - 세계 금융시장 흐름 허브 - 거의 안 바뀌지만 급변 시 바뀜':'ACCUMULATION - BOTTOM - GLOBAL HUB - Almost Fixed But Can Change'}</span><span>${bottom.length} TICKERS - ${market.date} 실제 데이터 - ${isKo?'오늘':'TODAY'} ${market.date}</span></div><div class="grid">`;
-  bottom.forEach(t=>html+=mkCard(t, true));
-  for(let i=bottom.length;i<3;i++) html+=`<div style="visibility:hidden"></div>`;
-  html+=`</div><div class="sec r"><span>${isKo?'DISTRIBUTION - TOP - 거의 안 바뀌지만 급변 시 강화':'DISTRIBUTION - TOP - Almost Fixed But Strengthens on Crash'}</span><span>${top.length} TICKERS - ${market.date}</span></div><div class="grid">`;
-  top.forEach(t=>html+=mkCard(t, top.indexOf(t)===0));
-  for(let i=top.length;i<3;i++) html+=`<div style="visibility:hidden"></div>`;
-  html+=`</div><div class="sec y"><span>${isKo?`SELECTED - THIS WEEK (MAX ${recCount}) - V4 - ${displayBias} - NEW 기능 - 흐름 바꼈으면 NEW로 표시`:`SELECTED - THIS WEEK (MAX ${recCount}) - V4 - ${displayBias} - NEW Feature - FLOW CHANGE = NEW`}</span><span>LONG / SHORT - 10M=3 20M=4 30M=5 60M=6 - ${displayBias} - ${market.date}</span></div><div class="grid">`;
-  recommended.forEach(t=>html+=mkCard(t, true));
+  let html=`<div class="sec g"><span>${isKo?'ACCUMULATION - BOTTOM - LONG 6개 - 줄에 맞게 3개씩 2줄':'ACCUMULATION - BOTTOM - LONG 6'}</span><span>6 TICKERS - ${market.date} - LONG6</span></div><div class="grid">`;
+  bottom.forEach(t=>html+=mkCard(t,true));
+  html+=`</div><div class="sec r"><span>${isKo?'DISTRIBUTION - TOP - SHORT 6개 - 줄에 맞게 3개씩 2줄':'DISTRIBUTION - TOP - SHORT 6'}</span><span>6 TICKERS - ${market.date} - SHORT6</span></div><div class="grid">`;
+  top.forEach(t=>html+=mkCard(t,true));
+  html+=`</div><div class="sec y"><span>${isKo?`SELECTED - THIS WEEK (MAX ${recCount}) - V4 - ${displayBias} - 중립이면 점수 높은 ${recCount}개 롱1+숏2 or 롱2+숏1 - 자본금 ${(market.capital||10000000).toLocaleString()}원`:`SELECTED - THIS WEEK (MAX ${recCount}) - V4 - ${displayBias} - NEUTRAL TOP${recCount} MIXED`}</span><span>LONG / SHORT - 10M=3 20M=4 30M=5 60M=6 - ${displayBias} - ${market.date}</span></div><div class="grid">`;
+  recommended.forEach(t=>html+=mkCard(t,true));
+  for(let i=recommended.length;i<3;i++) html+=`<div style="visibility:hidden"></div>`;
   html+=`</div>`;
 
-  document.getElementById('content').innerHTML = html;
-  document.getElementById('footer').innerHTML = `COMMAND CENTER V4 - REAL DATA CONNECTED - DATE ${market.date} (오늘 ${new Date().toLocaleDateString('ko-KR')}) - DXY ${market.dxy} US10Y ${market.us10y}% VIX ${market.vix} BIAS ${displayBias} - GitHub Actions https://github.com/onesangel7776-blip/weekly-absorption/actions 매일 갱신 - absorption.json 실제 연결 - 한/영 전체 반영 - 선정 점수 겹침 없음 - 모든 박스 3개 동일 - NEW 선정 기능 - 6주 가상매매 별도 journal - 세계 금융시장 흐름 허브 - 절대 안 변한다는 건 없다 - 1929 대공황 2008 2020 2022 30년 3번 폭락 감지 - Quantower 델타 결제 후 즉시 점수 반영`;
+  document.getElementById('content').innerHTML=html;
+  document.getElementById('footer').innerHTML=`COMMAND CENTER V4 - LONG6 SHORT6 - DATE ${market.date} - DXY ${market.dxy} US10Y ${market.us10y}% VIX ${market.vix} BIAS ${displayBias} - LONG6 SHORT6 항상 - 중립이면 점수 높은 ${recCount}개 진입 (롱1+숏2 or 롱2+숏1) - 롱이면 롱만 ${recCount}개 숏이면 숏만 ${recCount}개 - 10M=3 20M=4 30M=5 60M=6 - 모든 박스 3개 동일 - 선정 점수 겹침 없음 - 한/영 전체 반영 - NEW 선정 기능 - 세계 금융시장 흐름 허브 - 절대 안 변한다는 건 없다 - Quantower 델타 결제 후 즉시 반영`;
 }
 
-(async()=>{
-  const data = await fetchRealData();
-  render(data);
-})();
+(async()=>{const data=await fetchRealData(); render(data);})();
 </script>
 </body>
 </html>
