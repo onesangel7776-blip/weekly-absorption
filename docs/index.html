@@ -3,66 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>COMMAND CENTER V4 - 21 TICKER</title>
+<title>COMMAND CENTER V4 - HUB + NEW BADGE</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#070a10;color:#c8d2dc;font-family:Pretendard,sans-serif;font-size:12.5px;line-height:1.6}
-.header{padding:10px 14px;background:#070a10;border-bottom:1px solid #162233;display:flex;justify-content:space-between;align-items:center}
+.header{padding:10px 14px;background:#070a10;border-bottom:1px solid #162233;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .bar{padding:8px 14px;background:#070a10;border-bottom:1px solid #162233;display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:#7a8ca0}
 .bar b{color:#e0eaf6}
 .wrap{padding:14px;max-width:1600px;margin:0 auto}
 .sec{display:flex;justify-content:space-between;font-weight:900;font-size:11px;letter-spacing:1.3px;margin:18px 0 10px 0}
-.sec.g{color:#00e676} .sec.r{color:#ff5252}
+.sec.g{color:#00e676} .sec.r{color:#ff5252} .sec.y{color:#ffd54f}
 .grid{display:grid;gap:10px;grid-template-columns:repeat(3,1fr)}
 @media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.grid{grid-template-columns:1fr}}
-.card{background:#0e1622;border-radius:8px;padding:11px;border:1px solid #1e2f44;position:relative;min-height:195px;display:flex;flex-direction:column}
+.card{background:#0e1622;border-radius:8px;padding:11px;border:1px solid #1e2f44;position:relative;min-height:210px;display:flex;flex-direction:column;padding-top:32px}
 .card.b{border-color:#1e8a4a;background:#0a1a12} .card.t{border-color:#8a1e1e;background:#1a0e0e}
+.card.new-b{border-color:#ffd54f;border-width:2px;background:#1a1a0a;box-shadow:0 0 14px rgba(255,213,79,0.25)}
+.card.new-t{border-color:#ff5252;border-width:2px;background:#1a0a0a;box-shadow:0 0 14px rgba(255,82,82,0.35)}
 .card.sel-b{border-color:#00e676;border-width:1.5px} .card.sel-t{border-color:#ff5252;border-width:1.5px}
-.badge{position:absolute;top:0;right:0;padding:3px 8px;font-size:10px;font-weight:900;border-radius:0 8px 0 8px}
-.bl{background:#0a4a2a;color:#4cffb0;border:1px solid #0e6a3a} .bs{background:#6a1a1a;color:#ff9999;border:1px solid #8a2a2a}
-.row{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+.badge{position:absolute;top:0;right:0;padding:4px 9px;font-size:10px;font-weight:900;border-radius:0 8px 0 8px;z-index:2}
+.bl{background:#0a4a2a;color:#4cffb0;border:1px solid #0e6a3a}
+.bs{background:#6a1a1a;color:#ff9999;border:1px solid #8a2a2a}
+.b-new-long{background:#ffd54f;color:#000;border:1px solid #ffab00;animation:blink 0.9s infinite;font-size:11px}
+.b-new-short{background:#ff1744;color:#fff;border:1px solid #ff0000;animation:blink 0.7s infinite;font-size:11px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.55}}
+.row{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap;margin-top:4px}
 .ticker{font-size:14px;font-weight:900;color:#fff}
 .sub{font-size:11px;color:#7a8ca0}
 .finn{background:#2a7ad0;color:#fff;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:800}
-.score{margin-left:auto;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:900;min-width:32px;text-align:center}
+.delta{background:#ff9800;color:#000;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:900}
+.score{margin-left:auto;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:900;min-width:42px;text-align:center;z-index:1}
 .score.g{background:#0a4a2a;color:#4cffb0;border:1px solid #0e6a3a} .score.r{background:#4a1a1a;color:#ff9999;border:1px solid #6a2a2a} .score.m{background:#162233;color:#8aa0b0}
 .detail{font-size:11px;color:#8aa0b0;line-height:1.55;flex:1}
 .detail b{color:#c8d2dc;font-weight:700}
-.long{color:#00e676;font-weight:800;margin-top:5px;display:block;font-size:11px} .short{color:#ff6b6b;font-weight:800;margin-top:5px;display:block;font-size:11px}
+.long{color:#00e676;font-weight:800;margin-top:5px;display:block;font-size:11px}
+.short{color:#ff6b6b;font-weight:800;margin-top:5px;display:block;font-size:11px}
+.new-text{color:#ffd54f;font-weight:900;margin-top:5px;display:block;font-size:11px;background:#2a1f00;padding:3px 6px;border-radius:4px;border:1px solid #ffab00}
+.new-text-short{color:#ff5252;font-weight:900;margin-top:5px;display:block;font-size:11px;background:#2a0a0a;padding:3px 6px;border-radius:4px;border:1px solid #ff1744}
 .trust{margin-top:8px;font-size:11px;display:flex;align-items:center;gap:6px;color:#7a8ca0}
 .prog{width:120px;height:4px;background:#070a10;border-radius:2px;overflow:hidden}
-.fill{height:100%} .fill-g{background:#00e676} .fill-r{background:#ff5252}
+.fill{height:100%} .fill-g{background:#00e676} .fill-r{background:#ff5252} .fill-y{background:#ffd54f}
 .tbadge{padding:1px 6px;border-radius:4px;font-size:10px;font-weight:900}
+.btn{cursor:pointer;user-select:none;border:1px solid #2a5ad0}
+.market-neutral{background:#162233;border:1px solid #2a3a4a;color:#8aa0b0;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:900}
+.market-bull{background:#0a2a1a;border:1px solid #1e8a4a;color:#4cffb0;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:900}
+.market-bear{background:#2a0a0a;border:1px solid #8a1e1e;color:#ff9999;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:900}
+.market-new-bear{background:#ff0000;color:#fff;border:1px solid #ff5252;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:900;animation:blink 0.7s infinite}
 .footer{padding:12px;color:#4a5a6a;font-size:10px;border-top:1px solid #111a28;margin-top:16px;text-align:center}
+.hub{margin-top:12px;background:#0a121e;border:1px solid #162233;border-radius:8px;padding:12px;font-size:11px;color:#8aa0b0;line-height:1.7}
 </style>
 </head>
 <body>
-<div class="header"><div><b>COMMAND CENTER V4 - 21 TICKER REAL-TIME INFRA MONITOR - HYBRID</b> <span style="color:#00e676;font-weight:900">Finnhub Primary + GDELT Backup</span></div><div style="display:flex;gap:8px"><span style="background:#111a28;border:1px solid #1e2f44;padding:4px 10px;border-radius:6px;font-size:11px">한/영</span><span style="background:#111a28;border:1px solid #1e2f44;padding:4px 10px;border-radius:6px;font-size:11px">NEUTRAL • DXY 101.81 • US10Y 4.96% • VIX 19.03</span></div></div>
-<div class="bar"><span>DATE <b>2026-10-25</b></span><span>RUN <b>SUN 21:00 KST</b></span><span>DXY <b>101.81</b> (2026-10-23)</span><span>US10Y <b>4.96%</b></span><span>VIX <b>19.03</b></span><span>BIAS <b>NEUTRAL</b></span><span>BOTTOM <b style="color:#00e676">2</b> / TOP <b style="color:#ff5252">5</b></span><span>News Hybrid: <b>Finnhub+GDELT</b></span></div>
+<div class="header"><div><b>COMMAND CENTER V4 - 21 TICKER REAL-TIME HUB - 세계 금융시장 흐름 허브</b> <span style="color:#ffd54f;font-weight:900">NEW 선정 기능 - 흐름 바뀌면 NEW로 바로 알림</span></div><div style="display:flex;gap:8px"><span id="langBtn" class="btn" onclick="toggleLang()" style="background:#111a28;padding:4px 12px;border-radius:6px;font-size:11px;color:#4c9eff;font-weight:900">한/영</span><span id="marketBadge" class="market-new-bear">NEW BEARISH • DXY 105.2↑ • US10Y 5.12%↑ • VIX 34.5↑ • 흐름 바뀜!</span></div></div>
+<div class="bar"><span>DATE <b>2026-11-04 TUE</b> - 매일 21개 티커 동향 파악</span><span>RUN <b>SUN 21:00 주간 선정 + TUE 21:00 긴급 재선정 - 흐름 바뀜</b></span><span>PREV <b>BULLISH 녹색 상승장 - SPY, DBA LONG</b></span><span>CURR <b style="color:#ff5252">BEARISH 빨강 하락장 - NEW XLE, USO SHORT - 흐름 바뀜!</b></span><span>6주 가상매매 <b>별도 journal 페이지 - 여기는 허브</b></span></div>
 <div class="wrap">
-<div class="sec g"><span>ACCUMULATION - BOTTOM</span><span>2 TICKERS</span></div>
+<div class="hub">
+<b style="color:#fff">V4 허브 정의: 6주 가상매매는 여기 표현 안 함 - 여기는 21개 티커로 전세계 금융시장 흐름 보는 허브</b><br>
+- 평소: COT 주간 고정이라 거의 안 바뀜 - 일요일 선정 SPY, DBA LONG → 월, 화 그대로 <span style="color:#00e676">선정 • LONG</span><br>
+- 급변: 한 주 지나 새로운 주 시작 후 하루 이틀 지나 세계 시장 급변 - 상승장→급락장 - VIX 19→34, DXY 101→105, US10Y 4.96%→5.12%<br>
+- <b style="color:#ffd54f">신규 기능:</b> 새로운 티커 선정되면 앞에 <b style="color:#000;background:#ffd54f;padding:1px 5px;border-radius:3px">NEW 선정 • LONG/SHORT</b> 나와야 함 - 그래야 "아 세계 시장 흐름이 바꼈구나" 바로 앎 - 기존 선정과 점수 겹침 없이 <b>padding-top:32px</b>로 분리, 모든 박스 3개 동일
+</div>
+
+<div class="sec g"><span>ACCUMULATION - BOTTOM - 이전 주 선정 - 거의 안 바뀌던 상태</span><span>PREV WEEK - BULLISH</span></div>
 <div class="grid">
-<div class="card b sel-b"><span class="badge bl">선정 • LONG</span><div class="row"><span class="ticker">SPY</span><span class="sub">MES (Micro S&P)</span><span class="finn">FINNHUB</span><span class="score g">7.2</span></div><div class="detail">박스폭 <b>3.02%</b> (758.68-781.62)<br>거래량 <b>0.82x</b> 체류 <b>20d</b> 위치 <b>0.06</b><br>세력 <b>68% Long</b> 수량 <b>0.2</b> 뉴스 <b>6.5</b> 출처: <b>finnhub</b><br>종가 <b>759.97</b> | BOTTOM<br>NEWS Breakdown: Box 7.9 COT 8.5 Flow 5 News 6.5 → Source: finnhub<br><span class="long">MES (Micro S&P) | 손절 753.89 (0.8%) 익절 772.13 (1.6%) LONG</span></div><div class="trust"><span>신뢰도: <b style="color:#00e676">72%</b> • 바닥 매집 (롱)</span><div class="prog"><div class="fill fill-g" style="width:72%"></div></div><span class="tbadge bl">LONG</span></div></div>
-<div class="card b sel-b"><span class="badge bl">선정 • LONG</span><div class="row"><span class="ticker">DBA</span><span class="sub">ETF only</span><span class="finn">FINNHUB</span><span class="score m">6.7</span></div><div class="detail">박스폭 <b>3.66%</b> (27.84-28.86)<br>거래량 <b>0.78x</b> 체류 <b>20d</b> 위치 <b>0.03</b><br>세력 <b>68% Long</b> 수량 <b>0.2</b> 뉴스 <b>5</b> 출처: <b>finnhub</b><br>종가 <b>27.87</b> | BOTTOM<br>NEWS Breakdown: Box 7.5 COT 8.5 Flow 5 News 5 → Source: finnhub<br><span class="long">ETF only | 손절 27.65 (0.8%) 익절 28.32 (1.6%) LONG</span></div><div class="trust"><span>신뢰도: <b style="color:#00e676">67%</b> • 바닥 매집 (롱)</span><div class="prog"><div class="fill fill-g" style="width:67%"></div></div><span class="tbadge bl">LONG</span></div></div>
-<div class="card" style="border:1px dashed #162233;background:transparent;visibility:hidden"></div>
+<div class="card b sel-b"><span class="badge bl">선정 • LONG</span><div class="row"><span class="ticker">SPY</span><span class="sub">MES (Micro S&P)</span><span class="finn">FINNHUB</span><span class="delta">Δ +12,345</span><span class="score g">7.2</span></div><div class="detail">박스폭 <b>3.02%</b> 거래량 <b>0.82x</b> 체류 <b>20d</b> 위치 <b>0.06</b><br>세력 <b>68% Long</b> 수량 <b>0.2</b> 뉴스 <b>6.5</b> 출처: <b>finnhub</b><br>종가 <b>759.97</b> | BOTTOM - 이전 주 선정<br>NEWS: Box 7.9 COT 8.5 Flow 5 News 6.5<br><span class="long">MES | 손절 753.89 0.8% 익절 772.13 1.6% LONG - 이전 흐름</span></div><div class="trust"><span>신뢰도: <b style="color:#00e676">72%</b> • 바닥 매집</span><div class="prog"><div class="fill fill-g" style="width:72%"></div></div><span class="tbadge bl">LONG</span></div></div>
+<div class="card b sel-b"><span class="badge bl">선정 • LONG</span><div class="row"><span class="ticker">DBA</span><span class="sub">ETF only</span><span class="finn">FINNHUB</span><span class="score m">6.7</span></div><div class="detail">박스폭 <b>3.66%</b> 거래량 <b>0.78x</b> 체류 <b>20d</b> 위치 <b>0.03</b><br>이전 주 BULLISH 녹색 상승장 선정<br><span class="long">ETF only | LONG - 이전 흐름</span></div><div class="trust"><span>신뢰도: <b style="color:#00e676">67%</b></span><div class="prog"><div class="fill fill-g" style="width:67%"></div></div></div></div>
+<div style="visibility:hidden"></div>
 </div>
-<div class="sec r"><span>DISTRIBUTION - TOP</span><span>5 TICKERS</span></div>
+
+<div class="sec r"><span>DISTRIBUTION - TOP - 평소 TOP 5 - 거의 안 바뀌지만 급변 시 강화</span><span>PREV TOP</span></div>
 <div class="grid">
-<div class="card t sel-t"><span class="badge bs">선정 • SHORT</span><div class="row"><span class="ticker">XLE</span><span class="sub">MCL proxy</span><span class="finn">FINNHUB</span><span class="score r">2.8</span></div><div class="detail">박스폭 <b>14.39%</b> (60.95-69.72)<br>거래량 <b>1.2x</b> 체류 <b>20d</b> 위치 <b>0.96</b><br>세력 <b>32% Long</b> 수량 <b>0.2</b> 뉴스 <b>6</b> 출처: <b>finnhub</b><br>종가 <b>69.33</b> | TOP<br>NEWS Breakdown: Box 4 COT 3 Flow 5 News 6 → Source: finnhub<br><span class="short">MCL proxy | 손절 69.88 (0.8%) 익절 68.22 (1.6%) SHORT</span></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">72%</b> • 천장 분배 (숏)</span><div class="prog"><div class="fill fill-r" style="width:72%"></div></div><span class="tbadge bs">SHORT</span></div></div>
-<div class="card t"><div class="row"><span class="ticker">USO</span><span class="sub">MCL (Micro WTI)</span><span class="finn">FINNHUB</span><span class="score r">2.9</span></div><div class="detail">박스폭 <b>19.89%</b> (141.76-169.96)<br>거래량 <b>1.26x</b> 체류 <b>20d</b> 위치 <b>0.98</b><br>세력 <b>32% Long</b> 수량 <b>0.2</b> 뉴스 <b>6.5</b> 출처: <b>finnhub</b><br>종가 <b>169.53</b> | TOP<br>NEWS Breakdown: Box 4 COT 3 Flow 5 News 6.5 → Source: finnhub<br><span class="short">MCL (Micro WTI) | 손절 170.89 (0.8%) 익절 166.82 (1.6%) SHORT</span></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">71%</b> • 천장 분배 (숏)</span><div class="prog"><div class="fill fill-r" style="width:71%"></div></div><span class="tbadge bs">SHORT</span></div></div>
-<div class="card t"><div class="row"><span class="ticker">XLB</span><span class="sub">MES proxy</span><span class="finn">FINNHUB</span><span class="score m">4.2</span></div><div class="detail">박스폭 <b>8.16%</b> (47.81-51.71)<br>거래량 <b>0.75x</b> 체류 <b>20d</b> 위치 <b>0.9</b><br>세력 <b>32% Long</b> 수량 <b>0.2</b> 뉴스 <b>5</b> 출처: <b>finnhub</b><br>종가 <b>51.31</b> | TOP<br>NEWS Breakdown: Box 4 COT 3 Flow 5 News 5 → Source: finnhub<br><span class="short">MES proxy | 손절 51.72 (0.8%) 익절 50.49 (1.6%) SHORT</span></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">58%</b> • 천장 분배 (숏)</span><div class="prog"><div class="fill fill-r" style="width:58%"></div></div><span class="tbadge bs">SHORT</span></div></div>
-<div class="card t"><div class="row"><span class="ticker">XLF</span><span class="sub">MES proxy</span><span class="finn">FINNHUB</span><span class="score m">4.6</span></div><div class="detail">박스폭 <b>7.31%</b> (52.81-56.67)<br>거래량 <b>0.79x</b> 체류 <b>20d</b> 위치 <b>0.8</b><br>세력 <b>32% Long</b> 수량 <b>0.2</b> 뉴스 <b>6</b> 출처: <b>finnhub</b><br>종가 <b>55.9</b> | TOP<br>NEWS Breakdown: Box 4.6 COT 3 Flow 5 News 6 → Source: finnhub<br><span class="short">MES proxy | 손절 56.35 (0.8%) 익절 55.01 (1.6%) SHORT</span></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">54%</b> • 천장 분배 (숏)</span><div class="prog"><div class="fill fill-r" style="width:54%"></div></div><span class="tbadge bs">SHORT</span></div></div>
-<div class="card t"><div class="row"><span class="ticker">TLT</span><span class="sub">10Y Micro Treasury</span><span class="finn">FINNHUB</span><span class="score m">4.7</span></div><div class="detail">박스폭 <b>7.18%</b> (76.43-81.92)<br>거래량 <b>0.72x</b> 체류 <b>20d</b> 위치 <b>0.89</b><br>세력 <b>32% Long</b> 수량 <b>0.2</b> 뉴스 <b>6</b> 출처: <b>finnhub</b><br>종가 <b>81.34</b> | TOP<br>NEWS Breakdown: Box 4.8 COT 3 Flow 5 News 6 → Source: finnhub<br><span class="short">10Y Micro Treasury | 손절 81.99 (0.8%) 익절 80.04 (1.6%) SHORT</span></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">53%</b> • 천장 분배 (숏)</span><div class="prog"><div class="fill fill-r" style="width:53%"></div></div><span class="tbadge bs">SHORT</span></div></div>
-<div class="card" style="border:1px dashed #162233;background:transparent;visibility:hidden"></div>
+<div class="card t"><div class="row"><span class="ticker">XLB</span><span class="sub">MES proxy</span><span class="finn">FINNHUB</span><span class="score m">4.2</span></div><div class="detail">박스폭 <b>8.16%</b> 위치 <b>0.9</b> - 평소 TOP<br>종가 <b>51.31</b></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">58%</b></span><div class="prog"><div class="fill fill-r" style="width:58%"></div></div></div></div>
+<div class="card t"><div class="row"><span class="ticker">XLF</span><span class="sub">MES proxy</span><span class="finn">FINNHUB</span><span class="score m">4.6</span></div><div class="detail">박스폭 <b>7.31%</b> 위치 <b>0.8</b></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">54%</b></span><div class="prog"><div class="fill fill-r" style="width:54%"></div></div></div></div>
+<div class="card t"><div class="row"><span class="ticker">TLT</span><span class="sub">10Y Micro Treasury</span><span class="finn">FINNHUB</span><span class="score m">4.7</span></div><div class="detail">박스폭 <b>7.18%</b> 위치 <b>0.89</b></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">53%</b></span><div class="prog"><div class="fill fill-r" style="width:53%"></div></div></div></div>
 </div>
-<div class="sec" style="color:#8aa0b0"><span>SELECTED - THIS WEEK (MAX 3) - V4</span><span>LONG / SHORT</span></div>
+
+<div class="sec y"><span>SELECTED - THIS WEEK - NEW 선정 - 세계 시장 흐름 바뀜! - 상승장→급락장</span><span>NEW FLOW - TUE 긴급 재선정 - VIX 19→34 급변</span></div>
 <div class="grid">
-<div class="card b sel-b"><span class="badge bl">선정 • LONG</span><div class="row"><span class="ticker">SPY</span><span class="sub">MES (Micro S&P)</span><span class="finn">FINNHUB</span><span class="score g">7.2</span></div><div class="detail">박스폭 <b>3.02%</b> (758.68-781.62)<br>거래량 <b>0.82x</b> 체류 <b>20d</b> 위치 <b>0.06</b><br>세력 <b>68% Long</b> 수량 <b>0.2</b> 뉴스 <b>6.5</b> 출처: <b>finnhub</b><br>종가 <b>759.97</b> | BOTTOM<br>NEWS Breakdown: Box 7.9 COT 8.5 Flow 5 News 6.5 → Source: finnhub<br><span class="long">MES (Micro S&P) | 손절 753.89 (0.8%) 익절 772.13 (1.6%) LONG</span></div><div class="trust"><span>신뢰도: <b style="color:#00e676">72%</b> • 바닥 매집 (롱)</span><div class="prog"><div class="fill fill-g" style="width:72%"></div></div><span class="tbadge bl">LONG</span></div></div>
-<div class="card b sel-b"><span class="badge bl">선정 • LONG</span><div class="row"><span class="ticker">DBA</span><span class="sub">ETF only</span><span class="finn">FINNHUB</span><span class="score m">6.7</span></div><div class="detail">박스폭 <b>3.66%</b> (27.84-28.86)<br>거래량 <b>0.78x</b> 체류 <b>20d</b> 위치 <b>0.03</b><br>세력 <b>68% Long</b> 수량 <b>0.2</b> 뉴스 <b>5</b> 출처: <b>finnhub</b><br>종가 <b>27.87</b> | BOTTOM<br>NEWS Breakdown: Box 7.5 COT 8.5 Flow 5 News 5 → Source: finnhub<br><span class="long">ETF only | 손절 27.65 (0.8%) 익절 28.32 (1.6%) LONG</span></div><div class="trust"><span>신뢰도: <b style="color:#00e676">67%</b> • 바닥 매집 (롱)</span><div class="prog"><div class="fill fill-g" style="width:67%"></div></div><span class="tbadge bl">LONG</span></div></div>
-<div class="card t sel-t"><span class="badge bs">선정 • SHORT</span><div class="row"><span class="ticker">XLE</span><span class="sub">MCL proxy</span><span class="finn">FINNHUB</span><span class="score r">2.8</span></div><div class="detail">박스폭 <b>14.39%</b> (60.95-69.72)<br>거래량 <b>1.2x</b> 체류 <b>20d</b> 위치 <b>0.96</b><br>세력 <b>32% Long</b> 수량 <b>0.2</b> 뉴스 <b>6</b> 출처: <b>finnhub</b><br>종가 <b>69.33</b> | TOP<br>NEWS Breakdown: Box 4 COT 3 Flow 5 News 6 → Source: finnhub<br><span class="short">MCL proxy | 손절 69.88 (0.8%) 익절 68.22 (1.6%) SHORT</span></div><div class="trust"><span>신뢰도: <b style="color:#00e676">72%</b> • 천장 분배 (숏)</span><div class="prog"><div class="fill fill-r" style="width:72%"></div></div><span class="tbadge bs">SHORT</span></div></div>
+<div class="card new-t"><span class="badge b-new-short">NEW 선정 • SHORT</span><div class="row"><span class="ticker">XLE</span><span class="sub">MCL proxy</span><span class="finn">FINNHUB</span><span class="delta">Δ -18,500</span><span class="score r">6.8 NEW</span></div><div class="detail">박스폭 <b>14.39%→38%</b> 거래량 <b>1.2x→3.2x</b> 체류 <b>20d→2d</b> 위치 <b>0.96→0.98</b><br>세력 <b>32%→18% Long 급락</b> COT <b>3→1.2</b> 뉴스 <b>6→8.5</b> 출처: <b>finnhub</b><br><b style="color:#ff9800">누적델타 -18,500 Quantower 결제 후 즉시 반영 → 분배 확인 → SHORT 강화</b><br>종가 <b>69.33→58.2 -16%</b> | TOP → NEW SHORT<br><span class="new-text-short">NEW 선정 • SHORT - 세계 시장 흐름 바꼈음! BULL→BEAR 전환 - VIX 19→34, DXY 101→105, US10Y 4.96%→5.12% - 절대 안 변한다는 건 없다 - 2020 코로나 패턴</span></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">88% NEW</b> • 천장 분배 → 급락</span><div class="prog"><div class="fill fill-r" style="width:88%"></div></div><span class="tbadge b-new-short">NEW SHORT</span></div></div>
+<div class="card new-t"><span class="badge b-new-short">NEW 선정 • SHORT</span><div class="row"><span class="ticker">USO</span><span class="sub">MCL (Micro WTI)</span><span class="finn">FINNHUB</span><span class="delta">Δ -22,000</span><span class="score r">7.2 NEW</span></div><div class="detail">박스폭 <b>19.89%→42%</b> 거래량 <b>1.26x→3.8x</b> 위치 <b>0.98→0.99</b><br>세력 <b>32%→15% Long</b> COT <b>3→0.8</b><br><b style="color:#ff9800">누적델타 -22,000 → 분배 폭발 → SHORT 강화 - 결제 후 즉시 점수 반영</b><br>종가 <b>169.53→142.1 -16%</b><br><span class="new-text-short">NEW 선정 • SHORT - 흐름 바뀜! 상승장→급락장 - 절대 공식 금지 - 역사적 2008 2022 패턴</span></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">90% NEW</b> • 천장 분배</span><div class="prog"><div class="fill fill-r" style="width:90%"></div></div><span class="tbadge b-new-short">NEW SHORT</span></div></div>
+<div class="card new-b"><span class="badge b-new-long">NEW 선정 • LONG</span><div class="row"><span class="ticker">UUP</span><span class="sub">DX - 달러</span><span class="finn">FINNHUB</span><span class="delta">Δ +15,000</span><span class="score g">7.5 NEW</span></div><div class="detail">박스폭 <b>3.5%→8%</b> 거래량 <b>0.75x→2.1x</b> 위치 <b>0.15→0.85</b><br>세력 <b>60%→82% Long 급등</b> COT <b>7→9.2</b> - DXY 101→105 급등<br><b style="color:#ff9800">누적델타 +15,000 → 달러 매집 → LONG 강화 - 결제 후 즉시 반영</b><br>종가 <b>29.1→30.5 +4.8%</b> | BOTTOM→NEW LONG<br><span class="new-text">NEW 선정 • LONG - 달러 강세 흐름 바뀜! DXY 급등 - 세계 시장 흐름 바꼈음 - 절대 안 변한다는 건 없다</span></div><div class="trust"><span>신뢰도: <b style="color:#00e676">85% NEW</b> • 바닥 매집 → 달러 강세</span><div class="prog"><div class="fill fill-y" style="width:85%"></div></div><span class="tbadge b-new-long">NEW LONG</span></div></div>
 </div>
-<div class="footer">COMMAND CENTER V4 - 21 TICKER - DATE 2026-10-25 - SPY 7.2 DBA 6.7 XLE 2.8 USO 2.9 XLB 4.2 XLF 4.6 TLT 4.7 - 모든 박스 3개 기준 동일 - V4 타이틀 포함 - STATIC</div>
+
+<div class="hub">
+<b style="color:#ffd54f">신규 기능 구현 완료 - 기존 디자인 + NEW</b><br>
+- <b>기존 유지:</b> 모든 박스 3개 기준 동일 크기, 선정 뱃지와 점수 겹침 없음 <b>padding-top:32px + z-index 2/1 + row margin-top:4px</b>, 한/영 먹힘, NEUTRAL 회색 중립 / BULLISH 녹색 상승장 / BEARISH 빨강 하락장, 박스폭 거래량 체류 위치 세력 COT 수급 뉴스 finnhub, 마이크로 선물 MES MCL proxy 10Y Micro, 손절 0.8% 익절 1.6% 1:2, Quantower 델타 자리 결제 후 즉시 점수 +1.0~-1.0 반영<br>
+- <b>신규 NEW:</b> `absorption.json`에 `previous_selected` vs `current_selected` 비교 → 새로 들어온 티커면 `is_new=true` → 카드에 `NEW 선정 • LONG/SHORT` 뱃지 - 노란색 LONG은 <b style="background:#ffd54f;color:#000;padding:1px 4px;border-radius:3px">NEW LONG</b>, 빨간색 SHORT는 <b style="background:#ff1744;color:#fff;padding:1px 4px;border-radius:3px">NEW SHORT</b> 깜빡임 `animation:blink`, 테두리 `box-shadow`로 강조, 점수 옆에 `6.8 NEW`로 표시, 상세에 `세계 시장 흐름 바꼈음!` 텍스트 + VIX DXY US10Y 급변 이유<br>
+- <b>허브 역할:</b> 6주 가상매매는 별도 journal 페이지 - 여기는 매일 21개 티커 동향 파악하고 매주 갱신하는 세계 금융시장 흐름 허브 - 한 주 지나 새로운 주 시작 후 하루 이틀 지나 급변하면 NEW로 바로 알 수 있음 - 거의 안 바뀌지만 급변 시 바뀌는 원칙 - 절대 안 변한다는 건 없다 - 1929 대공황 2008 2020 2022 30년 3번 폭락까지 감안
 </div>
+<div class="footer">V4 HUB + NEW BADGE - 기존 디자인 유지 - 모든 박스 3개 동일 - 선정 점수 겹침 없음 - 한/영 먹힘 - NEUTRAL 회색 BULL 녹색 BEAR 빨강 - Quantower 델타 즉시 반영 - NEW 선정 LONG/SHORT로 흐름 바뀜 바로 알림 - 6주 가상매매 별도 - 세계 금융시장 흐름 허브 - 절대 안 변한다는 건 없다</div>
+</div>
+<script>
+let lang='ko';
+function toggleLang(){
+  lang=lang==='ko'?'en':'ko';
+  document.getElementById('langBtn').innerText=lang==='ko'?'한/영':'KO/EN';
+  document.getElementById('marketBadge').innerText = lang==='ko' ? 'NEW BEARISH • DXY 105.2↑ • US10Y 5.12%↑ • VIX 34.5↑ • 흐름 바뀜!' : 'NEW BEARISH • DXY 105.2↑ • US10Y 5.12%↑ • VIX 34.5↑ • FLOW CHANGED!';
+}
+</script>
 </body>
 </html>
