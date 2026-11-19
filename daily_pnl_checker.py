@@ -1,11 +1,12 @@
 """
-V4.4 STABLE - 3주째 주말 버그 완전 제거
+V4.4 STABLE - 3주째 주말 버그 완전 제거 + 누적 로직 FIX
 - OPEN=0 재 생성 로직 삭제 (중복 주차 원인)
 - JSON 깨지면 초기화하지 않고 즉시 실패 (이전 주차 증발 방지)
 - week_key는 무조건 월요일 기준으로만 생성
   - absorption이 토/일이면 -> 다음 월요일
   - absorption이 평일이면 -> 그 주의 월요일
 - 이미 존재하는 주차는 절대 다시 생성하지 않음
+- FIX: docs/journal_data.json만 보던 버그 -> docs/ + root + backup 3곳에서 로드 (이전 매매 사라짐 방지)
 """
 import json, os, sys
 from datetime import datetime, timezone, timedelta
@@ -72,11 +73,14 @@ def get_price(ticker):
         return None
 
 def main():
-    print(f"=== V4.4 STABLE {datetime.now(timezone.utc)} ===")
+    print(f"=== V4.4 STABLE FIXED {datetime.now(timezone.utc)} ===")
     
     # 1. absorption load - 하나만
     abs_path = "docs/absorption.json"
     absorption = load_json_strict(abs_path)
+    if not absorption:
+        # fallback root
+        absorption = load_json_strict("absorption.json")
     if not absorption:
         print(f"ERROR: {abs_path} 없음. 21개 스캐너 먼저 실행 필요.")
         sys.exit(1)
@@ -104,13 +108,24 @@ def main():
     
     print(f"Selected 3: {[s['ticker'] for s in selected]}")
 
-    # 2. journal load - 절대 빈 dict로 초기화하지 않음, 실패하면 종료
-    journal_path = "docs/journal_data.json"
-    journal = load_json_strict(journal_path)
+    # 2. journal load - FIX: 3곳에서 로드, 절대 빈 dict로 초기화하지 않음
+    journal = None
+    for p in ["docs/journal_data.json", "journal_data.json", "docs/journal_data_backup.json"]:
+        j = load_json_strict(p)
+        if j and "weeks" in j and len(j["weeks"]) > 0:
+            journal = j
+            print(f"Loaded journal from {p} - {len(j['weeks'])} weeks preserved")
+            break
+        elif j and "weeks" in j:
+            # weeks는 있지만 0개 - 다음 후보 확인
+            print(f"Found {p} but 0 weeks, trying next")
+            continue
+
     if journal is None:
         # 파일이 아예 없으면 새로 시작 (최초 1회만)
         journal = {"weeks": {}}
-        print("journal_data.json 없음 -> 새로 생성")
+        print("journal_data.json 없음 -> 새로 생성 (최초 1회)")
+
     if "weeks" not in journal:
         journal["weeks"] = {}
 
@@ -246,7 +261,7 @@ def main():
 
     total_closed = sum(1 for w in journal["weeks"].values() for t in w["trades"] if t["status"]=="CLOSED")
     total_open = sum(1 for w in journal["weeks"].values() for t in w["trades"] if t["status"]=="OPEN")
-    print(f"TOTAL {len(journal['weeks'])} weeks, CLOSED {total_closed}, OPEN {total_open} - V4.4 DONE")
+    print(f"TOTAL {len(journal['weeks'])} weeks, CLOSED {total_closed}, OPEN {total_open} - V4.4 FIXED DONE")
 
 if __name__ == "__main__":
     main()
