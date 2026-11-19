@@ -1,0 +1,29 @@
+name: V4-AUTO Journal FINAL - Week Ticker Once + Capital
+
+on:
+  schedule:
+    - cron: '0 21 * * *'  # 매일 21:00 UTC = 화~금엔 손익만 업데이트, 새 진입은 안 함 (Plan A)
+  workflow_dispatch:
+
+jobs:
+  maintain:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Maintain ledger - week+ticker once, capital-based max, unlimited
+        run: |
+          python scripts/update_journal_FINAL_WEEK_TICKER_ONCE_CAPITAL.py
+
+      - name: Commit docs/journal_data.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/journal_data.json
+          git diff --staged --quiet || git commit -m "V4-AUTO FINAL - week ticker once, 10M=3 20M=4 30M=5 60M=6, unlimited accumulate - $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push
