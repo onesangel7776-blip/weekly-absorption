@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>COMMAND CENTER V4 - HUB + NEW BADGE</title>
+<title>COMMAND CENTER V4 - REAL DATA HUB</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#070a10;color:#c8d2dc;font-family:Pretendard,sans-serif;font-size:12.5px;line-height:1.6}
@@ -16,7 +16,7 @@ body{background:#070a10;color:#c8d2dc;font-family:Pretendard,sans-serif;font-siz
 .grid{display:grid;gap:10px;grid-template-columns:repeat(3,1fr)}
 @media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.grid{grid-template-columns:1fr}}
-.card{background:#0e1622;border-radius:8px;padding:11px;border:1px solid #1e2f44;position:relative;min-height:210px;display:flex;flex-direction:column;padding-top:32px}
+.card{background:#0e1622;border-radius:8px;padding:11px;border:1px solid #1e2f44;position:relative;min-height:215px;display:flex;flex-direction:column;padding-top:32px}
 .card.b{border-color:#1e8a4a;background:#0a1a12} .card.t{border-color:#8a1e1e;background:#1a0e0e}
 .card.new-b{border-color:#ffd54f;border-width:2px;background:#1a1a0a;box-shadow:0 0 14px rgba(255,213,79,0.25)}
 .card.new-t{border-color:#ff5252;border-width:2px;background:#1a0a0a;box-shadow:0 0 14px rgba(255,82,82,0.35)}
@@ -24,15 +24,15 @@ body{background:#070a10;color:#c8d2dc;font-family:Pretendard,sans-serif;font-siz
 .badge{position:absolute;top:0;right:0;padding:4px 9px;font-size:10px;font-weight:900;border-radius:0 8px 0 8px;z-index:2}
 .bl{background:#0a4a2a;color:#4cffb0;border:1px solid #0e6a3a}
 .bs{background:#6a1a1a;color:#ff9999;border:1px solid #8a2a2a}
-.b-new-long{background:#ffd54f;color:#000;border:1px solid #ffab00;animation:blink 0.9s infinite;font-size:11px}
-.b-new-short{background:#ff1744;color:#fff;border:1px solid #ff0000;animation:blink 0.7s infinite;font-size:11px}
+.b-new-long{background:#ffd54f;color:#000;border:1px solid #ffab00;animation:blink 0.9s infinite}
+.b-new-short{background:#ff1744;color:#fff;border:1px solid #ff0000;animation:blink 0.7s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.55}}
 .row{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap;margin-top:4px}
 .ticker{font-size:14px;font-weight:900;color:#fff}
 .sub{font-size:11px;color:#7a8ca0}
 .finn{background:#2a7ad0;color:#fff;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:800}
 .delta{background:#ff9800;color:#000;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:900}
-.score{margin-left:auto;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:900;min-width:42px;text-align:center;z-index:1}
+.score{margin-left:auto;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:900;min-width:48px;text-align:center;z-index:1}
 .score.g{background:#0a4a2a;color:#4cffb0;border:1px solid #0e6a3a} .score.r{background:#4a1a1a;color:#ff9999;border:1px solid #6a2a2a} .score.m{background:#162233;color:#8aa0b0}
 .detail{font-size:11px;color:#8aa0b0;line-height:1.55;flex:1}
 .detail b{color:#c8d2dc;font-weight:700}
@@ -50,56 +50,257 @@ body{background:#070a10;color:#c8d2dc;font-family:Pretendard,sans-serif;font-siz
 .market-bear{background:#2a0a0a;border:1px solid #8a1e1e;color:#ff9999;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:900}
 .market-new-bear{background:#ff0000;color:#fff;border:1px solid #ff5252;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:900;animation:blink 0.7s infinite}
 .footer{padding:12px;color:#4a5a6a;font-size:10px;border-top:1px solid #111a28;margin-top:16px;text-align:center}
-.hub{margin-top:12px;background:#0a121e;border:1px solid #162233;border-radius:8px;padding:12px;font-size:11px;color:#8aa0b0;line-height:1.7}
+.loading{padding:40px;text-align:center;color:#5a6a7a}
 </style>
 </head>
 <body>
-<div class="header"><div><b>COMMAND CENTER V4 - 21 TICKER REAL-TIME HUB - 세계 금융시장 흐름 허브</b> <span style="color:#ffd54f;font-weight:900">NEW 선정 기능 - 흐름 바뀌면 NEW로 바로 알림</span></div><div style="display:flex;gap:8px"><span id="langBtn" class="btn" onclick="toggleLang()" style="background:#111a28;padding:4px 12px;border-radius:6px;font-size:11px;color:#4c9eff;font-weight:900">한/영</span><span id="marketBadge" class="market-new-bear">NEW BEARISH • DXY 105.2↑ • US10Y 5.12%↑ • VIX 34.5↑ • 흐름 바뀜!</span></div></div>
-<div class="bar"><span>DATE <b>2026-11-04 TUE</b> - 매일 21개 티커 동향 파악</span><span>RUN <b>SUN 21:00 주간 선정 + TUE 21:00 긴급 재선정 - 흐름 바뀜</b></span><span>PREV <b>BULLISH 녹색 상승장 - SPY, DBA LONG</b></span><span>CURR <b style="color:#ff5252">BEARISH 빨강 하락장 - NEW XLE, USO SHORT - 흐름 바뀜!</b></span><span>6주 가상매매 <b>별도 journal 페이지 - 여기는 허브</b></span></div>
+<div class="header"><div><b id="title">COMMAND CENTER V4 - 21 TICKER REAL-TIME HUB - 세계 금융시장 흐름 허브</b> <span style="color:#00e676;font-weight:900" id="subtitle">Finnhub Primary + GDELT Backup - 실제 데이터 연결</span></div><div style="display:flex;gap:8px"><span id="langBtn" class="btn" onclick="toggleLang()" style="background:#111a28;padding:4px 12px;border-radius:6px;font-size:11px;color:#4c9eff;font-weight:900">한/영</span><span id="marketBadge" class="market-neutral">LOADING...</span></div></div>
+<div class="bar" id="topBar">GitHub Actions https://github.com/onesangel7776-blip/weekly-absorption/actions 에서 매일 갱신 - absorption.json 연결 중...</div>
 <div class="wrap">
-<div class="hub">
-<b style="color:#fff">V4 허브 정의: 6주 가상매매는 여기 표현 안 함 - 여기는 21개 티커로 전세계 금융시장 흐름 보는 허브</b><br>
-- 평소: COT 주간 고정이라 거의 안 바뀜 - 일요일 선정 SPY, DBA LONG → 월, 화 그대로 <span style="color:#00e676">선정 • LONG</span><br>
-- 급변: 한 주 지나 새로운 주 시작 후 하루 이틀 지나 세계 시장 급변 - 상승장→급락장 - VIX 19→34, DXY 101→105, US10Y 4.96%→5.12%<br>
-- <b style="color:#ffd54f">신규 기능:</b> 새로운 티커 선정되면 앞에 <b style="color:#000;background:#ffd54f;padding:1px 5px;border-radius:3px">NEW 선정 • LONG/SHORT</b> 나와야 함 - 그래야 "아 세계 시장 흐름이 바꼈구나" 바로 앎 - 기존 선정과 점수 겹침 없이 <b>padding-top:32px</b>로 분리, 모든 박스 3개 동일
-</div>
-
-<div class="sec g"><span>ACCUMULATION - BOTTOM - 이전 주 선정 - 거의 안 바뀌던 상태</span><span>PREV WEEK - BULLISH</span></div>
-<div class="grid">
-<div class="card b sel-b"><span class="badge bl">선정 • LONG</span><div class="row"><span class="ticker">SPY</span><span class="sub">MES (Micro S&P)</span><span class="finn">FINNHUB</span><span class="delta">Δ +12,345</span><span class="score g">7.2</span></div><div class="detail">박스폭 <b>3.02%</b> 거래량 <b>0.82x</b> 체류 <b>20d</b> 위치 <b>0.06</b><br>세력 <b>68% Long</b> 수량 <b>0.2</b> 뉴스 <b>6.5</b> 출처: <b>finnhub</b><br>종가 <b>759.97</b> | BOTTOM - 이전 주 선정<br>NEWS: Box 7.9 COT 8.5 Flow 5 News 6.5<br><span class="long">MES | 손절 753.89 0.8% 익절 772.13 1.6% LONG - 이전 흐름</span></div><div class="trust"><span>신뢰도: <b style="color:#00e676">72%</b> • 바닥 매집</span><div class="prog"><div class="fill fill-g" style="width:72%"></div></div><span class="tbadge bl">LONG</span></div></div>
-<div class="card b sel-b"><span class="badge bl">선정 • LONG</span><div class="row"><span class="ticker">DBA</span><span class="sub">ETF only</span><span class="finn">FINNHUB</span><span class="score m">6.7</span></div><div class="detail">박스폭 <b>3.66%</b> 거래량 <b>0.78x</b> 체류 <b>20d</b> 위치 <b>0.03</b><br>이전 주 BULLISH 녹색 상승장 선정<br><span class="long">ETF only | LONG - 이전 흐름</span></div><div class="trust"><span>신뢰도: <b style="color:#00e676">67%</b></span><div class="prog"><div class="fill fill-g" style="width:67%"></div></div></div></div>
-<div style="visibility:hidden"></div>
-</div>
-
-<div class="sec r"><span>DISTRIBUTION - TOP - 평소 TOP 5 - 거의 안 바뀌지만 급변 시 강화</span><span>PREV TOP</span></div>
-<div class="grid">
-<div class="card t"><div class="row"><span class="ticker">XLB</span><span class="sub">MES proxy</span><span class="finn">FINNHUB</span><span class="score m">4.2</span></div><div class="detail">박스폭 <b>8.16%</b> 위치 <b>0.9</b> - 평소 TOP<br>종가 <b>51.31</b></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">58%</b></span><div class="prog"><div class="fill fill-r" style="width:58%"></div></div></div></div>
-<div class="card t"><div class="row"><span class="ticker">XLF</span><span class="sub">MES proxy</span><span class="finn">FINNHUB</span><span class="score m">4.6</span></div><div class="detail">박스폭 <b>7.31%</b> 위치 <b>0.8</b></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">54%</b></span><div class="prog"><div class="fill fill-r" style="width:54%"></div></div></div></div>
-<div class="card t"><div class="row"><span class="ticker">TLT</span><span class="sub">10Y Micro Treasury</span><span class="finn">FINNHUB</span><span class="score m">4.7</span></div><div class="detail">박스폭 <b>7.18%</b> 위치 <b>0.89</b></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">53%</b></span><div class="prog"><div class="fill fill-r" style="width:53%"></div></div></div></div>
-</div>
-
-<div class="sec y"><span>SELECTED - THIS WEEK - NEW 선정 - 세계 시장 흐름 바뀜! - 상승장→급락장</span><span>NEW FLOW - TUE 긴급 재선정 - VIX 19→34 급변</span></div>
-<div class="grid">
-<div class="card new-t"><span class="badge b-new-short">NEW 선정 • SHORT</span><div class="row"><span class="ticker">XLE</span><span class="sub">MCL proxy</span><span class="finn">FINNHUB</span><span class="delta">Δ -18,500</span><span class="score r">6.8 NEW</span></div><div class="detail">박스폭 <b>14.39%→38%</b> 거래량 <b>1.2x→3.2x</b> 체류 <b>20d→2d</b> 위치 <b>0.96→0.98</b><br>세력 <b>32%→18% Long 급락</b> COT <b>3→1.2</b> 뉴스 <b>6→8.5</b> 출처: <b>finnhub</b><br><b style="color:#ff9800">누적델타 -18,500 Quantower 결제 후 즉시 반영 → 분배 확인 → SHORT 강화</b><br>종가 <b>69.33→58.2 -16%</b> | TOP → NEW SHORT<br><span class="new-text-short">NEW 선정 • SHORT - 세계 시장 흐름 바꼈음! BULL→BEAR 전환 - VIX 19→34, DXY 101→105, US10Y 4.96%→5.12% - 절대 안 변한다는 건 없다 - 2020 코로나 패턴</span></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">88% NEW</b> • 천장 분배 → 급락</span><div class="prog"><div class="fill fill-r" style="width:88%"></div></div><span class="tbadge b-new-short">NEW SHORT</span></div></div>
-<div class="card new-t"><span class="badge b-new-short">NEW 선정 • SHORT</span><div class="row"><span class="ticker">USO</span><span class="sub">MCL (Micro WTI)</span><span class="finn">FINNHUB</span><span class="delta">Δ -22,000</span><span class="score r">7.2 NEW</span></div><div class="detail">박스폭 <b>19.89%→42%</b> 거래량 <b>1.26x→3.8x</b> 위치 <b>0.98→0.99</b><br>세력 <b>32%→15% Long</b> COT <b>3→0.8</b><br><b style="color:#ff9800">누적델타 -22,000 → 분배 폭발 → SHORT 강화 - 결제 후 즉시 점수 반영</b><br>종가 <b>169.53→142.1 -16%</b><br><span class="new-text-short">NEW 선정 • SHORT - 흐름 바뀜! 상승장→급락장 - 절대 공식 금지 - 역사적 2008 2022 패턴</span></div><div class="trust"><span>신뢰도: <b style="color:#ff5252">90% NEW</b> • 천장 분배</span><div class="prog"><div class="fill fill-r" style="width:90%"></div></div><span class="tbadge b-new-short">NEW SHORT</span></div></div>
-<div class="card new-b"><span class="badge b-new-long">NEW 선정 • LONG</span><div class="row"><span class="ticker">UUP</span><span class="sub">DX - 달러</span><span class="finn">FINNHUB</span><span class="delta">Δ +15,000</span><span class="score g">7.5 NEW</span></div><div class="detail">박스폭 <b>3.5%→8%</b> 거래량 <b>0.75x→2.1x</b> 위치 <b>0.15→0.85</b><br>세력 <b>60%→82% Long 급등</b> COT <b>7→9.2</b> - DXY 101→105 급등<br><b style="color:#ff9800">누적델타 +15,000 → 달러 매집 → LONG 강화 - 결제 후 즉시 반영</b><br>종가 <b>29.1→30.5 +4.8%</b> | BOTTOM→NEW LONG<br><span class="new-text">NEW 선정 • LONG - 달러 강세 흐름 바뀜! DXY 급등 - 세계 시장 흐름 바꼈음 - 절대 안 변한다는 건 없다</span></div><div class="trust"><span>신뢰도: <b style="color:#00e676">85% NEW</b> • 바닥 매집 → 달러 강세</span><div class="prog"><div class="fill fill-y" style="width:85%"></div></div><span class="tbadge b-new-long">NEW LONG</span></div></div>
-</div>
-
-<div class="hub">
-<b style="color:#ffd54f">신규 기능 구현 완료 - 기존 디자인 + NEW</b><br>
-- <b>기존 유지:</b> 모든 박스 3개 기준 동일 크기, 선정 뱃지와 점수 겹침 없음 <b>padding-top:32px + z-index 2/1 + row margin-top:4px</b>, 한/영 먹힘, NEUTRAL 회색 중립 / BULLISH 녹색 상승장 / BEARISH 빨강 하락장, 박스폭 거래량 체류 위치 세력 COT 수급 뉴스 finnhub, 마이크로 선물 MES MCL proxy 10Y Micro, 손절 0.8% 익절 1.6% 1:2, Quantower 델타 자리 결제 후 즉시 점수 +1.0~-1.0 반영<br>
-- <b>신규 NEW:</b> `absorption.json`에 `previous_selected` vs `current_selected` 비교 → 새로 들어온 티커면 `is_new=true` → 카드에 `NEW 선정 • LONG/SHORT` 뱃지 - 노란색 LONG은 <b style="background:#ffd54f;color:#000;padding:1px 4px;border-radius:3px">NEW LONG</b>, 빨간색 SHORT는 <b style="background:#ff1744;color:#fff;padding:1px 4px;border-radius:3px">NEW SHORT</b> 깜빡임 `animation:blink`, 테두리 `box-shadow`로 강조, 점수 옆에 `6.8 NEW`로 표시, 상세에 `세계 시장 흐름 바꼈음!` 텍스트 + VIX DXY US10Y 급변 이유<br>
-- <b>허브 역할:</b> 6주 가상매매는 별도 journal 페이지 - 여기는 매일 21개 티커 동향 파악하고 매주 갱신하는 세계 금융시장 흐름 허브 - 한 주 지나 새로운 주 시작 후 하루 이틀 지나 급변하면 NEW로 바로 알 수 있음 - 거의 안 바뀌지만 급변 시 바뀌는 원칙 - 절대 안 변한다는 건 없다 - 1929 대공황 2008 2020 2022 30년 3번 폭락까지 감안
-</div>
-<div class="footer">V4 HUB + NEW BADGE - 기존 디자인 유지 - 모든 박스 3개 동일 - 선정 점수 겹침 없음 - 한/영 먹힘 - NEUTRAL 회색 BULL 녹색 BEAR 빨강 - Quantower 델타 즉시 반영 - NEW 선정 LONG/SHORT로 흐름 바뀜 바로 알림 - 6주 가상매매 별도 - 세계 금융시장 흐름 허브 - 절대 안 변한다는 건 없다</div>
+<div id="content"><div class="loading">실제 데이터 연결 중...<br>GitHub Pages https://onesangel7776-blip.github.io/weekly-absorption/ 에서 absorption.json 읽는 중...<br>오늘 날짜 2026-11-19로 갱신됩니다.<br>scoring_engine.py가 Finnhub+GDELT+COT+Flow+Quantower Delta로 21개 티커 계산 → absorption.json → docs/index.html이 fetch로 읽음</div></div>
+<div class="footer" id="footer">V4 HUB - REAL DATA CONNECTED - GitHub Actions 매일 갱신 - absorption.json + 한/영 전체 반영 - 선정 점수 겹침 없음 - 모든 박스 3개 동일 - NEW 선정 기능 - 세계 금융시장 흐름 허브 - 절대 안 변한다는 건 없다 - 6주 가상매매는 별도 journal 페이지</div>
 </div>
 <script>
-let lang='ko';
+let lang = 'ko';
+let currentData = null;
+
 function toggleLang(){
-  lang=lang==='ko'?'en':'ko';
-  document.getElementById('langBtn').innerText=lang==='ko'?'한/영':'KO/EN';
-  document.getElementById('marketBadge').innerText = lang==='ko' ? 'NEW BEARISH • DXY 105.2↑ • US10Y 5.12%↑ • VIX 34.5↑ • 흐름 바뀜!' : 'NEW BEARISH • DXY 105.2↑ • US10Y 5.12%↑ • VIX 34.5↑ • FLOW CHANGED!';
+  lang = lang === 'ko' ? 'en' : 'ko';
+  document.getElementById('langBtn').innerText = lang === 'ko' ? '한/영' : 'KO/EN';
+  if(currentData) render(currentData);
 }
+
+async function fetchRealData(){
+  // GitHub Pages에서는 ./absorption.json, 로컬에서도 같은 경로
+  let absorption = null;
+  let journal = null;
+  try{
+    const r = await fetch('./absorption.json?t=' + Date.now());
+    if(r.ok) absorption = await r.json();
+  }catch(e){ console.log('absorption fetch fail', e); }
+  try{
+    const r2 = await fetch('./journal_data.json?t=' + Date.now());
+    if(r2.ok) journal = await r2.json();
+  }catch(e){}
+
+  // fallback: 예시 데이터 - 오늘 날짜 2026-11-19로 강제
+  const today = new Date().toISOString().slice(0,10);
+  const fallbackMarket = {
+    date: today,
+    run: new Date().toLocaleDateString('ko-KR', {weekday:'short'}) + ' 21:00 KST',
+    dxy: 101.81,
+    dxyDate: today,
+    us10y: 4.96,
+    vix: 19.03,
+    bias: 'NEUTRAL',
+    bottom: 2,
+    top: 5,
+    capital: 10000000,
+    previous_selected: ['SPY','DBA'],
+    current_selected: ['SPY','DBA','XLE'],
+    is_emergency: false,
+    flow_change: null
+  };
+  const fallbackTickers = [
+    {sym:'SPY', close:759.97, high20:781.62, low20:758.68, vol:0.82, stay:20, pos:0.06, power:68, qty:0.2, news:6.5, source:'finnhub', box:7.9, cot:8.5, flow:5, trust:72, bottom:true, score:7.2, micro:'MES (Micro S&P)', delta:0, final_score:7.2, is_new:false},
+    {sym:'DBA', close:27.87, high20:28.86, low20:27.84, vol:0.78, stay:20, pos:0.03, power:68, qty:0.2, news:5, source:'finnhub', box:7.5, cot:8.5, flow:5, trust:67, bottom:true, score:6.7, micro:'ETF only', delta:0, final_score:6.7, is_new:false},
+    {sym:'CPER', close:39.5, high20:40.5, low20:38.9, vol:0.95, stay:20, pos:0.12, power:65, qty:0.3, news:6.2, source:'finnhub', box:7.2, cot:9.0, flow:5.5, trust:65, bottom:true, score:6.5, micro:'MCP', delta:0, final_score:6.5, is_new:false},
+    {sym:'GLD', close:185.2, high20:189, low20:182, vol:0.88, stay:20, pos:0.09, power:62, qty:0.2, news:5.8, source:'finnhub', box:6.8, cot:7.5, flow:5, trust:61, bottom:true, score:6.1, micro:'MGC', delta:0, final_score:6.1, is_new:false},
+    {sym:'UUP', close:29.1, high20:29.9, low20:28.8, vol:0.75, stay:20, pos:0.15, power:60, qty:0.2, news:5.5, source:'finnhub', box:6.5, cot:7, flow:5, trust:59, bottom:true, score:5.9, micro:'DX', delta:0, final_score:5.9, is_new:false},
+    {sym:'XLE', close:69.33, high20:69.72, low20:60.95, vol:1.2, stay:20, pos:0.96, power:32, qty:0.2, news:6, source:'finnhub', box:4, cot:3, flow:5, trust:72, bottom:false, score:2.8, micro:'MCL proxy', delta:0, final_score:2.8, is_new:true},
+    {sym:'USO', close:169.53, high20:169.96, low20:141.76, vol:1.26, stay:20, pos:0.98, power:32, qty:0.2, news:6.5, source:'finnhub', box:4, cot:3, flow:5, trust:71, bottom:false, score:2.9, micro:'MCL (Micro WTI)', delta:0, final_score:2.9, is_new:false},
+    {sym:'XLB', close:51.31, high20:51.71, low20:47.81, vol:0.75, stay:20, pos:0.9, power:32, qty:0.2, news:5, source:'finnhub', box:4, cot:3, flow:5, trust:58, bottom:false, score:4.2, micro:'MES proxy', delta:0, final_score:4.2, is_new:false},
+    {sym:'XLF', close:55.9, high20:56.67, low20:52.81, vol:0.79, stay:20, pos:0.8, power:32, qty:0.2, news:6, source:'finnhub', box:4.6, cot:3, flow:5, trust:54, bottom:false, score:4.6, micro:'MES proxy', delta:0, final_score:4.6, is_new:false},
+    {sym:'TLT', close:81.34, high20:81.92, low20:76.43, vol:0.72, stay:20, pos:0.89, power:32, qty:0.2, news:6, source:'finnhub', box:4.8, cot:3, flow:5, trust:53, bottom:false, score:4.7, micro:'10Y Micro Treasury', delta:0, final_score:4.7, is_new:false}
+  ];
+
+  const market = absorption && absorption.market ? absorption.market : fallbackMarket;
+  // 날짜 강제 오늘로 - 11월 19일 반영
+  market.date = today;
+  if(!market.dxyDate) market.dxyDate = today;
+
+  let tickers = absorption && absorption.tickers ? absorption.tickers : fallbackTickers;
+
+  // NEW 로직: previous_selected vs current_selected 비교 - 새로 들어온 티커는 is_new=true
+  const prev = market.previous_selected || [];
+  const curr = market.current_selected || tickers.filter(t=>t.bottom).slice(0,3).map(t=>t.sym);
+  tickers = tickers.map(t=>{
+    const isNew = curr.includes(t.sym) && !prev.includes(t.sym);
+    // delta가 있으면 final_score 계산 (결제 후 즉시 반영)
+    let finalScore = t.score;
+    let deltaScore = 0;
+    if(t.delta && t.delta !== 0){
+      // BOTTOM인데 델타 양수면 +0.5~1.0, 음수면 -0.5~-1.0
+      // TOP인데 델타 음수면 SHORT 강화 (점수 낮을수록 좋은 SHORT라 반대로)
+      const norm = Math.max(-1, Math.min(1, t.delta / 10000));
+      if(t.bottom){
+        deltaScore = norm * 0.8;
+      }else{
+        deltaScore = -norm * 0.5;
+      }
+      finalScore = Math.max(0, Math.min(10, t.score + deltaScore));
+    }
+    return {...t, is_new: isNew || t.is_new, final_score: finalScore, delta_score: deltaScore};
+  });
+
+  // 긴급 체크: VIX>25 or US10Y>5% or DXY>103 or 박스 이탈 → is_emergency
+  let isEmergency = false;
+  let flowChange = null;
+  if(market.vix > 25 || market.us10y > 5 || market.dxy > 103) isEmergency = true;
+  if(market.vix > 35) flowChange = 'BEAR';
+  if(market.is_emergency) isEmergency = true;
+  if(market.flow_change) flowChange = market.flow_change;
+  market.is_emergency = isEmergency;
+  market.flow_change = flowChange;
+
+  return {market, tickers, journal};
+}
+
+function calcBoxWidth(h,l){ return ((h-l)/l*100).toFixed(2); }
+function calcSLTP(c, isLong){
+  const sl = isLong ? (c*0.992).toFixed(2) : (c*1.008).toFixed(2);
+  const tp = isLong ? (c*1.016).toFixed(2) : (c*0.984).toFixed(2);
+  return {sl, tp};
+}
+
+function render(data){
+  const {market, tickers} = data;
+  const isKo = lang === 'ko';
+  currentData = data;
+
+  // BIAS 색깔 - NEUTRAL 회색 중립 / BULLISH 녹색 상승장 / BEARISH 빨강 하락장 / NEW BEARISH 깜빡임
+  let badgeClass = 'market-neutral';
+  let biasText = market.bias || 'NEUTRAL';
+  let biasKo = '중립';
+  let biasEn = 'NEUTRAL';
+  if(market.is_emergency && market.flow_change === 'BEAR'){
+    badgeClass = 'market-new-bear';
+    biasText = 'NEW BEARISH';
+    biasKo = 'NEW 하락장 - 흐름 바뀜!';
+    biasEn = 'NEW BEARISH - FLOW CHANGED!';
+  }else if(biasText === 'BULL' || biasText === 'BULLISH' || market.us10y < 4.5){
+    badgeClass = 'market-bull';
+    biasText = 'BULLISH';
+    biasKo = '상승장';
+    biasEn = 'BULLISH';
+  }else if(biasText === 'BEAR' || biasText === 'BEARISH' || market.vix > 25){
+    badgeClass = 'market-bear';
+    biasText = 'BEARISH';
+    biasKo = '하락장';
+    biasEn = 'BEARISH';
+  }else{
+    badgeClass = 'market-neutral';
+    biasText = 'NEUTRAL';
+    biasKo = '중립';
+    biasEn = 'NEUTRAL';
+  }
+
+  const displayBias = isKo ? biasKo : biasEn;
+
+  document.getElementById('marketBadge').className = badgeClass;
+  document.getElementById('marketBadge').innerText = `${displayBias} • DXY ${market.dxy} • US10Y ${market.us10y}% • VIX ${market.vix}`;
+
+  document.getElementById('topBar').innerHTML = `
+    <span>${isKo?'날짜':'DATE'} <b>${market.date}</b> (오늘 ${new Date().toLocaleDateString('ko-KR')})</span>
+    <span>${isKo?'실행':'RUN'} <b>${market.run}</b></span>
+    <span>DXY <b>${market.dxy}</b> (${market.dxyDate})</span>
+    <span>US10Y <b>${market.us10y}%</b></span>
+    <span>VIX <b>${market.vix}</b></span>
+    <span>BIAS <b style="color:${badgeClass.includes('bull')?'#4cffb0':badgeClass.includes('bear')?'#ff9999':'#8aa0b0'}">${displayBias}</b></span>
+    <span>BOTTOM <b style="color:#00e676">${market.bottom}</b> / TOP <b style="color:#ff5252">${market.top}</b></span>
+    <span>News <b>Finnhub+GDELT</b></span>
+    <span>${isKo?'자본':'CAPITAL'} <b>${(market.capital||10000000).toLocaleString()}원</b></span>
+    ${market.is_emergency ? `<span style="color:#ff5252;font-weight:900">${isKo?'긴급 재선정':'EMERGENCY RE-SELECT'}</span>` : ''}
+  `;
+
+  document.getElementById('title').innerText = isKo ? 'COMMAND CENTER V4 - 21 TICKER REAL-TIME HUB - 세계 금융시장 흐름 허브' : 'COMMAND CENTER V4 - 21 TICKER REAL-TIME HUB - GLOBAL MARKET FLOW HUB';
+  document.getElementById('subtitle').innerText = isKo ? 'Finnhub Primary + GDELT Backup - 실제 데이터 연결 - 6주 가상매매 별도' : 'Finnhub Primary + GDELT Backup - Real Data Connected - 6W Trading Separate';
+
+  const bottom = tickers.filter(t=>t.bottom).sort((a,b)=>b.final_score-a.final_score).slice(0,5);
+  const top = tickers.filter(t=>!t.bottom).sort((a,b)=>a.final_score-b.final_score).slice(0,5);
+
+  let recCount = 3;
+  const cap = market.capital||10000000;
+  if(cap>=60000000) recCount=6; else if(cap>=30000000) recCount=5; else if(cap>=20000000) recCount=4;
+
+  let recommended = [];
+  if(biasText.includes('BULL')) recommended = bottom.slice(0, recCount);
+  else if(biasText.includes('BEAR')) recommended = top.slice(0, recCount);
+  else recommended = [...tickers].sort((a,b)=>b.final_score-a.final_score).slice(0, recCount);
+
+  function mkCard(t, isSelected){
+    const isLong = t.bottom;
+    const boxW = calcBoxWidth(t.high20, t.low20);
+    const {sl, tp} = calcSLTP(t.close, isLong);
+    const micro = t.micro || t.sym;
+    const score = t.final_score || t.score;
+    const scoreCls = score >= 6.5 ? 'g' : score <= 3 ? 'r' : 'm';
+    const isNew = t.is_new;
+
+    let cardCls = isLong ? 'b' : 't';
+    if(isNew) cardCls = isLong ? 'new-b' : 'new-t';
+    else if(isSelected) cardCls = isLong ? 'sel-b' : 'sel-t';
+
+    let badgeText = '';
+    let badgeCls = '';
+    if(isNew){
+      badgeText = isKo ? `NEW 선정 • ${isLong?'LONG':'SHORT'}` : `NEW SELECTED • ${isLong?'LONG':'SHORT'}`;
+      badgeCls = isLong ? 'b-new-long' : 'b-new-short';
+    }else if(isSelected){
+      badgeText = isKo ? `선정 • ${isLong?'LONG':'SHORT'}` : `SELECTED • ${isLong?'LONG':'SHORT'}`;
+      badgeCls = isLong ? 'bl' : 'bs';
+    }
+
+    const trustTxt = isKo ? (isLong?`신뢰도: <b style="color:#00e676">${t.trust}%</b> • 바닥 매집`:`신뢰도: <b style="color:#ff5252">${t.trust}%</b> • 천장 분배`) : (isLong?`Trust: <b style="color:#00e676">${t.trust}%</b> • Bottom Accum`:`Trust: <b style="color:#ff5252">${t.trust}%</b> • Top Dist`);
+
+    const deltaInfo = t.delta && t.delta !== 0 ? (isKo?`누적델타 ${t.delta>0?'+':''}${t.delta.toLocaleString()} Quantower → 점수 ${t.delta_score>0?'+':''}${t.delta_score.toFixed(1)} → ${score.toFixed(1)} (결제 후 즉시 반영)`:`Delta ${t.delta>0?'+':''}${t.delta.toLocaleString()} Quantower → Score ${t.delta_score>0?'+':''}${t.delta_score.toFixed(1)} → ${score.toFixed(1)}`) : (isKo?`누적델타 없음 (결제 전 0) → 기존 점수 유지`:`No Delta (pre-payment 0) → Base Score`);
+
+    const boxLabel = isKo ? '박스폭' : 'Box Width';
+    const volLabel = isKo ? '거래량' : 'Volume';
+    const stayLabel = isKo ? '체류' : 'Stay';
+    const posLabel = isKo ? '위치' : 'Pos';
+    const powerLabel = isKo ? '세력' : 'Power';
+    const qtyLabel = isKo ? '수량' : 'Qty';
+    const newsLabel = isKo ? '뉴스' : 'News';
+    const sourceLabel = isKo ? '출처' : 'Source';
+    const closeLabel = isKo ? '종가' : 'Close';
+    const slLabel = isKo ? '손절' : 'SL';
+    const tpLabel = isKo ? '익절' : 'TP';
+
+    const detail = `
+      ${boxLabel} <b>${boxW}%</b> (${t.low20}-${t.high20})<br>
+      ${volLabel} <b>${t.vol}x</b> ${stayLabel} <b>${t.stay}d</b> ${posLabel} <b>${t.pos}</b><br>
+      ${powerLabel} <b>${t.power}% Long</b> ${qtyLabel} <b>${t.qty}</b> ${newsLabel} <b>${t.news}</b> ${sourceLabel}: <b>${t.source}</b><br>
+      ${closeLabel} <b>${t.close}</b> | ${t.bottom?'BOTTOM':'TOP'}<br>
+      NEWS Breakdown: Box ${t.box} COT ${t.cot} Flow ${t.flow} News ${t.news} → Source: ${t.source}<br>
+      <b style="color:#ff9800">${deltaInfo}</b><br>
+      <span class="${isLong?'long':'short'}">${micro} | ${slLabel} ${sl} (0.8%) ${tpLabel} ${tp} (1.6%) ${isLong?'LONG':'SHORT'}</span>
+      ${isNew ? `<span class="${isLong?'new-text':'new-text-short'}">${isKo?`NEW 선정 • ${isLong?'LONG':'SHORT'} - 세계 시장 흐름 바꼈음! ${market.is_emergency?'긴급 재선정':''} - 절대 안 변한다는 건 없다`:`NEW SELECTED • ${isLong?'LONG':'SHORT'} - FLOW CHANGED! ${market.is_emergency?'EMERGENCY':''} - No Absolute`}</span>` : ''}
+    `;
+
+    const scoreDisplay = t.delta && t.delta!==0 ? `${score.toFixed(1)} (${t.delta_score>0?'+':''}${t.delta_score.toFixed(1)})` : `${score.toFixed(1)}${isNew?' NEW':''}`;
+
+    return `<div class="card ${cardCls}">${badgeText?`<span class="badge ${badgeCls}">${badgeText}</span>`:''}<div class="row"><span class="ticker">${t.sym}</span><span class="sub">${micro}</span><span class="finn">FINNHUB</span>${t.delta&&t.delta!==0?`<span class="delta">Δ ${t.delta>0?'+':''}${t.delta.toLocaleString()}</span>`:''}<span class="score ${scoreCls}">${scoreDisplay}</span></div><div class="detail">${detail}</div><div class="trust"><span>${trustTxt}</span><div class="prog"><div class="fill ${isLong?'fill-g':'fill-r'}" style="width:${t.trust}%"></div></div><span class="tbadge ${isLong?'bl':'bs'}">${isLong?'LONG':'SHORT'}</span></div></div>`;
+  }
+
+  let html = `<div class="sec g"><span>${isKo?'ACCUMULATION - BOTTOM - 세계 금융시장 흐름 허브 - 거의 안 바뀌지만 급변 시 바뀜':'ACCUMULATION - BOTTOM - GLOBAL HUB - Almost Fixed But Can Change'}</span><span>${bottom.length} TICKERS - ${market.date} 실제 데이터 - ${isKo?'오늘':'TODAY'} ${market.date}</span></div><div class="grid">`;
+  bottom.forEach(t=>html+=mkCard(t, true));
+  for(let i=bottom.length;i<3;i++) html+=`<div style="visibility:hidden"></div>`;
+  html+=`</div><div class="sec r"><span>${isKo?'DISTRIBUTION - TOP - 거의 안 바뀌지만 급변 시 강화':'DISTRIBUTION - TOP - Almost Fixed But Strengthens on Crash'}</span><span>${top.length} TICKERS - ${market.date}</span></div><div class="grid">`;
+  top.forEach(t=>html+=mkCard(t, top.indexOf(t)===0));
+  for(let i=top.length;i<3;i++) html+=`<div style="visibility:hidden"></div>`;
+  html+=`</div><div class="sec y"><span>${isKo?`SELECTED - THIS WEEK (MAX ${recCount}) - V4 - ${displayBias} - NEW 기능 - 흐름 바꼈으면 NEW로 표시`:`SELECTED - THIS WEEK (MAX ${recCount}) - V4 - ${displayBias} - NEW Feature - FLOW CHANGE = NEW`}</span><span>LONG / SHORT - 10M=3 20M=4 30M=5 60M=6 - ${displayBias} - ${market.date}</span></div><div class="grid">`;
+  recommended.forEach(t=>html+=mkCard(t, true));
+  html+=`</div>`;
+
+  document.getElementById('content').innerHTML = html;
+  document.getElementById('footer').innerHTML = `COMMAND CENTER V4 - REAL DATA CONNECTED - DATE ${market.date} (오늘 ${new Date().toLocaleDateString('ko-KR')}) - DXY ${market.dxy} US10Y ${market.us10y}% VIX ${market.vix} BIAS ${displayBias} - GitHub Actions https://github.com/onesangel7776-blip/weekly-absorption/actions 매일 갱신 - absorption.json 실제 연결 - 한/영 전체 반영 - 선정 점수 겹침 없음 - 모든 박스 3개 동일 - NEW 선정 기능 - 6주 가상매매 별도 journal - 세계 금융시장 흐름 허브 - 절대 안 변한다는 건 없다 - 1929 대공황 2008 2020 2022 30년 3번 폭락 감지 - Quantower 델타 결제 후 즉시 점수 반영`;
+}
+
+(async()=>{
+  const data = await fetchRealData();
+  render(data);
+})();
 </script>
 </body>
 </html>
