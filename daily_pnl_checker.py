@@ -1,114 +1,120 @@
+#!/usr/bin/env python3
+"""
+V4 Daily Auto PnL - FINAL
+- 한 주에 같은 티커 한 번만 (week+ticker 중복 제거)
+- 자본금별 한 주 개수: 10M=3, 20M=4, 30M=5, 60M=6
+- 월요일에만 새 진입, 화~금 추가 진입 없음
+- 무제한 누적 (자르기 없음, 6개월 78개 이상 계속 누적)
+- 기존 daily_pnl_checker.py 교체용
+"""
+import json
+from collections import defaultdict
 
-# daily_pnl_checker.py V4.5 FINAL FIX - V4 누적치 사라짐 방지 + V5 호환
-# - V4: journal_data.json 누적 append, 절대 덮어쓰기 금지
-# - 검색 경로: ./journal_data.json, docs/journal_data.json, docs/v5-ma-delta/journal_data.json, backup/journal_data.json
-# - 없으면 생성 + 기존 데이터 합치기
-# - V4 + V5 모두 지원
+JOURNAL_PATHS = ["docs/journal_data.json", "journal_data.json"]
 
-import json, os, glob
-from datetime import datetime
+def parse_num(v,d=0):
+    if v is None or v=="": return d
+    if isinstance(v,(int,float)): return v
+    if isinstance(v,str):
+        s=v.replace(",","").replace("원","").replace("$","").replace(" ","").replace("+","").replace("KRW","").replace("USD","")
+        try: return float(s) if "." in s else int(s)
+        except: return d
+    return d
 
-CANDIDATE_PATHS = [
-    "journal_data.json",
-    "./journal_data.json",
-    "docs/journal_data.json",
-    "./docs/journal_data.json",
-    "docs/v5-ma-delta/journal_data.json",
-    "journal_data_v5.json",
-    "docs/journal_data_v5.json",
-    "backup/journal_data.json",
-    "data/journal_data.json"
-]
+def get_max_tickers(c):
+    c=parse_num(c,10000000)
+    if c>=60000000: return 6
+    if c>=30000000: return 5
+    if c>=20000000: return 4
+    return 3
 
-def load_all_existing():
-    merged = {}
-    existing_files = []
-    for p in CANDIDATE_PATHS:
-        if os.path.exists(p):
-            try:
-                with open(p, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-                    if isinstance(data, dict) and len(str(data)) > 10:
-                        merged[p] = data
-                        existing_files.append(p)
-                        print(f"[FOUND] {p} len={len(str(data))}")
-            except Exception as e:
-                print(f"[ERR] {p}: {e}")
-    return merged, existing_files
+# 루트에 있는 파일 먼저 시도, 없으면 docs
+journal_path = None
+for p in JOURNAL_PATHS:
+    try:
+        with open(p,"r",encoding="utf-8") as f:
+            json.load(f)
+        journal_path = p
+        break
+    except:
+        continue
 
-def get_latest_cumulative(merged):
-    # 가장 큰 데이터 선택 (누적치가 가장 많은 파일)
-    if not merged:
-        return None
-    best_path = max(merged.keys(), key=lambda k: len(str(merged[k])))
-    print(f"[BEST] {best_path} as base")
-    return merged[best_path]
+if not journal_path:
+    journal_path = "docs/journal_data.json"
 
-def ensure_v4_structure(base):
-    if not base:
-        # 빈 V4 구조 생성 (누적 시작)
-        return {
-            "date": datetime.now().strftime("%Y-%m-%d"),
-            "balance_krw": 10000000,
-            "balance_usd": 7407.41,
-            "pnl_krw": 0,
-            "pnl_usd": 0,
-            "positions": [],
-            "ledger": [],  # 전체 누적 원장
-            "weekly": [],
-            "source": "V4.5 FINAL FIX - created"
-        }
-    # 기존 구조 유지
-    if "ledger" not in base:
-        base["ledger"] = base.get("positions", [])
-    return base
+with open(journal_path,"r",encoding="utf-8") as f:
+    data=json.load(f)
 
-def save_to_all_places(data):
-    targets = [
-        "journal_data.json",
-        "docs/journal_data.json",
-        "docs/v5-ma-delta/journal_data.json",
-        "backup/journal_data.json"
-    ]
-    for t in targets:
-        try:
-            os.makedirs(os.path.dirname(t) if os.path.dirname(t) else ".", exist_ok=True)
-            with open(t, 'w', encoding='utf-8') as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
-            print(f"[SAVED] {t}")
-        except Exception as e:
-            print(f"[SAVE ERR] {t}: {e}")
+ledger=data.get("ledger",[])
+print(f"Before: {len(ledger)} entries from {journal_path}")
 
-def main():
-    print("=== daily_pnl_checker V4.5 FINAL FIX ===")
-    merged, files = load_all_existing()
-    if not files:
-        print("[WARN] No existing journal_data.json found - creating new cumulative file")
-        base = ensure_v4_structure(None)
-    else:
-        base = get_latest_cumulative(merged)
-        base = ensure_v4_structure(base)
-        # 모든 파일의 ledger 합치기 (중복 제거)
-        all_ledger = []
-        seen = set()
-        for path, data in merged.items():
-            ledger = data.get("ledger") or data.get("positions") or []
-            for row in ledger:
-                key = f"{row.get('date','')}_{row.get('ticker','')}_{row.get('entry','')}"
-                if key not in seen:
-                    seen.add(key)
-                    all_ledger.append(row)
-        if all_ledger:
-            base["ledger"] = all_ledger
-            print(f"[MERGED] ledger total {len(all_ledger)} rows")
-    
-    base["date"] = datetime.now().strftime("%Y-%m-%d")
-    base["last_checked"] = datetime.now().isoformat()
-    base["fix_version"] = "V4.5 FINAL FIX - cumulative no overwrite"
-    
-    save_to_all_places(base)
-    print(f"=== DONE: ledger {len(base.get('ledger',[]))} rows saved to {len([p for p in ['journal_data.json','docs/journal_data.json'] if True])} places ===")
-    return base
+# 1. 한 주에 같은 티커 한 번만
+seen={}
+for e in ledger:
+    week=str(e.get("week","")).strip()
+    ticker=str(e.get("ticker","")).strip().upper()
+    if not week or not ticker: continue
+    key=f"{week}_{ticker}"
+    seen[key]=e
 
-if __name__ == "__main__":
-    main()
+by_week=defaultdict(list)
+for e in seen.values():
+    by_week[e.get("week","")].append(e)
+
+capital_krw=parse_num(data.get("capital_krw",10000000),10000000)
+max_per_week=get_max_tickers(capital_krw)
+
+final_entries=[]
+for week in sorted(by_week.keys()):
+    entries=by_week[week]
+    # 신뢰도 높은 순으로 정렬해서 max_per_week개만 유지
+    entries_sorted=sorted(entries, key=lambda x: parse_num(x.get("score",0),0), reverse=True)
+    if len(entries_sorted)>max_per_week:
+        print(f"Week {week}: {len(entries_sorted)} -> {max_per_week} (trim by score)")
+        entries_sorted=entries_sorted[:max_per_week]
+    final_entries.extend(entries_sorted)
+
+sorted_entries=sorted(final_entries, key=lambda x: (x.get("week",""), x.get("ticker","")))
+
+# 무제한 누적 - 2000개 안전장치만
+if len(sorted_entries)>2000:
+    sorted_entries=sorted_entries[-2000:]
+
+print(f"After dedup: {len(sorted_entries)} entries, {len(by_week)} weeks, max per week {max_per_week}")
+
+capital_usd=parse_num(data.get("capital_usd",7407.41),7407.41)
+closed=[x for x in sorted_entries if str(x.get("status","")).upper()=="CLOSED"]
+total_pnl_krw=sum(parse_num(x.get("pnl_krw",0),0) for x in closed)
+total_pnl_usd=sum(parse_num(x.get("pnl_usd",0),0) for x in closed)
+win_count=sum(1 for x in closed if parse_num(x.get("pnl_krw",0),0)>0)
+total_closed=len(closed)
+win_rate=round(win_count/total_closed*100,1) if total_closed else 0
+
+data["capital_krw"]=capital_krw
+data["capital_usd"]=capital_usd
+data["balance_krw"]=capital_krw+total_pnl_krw
+data["balance_usd"]=round(capital_usd+total_pnl_usd,2)
+data["total_pnl_krw"]=total_pnl_krw
+data["total_pnl_usd"]=round(total_pnl_usd,2)
+data["win_rate"]=win_rate
+data["win_count"]=win_count
+data["total_closed"]=total_closed
+data["total_weeks"]=len(by_week)
+data["total_entries"]=len(sorted_entries)
+data["max_tickers"]=max_per_week
+data["ledger"]=sorted_entries
+
+if len(sorted_entries)<3:
+    print(f"ABORT too small {len(sorted_entries)}")
+    exit(1)
+
+# 두 경로 모두에 저장 (루트와 docs)
+for out_path in ["docs/journal_data.json", "journal_data.json"]:
+    try:
+        with open(out_path,"w",encoding="utf-8") as f:
+            json.dump(data,f,ensure_ascii=False,indent=2)
+        print(f"Saved {out_path}: {len(sorted_entries)} entries")
+    except Exception as e:
+        print(f"Skip {out_path}: {e}")
+
+print(f"FINAL: {len(sorted_entries)} entries, {len(by_week)} weeks, {max_per_week}/week, pnl {total_pnl_krw}")
