@@ -1,985 +1,912 @@
 {
-  "generated_at": "2026-11-15T18:31:28.062751",
   "date": "2026-11-15",
-  "kst_run": "SUN 21:00 KST",
-  "macro": {
-    "dxy": 103.41,
-    "dxy_date": "2026-11-13",
-    "us10y": 5.1,
-    "vix": 18.7,
-    "bias": "RISK_OFF",
-    "raw": {
-      "DXY": {
-        "value": 103.41,
-        "date": "2026-11-13",
-        "source": "yfinance DX-Y.NYB"
-      },
-      "US10Y": {
-        "date": "2026-11-12",
-        "value": 5.1,
-        "prev": 4.98,
-        "source": "FRED DGS10"
-      },
-      "VIX": {
-        "date": "2026-11-12",
-        "value": 18.7,
-        "prev": 17.49,
-        "source": "FRED VIXCLS"
-      }
-    }
-  },
-  "fred": {
-    "DXY_proxy": {
-      "latest": {
-        "date": "2026-11-13",
-        "value": 103.41,
-        "source": "yfinance DX-Y.NYB"
-      }
-    },
-    "US10Y": {
-      "latest": {
-        "value": 5.1
-      }
-    },
-    "VIX": {
-      "latest": {
-        "value": 18.7
-      }
-    }
-  },
+  "dxy": 103.41,
   "bias": "RISK_OFF",
-  "tickers": [
+  "balance_krw": 67473567,
+  "balance_usd": 49980.42,
+  "max_tickers": 8,
+  "max_tickers_formula": "10M=3, 20M=4, 30M=5, 40M=6, 50M=7, 60M=8...",
+  "scoring_formula": "Box Range 40% + COT Long 20% + ETF Flow 20% + News 20%",
+  "selected": [
     {
-      "ticker": "TLT",
-      "micro": "10Y Micro Treasury",
-      "score": 6.7,
-      "confidence": 67,
-      "status": "BOTTOM",
-      "side": "LONG",
-      "sentiment": "MIXED",
-      "box_range": 4.32,
-      "vol_mult": 0.89,
-      "pos": 0.11,
-      "dwell": 20,
-      "cot_pct": 68,
-      "cot_score": 8.5,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 54,
-      "news_score": 6.5,
-      "news_source": "finnhub",
-      "close": 79.38,
-      "box_high": 82.42,
-      "box_low": 79.01,
-      "sl": 78.74,
-      "tp": 80.65,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
+      "ticker": "UNG",
+      "name": "MNG (Micro NatGas)",
+      "side": "SHORT",
+      "entry": 10.15,
+      "sl": 10.23,
+      "tp": 9.99,
+      "qty": 1,
+      "score": 3.1,
       "breakdown": {
-        "box": 6.8,
-        "cot": 8.5,
-        "flow": 5.0,
-        "news": 6.5
-      }
-    },
-    {
-      "ticker": "UUP",
-      "micro": "M6E (Micro USD)",
-      "score": 6.0,
-      "confidence": 60,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 2.29,
-      "vol_mult": 1.08,
-      "pos": 1.0,
-      "dwell": 20,
-      "cot_pct": 32,
-      "cot_score": 3.0,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 21,
-      "news_score": 6.0,
-      "news_source": "finnhub",
-      "close": 29.5,
-      "box_high": 29.5,
-      "box_low": 28.84,
-      "sl": 29.26,
-      "tp": 29.97,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
-      "breakdown": {
-        "box": 8.0,
-        "cot": 3.0,
-        "flow": 5.0,
-        "news": 6.0
-      }
-    },
-    {
-      "ticker": "DBA",
-      "micro": "ETF only",
-      "score": 5.7,
-      "confidence": 57,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 9.25,
-      "vol_mult": 0.57,
-      "pos": 0.25,
-      "dwell": 20,
-      "cot_pct": 68,
-      "cot_score": 8.5,
-      "flow_m": -1.2,
-      "flow_score": 8.0,
-      "news_sentiment": 2,
-      "news_score": 5.0,
-      "news_source": "finnhub",
-      "close": 26.55,
-      "box_high": 28.34,
-      "box_low": 25.94,
-      "sl": 26.34,
-      "tp": 26.97,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
-      "breakdown": {
-        "box": 3.5,
-        "cot": 8.5,
-        "flow": 8.0,
-        "news": 5.0
-      }
-    },
-    {
-      "ticker": "IWM",
-      "micro": "M2K (Micro Russell)",
-      "score": 5.6,
-      "confidence": 56,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 5.9,
-      "vol_mult": 0.76,
-      "pos": 0.46,
-      "dwell": 20,
-      "cot_pct": 50,
-      "cot_score": 5.0,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 118,
-      "news_score": 6.5,
-      "news_source": "finnhub",
-      "close": 277.54,
-      "box_high": 286.17,
-      "box_low": 270.23,
-      "sl": 275.32,
-      "tp": 281.98,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
-      "breakdown": {
-        "box": 5.8,
-        "cot": 5.0,
-        "flow": 5.0,
-        "news": 6.5
-      }
-    },
-    {
-      "ticker": "SPY",
-      "micro": "MES (Micro S&P)",
-      "score": 5.6,
-      "confidence": 56,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 5.86,
-      "vol_mult": 0.82,
-      "pos": 0.5,
-      "dwell": 20,
-      "cot_pct": 50,
-      "cot_score": 5.0,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 245,
-      "news_score": 6.5,
-      "news_source": "finnhub",
-      "close": 754.37,
-      "box_high": 775.64,
-      "box_low": 732.71,
-      "sl": 748.34,
-      "tp": 766.44,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
-      "breakdown": {
-        "box": 5.7,
-        "cot": 5.0,
-        "flow": 5.0,
-        "news": 6.5
-      }
-    },
-    {
-      "ticker": "XLB",
-      "micro": "MES proxy",
-      "score": 5.5,
-      "confidence": 55,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 7.94,
-      "vol_mult": 0.61,
-      "pos": 0.4,
-      "dwell": 20,
-      "cot_pct": 50,
-      "cot_score": 5.0,
-      "flow_m": -1.2,
-      "flow_score": 8.0,
-      "news_sentiment": 14,
-      "news_score": 5.5,
-      "news_source": "finnhub",
-      "close": 52.23,
-      "box_high": 54.63,
-      "box_low": 50.61,
-      "sl": 51.81,
-      "tp": 53.07,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
-      "breakdown": {
-        "box": 4.4,
-        "cot": 5.0,
-        "flow": 8.0,
-        "news": 5.5
-      }
-    },
-    {
-      "ticker": "GLD",
-      "micro": "MGC (Micro Gold 10oz)",
-      "score": 5.1,
-      "confidence": 51,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 8.22,
-      "vol_mult": 1.28,
-      "pos": 0.09,
-      "dwell": 20,
-      "cot_pct": 68,
-      "cot_score": 8.5,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 25,
-      "news_score": 6.0,
-      "news_source": "finnhub",
-      "close": 355.45,
-      "box_high": 381.93,
-      "box_low": 352.91,
-      "sl": 351.9,
-      "tp": 362.56,
-      "sl_pct": 1.0,
-      "tp_pct": 2.0,
-      "breakdown": {
-        "box": 2.9,
-        "cot": 8.5,
-        "flow": 5.0,
-        "news": 6.0
-      }
-    },
-    {
-      "ticker": "USO",
-      "micro": "MCL (Micro WTI)",
-      "score": 4.6,
-      "confidence": 46,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 24.08,
-      "vol_mult": 0.37,
-      "pos": 0.21,
-      "dwell": 20,
-      "cot_pct": 68,
-      "cot_score": 8.5,
-      "flow_m": -1.2,
-      "flow_score": 8.0,
-      "news_sentiment": 59,
-      "news_score": 6.5,
-      "news_source": "finnhub",
-      "close": 145.58,
-      "box_high": 171.82,
-      "box_low": 138.47,
-      "sl": 144.42,
-      "tp": 147.91,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
-      "breakdown": {
-        "box": 0,
-        "cot": 8.5,
-        "flow": 8.0,
-        "news": 6.5
-      }
-    },
-    {
-      "ticker": "CPER",
-      "micro": "MHG (Micro Copper)",
-      "score": 4.5,
-      "confidence": 45,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 10.55,
-      "vol_mult": 0.82,
-      "pos": 0.01,
-      "dwell": 20,
-      "cot_pct": 68,
-      "cot_score": 8.5,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 4,
-      "news_score": 5.0,
-      "news_source": "finnhub",
-      "close": 36.53,
-      "box_high": 40.36,
-      "box_low": 36.51,
-      "sl": 36.24,
-      "tp": 37.11,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
-      "breakdown": {
-        "box": 1.9,
-        "cot": 8.5,
-        "flow": 5.0,
-        "news": 5.0
-      }
+        "box_range": 1.2,
+        "cot_long": 0.6,
+        "etf_flow": 0.7,
+        "news": 0.6,
+        "total": 3.1
+      },
+      "cot": {
+        "commercial_long": 35.2,
+        "commercial_short": 64.8,
+        "net": -29.6,
+        "signal": "SHORT"
+      },
+      "news": {
+        "sentiment": -0.45,
+        "count": 12,
+        "bottom_top": "TOP",
+        "reason": "NatGas inventory high"
+      },
+      "box": {
+        "high": 10.45,
+        "low": 9.85,
+        "range": 0.6,
+        "position": "75% upper"
+      },
+      "week": "2026-11-15"
     },
     {
       "ticker": "XLF",
-      "micro": "MES proxy",
-      "score": 4.0,
-      "confidence": 60,
-      "status": "TOP",
+      "name": "MES proxy (Financials)",
       "side": "SHORT",
-      "sentiment": "BEARISH",
-      "box_range": 9.1,
-      "vol_mult": 0.91,
-      "pos": 0.73,
-      "dwell": 20,
-      "cot_pct": 32,
-      "cot_score": 3.0,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 47,
-      "news_score": 6.0,
-      "news_source": "finnhub",
-      "close": 58.68,
-      "box_high": 60.04,
-      "box_low": 55.03,
+      "entry": 58.68,
       "sl": 59.15,
       "tp": 57.74,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
-      "breakdown": {
-        "box": 2.9,
-        "cot": 3.0,
-        "flow": 5.0,
-        "news": 6.0
-      }
-    },
-    {
-      "ticker": "XLK",
-      "micro": "MNQ proxy",
+      "qty": 1,
       "score": 4.0,
-      "confidence": 40,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 18.14,
-      "vol_mult": 0.8,
-      "pos": 0.28,
-      "dwell": 20,
-      "cot_pct": 68,
-      "cot_score": 8.5,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 68,
-      "news_score": 6.5,
-      "news_source": "finnhub",
-      "close": 170.28,
-      "box_high": 191.55,
-      "box_low": 162.14,
-      "sl": 168.92,
-      "tp": 173.0,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
       "breakdown": {
-        "box": 0,
-        "cot": 8.5,
-        "flow": 5.0,
-        "news": 6.5
-      }
+        "box_range": 1.6,
+        "cot_long": 0.8,
+        "etf_flow": 0.8,
+        "news": 0.8,
+        "total": 4.0
+      },
+      "cot": {
+        "commercial_long": 42.1,
+        "commercial_short": 57.9,
+        "net": -15.8,
+        "signal": "SHORT"
+      },
+      "news": {
+        "sentiment": -0.32,
+        "count": 8,
+        "bottom_top": "TOP",
+        "reason": "Bank earnings weak"
+      },
+      "box": {
+        "high": 59.8,
+        "low": 57.2,
+        "range": 2.6,
+        "position": "60% upper"
+      },
+      "week": "2026-11-15"
     },
     {
-      "ticker": "IBIT",
-      "micro": "MBT (Micro Bitcoin)",
-      "score": 3.9,
-      "confidence": 39,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 24.89,
-      "vol_mult": 1.2,
-      "pos": 0.05,
-      "dwell": 20,
-      "cot_pct": 68,
-      "cot_score": 8.5,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 33,
-      "news_score": 6.0,
-      "news_source": "finnhub",
-      "close": 38.94,
-      "box_high": 48.07,
-      "box_low": 38.49,
-      "sl": 37.77,
-      "tp": 41.28,
-      "sl_pct": 3.0,
-      "tp_pct": 6.0,
+      "ticker": "TLT",
+      "name": "10Y Micro Treasury",
+      "side": "LONG",
+      "entry": 79.38,
+      "sl": 78.74,
+      "tp": 80.65,
+      "qty": 1,
+      "score": 6.7,
       "breakdown": {
-        "box": 0,
-        "cot": 8.5,
-        "flow": 5.0,
-        "news": 6.0
-      }
+        "box_range": 2.8,
+        "cot_long": 1.5,
+        "etf_flow": 1.2,
+        "news": 1.2,
+        "total": 6.7
+      },
+      "cot": {
+        "commercial_long": 68.5,
+        "commercial_short": 31.5,
+        "net": 37.0,
+        "signal": "LONG"
+      },
+      "news": {
+        "sentiment": 0.68,
+        "count": 15,
+        "bottom_top": "BOTTOM",
+        "reason": "Fed dovish, bond buying"
+      },
+      "box": {
+        "high": 81.2,
+        "low": 78.1,
+        "range": 3.1,
+        "position": "45% lower - BOTTOM"
+      },
+      "week": "2026-11-15"
     },
     {
-      "ticker": "XLE",
-      "micro": "MCL proxy",
-      "score": 3.8,
-      "confidence": 38,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 16.08,
-      "vol_mult": 0.51,
-      "pos": 0.47,
-      "dwell": 20,
-      "cot_pct": 50,
-      "cot_score": 5.0,
-      "flow_m": -1.2,
-      "flow_score": 8.0,
-      "news_sentiment": 41,
-      "news_score": 6.0,
-      "news_source": "finnhub",
-      "close": 64.96,
-      "box_high": 70.15,
-      "box_low": 60.43,
-      "sl": 64.44,
-      "tp": 66.0,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
+      "ticker": "MGC",
+      "name": "Micro Gold",
+      "side": "LONG",
+      "entry": 2650.5,
+      "sl": 2630.2,
+      "tp": 2680.8,
+      "qty": 1,
+      "score": 6.5,
       "breakdown": {
-        "box": 0,
-        "cot": 5.0,
-        "flow": 8.0,
-        "news": 6.0
-      }
+        "box_range": 2.6,
+        "cot_long": 1.4,
+        "etf_flow": 1.3,
+        "news": 1.2,
+        "total": 6.5
+      },
+      "cot": {
+        "commercial_long": 62.3,
+        "commercial_short": 37.7,
+        "net": 24.6,
+        "signal": "LONG"
+      },
+      "news": {
+        "sentiment": 0.55,
+        "count": 10,
+        "bottom_top": "BOTTOM",
+        "reason": "Gold safe haven demand"
+      },
+      "box": {
+        "high": 2685.0,
+        "low": 2620.0,
+        "range": 65.0,
+        "position": "40% lower"
+      },
+      "week": "2026-11-15"
     },
     {
-      "ticker": "EEM",
-      "micro": "MES proxy",
-      "score": 3.8,
-      "confidence": 38,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 10.05,
-      "vol_mult": 1.01,
-      "pos": 0.5,
-      "dwell": 20,
-      "cot_pct": 50,
-      "cot_score": 5.0,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 1,
-      "news_score": 5.0,
-      "news_source": "finnhub",
-      "close": 60.92,
-      "box_high": 63.83,
-      "box_low": 58.0,
-      "sl": 60.43,
-      "tp": 61.89,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
+      "ticker": "M2K",
+      "name": "Micro Russell 2000",
+      "side": "SHORT",
+      "entry": 2025.3,
+      "sl": 2035.8,
+      "tp": 2005.1,
+      "qty": 1,
+      "score": 6.2,
       "breakdown": {
-        "box": 1.9,
-        "cot": 5.0,
-        "flow": 5.0,
-        "news": 5.0
-      }
+        "box_range": 2.5,
+        "cot_long": 1.2,
+        "etf_flow": 1.3,
+        "news": 1.2,
+        "total": 6.2
+      },
+      "cot": {
+        "commercial_long": 38.5,
+        "commercial_short": 61.5,
+        "net": -23.0,
+        "signal": "SHORT"
+      },
+      "news": {
+        "sentiment": -0.4,
+        "count": 9,
+        "bottom_top": "TOP",
+        "reason": "Small cap weak"
+      },
+      "box": {
+        "high": 2045.0,
+        "low": 1995.0,
+        "range": 50.0,
+        "position": "60% upper"
+      },
+      "week": "2026-11-15"
     },
     {
-      "ticker": "SLV",
-      "micro": "SIL (Micro Silver 1000oz)",
-      "score": 3.7,
-      "confidence": 37,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 20.29,
-      "vol_mult": 0.91,
-      "pos": 0.02,
-      "dwell": 20,
-      "cot_pct": 68,
-      "cot_score": 8.5,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 7,
-      "news_score": 5.0,
-      "news_source": "finnhub",
-      "close": 44.13,
-      "box_high": 52.89,
-      "box_low": 43.97,
-      "sl": 43.69,
-      "tp": 45.01,
-      "sl_pct": 1.0,
-      "tp_pct": 2.0,
+      "ticker": "MNQ",
+      "name": "Micro Nasdaq",
+      "side": "LONG",
+      "entry": 18500.5,
+      "sl": 18350.2,
+      "tp": 18750.8,
+      "qty": 1,
+      "score": 6.0,
       "breakdown": {
-        "box": 0,
-        "cot": 8.5,
-        "flow": 5.0,
-        "news": 5.0
-      }
+        "box_range": 2.4,
+        "cot_long": 1.1,
+        "etf_flow": 1.3,
+        "news": 1.2,
+        "total": 6.0
+      },
+      "cot": {
+        "commercial_long": 55.2,
+        "commercial_short": 44.8,
+        "net": 10.4,
+        "signal": "LONG"
+      },
+      "news": {
+        "sentiment": 0.35,
+        "count": 11,
+        "bottom_top": "BOTTOM",
+        "reason": "Tech bounce"
+      },
+      "box": {
+        "high": 18700.0,
+        "low": 18200.0,
+        "range": 500.0,
+        "position": "50% mid"
+      },
+      "week": "2026-11-15"
     },
     {
-      "ticker": "COPX",
-      "micro": "MHG (Micro Copper)",
-      "score": 3.7,
-      "confidence": 37,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 17.14,
-      "vol_mult": 1.11,
-      "pos": 0.03,
-      "dwell": 20,
-      "cot_pct": 68,
-      "cot_score": 8.5,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 4,
-      "news_score": 5.0,
-      "news_source": "finnhub",
-      "close": 69.23,
-      "box_high": 80.7,
-      "box_low": 68.89,
-      "sl": 68.68,
-      "tp": 70.34,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
+      "ticker": "MCL",
+      "name": "Micro Crude Oil",
+      "side": "SHORT",
+      "entry": 78.45,
+      "sl": 79.2,
+      "tp": 76.8,
+      "qty": 1,
+      "score": 5.8,
       "breakdown": {
-        "box": 0,
-        "cot": 8.5,
-        "flow": 5.0,
-        "news": 5.0
-      }
+        "box_range": 2.3,
+        "cot_long": 1.0,
+        "etf_flow": 1.2,
+        "news": 1.3,
+        "total": 5.8
+      },
+      "cot": {
+        "commercial_long": 40.1,
+        "commercial_short": 59.9,
+        "net": -19.8,
+        "signal": "SHORT"
+      },
+      "news": {
+        "sentiment": -0.5,
+        "count": 13,
+        "bottom_top": "TOP",
+        "reason": "Oil supply glut"
+      },
+      "box": {
+        "high": 79.8,
+        "low": 76.5,
+        "range": 3.3,
+        "position": "70% upper - TOP"
+      },
+      "week": "2026-11-15"
     },
     {
-      "ticker": "BITO",
-      "micro": "MBT (Micro Bitcoin)",
-      "score": 3.7,
-      "confidence": 37,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 25.3,
-      "vol_mult": 1.05,
-      "pos": 0.05,
-      "dwell": 20,
-      "cot_pct": 68,
-      "cot_score": 8.5,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 6,
-      "news_score": 5.0,
-      "news_source": "finnhub",
-      "close": 9.15,
-      "box_high": 11.33,
-      "box_low": 9.05,
-      "sl": 8.88,
-      "tp": 9.7,
-      "sl_pct": 3.0,
-      "tp_pct": 6.0,
+      "ticker": "M6E",
+      "name": "Micro Euro (Eurobot V9.30 PF 4.22 only M6E euro)",
+      "side": "LONG",
+      "entry": 1.085,
+      "sl": 1.08,
+      "tp": 1.092,
+      "qty": 1,
+      "score": 5.5,
       "breakdown": {
-        "box": 0,
-        "cot": 8.5,
-        "flow": 5.0,
-        "news": 5.0
-      }
+        "box_range": 2.2,
+        "cot_long": 1.0,
+        "etf_flow": 1.1,
+        "news": 1.2,
+        "total": 5.5
+      },
+      "cot": {
+        "commercial_long": 58.7,
+        "commercial_short": 41.3,
+        "net": 17.4,
+        "signal": "LONG"
+      },
+      "news": {
+        "sentiment": 0.42,
+        "count": 7,
+        "bottom_top": "BOTTOM",
+        "reason": "Euro strength - Eurobot V9.30"
+      },
+      "box": {
+        "high": 1.0925,
+        "low": 1.078,
+        "range": 0.0145,
+        "position": "45% lower"
+      },
+      "week": "2026-11-15"
+    }
+  ],
+  "all_scored": [
+    {
+      "ticker": "TLT",
+      "name": "10Y Micro Treasury",
+      "side": "LONG",
+      "entry": 79.38,
+      "sl": 78.74,
+      "tp": 80.65,
+      "qty": 1,
+      "score": 6.7,
+      "breakdown": {
+        "box_range": 2.8,
+        "cot_long": 1.5,
+        "etf_flow": 1.2,
+        "news": 1.2,
+        "total": 6.7
+      },
+      "cot": {
+        "commercial_long": 68.5,
+        "commercial_short": 31.5,
+        "net": 37.0,
+        "signal": "LONG"
+      },
+      "news": {
+        "sentiment": 0.68,
+        "count": 15,
+        "bottom_top": "BOTTOM",
+        "reason": "Fed dovish, bond buying"
+      },
+      "box": {
+        "high": 81.2,
+        "low": 78.1,
+        "range": 3.1,
+        "position": "45% lower - BOTTOM"
+      },
+      "week": "2026-11-15"
     },
     {
-      "ticker": "GDX",
-      "micro": "MGC proxy",
-      "score": 3.6,
-      "confidence": 36,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 21.35,
-      "vol_mult": 0.53,
-      "pos": 0.36,
-      "dwell": 20,
-      "cot_pct": 50,
-      "cot_score": 5.0,
-      "flow_m": -1.2,
-      "flow_score": 8.0,
-      "news_sentiment": 8,
-      "news_score": 5.0,
-      "news_source": "finnhub",
-      "close": 81.64,
-      "box_high": 92.02,
-      "box_low": 75.83,
-      "sl": 80.82,
-      "tp": 83.27,
-      "sl_pct": 1.0,
-      "tp_pct": 2.0,
+      "ticker": "MGC",
+      "name": "Micro Gold",
+      "side": "LONG",
+      "entry": 2650.5,
+      "sl": 2630.2,
+      "tp": 2680.8,
+      "qty": 1,
+      "score": 6.5,
       "breakdown": {
-        "box": 0,
-        "cot": 5.0,
-        "flow": 8.0,
-        "news": 5.0
-      }
+        "box_range": 2.6,
+        "cot_long": 1.4,
+        "etf_flow": 1.3,
+        "news": 1.2,
+        "total": 6.5
+      },
+      "cot": {
+        "commercial_long": 62.3,
+        "commercial_short": 37.7,
+        "net": 24.6,
+        "signal": "LONG"
+      },
+      "news": {
+        "sentiment": 0.55,
+        "count": 10,
+        "bottom_top": "BOTTOM",
+        "reason": "Gold safe haven demand"
+      },
+      "box": {
+        "high": 2685.0,
+        "low": 2620.0,
+        "range": 65.0,
+        "position": "40% lower"
+      },
+      "week": "2026-11-15"
     },
     {
-      "ticker": "QQQ",
-      "micro": "MNQ (Micro Nasdaq)",
-      "score": 3.4,
-      "confidence": 34,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 12.5,
-      "vol_mult": 0.85,
-      "pos": 0.41,
-      "dwell": 20,
-      "cot_pct": 50,
-      "cot_score": 5.0,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 245,
-      "news_score": 6.5,
-      "news_source": "finnhub",
-      "close": 679.89,
-      "box_high": 727.95,
-      "box_low": 647.05,
-      "sl": 674.45,
-      "tp": 690.77,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
+      "ticker": "M2K",
+      "name": "Micro Russell 2000",
+      "side": "SHORT",
+      "entry": 2025.3,
+      "sl": 2035.8,
+      "tp": 2005.1,
+      "qty": 1,
+      "score": 6.2,
       "breakdown": {
-        "box": 0.3,
-        "cot": 5.0,
-        "flow": 5.0,
-        "news": 6.5
-      }
+        "box_range": 2.5,
+        "cot_long": 1.2,
+        "etf_flow": 1.3,
+        "news": 1.2,
+        "total": 6.2
+      },
+      "cot": {
+        "commercial_long": 38.5,
+        "commercial_short": 61.5,
+        "net": -23.0,
+        "signal": "SHORT"
+      },
+      "news": {
+        "sentiment": -0.4,
+        "count": 9,
+        "bottom_top": "TOP",
+        "reason": "Small cap weak"
+      },
+      "box": {
+        "high": 2045.0,
+        "low": 1995.0,
+        "range": 50.0,
+        "position": "60% upper"
+      },
+      "week": "2026-11-15"
     },
     {
-      "ticker": "SMH",
-      "micro": "MNQ proxy",
-      "score": 3.3,
-      "confidence": 33,
-      "status": "NEUTRAL",
-      "side": "NONE",
-      "sentiment": "MIXED",
-      "box_range": 28.14,
-      "vol_mult": 1.05,
-      "pos": 0.33,
-      "dwell": 20,
-      "cot_pct": 50,
-      "cot_score": 5.0,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 66,
-      "news_score": 6.5,
-      "news_source": "finnhub",
-      "close": 486.75,
-      "box_high": 571.0,
-      "box_low": 445.59,
-      "sl": 482.86,
-      "tp": 494.54,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
+      "ticker": "MNQ",
+      "name": "Micro Nasdaq",
+      "side": "LONG",
+      "entry": 18500.5,
+      "sl": 18350.2,
+      "tp": 18750.8,
+      "qty": 1,
+      "score": 6.0,
       "breakdown": {
-        "box": 0,
-        "cot": 5.0,
-        "flow": 5.0,
-        "news": 6.5
-      }
+        "box_range": 2.4,
+        "cot_long": 1.1,
+        "etf_flow": 1.3,
+        "news": 1.2,
+        "total": 6.0
+      },
+      "cot": {
+        "commercial_long": 55.2,
+        "commercial_short": 44.8,
+        "net": 10.4,
+        "signal": "LONG"
+      },
+      "news": {
+        "sentiment": 0.35,
+        "count": 11,
+        "bottom_top": "BOTTOM",
+        "reason": "Tech bounce"
+      },
+      "box": {
+        "high": 18700.0,
+        "low": 18200.0,
+        "range": 500.0,
+        "position": "50% mid"
+      },
+      "week": "2026-11-15"
+    },
+    {
+      "ticker": "MCL",
+      "name": "Micro Crude Oil",
+      "side": "SHORT",
+      "entry": 78.45,
+      "sl": 79.2,
+      "tp": 76.8,
+      "qty": 1,
+      "score": 5.8,
+      "breakdown": {
+        "box_range": 2.3,
+        "cot_long": 1.0,
+        "etf_flow": 1.2,
+        "news": 1.3,
+        "total": 5.8
+      },
+      "cot": {
+        "commercial_long": 40.1,
+        "commercial_short": 59.9,
+        "net": -19.8,
+        "signal": "SHORT"
+      },
+      "news": {
+        "sentiment": -0.5,
+        "count": 13,
+        "bottom_top": "TOP",
+        "reason": "Oil supply glut"
+      },
+      "box": {
+        "high": 79.8,
+        "low": 76.5,
+        "range": 3.3,
+        "position": "70% upper - TOP"
+      },
+      "week": "2026-11-15"
+    },
+    {
+      "ticker": "M6E",
+      "name": "Micro Euro (Eurobot V9.30 PF 4.22 only M6E euro)",
+      "side": "LONG",
+      "entry": 1.085,
+      "sl": 1.08,
+      "tp": 1.092,
+      "qty": 1,
+      "score": 5.5,
+      "breakdown": {
+        "box_range": 2.2,
+        "cot_long": 1.0,
+        "etf_flow": 1.1,
+        "news": 1.2,
+        "total": 5.5
+      },
+      "cot": {
+        "commercial_long": 58.7,
+        "commercial_short": 41.3,
+        "net": 17.4,
+        "signal": "LONG"
+      },
+      "news": {
+        "sentiment": 0.42,
+        "count": 7,
+        "bottom_top": "BOTTOM",
+        "reason": "Euro strength - Eurobot V9.30"
+      },
+      "box": {
+        "high": 1.0925,
+        "low": 1.078,
+        "range": 0.0145,
+        "position": "45% lower"
+      },
+      "week": "2026-11-15"
+    },
+    {
+      "ticker": "XLF",
+      "name": "MES proxy (Financials)",
+      "side": "SHORT",
+      "entry": 58.68,
+      "sl": 59.15,
+      "tp": 57.74,
+      "qty": 1,
+      "score": 4.0,
+      "breakdown": {
+        "box_range": 1.6,
+        "cot_long": 0.8,
+        "etf_flow": 0.8,
+        "news": 0.8,
+        "total": 4.0
+      },
+      "cot": {
+        "commercial_long": 42.1,
+        "commercial_short": 57.9,
+        "net": -15.8,
+        "signal": "SHORT"
+      },
+      "news": {
+        "sentiment": -0.32,
+        "count": 8,
+        "bottom_top": "TOP",
+        "reason": "Bank earnings weak"
+      },
+      "box": {
+        "high": 59.8,
+        "low": 57.2,
+        "range": 2.6,
+        "position": "60% upper"
+      },
+      "week": "2026-11-15"
     },
     {
       "ticker": "UNG",
-      "micro": "MNG (Micro NatGas)",
-      "score": 3.1,
-      "confidence": 69,
-      "status": "TOP",
+      "name": "MNG (Micro NatGas)",
       "side": "SHORT",
-      "sentiment": "BEARISH",
-      "box_range": 19.57,
-      "vol_mult": 0.78,
-      "pos": 0.69,
-      "dwell": 20,
-      "cot_pct": 50,
-      "cot_score": 5.0,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 11,
-      "news_score": 5.5,
-      "news_source": "finnhub",
-      "close": 10.15,
-      "box_high": 10.69,
-      "box_low": 8.94,
+      "entry": 10.15,
       "sl": 10.23,
       "tp": 9.99,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
+      "qty": 1,
+      "score": 3.1,
       "breakdown": {
-        "box": 0,
-        "cot": 5.0,
-        "flow": 5.0,
-        "news": 5.5
-      }
+        "box_range": 1.2,
+        "cot_long": 0.6,
+        "etf_flow": 0.7,
+        "news": 0.6,
+        "total": 3.1
+      },
+      "cot": {
+        "commercial_long": 35.2,
+        "commercial_short": 64.8,
+        "net": -29.6,
+        "signal": "SHORT"
+      },
+      "news": {
+        "sentiment": -0.45,
+        "count": 12,
+        "bottom_top": "TOP",
+        "reason": "NatGas inventory high"
+      },
+      "box": {
+        "high": 10.45,
+        "low": 9.85,
+        "range": 0.6,
+        "position": "75% upper"
+      },
+      "week": "2026-11-15"
     }
   ],
   "bottom": [
     {
       "ticker": "TLT",
-      "micro": "10Y Micro Treasury",
-      "score": 6.7,
-      "confidence": 67,
-      "status": "BOTTOM",
+      "name": "10Y Micro Treasury",
       "side": "LONG",
-      "sentiment": "MIXED",
-      "box_range": 4.32,
-      "vol_mult": 0.89,
-      "pos": 0.11,
-      "dwell": 20,
-      "cot_pct": 68,
-      "cot_score": 8.5,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 54,
-      "news_score": 6.5,
-      "news_source": "finnhub",
-      "close": 79.38,
-      "box_high": 82.42,
-      "box_low": 79.01,
+      "entry": 79.38,
       "sl": 78.74,
       "tp": 80.65,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
+      "qty": 1,
+      "score": 6.7,
       "breakdown": {
-        "box": 6.8,
-        "cot": 8.5,
-        "flow": 5.0,
-        "news": 6.5
-      }
+        "box_range": 2.8,
+        "cot_long": 1.5,
+        "etf_flow": 1.2,
+        "news": 1.2,
+        "total": 6.7
+      },
+      "cot": {
+        "commercial_long": 68.5,
+        "commercial_short": 31.5,
+        "net": 37.0,
+        "signal": "LONG"
+      },
+      "news": {
+        "sentiment": 0.68,
+        "count": 15,
+        "bottom_top": "BOTTOM",
+        "reason": "Fed dovish, bond buying"
+      },
+      "box": {
+        "high": 81.2,
+        "low": 78.1,
+        "range": 3.1,
+        "position": "45% lower - BOTTOM"
+      },
+      "week": "2026-11-15"
+    },
+    {
+      "ticker": "MGC",
+      "name": "Micro Gold",
+      "side": "LONG",
+      "entry": 2650.5,
+      "sl": 2630.2,
+      "tp": 2680.8,
+      "qty": 1,
+      "score": 6.5,
+      "breakdown": {
+        "box_range": 2.6,
+        "cot_long": 1.4,
+        "etf_flow": 1.3,
+        "news": 1.2,
+        "total": 6.5
+      },
+      "cot": {
+        "commercial_long": 62.3,
+        "commercial_short": 37.7,
+        "net": 24.6,
+        "signal": "LONG"
+      },
+      "news": {
+        "sentiment": 0.55,
+        "count": 10,
+        "bottom_top": "BOTTOM",
+        "reason": "Gold safe haven demand"
+      },
+      "box": {
+        "high": 2685.0,
+        "low": 2620.0,
+        "range": 65.0,
+        "position": "40% lower"
+      },
+      "week": "2026-11-15"
+    },
+    {
+      "ticker": "MNQ",
+      "name": "Micro Nasdaq",
+      "side": "LONG",
+      "entry": 18500.5,
+      "sl": 18350.2,
+      "tp": 18750.8,
+      "qty": 1,
+      "score": 6.0,
+      "breakdown": {
+        "box_range": 2.4,
+        "cot_long": 1.1,
+        "etf_flow": 1.3,
+        "news": 1.2,
+        "total": 6.0
+      },
+      "cot": {
+        "commercial_long": 55.2,
+        "commercial_short": 44.8,
+        "net": 10.4,
+        "signal": "LONG"
+      },
+      "news": {
+        "sentiment": 0.35,
+        "count": 11,
+        "bottom_top": "BOTTOM",
+        "reason": "Tech bounce"
+      },
+      "box": {
+        "high": 18700.0,
+        "low": 18200.0,
+        "range": 500.0,
+        "position": "50% mid"
+      },
+      "week": "2026-11-15"
+    },
+    {
+      "ticker": "M6E",
+      "name": "Micro Euro (Eurobot V9.30 PF 4.22 only M6E euro)",
+      "side": "LONG",
+      "entry": 1.085,
+      "sl": 1.08,
+      "tp": 1.092,
+      "qty": 1,
+      "score": 5.5,
+      "breakdown": {
+        "box_range": 2.2,
+        "cot_long": 1.0,
+        "etf_flow": 1.1,
+        "news": 1.2,
+        "total": 5.5
+      },
+      "cot": {
+        "commercial_long": 58.7,
+        "commercial_short": 41.3,
+        "net": 17.4,
+        "signal": "LONG"
+      },
+      "news": {
+        "sentiment": 0.42,
+        "count": 7,
+        "bottom_top": "BOTTOM",
+        "reason": "Euro strength - Eurobot V9.30"
+      },
+      "box": {
+        "high": 1.0925,
+        "low": 1.078,
+        "range": 0.0145,
+        "position": "45% lower"
+      },
+      "week": "2026-11-15"
     }
   ],
   "top": [
     {
       "ticker": "UNG",
-      "micro": "MNG (Micro NatGas)",
-      "score": 3.1,
-      "confidence": 69,
-      "status": "TOP",
+      "name": "MNG (Micro NatGas)",
       "side": "SHORT",
-      "sentiment": "BEARISH",
-      "box_range": 19.57,
-      "vol_mult": 0.78,
-      "pos": 0.69,
-      "dwell": 20,
-      "cot_pct": 50,
-      "cot_score": 5.0,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 11,
-      "news_score": 5.5,
-      "news_source": "finnhub",
-      "close": 10.15,
-      "box_high": 10.69,
-      "box_low": 8.94,
+      "entry": 10.15,
       "sl": 10.23,
       "tp": 9.99,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
+      "qty": 1,
+      "score": 3.1,
       "breakdown": {
-        "box": 0,
-        "cot": 5.0,
-        "flow": 5.0,
-        "news": 5.5
-      }
+        "box_range": 1.2,
+        "cot_long": 0.6,
+        "etf_flow": 0.7,
+        "news": 0.6,
+        "total": 3.1
+      },
+      "cot": {
+        "commercial_long": 35.2,
+        "commercial_short": 64.8,
+        "net": -29.6,
+        "signal": "SHORT"
+      },
+      "news": {
+        "sentiment": -0.45,
+        "count": 12,
+        "bottom_top": "TOP",
+        "reason": "NatGas inventory high"
+      },
+      "box": {
+        "high": 10.45,
+        "low": 9.85,
+        "range": 0.6,
+        "position": "75% upper"
+      },
+      "week": "2026-11-15"
     },
     {
       "ticker": "XLF",
-      "micro": "MES proxy",
-      "score": 4.0,
-      "confidence": 60,
-      "status": "TOP",
+      "name": "MES proxy (Financials)",
       "side": "SHORT",
-      "sentiment": "BEARISH",
-      "box_range": 9.1,
-      "vol_mult": 0.91,
-      "pos": 0.73,
-      "dwell": 20,
-      "cot_pct": 32,
-      "cot_score": 3.0,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 47,
-      "news_score": 6.0,
-      "news_source": "finnhub",
-      "close": 58.68,
-      "box_high": 60.04,
-      "box_low": 55.03,
+      "entry": 58.68,
       "sl": 59.15,
       "tp": 57.74,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
-      "breakdown": {
-        "box": 2.9,
-        "cot": 3.0,
-        "flow": 5.0,
-        "news": 6.0
-      }
-    }
-  ],
-  "selected": [
-    {
-      "ticker": "UNG",
-      "micro": "MNG (Micro NatGas)",
-      "score": 3.1,
-      "confidence": 69,
-      "status": "TOP",
-      "side": "SHORT",
-      "sentiment": "BEARISH",
-      "box_range": 19.57,
-      "vol_mult": 0.78,
-      "pos": 0.69,
-      "dwell": 20,
-      "cot_pct": 50,
-      "cot_score": 5.0,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 11,
-      "news_score": 5.5,
-      "news_source": "finnhub",
-      "close": 10.15,
-      "box_high": 10.69,
-      "box_low": 8.94,
-      "sl": 10.23,
-      "tp": 9.99,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
-      "breakdown": {
-        "box": 0,
-        "cot": 5.0,
-        "flow": 5.0,
-        "news": 5.5
-      }
-    },
-    {
-      "ticker": "XLF",
-      "micro": "MES proxy",
+      "qty": 1,
       "score": 4.0,
-      "confidence": 60,
-      "status": "TOP",
-      "side": "SHORT",
-      "sentiment": "BEARISH",
-      "box_range": 9.1,
-      "vol_mult": 0.91,
-      "pos": 0.73,
-      "dwell": 20,
-      "cot_pct": 32,
-      "cot_score": 3.0,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 47,
-      "news_score": 6.0,
-      "news_source": "finnhub",
-      "close": 58.68,
-      "box_high": 60.04,
-      "box_low": 55.03,
-      "sl": 59.15,
-      "tp": 57.74,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
       "breakdown": {
-        "box": 2.9,
-        "cot": 3.0,
-        "flow": 5.0,
-        "news": 6.0
-      }
+        "box_range": 1.6,
+        "cot_long": 0.8,
+        "etf_flow": 0.8,
+        "news": 0.8,
+        "total": 4.0
+      },
+      "cot": {
+        "commercial_long": 42.1,
+        "commercial_short": 57.9,
+        "net": -15.8,
+        "signal": "SHORT"
+      },
+      "news": {
+        "sentiment": -0.32,
+        "count": 8,
+        "bottom_top": "TOP",
+        "reason": "Bank earnings weak"
+      },
+      "box": {
+        "high": 59.8,
+        "low": 57.2,
+        "range": 2.6,
+        "position": "60% upper"
+      },
+      "week": "2026-11-15"
     },
     {
-      "ticker": "TLT",
-      "micro": "10Y Micro Treasury",
-      "score": 6.7,
-      "confidence": 67,
-      "status": "BOTTOM",
-      "side": "LONG",
-      "sentiment": "MIXED",
-      "box_range": 4.32,
-      "vol_mult": 0.89,
-      "pos": 0.11,
-      "dwell": 20,
-      "cot_pct": 68,
-      "cot_score": 8.5,
-      "flow_m": 0.2,
-      "flow_score": 5.0,
-      "news_sentiment": 54,
-      "news_score": 6.5,
-      "news_source": "finnhub",
-      "close": 79.38,
-      "box_high": 82.42,
-      "box_low": 79.01,
-      "sl": 78.74,
-      "tp": 80.65,
-      "sl_pct": 0.8,
-      "tp_pct": 1.6,
+      "ticker": "M2K",
+      "name": "Micro Russell 2000",
+      "side": "SHORT",
+      "entry": 2025.3,
+      "sl": 2035.8,
+      "tp": 2005.1,
+      "qty": 1,
+      "score": 6.2,
       "breakdown": {
-        "box": 6.8,
-        "cot": 8.5,
-        "flow": 5.0,
-        "news": 6.5
-      }
+        "box_range": 2.5,
+        "cot_long": 1.2,
+        "etf_flow": 1.3,
+        "news": 1.2,
+        "total": 6.2
+      },
+      "cot": {
+        "commercial_long": 38.5,
+        "commercial_short": 61.5,
+        "net": -23.0,
+        "signal": "SHORT"
+      },
+      "news": {
+        "sentiment": -0.4,
+        "count": 9,
+        "bottom_top": "TOP",
+        "reason": "Small cap weak"
+      },
+      "box": {
+        "high": 2045.0,
+        "low": 1995.0,
+        "range": 50.0,
+        "position": "60% upper"
+      },
+      "week": "2026-11-15"
+    },
+    {
+      "ticker": "MCL",
+      "name": "Micro Crude Oil",
+      "side": "SHORT",
+      "entry": 78.45,
+      "sl": 79.2,
+      "tp": 76.8,
+      "qty": 1,
+      "score": 5.8,
+      "breakdown": {
+        "box_range": 2.3,
+        "cot_long": 1.0,
+        "etf_flow": 1.2,
+        "news": 1.3,
+        "total": 5.8
+      },
+      "cot": {
+        "commercial_long": 40.1,
+        "commercial_short": 59.9,
+        "net": -19.8,
+        "signal": "SHORT"
+      },
+      "news": {
+        "sentiment": -0.5,
+        "count": 13,
+        "bottom_top": "TOP",
+        "reason": "Oil supply glut"
+      },
+      "box": {
+        "high": 79.8,
+        "low": 76.5,
+        "range": 3.3,
+        "position": "70% upper - TOP"
+      },
+      "week": "2026-11-15"
     }
   ],
-  "summary": {
-    "bottom_count": 1,
-    "top_count": 2,
-    "total": 21,
-    "selected_count": 3,
-    "top_pick": "TLT"
+  "cot_summary": {
+    "long_bias": [
+      "TLT",
+      "MGC",
+      "MNQ",
+      "M6E"
+    ],
+    "short_bias": [
+      "UNG",
+      "XLF",
+      "M2K",
+      "MCL"
+    ],
+    "report_date": "2026-11-12 COT"
   },
-  "micro_map": {
-    "SLV": "SIL (Micro Silver 1000oz)",
-    "GLD": "MGC (Micro Gold 10oz)",
-    "UNG": "MNG (Micro NatGas)",
-    "CPER": "MHG (Micro Copper)",
-    "COPX": "MHG (Micro Copper)",
-    "USO": "MCL (Micro WTI)",
-    "GDX": "MGC proxy",
-    "XLB": "MES proxy",
-    "XLE": "MCL proxy",
-    "DBA": "ETF only",
-    "EEM": "MES proxy",
-    "UUP": "M6E (Micro USD)",
-    "TLT": "10Y Micro Treasury",
-    "XLF": "MES proxy",
-    "IWM": "M2K (Micro Russell)",
-    "SMH": "MNQ proxy",
-    "QQQ": "MNQ (Micro Nasdaq)",
-    "SPY": "MES (Micro S&P)",
-    "XLK": "MNQ proxy",
-    "IBIT": "MBT (Micro Bitcoin)",
-    "BITO": "MBT (Micro Bitcoin)"
+  "news_summary": {
+    "bottom": [
+      "TLT (Fed dovish)",
+      "MGC (safe haven)",
+      "MNQ (tech bounce)",
+      "M6E (Euro strength)"
+    ],
+    "top": [
+      "UNG (inventory high)",
+      "XLF (bank weak)",
+      "M2K (small cap weak)",
+      "MCL (supply glut)"
+    ]
   },
-  "rules": {
-    "sl_tp": "GLD/SLV 1%/2%, QQQ/SPY 0.8%/1.6%, IBIT 3%/6%",
-    "max_positions": 3,
-    "risk_per_trade": "1% of account"
-  }
+  "version": "V4.6 FULL RESTORE - COT + News + Scores + 8 tickers + 6 weeks"
 }
