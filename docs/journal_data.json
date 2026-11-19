@@ -1079,7 +1079,41 @@
     "no_reentry": true
   },
   "note": "5 TICKER x 3TF = 15 POSITIONS - Father 1m / Son 2m / Daughter 3m each 50K independent - Entry/SL/TP different per TF - REAL_DATA_MODE uses Lucid Rithmic L1/L2 hdMain[1].VolumeAnalysisData.Total.Delta - 50K 5티커, 60K 6티커 동적",
-  "ledger": [],
-  "last_checked": "2026-11-19T05:55:18.376938",
+  "ledger": [
+    {
+      "week": "2026-11-15",
+      "ticker": "UNG",
+      "side": "SHORT",
+      "entry": 10.15,
+      "sl": 10.23,
+      "tp": 9.99,
+      "qty": 1,
+      "status": "OPEN",
+      "current": 10.15
+    },
+    {
+      "week": "2026-11-15",
+      "ticker": "XLF",
+      "side": "SHORT",
+      "entry": 58.68,
+      "sl": 59.15,
+      "tp": 57.74,
+      "qty": 1,
+      "status": "OPEN",
+      "current": 58.68
+    },
+    {
+      "week": "2026-11-15",
+      "ticker": "TLT",
+      "side": "LONG",
+      "entry": 79.38,
+      "sl": 78.74,
+      "tp": 80.65,
+      "qty": 1,
+      "status": "OPEN",
+      "current": 79.38
+    }
+  ],
+  "last_checked": "2026-11-19T06:12:38.450972",
   "fix_version": "V4.5 FINAL FIX - cumulative no overwrite"
 }
