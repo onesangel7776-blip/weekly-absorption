@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COMMAND CENTER - 21 TICKER REAL-TIME INFRA MONITOR - HYBRID 원래대로</title>
+<style>
+:root{--bg:#070a14;--card:#11162a;--border:#1e293b;--text:#e2e8f0;--muted:#64748b;--long:#10b981;--short:#ef4444;--gold:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard',system-ui,sans-serif;padding:10px}
+.header{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:10px}
+.info-bar{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px;margin-bottom:10px;font-size:11px;display:flex;gap:12px;flex-wrap:wrap}
+.section-title{font-size:12px;font-weight:900;margin:14px 0 8px 0;display:flex;justify-content:space-between}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;position:relative}
+.card.LONG{border-left:3px solid var(--long)} .card.SHORT{border-left:3px solid var(--short)}
+.card.BOTTOM{border:1px solid var(--long)} .card.TOP{border:1px solid var(--short)}
+.ticker{font-size:14px;font-weight:900} .badge{font-size:9px;padding:2px 6px;border-radius:4px;margin-left:6px}
+.FINNHUB{background:#3b82f6;color:#fff}
+.score{position:absolute;top:10px;right:10px;background:#1e293b;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:900}
+.detail{font-size:10px;line-height:1.6;color:#94a3b8;margin-top:6px}
+.trust{margin-top:8px;font-size:11px;font-weight:700}
+.bar{height:4px;background:#1e293b;border-radius:2px;margin-top:4px;overflow:hidden}
+.bar-fill{height:100%}
+</style>
+</head>
+<body>
+<div class="header"><div><b>COMMAND CENTER - 21 TICKER REAL-TIME INFRA MONITOR - HYBRID</b><div style="font-size:11px;color:var(--muted)">Backup | Finnhub Primary + GDELT</div></div><div style="display:flex;gap:6px"><button style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px">한/영</button><button style="background:#f59e0b;color:#000;padding:6px 10px;border-radius:6px;border:0;font-weight:900">NEUTRAL • DXY 101.81 • US10Y 4.96% • VIX 19.03</button></div></div>
+<div class="info-bar"><span>DATE <b>2026-10-25</b> RUN <b>SUN 21:00 KST</b></span><span>DXY <b>101.81</b> (2026-10-23)</span><span>US10Y <b>4.96%</b></span><span>VIX <b>19.03</b></span><span>BIAS <b>NEUTRAL</b></span><span>BOTTOM <b style="color:var(--long)">2</b> / TOP <b style="color:var(--short)">5</b></span><span>News Hybrid: <b>Finnhub+GDELT</b></span></div>
+
+<div class="section-title"><span style="color:var(--long)">ACCUMULATION - BOTTOM</span><span style="color:var(--long)">2 TICKERS</span></div>
+<div class="grid" id="bottomGrid"></div>
+
+<div class="section-title"><span style="color:var(--short)">DISTRIBUTION - TOP</span><span style="color:var(--short)">5 TICKERS</span></div>
+<div class="grid" id="topGrid"></div>
+
+<div class="section-title"><span>SELECTED - THIS WEEK (MAX 3)</span><span style="color:var(--long)">LONG</span><span>/</span><span style="color:var(--short)">SHORT</span></div>
+<div class="grid" id="selectedGrid"></div>
+
+<script>
+const bottom = [
+  {ticker:"SPY", name:"MES (Micro S&P)", source:"FINNHUB", score:7.2, box:"3.02% (758.68-781.62)", vol:"0.82x", pos:"20d 위치 0.06", power:"68% Long", supply:"0.2", news:"6.5", origin:"finnhub", current:"759.97", position:"BOTTOM", breakdown:"Box 7.9 COT 8.5 Flow 5 News 6.5 → Source: finnhub", entry:"753.89 (0.8%)", tp:"772.13 (1.6%)", trust:72, trustText:"바닥 매집 (롱)", side:"LONG"},
+  {ticker:"DBA", name:"ETF only", source:"FINNHUB", score:6.7, box:"3.66% (27.84-28.86)", vol:"0.78x", pos:"20d 위치 0.03", power:"68% Long", supply:"0.2", news:"5", origin:"finnhub", current:"27.87", position:"BOTTOM", breakdown:"Box 7.5 COT 8.5 Flow 5 News 5 → Source: Finnhub", entry:"27.65 (0.8%)", tp:"28.32 (1.6%)", trust:67, trustText:"바닥 매집 (롱)", side:"LONG"},
+];
+const top = [
+  {ticker:"XLE", name:"MCL proxy", source:"FINNHUB", score:2.8, box:"14.39% (60.95-69.72)", vol:"1.2x", pos:"20d 위치 0.96", power:"32% Long", supply:"0.2", news:"0.2", origin:"finnhub", current:"69.33", position:"TOP", breakdown:"Box 4 COT 3 Flow 5 News 6 → Source: finnhub", entry:"69.88 (0.8%)", tp:"68.22 (1.6%)", trust:72, trustText:"천장 분배 (숏)", side:"SHORT"},
+  {ticker:"USO", name:"MCL (Micro WTI)", source:"FINNHUB", score:2.9, box:"19.89% (141.76-169.96)", vol:"1.26x", pos:"20d 위치 0.98", power:"32% Long", supply:"0.2", news:"6.5", origin:"finnhub", current:"169.53", position:"TOP", breakdown:"Box 4 COT 3 Flow 5 News 6 → Source: finnhub", entry:"170.89 (0.8%)", tp:"166.82 (1.6%)", trust:71, trustText:"천장 분배 (숏)", side:"SHORT"},
+  {ticker:"XLB", name:"MES proxy", source:"FINNHUB", score:4.2, box:"8.16% (47.81-51.71)", vol:"0.73x", pos:"20d 위치 0.9", power:"32% Long", supply:"0.2", news:"5", origin:"finnhub", current:"51.31", position:"TOP", breakdown:"Box 4 COT 3 Flow 5 News 5 → Source: finnhub", entry:"51.72 (0.8%)", tp:"50.49 (1.6%)", trust:58, trustText:"천장 분배 (숏)", side:"SHORT"},
+  {ticker:"XLF", name:"", source:"FINNHUB", score:4.6, box:"7.31% (52.81-56.67)", vol:"0.79x", pos:"20d 위치 0.8", power:"32% Long", supply:"0.2", news:"6", origin:"finnhub", current:"55.9", position:"TOP", breakdown:"Box 4.6 COT 3 Flow 5 News 6 → Source: finnhub", entry:"56.35 (0.8%)", tp:"55.01 (1.6%)", trust:54, trustText:"천장 분배 (숏)", side:"SHORT"},
+  {ticker:"TLT", name:"10Y Micro Treasury", source:"FINNHUB", score:4.7, box:"7.18% (76.43-81.92)", vol:"0.72x", pos:"20d 위치 0.89", power:"32% Long", supply:"0.2", news:"6", origin:"finnhub", current:"81.34", position:"TOP", breakdown:"Box 4.8 COT 3 Flow 5 News 6 → Source: finnhub", entry:"81.99 (0.8%)", tp:"80.04 (1.6%)", trust:53, trustText:"천장 분배 (숏)", side:"SHORT"},
+];
+
+function makeCard(p, type){
+  const color = p.side==='LONG'?'var(--long)':'var(--short)';
+  const trustColor = p.trust>=70?'var(--long)':p.trust>=60?'#f59e0b':'var(--short)';
+  return `<div class="card ${p.side} ${type}"><div class="ticker">${p.ticker} <span style="font-size:11px;color:var(--muted)">${p.name}</span> <span class="badge FINNHUB">${p.source}</span></div><div class="score" style="background:${p.side==='LONG'?'#064e3b':'#7f1d1d'};color:${p.side==='LONG'?'#34d399':'#fca5a5'}">${p.score}</div><div class="detail">박스권 ${p.box}<br>거래량 ${p.vol} 체류 ${p.pos}<br>세력 ${p.power} 수급 ${p.supply} 뉴스 ${p.news} 출처: ${p.origin}<br>종가 ${p.current} | ${p.position}<br>NEWS Breakdown: ${p.breakdown}</div><div style="margin-top:6px;font-size:10px;color:${color}">${p.name.includes('MES')?'MES (Micro S&P)':p.ticker.includes('MCL')||p.ticker==='XLE'||p.ticker==='USO'?'MCL (Micro WTI)':p.ticker==='DBA'?'ETF only':p.ticker==='XLB'?'MES proxy':p.ticker==='XLF'?'MES proxy':p.ticker==='TLT'?'10Y Micro Treasury':''} | 손절 ${p.entry} 익절 ${p.tp} ${p.side}</div><div class="trust" style="color:${trustColor}">신뢰도: ${p.trust}% • ${p.trustText} <span style="background:${color};color:#000;padding:2px 6px;border-radius:4px;margin-left:6px">${p.side}</span></div><div class="bar"><div class="bar-fill" style="width:${p.trust}%;background:${color}"></div></div></div>`;
+}
+
+document.getElementById('bottomGrid').innerHTML = bottom.map(p=>makeCard(p,'BOTTOM')).join('');
+document.getElementById('topGrid').innerHTML = top.map(p=>makeCard(p,'TOP')).join('');
+document.getElementById('selectedGrid').innerHTML = [bottom[0], bottom[1], top[0]].map(p=>makeCard(p,'SELECTED')).join('');
+</script>
+</body>
+</html>
