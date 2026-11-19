@@ -332,7 +332,7 @@
           "tp_pct": 1.6,
           "shares": 115,
           "status": "OPEN",
-          "current": 80.22000122070312,
+          "current": NaN,
           "exit": null,
           "exit_date": null,
           "exit_reason": null,
