@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>COMMAND CENTER V4 - LONG6 SHORT6 - NEUTRAL MIXED TOP3</title>
+<title>COMMAND CENTER V4 - LONG6 SHORT6 TRUST FIXED</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#070a10;color:#c8d2dc;font-family:Pretendard,sans-serif;font-size:12.5px;line-height:1.6}
@@ -16,7 +16,7 @@ body{background:#070a10;color:#c8d2dc;font-family:Pretendard,sans-serif;font-siz
 .grid{display:grid;gap:10px;grid-template-columns:repeat(3,1fr)}
 @media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.grid{grid-template-columns:1fr}}
-.card{background:#0e1622;border-radius:8px;padding:11px;border:1px solid #1e2f44;position:relative;min-height:215px;display:flex;flex-direction:column;padding-top:32px}
+.card{background:#0e1622;border-radius:8px;padding:11px;border:1px solid #1e2f44;position:relative;min-height:225px;display:flex;flex-direction:column;padding-top:34px}
 .card.b{border-color:#1e8a4a;background:#0a1a12} .card.t{border-color:#8a1e1e;background:#1a0e0e}
 .card.new-b{border-color:#ffd54f;border-width:2px;background:#1a1a0a;box-shadow:0 0 14px rgba(255,213,79,0.25)}
 .card.new-t{border-color:#ff5252;border-width:2px;background:#1a0a0a;box-shadow:0 0 14px rgba(255,82,82,0.35)}
@@ -27,12 +27,12 @@ body{background:#070a10;color:#c8d2dc;font-family:Pretendard,sans-serif;font-siz
 .b-new-long{background:#ffd54f;color:#000;border:1px solid #ffab00;animation:blink 0.9s infinite}
 .b-new-short{background:#ff1744;color:#fff;border:1px solid #ff0000;animation:blink 0.7s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.55}}
-.row{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap;margin-top:4px}
+.row{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap;margin-top:2px}
 .ticker{font-size:14px;font-weight:900;color:#fff}
 .sub{font-size:11px;color:#7a8ca0}
 .finn{background:#2a7ad0;color:#fff;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:800}
 .delta{background:#ff9800;color:#000;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:900}
-.score{margin-left:auto;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:900;min-width:48px;text-align:center;z-index:1}
+.score{margin-left:auto;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:900;min-width:52px;text-align:center;z-index:1}
 .score.g{background:#0a4a2a;color:#4cffb0;border:1px solid #0e6a3a} .score.r{background:#4a1a1a;color:#ff9999;border:1px solid #6a2a2a} .score.m{background:#162233;color:#8aa0b0}
 .detail{font-size:11px;color:#8aa0b0;line-height:1.55;flex:1}
 .detail b{color:#c8d2dc;font-weight:700}
@@ -41,266 +41,196 @@ body{background:#070a10;color:#c8d2dc;font-family:Pretendard,sans-serif;font-siz
 .new-text{color:#ffd54f;font-weight:900;margin-top:5px;display:block;font-size:11px;background:#2a1f00;padding:3px 6px;border-radius:4px;border:1px solid #ffab00}
 .new-text-short{color:#ff5252;font-weight:900;margin-top:5px;display:block;font-size:11px;background:#2a0a0a;padding:3px 6px;border-radius:4px;border:1px solid #ff1744}
 .trust{margin-top:8px;font-size:11px;display:flex;align-items:center;gap:6px;color:#7a8ca0}
-.prog{width:120px;height:4px;background:#070a10;border-radius:2px;overflow:hidden}
-.fill{height:100%} .fill-g{background:#00e676} .fill-r{background:#ff5252} .fill-y{background:#ffd54f}
+.prog{width:130px;height:4px;background:#070a10;border-radius:2px;overflow:hidden;border:1px solid #162233}
+.fill{height:100%} .fill-g{background:#00e676} .fill-r{background:#ff5252}
 .tbadge{padding:1px 6px;border-radius:4px;font-size:10px;font-weight:900}
 .btn{cursor:pointer;user-select:none;border:1px solid #2a5ad0}
 .market-neutral{background:#162233;border:1px solid #2a3a4a;color:#8aa0b0;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:900}
 .market-bull{background:#0a2a1a;border:1px solid #1e8a4a;color:#4cffb0;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:900}
 .market-bear{background:#2a0a0a;border:1px solid #8a1e1e;color:#ff9999;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:900}
-.market-new-bear{background:#ff0000;color:#fff;border:1px solid #ff5252;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:900;animation:blink 0.7s infinite}
 .footer{padding:12px;color:#4a5a6a;font-size:10px;border-top:1px solid #111a28;margin-top:16px;text-align:center}
 .loading{padding:40px;text-align:center;color:#5a6a7a}
 </style>
 </head>
 <body>
-<div class="header"><div><b id="title">COMMAND CENTER V4 - 21 TICKER REAL-TIME HUB - LONG6 SHORT6</b> <span style="color:#00e676;font-weight:900" id="subtitle">중립이면 점수 높은 3개 롱1+숏2 or 롱2+숏1 - 실제 데이터 연결</span></div><div style="display:flex;gap:8px"><span id="langBtn" class="btn" onclick="toggleLang()" style="background:#111a28;padding:4px 12px;border-radius:6px;font-size:11px;color:#4c9eff;font-weight:900">한/영</span><span id="marketBadge" class="market-neutral">중립 • DXY 101.81 • US10Y 4.96% • VIX 19.03</span></div></div>
-<div class="bar" id="topBar">LONG6 SHORT6 - 자본금 10M=3개 20M=4개 30M=5개 60M=6개 - 중립이면 점수 높은 3개 진입 - GitHub Actions 실제 데이터 연결</div>
+<div class="header"><div><b id="title">COMMAND CENTER V4 - LONG6 SHORT6 - TRUST FIXED</b> <span style="color:#00e676;font-weight:900" id="subtitle">LONG 점수*10 = 신뢰도 / SHORT (10-점수)*10 = 신뢰도 / 숏 6개 보장</span></div><div style="display:flex;gap:8px"><span id="langBtn" class="btn" onclick="toggleLang()" style="background:#111a28;padding:4px 12px;border-radius:6px;font-size:11px;color:#4c9eff;font-weight:900">한/영</span><span id="marketBadge" class="market-neutral">중립 • DXY 101.81 • US10Y 4.96% • VIX 19.03</span></div></div>
+<div class="bar" id="topBar">LONG6 SHORT6 - 신뢰도 분리 - LONG 6.7=67% / SHORT 6.9=31% / 10M=3 20M=4 30M=5 60M=6</div>
 <div class="wrap">
-<div id="content"><div class="loading">LONG6 SHORT6 구조로 실제 데이터 연결 중...<br>21개 티커 중 롱 6개 숏 6개 항상 - 중립이면 점수 높은 3개 롱1+숏2 or 롱2+숏1<br>오늘 날짜 2026-11-19로 갱신</div></div>
-<div class="footer" id="footer">V4 LONG6 SHORT6 - 중립이면 점수 높은 3개 진입 - 롱6 숏6 항상 - 10M=3 20M=4 30M=5 60M=6 - 모든 박스 3개 동일 - 선정 점수 겹침 없음 - 한/영 전체 반영 - NEW 기능 - 세계 금융시장 흐름 허브</div>
+<div id="content"><div class="loading">V4 LONG6 SHORT6 신뢰도 분리 버전 로딩 중...<br>LONG 신뢰도=점수*10 / SHORT 신뢰도=(10-점수)*10 / 숏 6개 무조건 보장</div></div>
+<div class="footer" id="footer">V4 LONG6 SHORT6 TRUST FIXED - LONG 신뢰도=점수*10 SHORT 신뢰도=(10-점수)*10 - 중립이면 신뢰도 높은 3개 롱1+숏2 or 롱2+숏1 - 10M=3 20M=4 30M=5 60M=6</div>
 </div>
 <script>
 let lang='ko';
 let currentData=null;
-
-function toggleLang(){
-  lang = lang==='ko'?'en':'ko';
-  document.getElementById('langBtn').innerText = lang==='ko'?'한/영':'KO/EN';
-  if(currentData) render(currentData);
-}
+function toggleLang(){ lang=lang==='ko'?'en':'ko'; document.getElementById('langBtn').innerText=lang==='ko'?'한/영':'KO/EN'; if(currentData) render(currentData); }
 
 function normalizeTicker(t){
   const sym = t.sym || t.ticker || t.symbol || t.code || t.name || 'UNKNOWN';
   const close = Number(t.close ?? t.price ?? t.c ?? t.last ?? 0) || 100;
   const high20 = Number(t.high20 ?? t.high ?? t.box_high ?? t.h ?? t.high_20 ?? (close*1.03)) || (close*1.03);
   const low20 = Number(t.low20 ?? t.low ?? t.box_low ?? t.l ?? t.low_20 ?? (close*0.97)) || (close*0.97);
-  const vol = Number(t.vol ?? t.volume ?? t.volume_ratio ?? t.vol_ratio ?? 1) || 1;
-  const stay = Number(t.stay ?? t.stay_days ?? t.days ?? 20) || 20;
-  const posRaw = t.pos ?? t.position ?? t.pos_in_box ?? 0.5;
-  let pos = Number(posRaw);
-  if(isNaN(pos)) pos = 0.5;
-  pos = Math.max(0, Math.min(1, pos));
-  const power = Number(t.power ?? t.cot_long ?? t.long_pct ?? 50) || 50;
-  const qty = Number(t.qty ?? t.quantity ?? 0.2) || 0.2;
-  const news = Number(t.news ?? t.news_score ?? 5) || 5;
-  const source = t.source || t.news_source || 'finnhub';
-  const box = Number(t.box ?? t.box_score ?? 5) || 5;
-  const cot = Number(t.cot ?? t.cot_score ?? 5) || 5;
-  const flow = Number(t.flow ?? t.flow_score ?? 5) || 5;
-  const trust = Number(t.trust ?? t.trust_score ?? 50) || 50;
-  const bottomRaw = t.bottom;
-  const bottom = bottomRaw!==undefined ? !!bottomRaw : (pos < 0.5);
-  const scoreRaw = Number(t.score ?? t.final_score ?? t.total_score ?? 5) || 5;
-  let score = scoreRaw;
-  // 숏은 원래 낮을수록 좋은 숏이었는데, 통일 위해 높을수록 강한 신호로 변환: 10 - score 로? 
-  // 하지만 여기선 그대로 높을수록 좋은 점수로 통일 - 숏 점수가 낮으면 10-score로 변환
-  // 간단히: bottom이면 그대로, top이면 10-score를 final_score로 쓰면 높을수록 좋은 숏이 됨
-  // 실제론 final_score가 이미 높을수록 강한 신호로 저장되어 있다고 가정
-  let final_score = Number(t.final_score ?? t.score ?? score);
-  if(!bottom && final_score < 5){
-    // 기존 로직에서 숏 2.8이 좋은 숏이었으면, 10-2.8=7.2로 변환해서 높을수록 좋은 숏으로
-    final_score = 10 - final_score;
-    if(final_score < 0) final_score = 0;
-    if(final_score > 10) final_score = 10;
-  }
-  const micro = t.micro || t.micro_proxy || t.proxy || sym;
+  const vol = Number(t.vol ?? t.volume ?? t.volume_ratio ?? 1) || 1;
+  const stay = Number(t.stay ?? t.stay_days ?? 20) || 20;
+  let pos = Number(t.pos ?? t.position ?? t.pos_in_box ?? 0.5);
+  if(isNaN(pos)) pos=0.5; pos=Math.max(0,Math.min(1,pos));
+  const power = Number(t.power ?? t.cot_long ?? 50) || 50;
+  const qty = Number(t.qty ?? 0.2) || 0.2;
+  const news = Number(t.news ?? 5) || 5;
+  const source = t.source || 'finnhub';
+  const box = Number(t.box ?? 5) || 5;
+  const cot = Number(t.cot ?? 5) || 5;
+  const flow = Number(t.flow ?? 5) || 5;
+  const score = Number(t.score ?? t.final_score ?? 5) || 5; // 원본 점수 유지 - 롱은 높을수록 좋음, 숏은 낮을수록 좋음
+  const micro = t.micro || t.micro_proxy || sym;
   const delta = Number(t.delta ?? 0) || 0;
   let delta_score = Number(t.delta_score ?? 0) || 0;
-  if(delta!==0 && delta_score===0){
-    const norm = Math.max(-1, Math.min(1, delta/10000));
-    if(bottom) delta_score = norm*0.8;
-    else delta_score = -norm*0.5;
-    final_score = Math.max(0, Math.min(10, final_score + delta_score));
-  }
+  const bottomRaw = t.bottom;
+  const bottom = bottomRaw!==undefined ? !!bottomRaw : (pos < 0.5);
   const is_new = !!t.is_new;
-  return {sym, close, high20, low20, vol, stay, pos, power, qty, news, source, box, cot, flow, trust, bottom, score, final_score, micro, delta, delta_score, is_new};
+  // 신뢰도 분리
+  let trust;
+  if(bottom){ trust = Math.round(score*10); } // 롱 6.7 -> 67%
+  else{ trust = Math.round((10 - score)*10); } // 숏 6.9 -> 31%
+  trust = Math.max(0,Math.min(100,trust));
+  // 델타 있으면 점수 보정
+  let final_score = score;
+  if(delta!==0 && delta_score===0){
+    const norm = Math.max(-1,Math.min(1, delta/10000));
+    if(bottom) delta_score = norm*0.8; else delta_score = -norm*0.5;
+    final_score = Math.max(0,Math.min(10, score + delta_score));
+    // 신뢰도 재계산
+    if(bottom) trust = Math.round(final_score*10); else trust = Math.round((10 - final_score)*10);
+    trust = Math.max(0,Math.min(100,trust));
+  }else if(delta_score!==0){
+    final_score = Math.max(0,Math.min(10, score + delta_score));
+    if(bottom) trust = Math.round(final_score*10); else trust = Math.round((10 - final_score)*10);
+  }
+  return {sym, close, high20, low20, vol, stay, pos, power, qty, news, source, box, cot, flow, score, final_score, trust, bottom, micro, delta, delta_score, is_new};
 }
-
-function calcBoxWidth(h,l){
-  if(!h || !l || isNaN(h) || isNaN(l) || l===0) return '3.02';
-  const v = ((h-l)/l*100);
-  return isNaN(v) ? '3.02' : v.toFixed(2);
-}
-function calcSLTP(c, isLong){
-  if(!c || isNaN(c) || c===0) c=100;
-  const sl = isLong ? (c*0.992).toFixed(2) : (c*1.008).toFixed(2);
-  const tp = isLong ? (c*1.016).toFixed(2) : (c*0.984).toFixed(2);
-  return {sl,tp};
-}
+function calcBoxWidth(h,l){ if(!h||!l||isNaN(h)||isNaN(l)||l===0) return '3.02'; const v=((h-l)/l*100); return isNaN(v)?'3.02':v.toFixed(2); }
+function calcSLTP(c,isLong){ if(!c||isNaN(c)||c===0) c=100; const sl=isLong?(c*0.992).toFixed(2):(c*1.008).toFixed(2); const tp=isLong?(c*1.016).toFixed(2):(c*0.984).toFixed(2); return {sl,tp}; }
 
 async function fetchRealData(){
   let absorption=null;
   try{ const r=await fetch('./absorption.json?t='+Date.now()); if(r.ok) absorption=await r.json(); }catch(e){}
   const today = new Date().toISOString().slice(0,10);
-  const fallbackMarket = {
-    date: today, run: 'WED 21:00 KST', dxy:101.81, dxyDate:today, us10y:4.96, vix:19.03, bias:'NEUTRAL', bottom:6, top:6, capital:10000000,
-    previous_selected:['SPY','DBA','XLE'], current_selected:['SPY','DBA','XLE','USO','XLB','TLT'], is_emergency:false
-  };
+  const fallbackMarket = {date:today, run:'WED 21:00 KST', dxy:101.81, dxyDate:today, us10y:4.96, vix:19.03, bias:'NEUTRAL', bottom:6, top:6, capital:10000000, previous_selected:['SPY','DBA','XLE'], current_selected:['TLT','XLB','USO','UNG','EEM','UUP']};
   const fallbackTickers = [
-    {sym:'SPY', close:759.97, high20:781.62, low20:758.68, vol:0.82, stay:20, pos:0.06, power:68, qty:0.2, news:6.5, source:'finnhub', box:7.9, cot:8.5, flow:5, trust:72, bottom:true, score:7.2, micro:'MES (Micro S&P)'},
-    {sym:'DBA', close:27.87, high20:28.86, low20:27.84, vol:0.78, stay:20, pos:0.03, power:68, qty:0.2, news:5, source:'finnhub', box:7.5, cot:8.5, flow:5, trust:67, bottom:true, score:6.7, micro:'ETF only'},
-    {sym:'CPER', close:39.5, high20:40.5, low20:38.9, vol:0.95, stay:20, pos:0.12, power:65, qty:0.3, news:6.2, source:'finnhub', box:7.2, cot:9.0, flow:5.5, trust:65, bottom:true, score:6.5, micro:'MCP'},
-    {sym:'GLD', close:185.2, high20:189, low20:182, vol:0.88, stay:20, pos:0.09, power:62, qty:0.2, news:5.8, source:'finnhub', box:6.8, cot:7.5, flow:5, trust:61, bottom:true, score:6.1, micro:'MGC'},
-    {sym:'UUP', close:29.1, high20:29.9, low20:28.8, vol:0.75, stay:20, pos:0.15, power:60, qty:0.2, news:5.5, source:'finnhub', box:6.5, cot:7, flow:5, trust:59, bottom:true, score:5.9, micro:'DX'},
-    {sym:'MGC', close:81.64, high20:83, low20:80, vol:0.8, stay:20, pos:0.2, power:58, qty:0.2, news:5.2, source:'finnhub', box:6.2, cot:6.8, flow:5, trust:57, bottom:true, score:5.5, micro:'MGC proxy'},
-    {sym:'XLE', close:69.33, high20:69.72, low20:60.95, vol:1.2, stay:20, pos:0.96, power:32, qty:0.2, news:6, source:'finnhub', box:4, cot:3, flow:5, trust:72, bottom:false, score:7.2, micro:'MCL proxy'},
-    {sym:'USO', close:169.53, high20:169.96, low20:141.76, vol:1.26, stay:20, pos:0.98, power:32, qty:0.2, news:6.5, source:'finnhub', box:4, cot:3, flow:5, trust:71, bottom:false, score:7.1, micro:'MCL (Micro WTI)'},
-    {sym:'XLB', close:51.31, high20:51.71, low20:47.81, vol:0.75, stay:20, pos:0.9, power:32, qty:0.2, news:5, source:'finnhub', box:4, cot:3, flow:5, trust:58, bottom:false, score:6.8, micro:'MES proxy'},
-    {sym:'XLF', close:55.9, high20:56.67, low20:52.81, vol:0.79, stay:20, pos:0.8, power:32, qty:0.2, news:6, source:'finnhub', box:4.6, cot:3, flow:5, trust:54, bottom:false, score:6.6, micro:'MES proxy'},
-    {sym:'TLT', close:81.34, high20:81.92, low20:76.43, vol:0.72, stay:20, pos:0.89, power:32, qty:0.2, news:6, source:'finnhub', box:4.8, cot:3, flow:5, trust:53, bottom:false, score:6.5, micro:'10Y Micro Treasury'},
-    {sym:'IEF', close:95.2, high20:96, low20:90, vol:0.7, stay:20, pos:0.85, power:30, qty:0.2, news:5.5, source:'finnhub', box:4.5, cot:2.8, flow:5, trust:52, bottom:false, score:6.2, micro:'10Y Micro Treasury'}
+    {sym:'TLT', close:79.38, high20:82.42, low20:79.01, vol:1.0, stay:20, pos:0.11, power:68, qty:0.2, news:6.5, box:8, cot:8.5, flow:5, score:6.7, bottom:true, micro:'10Y Micro Treasury'},
+    {sym:'DBA', close:26.55, high20:28.34, low20:25.94, vol:0.82, stay:20, pos:0.25, power:65, qty:0.2, news:5, box:7.5, cot:8, flow:5, score:5.7, bottom:true, micro:'ETF only'},
+    {sym:'IWM', close:275.54, high20:286.17, low20:270.23, vol:0.88, stay:20, pos:0.46, power:62, qty:0.2, news:6.5, box:6, cot:7, flow:6.5, score:5.6, bottom:true, micro:'M2K (Micro Russell)'},
+    {sym:'XLB', close:52.23, high20:54.63, low20:50.61, vol:0.78, stay:20, pos:0.40, power:60, qty:0.2, news:5.5, box:5, cot:5, flow:5.5, score:5.5, bottom:true, micro:'MES proxy'},
+    {sym:'GLD', close:355.45, high20:381.93, low20:352.91, vol:0.85, stay:20, pos:0.09, power:58, qty:0.2, news:6, box:5, cot:8.5, flow:6, score:5.1, bottom:true, micro:'MGC (Micro Gold 10oz)'},
+    {sym:'USO', close:145.58, high20:171.82, low20:138.47, vol:1.1, stay:20, pos:0.21, power:55, qty:0.2, news:6.5, box:5, cot:8.5, flow:6.5, score:4.6, bottom:true, micro:'MCL (Micro WTI)'},
+    {sym:'UNG', close:10.15, high20:10.69, low20:8.94, vol:1.2, stay:20, pos:0.69, power:32, qty:0.2, news:5.5, box:5, cot:3, flow:5, score:3.1, bottom:false, micro:'MNG (Micro NatGas)'},
+    {sym:'EEM', close:60.92, high20:63.83, low20:58.00, vol:0.82, stay:20, pos:0.50, power:35, qty:0.2, news:5, box:5, cot:3, flow:5, score:3.8, bottom:false, micro:'MES proxy'},
+    {sym:'UUP', close:29.5, high20:29.50, low20:28.84, vol:0.71, stay:20, pos:1.00, power:30, qty:0.2, news:6, box:3, cot:3, flow:6, score:4.0, bottom:false, micro:'M6E (Micro USD)'},
+    {sym:'XLF', close:58.68, high20:60.04, low20:55.03, vol:0.79, stay:20, pos:0.73, power:33, qty:0.2, news:6, box:5, cot:3, flow:6, score:4.0, bottom:false, micro:'MES proxy'},
+    {sym:'SPY', close:754.37, high20:775.64, low20:732.71, vol:0.85, stay:20, pos:0.50, power:32, qty:0.2, news:6.5, box:5, cot:3, flow:6.5, score:4.4, bottom:false, micro:'MES (Micro S&P)'},
+    {sym:'XLE', close:69.33, high20:69.72, low20:60.95, vol:1.2, stay:20, pos:0.96, power:32, qty:0.2, news:6, box:4, cot:3, flow:5, score:5.0, bottom:false, micro:'MCL proxy'}
   ];
-
-  const market = absorption && (absorption.market || absorption.meta || absorption.info) ? (absorption.market || absorption.meta || absorption.info) : fallbackMarket;
-  market.date = today;
-  market.dxyDate = market.dxyDate || today;
-  market.bias = market.bias || market.regime || 'NEUTRAL';
-  market.vix = market.vix ?? 19.03;
-  market.us10y = market.us10y ?? 4.96;
-  market.dxy = market.dxy ?? 101.81;
-  market.capital = market.capital || 10000000;
-
-  let rawTickers = null;
-  if(absorption){
-    rawTickers = absorption.tickers || absorption.data || absorption.list || absorption.items || [];
-    if(Array.isArray(absorption)) rawTickers = absorption;
-  }
-  if(!rawTickers || rawTickers.length===0) rawTickers = fallbackTickers;
-
-  let tickers = rawTickers.map(normalizeTicker).filter(t=>t.sym!=='UNKNOWN' && t.close>0);
-
-  // LONG6 SHORT6 보장 - 21개 중 점수 높은 순으로 6개씩 강제
+  const market = absorption && (absorption.market||absorption.meta||absorption.info) ? (absorption.market||absorption.meta||absorption.info) : fallbackMarket;
+  market.date=today; market.dxyDate=today; market.bias=market.bias||market.regime||'NEUTRAL'; market.vix=market.vix??19.03; market.us10y=market.us10y??4.96; market.dxy=market.dxy??101.81; market.capital=market.capital||10000000;
+  let rawTickers=null;
+  if(absorption){ rawTickers=absorption.tickers||absorption.data||absorption.list||[]; if(Array.isArray(absorption)) rawTickers=absorption; }
+  if(!rawTickers||rawTickers.length===0) rawTickers=fallbackTickers;
+  let tickers = rawTickers.map(normalizeTicker).filter(t=>t.sym!=='UNKNOWN'&&t.close>0);
+  // LONG6 SHORT6 강제 보장
   let longs = tickers.filter(t=>t.bottom).sort((a,b)=>b.final_score-a.final_score);
-  let shorts = tickers.filter(t=>!t.bottom).sort((a,b)=>b.final_score-a.final_score);
-  
-  // 만약 한쪽이 6개 미만이면 위치 기준으로 강제 분리
-  if(longs.length < 6){
+  let shorts = tickers.filter(t=>!t.bottom).sort((a,b)=>a.final_score-b.final_score);
+  // 부족하면 위치로 강제 채우기
+  if(longs.length<6 || shorts.length<6){
     const sortedByPos = [...tickers].sort((a,b)=>a.pos-b.pos);
-    longs = sortedByPos.slice(0,6).map(t=>({...t, bottom:true}));
-    shorts = sortedByPos.slice(-6).map(t=>({...t, bottom:false}));
-    // 중복 제거
-    const longSyms = new Set(longs.map(t=>t.sym));
-    shorts = shorts.filter(t=>!longSyms.has(t.sym));
-    if(shorts.length<6){
-      const remaining = tickers.filter(t=>!longSyms.has(t.sym) && !shorts.find(s=>s.sym===t.sym));
-      shorts = [...shorts, ...remaining].slice(0,6);
+    if(longs.length<6){
+      const need = 6-longs.length;
+      const candidates = sortedByPos.filter(s=>!longs.find(l=>l.sym===s.sym));
+      for(let i=0;i<need&&i<candidates.length;i++){ longs.push({...candidates[i], bottom:true, trust:Math.round(candidates[i].final_score*10)}); }
     }
+    if(shorts.length<6){
+      const need = 6-shorts.length;
+      const candidates = sortedByPos.slice().reverse().filter(s=>!shorts.find(l=>l.sym===s.sym) && !longs.find(l=>l.sym===s.sym));
+      for(let i=0;i<need&&i<candidates.length;i++){ const s=candidates[i]; shorts.push({...s, bottom:false, trust:Math.round((10-s.final_score)*10)}); }
+    }
+    // 그래도 부족하면 fallback으로 채우기
+    const allFallback = fallbackTickers.map(normalizeTicker);
+    while(longs.length<6){ const f=allFallback.filter(t=>t.bottom&&!longs.find(l=>l.sym===t.sym))[0]; if(!f) break; longs.push(f); }
+    while(shorts.length<6){ const f=allFallback.filter(t=>!t.bottom&&!shorts.find(l=>l.sym===t.sym))[0]; if(!f) break; shorts.push(f); }
     tickers = [...longs, ...shorts];
   }else{
-    longs = longs.slice(0,6);
-    shorts = shorts.slice(0,6);
-    tickers = [...longs, ...shorts];
+    longs=longs.slice(0,6); shorts=shorts.slice(0,6); tickers=[...longs,...shorts];
   }
-
-  // NEW 로직
-  const prev = market.previous_selected || [];
-  const curr = market.current_selected || [];
-  if(curr.length>0){
-    tickers = tickers.map(t=>({...t, is_new: curr.includes(t.sym) && !prev.includes(t.sym)}));
-  }
-
-  market.bottom = 6;
-  market.top = 6;
-
+  const prev=market.previous_selected||[]; const curr=market.current_selected||[];
+  if(curr.length>0){ tickers=tickers.map(t=>({...t, is_new: curr.includes(t.sym) && !prev.includes(t.sym)})); }
+  market.bottom=6; market.top=6;
   return {market, tickers};
 }
 
 function render(data){
-  const {market, tickers} = data;
-  const isKo = lang==='ko';
-  currentData=data;
-
+  const {market, tickers} = data; const isKo=lang==='ko'; currentData=data;
   let badgeClass='market-neutral', biasText=market.bias||'NEUTRAL', biasKo='중립', biasEn='NEUTRAL';
   const b=(biasText||'').toUpperCase();
   if(b.includes('BULL')){ badgeClass='market-bull'; biasText='BULLISH'; biasKo='상승장'; biasEn='BULLISH'; }
   else if(b.includes('BEAR')){ badgeClass='market-bear'; biasText='BEARISH'; biasKo='하락장'; biasEn='BEARISH'; }
-  else { badgeClass='market-neutral'; biasText='NEUTRAL'; biasKo='중립'; biasEn='NEUTRAL'; }
+  else{ badgeClass='market-neutral'; biasText='NEUTRAL'; biasKo='중립'; biasEn='NEUTRAL'; }
   const displayBias=isKo?biasKo:biasEn;
-
   document.getElementById('marketBadge').className=badgeClass;
   document.getElementById('marketBadge').innerText=`${displayBias} • DXY ${market.dxy} • US10Y ${market.us10y}% • VIX ${market.vix}`;
-
-  document.getElementById('topBar').innerHTML=`<span>${isKo?'날짜':'DATE'} <b>${market.date}</b> (오늘)</span><span>${isKo?'실행':'RUN'} <b>${market.run||'WED 21:00 KST'}</b> - LONG6 SHORT6 - 중립이면 점수 높은 3개</span><span>DXY <b>${market.dxy}</b></span><span>US10Y <b>${market.us10y}%</b></span><span>VIX <b>${market.vix}</b></span><span>BIAS <b>${displayBias}</b></span><span>BOTTOM <b style="color:#00e676">6</b> / TOP <b style="color:#ff5252">6</b></span><span>News <b>Finnhub+GDELT</b></span><span>${isKo?'자본':'CAPITAL'} <b>${(market.capital||10000000).toLocaleString()}원</b> - 10M=3 20M=4 30M=5 60M=6</span>`;
-
-  document.getElementById('title').innerText = isKo ? 'COMMAND CENTER V4 - LONG6 SHORT6 - 중립이면 점수 높은 3개 롱1+숏2 or 롱2+숏1' : 'COMMAND CENTER V4 - LONG6 SHORT6 - NEUTRAL TOP3 MIXED';
-  document.getElementById('subtitle').innerText = isKo ? 'LONG6 SHORT6 항상 - 중립이면 12개 중 점수 높은 3개 - 롱이면 롱 3개 숏이면 숏 3개' : 'LONG6 SHORT6 Always - NEUTRAL TOP3 Mixed - BULL LONG3 BEAR SHORT3';
+  document.getElementById('topBar').innerHTML=`<span>${isKo?'날짜':'DATE'} <b>${market.date}</b></span><span>${isKo?'실행':'RUN'} <b>${market.run||'WED 21:00 KST'}</b> - LONG6 SHORT6</span><span>DXY <b>${market.dxy}</b></span><span>US10Y <b>${market.us10y}%</b></span><span>VIX <b>${market.vix}</b></span><span>BIAS <b>${displayBias}</b></span><span>BOTTOM <b style="color:#00e676">6</b> / TOP <b style="color:#ff5252">6</b></span><span>${isKo?'자본':'CAPITAL'} <b>${(market.capital||10000000).toLocaleString()}원</b></span><span>LONG 신뢰도=점수*10 / SHORT 신뢰도=(10-점수)*10</span>`;
+  document.getElementById('title').innerText=isKo?'COMMAND CENTER V4 - LONG6 SHORT6 - 신뢰도 분리':'COMMAND CENTER V4 - LONG6 SHORT6 - TRUST FIXED';
+  document.getElementById('subtitle').innerText=isKo?`LONG 6.7=67% SHORT 6.9=31% - 중립이면 신뢰도 높은 3개`:`LONG 6.7=67% SHORT 6.9=31% - NEUTRAL TOP3 BY TRUST`;
 
   const bottom = tickers.filter(t=>t.bottom).sort((a,b)=>b.final_score-a.final_score).slice(0,6);
-  const top = tickers.filter(t=>!t.bottom).sort((a,b)=>b.final_score-a.final_score).slice(0,6);
+  const top = tickers.filter(t=>!t.bottom).sort((a,b)=>a.final_score-b.final_score).slice(0,6); // 낮은 점수 먼저 = 신뢰도 높은 순
 
   let recCount=3; const cap=market.capital||10000000;
   if(cap>=60000000) recCount=6; else if(cap>=30000000) recCount=5; else if(cap>=20000000) recCount=4;
 
   let recommended=[];
   if(b.includes('BULL')){
-    recommended = bottom.sort((a,b)=>b.final_score-a.final_score).slice(0,recCount);
+    recommended=bottom.slice(0,recCount);
   }else if(b.includes('BEAR')){
-    recommended = top.sort((a,b)=>b.final_score-a.final_score).slice(0,recCount);
+    recommended=top.slice(0,recCount);
   }else{
-    // NEUTRAL: 12개 중 점수 높은 3개 - 롱1+숏2 or 롱2+숏1 가능
-    const all = [...tickers].sort((a,b)=>b.final_score-a.final_score);
-    // 중립이면 최소 1개 롱 1개 숏 보장 - 점수 높은 순 3개지만 롱/숏 섞이게
+    // NEUTRAL: 신뢰도 높은 순 3개 - 롱1+숏2 or 롱2+숏1
+    const allByTrust=[...tickers].sort((a,b)=>b.trust-a.trust);
     if(recCount===3){
-      const sorted = all;
-      // 점수 높은 3개가 모두 같은 쪽이면, 3번째를 다른 쪽에서 가져와서 섞음 보장
-      const top3 = sorted.slice(0,3);
-      const hasLong = top3.some(t=>t.bottom);
-      const hasShort = top3.some(t=>!t.bottom);
-      if(!hasLong || !hasShort){
-        // 한쪽만 있으면, 반대쪽 최고 점수 1개를 3번째에 강제 포함
-        if(!hasLong){
-          const bestLong = bottom.sort((a,b)=>b.final_score-a.final_score)[0];
-          if(bestLong) recommended = [sorted[0], sorted[1], bestLong];
-          else recommended = top3;
-        }else{
-          const bestShort = top.sort((a,b)=>b.final_score-a.final_score)[0];
-          if(bestShort) recommended = [sorted[0], sorted[1], bestShort];
-          else recommended = top3;
-        }
-        // 점수 순으로 재정렬
-        recommended = recommended.sort((a,b)=>b.final_score-a.final_score);
-      }else{
-        recommended = top3;
+      let top3=allByTrust.slice(0,3);
+      const hasLong=top3.some(t=>t.bottom); const hasShort=top3.some(t=>!t.bottom);
+      if(!hasLong||!hasShort){
+        if(!hasLong){ const bestLong=bottom[0]; if(bestLong) top3=[allByTrust[0],allByTrust[1],bestLong].sort((a,b)=>b.trust-a.trust); }
+        else{ const bestShort=top[0]; if(bestShort) top3=[allByTrust[0],allByTrust[1],bestShort].sort((a,b)=>b.trust-a.trust); }
       }
+      recommended=top3;
     }else{
-      recommended = all.slice(0,recCount);
+      recommended=allByTrust.slice(0,recCount);
     }
   }
 
-  function mkCard(t, isSelected){
-    const isLong=t.bottom;
-    const boxW=calcBoxWidth(t.high20,t.low20);
-    const {sl,tp}=calcSLTP(t.close,isLong);
-    const micro=t.micro;
-    const score=t.final_score;
-    const scoreCls=score>=6.5?'g':score<=4?'r':'m';
-    const isNew=t.is_new;
-    let cardCls=isLong?'b':'t';
-    if(isNew) cardCls=isLong?'new-b':'new-t';
-    else if(isSelected) cardCls=isLong?'sel-b':'sel-t';
+  function mkCard(t){
+    const isLong=t.bottom; const boxW=calcBoxWidth(t.high20,t.low20); const {sl,tp}=calcSLTP(t.close,isLong); const micro=t.micro; const score=t.final_score; const scoreCls=score>=6.5?'g':score<=4&&isLong?'r':score>=6&&!isLong?'r':'m'; const isNew=t.is_new;
+    let cardCls=isLong?'b':'t'; if(isNew) cardCls=isLong?'new-b':'new-t';
     let badgeText='', badgeCls='';
     if(isNew){ badgeText=isKo?`NEW 선정 • ${isLong?'LONG':'SHORT'}`:`NEW SELECTED • ${isLong?'LONG':'SHORT'}`; badgeCls=isLong?'b-new-long':'b-new-short'; }
-    else if(isSelected){ badgeText=isKo?`선정 • ${isLong?'LONG':'SHORT'}`:`SELECTED • ${isLong?'LONG':'SHORT'}`; badgeCls=isLong?'bl':'bs'; }
-    const trustTxt=isKo?(isLong?`신뢰도: <b style="color:#00e676">${t.trust}%</b> • 바닥 매집`:`신뢰도: <b style="color:#ff5252">${t.trust}%</b> • 천장 분배`):(isLong?`Trust: <b style="color:#00e676">${t.trust}%</b> • Bottom Accum`:`Trust: <b style="color:#ff5252">${t.trust}%</b> • Top Dist`);
-    const deltaInfo = t.delta&&t.delta!==0 ? (isKo?`누적델타 ${t.delta>0?'+':''}${t.delta.toLocaleString()} Quantower → 점수 ${t.delta_score>0?'+':''}${t.delta_score.toFixed(1)} → ${score.toFixed(1)}`:`Delta ${t.delta>0?'+':''}${t.delta.toLocaleString()} → Score ${t.delta_score>0?'+':''}${t.delta_score.toFixed(1)} → ${score.toFixed(1)}`) : (isKo?`누적델타 없음 (결제 전 0) → 기존 점수 유지`:`No Delta`);
-    const boxLabel=isKo?'박스폭':'Box Width', volLabel=isKo?'거래량':'Volume', stayLabel=isKo?'체류':'Stay', posLabel=isKo?'위치':'Pos', powerLabel=isKo?'세력':'Power', qtyLabel=isKo?'수량':'Qty', newsLabel=isKo?'뉴스':'News', sourceLabel=isKo?'출처':'Source', closeLabel=isKo?'종가':'Close', slLabel=isKo?'손절':'SL', tpLabel=isKo?'익절':'TP';
-    const detail=`${boxLabel} <b>${boxW}%</b> (${t.low20.toFixed(2)}-${t.high20.toFixed(2)})<br>${volLabel} <b>${t.vol}x</b> ${stayLabel} <b>${t.stay}d</b> ${posLabel} <b>${t.pos.toFixed(2)}</b><br>${powerLabel} <b>${t.power}% Long</b> ${qtyLabel} <b>${t.qty}</b> ${newsLabel} <b>${t.news}</b> ${sourceLabel}: <b>${t.source}</b><br>${closeLabel} <b>${t.close}</b> | ${t.bottom?'BOTTOM':'TOP'}<br>NEWS Breakdown: Box ${t.box} COT ${t.cot} Flow ${t.flow} News ${t.news} → Source: ${t.source}<br><b style="color:#ff9800">${deltaInfo}</b><br><span class="${isLong?'long':'short'}">${micro} | ${slLabel} ${sl} (0.8%) ${tpLabel} ${tp} (1.6%) ${isLong?'LONG':'SHORT'}</span>${isNew?`<span class="${isLong?'new-text':'new-text-short'}">${isKo?`NEW 선정 • ${isLong?'LONG':'SHORT'} - 세계 시장 흐름 바꼈음!`:`NEW SELECTED • ${isLong?'LONG':'SHORT'} - FLOW CHANGED!`}</span>`:''}`;
-    const scoreDisplay = t.delta&&t.delta!==0 ? `${score.toFixed(1)} (${t.delta_score>0?'+':''}${t.delta_score.toFixed(1)})` : `${score.toFixed(1)}${isNew?' NEW':''}`;
-    return `<div class="card ${cardCls}">${badgeText?`<span class="badge ${badgeCls}">${badgeText}</span>`:''}<div class="row"><span class="ticker">${t.sym}</span><span class="sub">${micro}</span><span class="finn">FINNHUB</span>${t.delta&&t.delta!==0?`<span class="delta">Δ ${t.delta>0?'+':''}${t.delta.toLocaleString()}</span>`:''}<span class="score ${scoreCls}">${scoreDisplay}</span></div><div class="detail">${detail}</div><div class="trust"><span>${trustTxt}</span><div class="prog"><div class="fill ${isLong?'fill-g':'fill-r'}" style="width:${t.trust}%"></div></div><span class="tbadge ${isLong?'bl':'bs'}">${isLong?'LONG':'SHORT'}</span></div></div>`;
+    else{ badgeText=isKo?`선정 • ${isLong?'LONG':'SHORT'}`:`SELECTED • ${isLong?'LONG':'SHORT'}`; badgeCls=isLong?'bl':'bs'; }
+    const trustTxt=isKo?(isLong?`신뢰도: <b style="color:#00e676">${t.trust}%</b> • 바닥 매집 (점수 ${score.toFixed(1)}*10)`:`신뢰도: <b style="color:#ff5252">${t.trust}%</b> • 천장 분배 (10-${score.toFixed(1)})*10`):(isLong?`Trust: <b style="color:#00e676">${t.trust}%</b> • Bottom Accum (${score.toFixed(1)}*10)`:`Trust: <b style="color:#ff5252">${t.trust}%</b> • Top Dist (10-${score.toFixed(1)})*10`);
+    const deltaInfo=t.delta&&t.delta!==0?(isKo?`누적델타 ${t.delta>0?'+':''}${t.delta.toLocaleString()} → 점수 ${t.delta_score>0?'+':''}${t.delta_score.toFixed(1)}`:`Delta ${t.delta>0?'+':''}${t.delta.toLocaleString()}`):(isKo?`누적델타 없음 (결제 전 0) → 기존 점수 유지`:`No Delta`);
+    const boxLabel=isKo?'박스폭':'Box', volLabel=isKo?'거래량':'Vol', stayLabel=isKo?'체류':'Stay', posLabel=isKo?'위치':'Pos', powerLabel=isKo?'세력':'Power', qtyLabel=isKo?'수량':'Qty', newsLabel=isKo?'뉴스':'News', sourceLabel=isKo?'출처':'Source', closeLabel=isKo?'종가':'Close', slLabel=isKo?'손절':'SL', tpLabel=isKo?'익절':'TP';
+    const detail=`${boxLabel} <b>${boxW}%</b> (${t.low20.toFixed(2)}-${t.high20.toFixed(2)})<br>${volLabel} <b>${t.vol}x</b> ${stayLabel} <b>${t.stay}d</b> ${posLabel} <b>${t.pos.toFixed(2)}</b><br>${powerLabel} <b>${t.power}% Long</b> ${qtyLabel} <b>${t.qty}</b> ${newsLabel} <b>${t.news}</b> ${sourceLabel}: <b>${t.source}</b><br>${closeLabel} <b>${t.close}</b> | ${t.bottom?'BOTTOM':'TOP'} | Score ${t.score.toFixed(1)} → Final ${t.final_score.toFixed(1)}<br>NEWS Breakdown: Box ${t.box} COT ${t.cot} Flow ${t.flow} News ${t.news} → Source: ${t.source}<br><b style="color:#ff9800">${deltaInfo}</b><br><span class="${isLong?'long':'short'}">${micro} | ${slLabel} ${sl} (0.8%) ${tpLabel} ${tp} (1.6%) ${isLong?'LONG':'SHORT'}</span>${isNew?`<span class="${isLong?'new-text':'new-text-short'}">${isKo?`NEW 선정 • ${isLong?'LONG':'SHORT'} - 세계 시장 흐름 바꼈음!`:`NEW SELECTED`}</span>`:''}`;
+    const scoreDisplay=`${score.toFixed(1)}${isNew?' NEW':''}`;
+    return `<div class="card ${cardCls}"><span class="badge ${badgeCls}">${badgeText}</span><div class="row"><span class="ticker">${t.sym}</span><span class="sub">${micro}</span><span class="finn">FINNHUB</span>${t.delta&&t.delta!==0?`<span class="delta">Δ ${t.delta>0?'+':''}${t.delta.toLocaleString()}</span>`:''}<span class="score ${scoreCls}">${scoreDisplay}</span></div><div class="detail">${detail}</div><div class="trust"><span>${trustTxt}</span><div class="prog"><div class="fill ${isLong?'fill-g':'fill-r'}" style="width:${t.trust}%"></div></div><span class="tbadge ${isLong?'bl':'bs'}">${isLong?'LONG':'SHORT'}</span></div></div>`;
   }
 
-  let html=`<div class="sec g"><span>${isKo?'ACCUMULATION - BOTTOM - LONG 6개 - 줄에 맞게 3개씩 2줄':'ACCUMULATION - BOTTOM - LONG 6'}</span><span>6 TICKERS - ${market.date} - LONG6</span></div><div class="grid">`;
-  bottom.forEach(t=>html+=mkCard(t,true));
-  html+=`</div><div class="sec r"><span>${isKo?'DISTRIBUTION - TOP - SHORT 6개 - 줄에 맞게 3개씩 2줄':'DISTRIBUTION - TOP - SHORT 6'}</span><span>6 TICKERS - ${market.date} - SHORT6</span></div><div class="grid">`;
-  top.forEach(t=>html+=mkCard(t,true));
-  html+=`</div><div class="sec y"><span>${isKo?`SELECTED - THIS WEEK (MAX ${recCount}) - V4 - ${displayBias} - 중립이면 점수 높은 ${recCount}개 롱1+숏2 or 롱2+숏1 - 자본금 ${(market.capital||10000000).toLocaleString()}원`:`SELECTED - THIS WEEK (MAX ${recCount}) - V4 - ${displayBias} - NEUTRAL TOP${recCount} MIXED`}</span><span>LONG / SHORT - 10M=3 20M=4 30M=5 60M=6 - ${displayBias} - ${market.date}</span></div><div class="grid">`;
-  recommended.forEach(t=>html+=mkCard(t,true));
+  let html=`<div class="sec g"><span>ACCUMULATION - BOTTOM - LONG 6개 - 줄에 맞게 3개씩 2줄 - 점수 높은 순 - 신뢰도=점수*10</span><span>6 TICKERS - ${market.date} - LONG6 - 점수 높은 순</span></div><div class="grid">`;
+  bottom.forEach(t=>html+=mkCard(t));
+  html+=`</div><div class="sec r"><span>DISTRIBUTION - TOP - SHORT 6개 - 줄에 맞게 3개씩 2줄 - 점수 낮은 순 = 신뢰도 높은 순 - 신뢰도=(10-점수)*10</span><span>6 TICKERS - ${market.date} - SHORT6 - 점수 낮은 순</span></div><div class="grid">`;
+  top.forEach(t=>html+=mkCard(t));
+  html+=`</div><div class="sec y"><span>SELECTED - THIS WEEK (MAX ${recCount}) - V4 - ${displayBias} - 중립이면 신뢰도 높은 ${recCount}개 롱1+숏2 or 롱2+숏1 - 자본금 ${(market.capital||10000000).toLocaleString()}원 - LONG 6.7=67% SHORT 6.9=31%</span><span>LONG / SHORT - 10M=3 20M=4 30M=5 60M=6 - ${displayBias}</span></div><div class="grid">`;
+  recommended.forEach(t=>html+=mkCard(t));
   for(let i=recommended.length;i<3;i++) html+=`<div style="visibility:hidden"></div>`;
   html+=`</div>`;
 
   document.getElementById('content').innerHTML=html;
-  document.getElementById('footer').innerHTML=`COMMAND CENTER V4 - LONG6 SHORT6 - DATE ${market.date} - DXY ${market.dxy} US10Y ${market.us10y}% VIX ${market.vix} BIAS ${displayBias} - LONG6 SHORT6 항상 - 중립이면 점수 높은 ${recCount}개 진입 (롱1+숏2 or 롱2+숏1) - 롱이면 롱만 ${recCount}개 숏이면 숏만 ${recCount}개 - 10M=3 20M=4 30M=5 60M=6 - 모든 박스 3개 동일 - 선정 점수 겹침 없음 - 한/영 전체 반영 - NEW 선정 기능 - 세계 금융시장 흐름 허브 - 절대 안 변한다는 건 없다 - Quantower 델타 결제 후 즉시 반영`;
+  document.getElementById('footer').innerHTML=`V4 LONG6 SHORT6 TRUST FIXED - DATE ${market.date} - LONG 신뢰도=점수*10 SHORT 신뢰도=(10-점수)*10 - LONG 6.7→67% SHORT 6.9→31% - LONG 점수 높은 순 SHORT 점수 낮은 순 - 중립이면 신뢰도 높은 ${recCount}개 진입 - 10M=3 20M=4 30M=5 60M=6 - 모든 박스 3개 동일 - 선정 점수 겹침 없음`;
 }
 
 (async()=>{const data=await fetchRealData(); render(data);})();
