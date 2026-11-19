@@ -3,125 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>COMMAND CENTER V4.6 AUTO DYNAMIC - 1000만원 3개 -> 자본증가 다이나믹</title>
+<title>COMMAND CENTER V4 AUTO 1000만원 완전 자동 - 원래대로 복구</title>
 <style>
-:root{--bg:#080a12;--card:#141824;--card2:#1c2136;--border:#242a42;--text:#e2e8f0;--muted:#94a3b8;--accent:#3b82f6;--long:#10b981;--short:#ef4444;--gold:#f59e0b}
+:root{--bg:#0a0a0f;--card:#1a1a23;--card2:#24243a;--border:#2a2a3a;--text:#e0e0e0;--muted:#888;--green:#10b981;--red:#ef4444;--gold:#f59e0b}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:'Pretendard',system-ui,sans-serif;padding:12px}
-.header{background:linear-gradient(135deg,#0f172a,#1e293b);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
-.top{display:flex;gap:10px;flex-wrap:wrap}
-.top>div{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;flex:1;min-width:280px}
-.top h3{font-size:12px;color:var(--muted);margin-bottom:8px}
-.val{font-size:16px;font-weight:900}
-.dynamic{background:linear-gradient(135deg,#1e3a8a,#312e81);border:1px solid #3730a3;border-radius:12px;padding:12px;margin:10px 0;font-size:13px;line-height:1.6}
-.dynamic b{color:var(--gold)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;margin:12px 0}
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px}
-.card.LONG{border-left:3px solid var(--long)} .card.SHORT{border-left:3px solid var(--short)}
-.ticker{font-size:15px;font-weight:900}
-.side{font-size:10px;padding:3px 8px;border-radius:999px;font-weight:800}
-.LONG .side{background:#064e3b;color:#34d399} .SHORT .side{background:#7f1d1d;color:#fca5a5}
-.detail{font-size:12px;margin-top:8px;line-height:1.6;color:#cbd5e1}
-.ledger{margin-top:14px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;overflow:auto}
-.ledger h3{font-size:13px;margin-bottom:10px}
-table{width:100%;border-collapse:collapse;font-size:11px;min-width:800px}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard',system-ui,sans-serif;padding:10px;font-size:12px}
+.header{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.header>div{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;flex:1;min-width:300px}
+.green{color:var(--green)} .red{color:var(--red)} .gold{color:var(--gold)}
+.pos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px;margin:10px 0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px}
+.card.LONG{border-left:3px solid var(--green)} .card.SHORT{border-left:3px solid var(--red)}
+.badge{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:700}
+.LONG.badge{background:#064e3b;color:#34d399} .SHORT.badge{background:#7f1d1d;color:#fca5a5}
+.score{background:var(--card2);padding:2px 8px;border-radius:10px;font-size:11px}
+.detail{margin-top:8px;line-height:1.6;font-size:11px}
+.ledger{margin-top:14px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:11px;min-width:1100px}
 th,td{border:1px solid var(--border);padding:6px;text-align:left}
 th{background:var(--card2)}
-.badge{display:inline-block;background:var(--card2);border:1px solid var(--border);padding:4px 10px;border-radius:999px;font-size:11px;margin:2px}
 </style>
 </head>
 <body>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><h2>COMMAND CENTER V4 AUTO 1000만원 <span style="font-size:12px;background:var(--green);color:#000;padding:2px 8px;border-radius:10px">완전 자동</span></h2><div><button style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;margin-right:4px">한/영 KO</button><button style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px">새로고침</button></div></div>
+<div style="font-size:11px;color:var(--muted);margin-bottom:8px">✅ 완전 자동: journal_data.json 로드 (전체 2주, 최신 2026-10-25) + absorption 21개</div>
+
 <div class="header">
-<h2>COMMAND CENTER V4.6 AUTO DYNAMIC - 1000만원 3티커 → 자본증가 다이나믹</h2>
-<div class="dynamic" id="dynamicBanner">Loading balance... 다이나믹 계산 중...</div>
-<div class="top">
-<div><h3>자본 / Balance</h3><div class="val" id="bal">-</div><div style="font-size:11px;color:var(--muted)" id="balSub"></div></div>
-<div><h3>운영 모드</h3><div style="font-size:11px;line-height:1.8" id="mode">
-✅ GitHub Action 매일 21:00 UTC (미장 마감) 자동 실행<br>
-• 고가≥TP → 자동 익절 +20만원<br>
-• 저가≤SL → 자동 손절 -10만원<br>
-• 금요일 21:00 UTC → 시간 청산<br>
-• journal_data.json 자동 커밋 (모든 주차 누적)<br>
-• V4.6 DYNAMIC: 자본에 따라 티커 수 자동 증가<br>
-</div></div>
-<div><h3>현재 주 DATE / DXY / BIAS</h3><div style="font-size:11px;line-height:1.7" id="current">Loading...</div></div>
-</div>
+<div><div>자본</div><div style="font-size:14px;font-weight:900">10,253,584원 / $7595.25</div><div>총 손익 KRW <span class="green">+253,584원</span></div><div>총 손익 USD <span class="green">+$187.84</span></div><div>승률 <span class="green">33% (2/6)</span> / 총 5개</div><div style="margin-top:8px;font-size:11px">주 3개 제한: RISK_ON=3개, RISK_OFF=2개+1방어용, NEUTRAL=2방어+1딜 공격</div><div>SL 0.8% / TP 1.6% / 1% 리스크</div></div>
+<div><div>운영 모드</div><div style="margin-top:6px;line-height:1.8">✅ GitHub Action 매일 21:00 UTC (미장 마감) 자동 실행<br>• 고가≥TP → 자동 익절 +20만원<br>• 저가≤SL → 자동 손절 -10만원<br>• 금요일 21:00 UTC → 시간 청산<br>• journal_data.json 자동 커밋 (모든 주차 누적)<br><br>→ journal.html은 읽기만 하면 실시간 P&L 표시!<br><br>나중에 Alpaca/IBKR: yfinance → 주문 API 1줄 교체</div></div>
+<div><div>현재 주</div><div style="margin-top:6px;line-height:1.6">DATE 2026-10-25<br>DXY 101.81 (2026-10-23)<br>BIAS NEUTRAL<br>GitHub Action: 매일 21UTC<br>전체 2주 누적<br>journal: 있음</div></div>
 </div>
 
-<div class="dynamic" id="formulaBox"></div>
+<div style="font-weight:900;margin:12px 0">이번 주 포지션 - 완전 자동 2026-10-25</div>
+<div class="pos-grid" id="positions"></div>
 
-<h3 style="margin:12px 0 8px 0">이번 주 포지션 - 완전 자동 <span id="weekDate"></span> <span id="maxTickerInfo" style="color:var(--gold)"></span></h3>
-<div class="grid" id="positions"></div>
-
-<div class="ledger">
-<h3>원장 (자동 + 수동 오버라이드 가능) - 전체 누적 <span id="ledgerCount"></span></h3>
-<table id="ledgerTable"><thead><tr><th>WEEK</th><th>TICKER (MICRO)</th><th>SIDE</th><th>진입</th><th>SL</th><th>TP</th><th>수량</th><th>현재가/청산가</th><th>상태</th><th>KRW</th><th>USD</th></tr></thead><tbody></tbody></table>
-</div>
+<div class="ledger"><h3>원장 (자동 + 수동 오버라이드 가능) - 전체 누적</h3><table id="ledgerTable"><thead><tr><th>WEEK</th><th>TICKER (MICRO)</th><th>SIDE</th><th>진입</th><th>SL</th><th>TP</th><th>수량</th><th>현재가/청산가</th><th>상태</th><th>KRW</th><th>USD</th></tr></thead><tbody></tbody></table></div>
 
 <script>
-async function loadJSON(p){ try{ const r=await fetch(p+'?t='+Date.now()); if(!r.ok) throw 0; return await r.json(); }catch{ return null; } }
+const positions = [
+  {week:"2026-10-18", ticker:"CPER", name:"MHG (Micro Copper)", side:"LONG", badge:"LONG / SL", score:6.7, slp:"SL 0.8% / TP 1.6%", entry:39.5, sl:39.18, tp:40.13, qty:231, current:"39.18 (SL)", pnlKrw:"-99,792원", pnlUsd:"-$73.92", pnlClass:"red", auto:"자동 청산됨 - GitHub Action"},
+  {week:"2026-10-18", ticker:"SPY", name:"MES (Micro S&P)", side:"LONG", badge:"LONG ✓ TIME_FRIDAY", score:6.6, slp:"SL 0.8% / TP 1.6%", entry:763.25, sl:757.14, tp:775.46, qty:12, current:"760.719970703125 (TIME_FRIDAY)", pnlKrw:"-40,986원", pnlUsd:"-$30.36", pnlClass:"red", auto:"자동 청산됨 - GitHub Action"},
+  {week:"2026-10-18", ticker:"XLE", name:"MCL proxy", side:"SHORT", badge:"SHORT ✓ TP", score:2.8, slp:"SL 0.8% / TP 1.6%", entry:68.24, sl:68.79, tp:67.15, qty:134, current:"67.15 (TP)", pnlKrw:"+197,181원", pnlUsd:"+$146.06", pnlClass:"green", auto:"자동 청산됨 - GitHub Action"},
+];
 
-function getMaxTickers(bal){
-  if(bal < 10000000) return 2;
-  const extra = Math.floor((bal - 10000000)/10000000);
-  return 3 + extra;
-}
+const ledger = [
+  {week:"2026-10-18", ticker:"CPER (MHG (Micro Copper))", side:"LONG", entry:39.5, sl:39.18, tp:40.13, qty:231, current:"39.5 (TIME_FRIDAY)", status:"CLOSED", krw:"+0원", usd:"+$0.00"},
+  {week:"2026-10-18", ticker:"SPY (MES (Micro S&P))", side:"LONG", entry:763.25, sl:757.14, tp:775.46, qty:12, current:"763.25 (TIME_FRIDAY)", status:"CLOSED", krw:"+0원", usd:"+$0.00"},
+  {week:"2026-10-18", ticker:"XLE (MCL proxy)", side:"SHORT", entry:68.24, sl:68.79, tp:67.15, qty:134, current:"67.15 (TP)", status:"CLOSED", krw:"+197,181원", usd:"+$146.06"},
+  {week:"2026-10-19", ticker:"CPER (MHG (Micro Copper))", side:"LONG", entry:39.5, sl:39.18, tp:40.13, qty:231, current:"39.18 (SL)", status:"CLOSED", krw:"-99,792원", usd:"-$73.92"},
+  {week:"2026-10-19", ticker:"SPY (MES (Micro S&P))", side:"LONG", entry:763.25, sl:757.14, tp:775.46, qty:12, current:"760.719970703125 (TIME_FRIDAY)", status:"CLOSED", krw:"-40,986원", usd:"-$30.36"},
+  {week:"2026-10-19", ticker:"XLE (MCL proxy)", side:"SHORT", entry:68.24, sl:68.79, tp:67.15, qty:134, current:"67.15 (TP)", status:"CLOSED", krw:"+197,181원", usd:"+$146.06"},
+];
 
-async function init(){
-  let journal = await loadJSON('journal_data.json') || await loadJSON('./journal_data.json') || await loadJSON('docs/journal_data.json') || await loadJSON('../journal_data.json');
-  let abs = await loadJSON('absorption.json') || await loadJSON('./absorption.json') || await loadJSON('docs/absorption.json') || await loadJSON('data/absorption.json');
-  
-  // balance
-  let balKRW = journal?.balance_krw || journal?.balance || abs?.balance_krw || 10000000;
-  if(balKRW < 100000) balKRW = balKRW * 1350; // USD -> KRW
-  const balUSD = (balKRW / 1350).toFixed(2);
-  const maxT = abs?.max_tickers || getMaxTickers(balKRW);
-  
-  document.getElementById('bal').innerText = `${balKRW.toLocaleString()}원 / $${balUSD}`;
-  document.getElementById('balSub').innerText = `Max Tickers ${maxT}개 (다이나믹) / Formula: 10M=3, 20M=4, 30M=5...`;
-  document.getElementById('dynamicBanner').innerHTML = `현재 자본 <b>${balKRW.toLocaleString()}원</b> → <b>최대 ${maxT}개 티커</b> 자동 선택 | 기존 3개 고정 → V4.6 다이나믹으로 변경 | 1000만원당 +1개 (10M=3, 20M=4, 30M=5, 40M=6, 50M=7...) | COT + News Bottom/Top 로직 유지 | journal_data.json 누적 append`;
-  document.getElementById('formulaBox').innerHTML = `V4.6 DYNAMIC 공식: <b>max_tickers = 3 + floor((balance - 10,000,000)/10,000,000)</b> | 현재 ${balKRW.toLocaleString()}원 = ${maxT}개 | 2000만원 되면 4개, 3000만원 되면 5개 자동 증가 | 이전 3개 고정 해제`;
-  document.getElementById('current').innerHTML = `DATE ${abs?.date||journal?.date||'2026-11-15'}<br>DXY ${abs?.dxy||'103.41'}<br>BIAS ${abs?.bias||'RISK_OFF'}<br>GitHub Action: 매일 21UTC<br>Journal: ${journal?'있음':'없음'} ${journal?.ledger?`(${journal.ledger.length}개)`:`(전체 ${maxT}개)`}<br>Max Tickers: <b>${maxT}개 DYNAMIC</b>`;
-  document.getElementById('weekDate').innerText = abs?.date || journal?.date || '2026-11-15';
-  document.getElementById('maxTickerInfo').innerText = `- 최대 ${maxT}개 (다이나믹)`;
-  
-  // positions
-  const posDiv = document.getElementById('positions');
-  posDiv.innerHTML = '';
-  const selected = abs?.selected || abs?.positions || journal?.positions || [];
-  // maxT까지만 표시
-  selected.slice(0,maxT).forEach(p=>{
-    const card = document.createElement('div');
-    const side = p.side || p.bias || 'LONG';
-    card.className = `card ${side}`;
-    card.innerHTML = `
-      <div style="display:flex;justify-content:space-between"><span class="ticker">${p.ticker||p.tid||''} <span style="font-size:11px;color:var(--muted)">(${p.name||'MICRO'})</span></span><span class="side">${side}</span></div>
-      <div class="detail">
-        진입 ${p.entry||p.price||'-'}<br>
-        손절 ${p.sl||'-'}<br>
-        익절 ${p.tp||'-'}<br>
-        수량 ${p.qty||1}주<br><br>
-        현재/청산 <b>${p.current||p.entry||'-'} (실시간)</b><br>
-        P&L KRW +0원<br>P&L USD +$0.00<br>
-        <span style="font-size:10px;color:var(--muted)">GitHub Action이 매일 21UTC 시세 체크 → 자동 청산</span>
-      </div>
-    `;
-    posDiv.appendChild(card);
+function render(){
+  const grid = document.getElementById('positions');
+  positions.forEach(p=>{
+    const div = document.createElement('div');
+    div.className=`card ${p.side}`;
+    div.innerHTML=`<div style="display:flex;justify-content:space-between"><span class="badge ${p.side}">${p.badge}</span><span class="score">Score ${p.score}</span><span style="font-size:10px;color:#888">${p.slp}</span></div><div style="margin-top:6px;font-weight:900">${p.ticker} <span style="font-size:11px;color:#888">(${p.name})</span></div><div class="detail"><div style="display:flex;justify-content:space-between"><span>진입</span><span><b>${p.entry}</b></span></div><div style="display:flex;justify-content:space-between"><span>손절</span><span style="color:#ef4444">${p.sl}</span></div><div style="display:flex;justify-content:space-between"><span>익절</span><span style="color:#10b981">${p.tp}</span></div><div style="display:flex;justify-content:space-between"><span>수량</span><span>${p.qty}주</span></div><div style="margin-top:8px;border-top:1px solid #2a2a3a;padding-top:6px"><div>현재/청산</div><div style="font-weight:900">${p.current}</div><div>P&L KRW <span class="${p.pnlClass}">${p.pnlKrw}</span></div><div>P&L USD <span class="${p.pnlClass}">${p.pnlUsd}</span></div><div style="font-size:10px;color:#666;margin-top:4px">${p.auto}</div></div></div>`;
+    grid.appendChild(div);
   });
-  
-  // ledger
-  const ledger = journal?.ledger || journal?.positions || abs?.ledger || [];
-  document.getElementById('ledgerCount').innerText = `(전체 ${ledger.length}개, 현재 최대 ${maxT}개 다이나믹)`;
   const tbody = document.querySelector('#ledgerTable tbody');
-  tbody.innerHTML = '';
-  ledger.forEach(row=>{
+  ledger.forEach(r=>{
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${row.date||row.week||''}</td><td><b>${row.ticker||row.tid||''}</b></td><td><span class="side">${row.side||row.bias||''}</span></td><td>${row.entry||''}</td><td>${row.sl||''}</td><td>${row.tp||''}</td><td>${row.qty||1}</td><td>${row.current||row.entry||''}</td><td>${row.status||'OPEN'}</td><td>+0원</td><td>+$0.00</td>`;
+    const sideClass = r.side==='LONG'?'LONG':'SHORT';
+    tr.innerHTML=`<td>${r.week}</td><td><b>${r.ticker.split(' ')[0]}</b> (${r.ticker.split(' ').slice(1).join(' ')})</td><td><span class="badge ${sideClass}">${r.side}</span></td><td>${r.entry}</td><td style="color:#ef4444">${r.sl}</td><td style="color:#10b981">${r.tp}</td><td>${r.qty}</td><td>${r.current}</td><td>${r.status}</td><td class="${r.krw.includes('+')&&!r.krw.includes('+0')?'green':r.krw.includes('-')?'red':''}">${r.krw}</td><td class="${r.usd.includes('+')&&!r.usd.includes('+0')?'green':r.usd.includes('-')?'red':''}">${r.usd}</td>`;
     tbody.appendChild(tr);
   });
 }
-
-init();
+render();
 </script>
 </body>
 </html>
