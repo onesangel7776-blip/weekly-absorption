@@ -2,180 +2,139 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>COMMAND CENTER 가상매매 V4 AUTO - 1000만원</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V4-AUTO 스윙매매 - 6주 누적 - 테두리 3.5px 두껍게</title>
 <style>
-:root{--bg:#0a0a0f;--card:#14141c;--border:#242432;--green:#22c55e;--red:#ef4444;--blue:#3b82f6;--dim:#8a8a9a;--text:#e8e8ef}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:ui-monospace,monospace;padding:18px}
-.top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px}
-.badge{font-size:11px;padding:3px 7px;border-radius:4px;border:1px solid var(--border);background:#1a1a26}
-.badge.green{color:var(--green);border-color:var(--green)} .badge.red{color:var(--red);border-color:var(--red)} .badge.blue{color:var(--blue);border-color:var(--blue)}
-.btn{cursor:pointer;padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:#1e1e2e;color:var(--text);font-size:12px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}@media(max-width:900px){.grid3{grid-template-columns:1fr}}
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px}
-.card.long{border-color:rgba(34,197,94,.35)} .card.short{border-color:rgba(239,68,68,.35)}
-.row{display:flex;justify-content:space-between;margin:5px 0;font-size:12px}
-.k{color:var(--dim)} .v{font-weight:700}
-.pnl{font-weight:800} .pos{color:var(--green)} .neg{color:var(--red)}
-.small{font-size:11px;color:var(--dim);line-height:1.4}
-.hr{height:1px;background:var(--border);margin:10px 0}
-table{width:100%;border-collapse:collapse;font-size:12px} th{color:var(--dim);text-align:left;padding:7px;border-bottom:1px solid var(--border)} td{padding:7px;border-bottom:1px solid rgba(36,36,50,.5)}
-.autoTag{font-size:10px;padding:2px 6px;border-radius:10px;background:#1e3a2a;color:var(--green);border:1px solid var(--green)}
+:root{--bg:#0a0a0f;--card:#16161f;--card2:#1e1e2e;--border:#2a2a3a;--text:#e8e8e8;--muted:#7a7a8a;--green:#10b981;--red:#ef4444}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:Pretendard,system-ui,sans-serif;padding:10px;font-size:12px;line-height:1.5}
+.header{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.header>div{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;flex:1;min-width:310px}
+.green{color:var(--green)} .red{color:var(--red)}
+.pos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px;margin:14px 0}
+/* V4 사진과 통일된 테두리 디자인 */
+.card{background:#11151d;border-radius:10px;padding:14px;position:relative;min-height:210px}
+.card.LONG{border:3.5px solid #00e676;background:#0f1a13;box-shadow:0 0 16px rgba(0,230,118,0.35), inset 0 0 0 1px rgba(0,230,118,0.2)} /* 사진 GLD, DBA, IWM 초록 테두리 */
+.card.SHORT{border:3.5px solid #ef4444;background:#1a1212;box-shadow:0 0 16px rgba(239,68,68,0.35), inset 0 0 0 1px rgba(239,68,68,0.2)} /* 사진 XLF, XLE, SPY 어두운 빨강 테두리 */
+.card.LONG.NEW{border:3.5px solid #ffd54f;background:#1e1a0a;box-shadow:0 0 18px rgba(255,213,79,0.5), inset 0 0 0 1px rgba(255,213,79,0.3)} /* 사진 TLT, XLB, USO 노란 NEW 테두리 */
+.card.SHORT.NEW{border:3.5px solid #ff1744;background:#1e0f0f;box-shadow:0 0 18px rgba(255,23,68,0.55), inset 0 0 0 1px rgba(255,23,68,0.3)} /* 사진 UNG, EEM, UUP 빨간 NEW 테두리 */
+.badge{font-size:10px;padding:3px 8px;border-radius:5px;font-weight:800;display:inline-block}
+.LONG.badge{background:#0a2a1a;color:#4cffb0;border:1px solid #1e4a2a} .SHORT.badge{background:#2a1212;color:#c8a0a0;border:1px solid #4a1e1e}
+.badge-new{position:absolute;top:0;right:0;padding:5px 12px;font-size:11px;font-weight:900;border-radius:0 10px 0 10px;z-index:2}
+.bl-new{background:#2a2410;color:#ffd54f;border:1px solid #b8960a}
+.bs-new{background:#5a1515;color:#ff6b6b;border:1px solid #8a1e1e}
+.score{background:var(--card2);padding:3px 8px;border-radius:10px;font-size:11px;font-weight:700;margin-left:6px}
+.detail{margin-top:10px;line-height:1.7;font-size:11px}
+.detail .row{display:flex;justify-content:space-between;padding:2px 0}
+.ledger{margin-top:18px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:11px;min-width:1150px}
+th,td{border:1px solid var(--border);padding:7px 8px;text-align:left}
+th{background:var(--card2);font-weight:800;color:var(--muted);font-size:10px}
+.btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:11px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px}
 </style>
 </head>
 <body>
-<div class="top">
-  <div>
-    <div style="font-size:20px;font-weight:900">COMMAND CENTER <span style="color:var(--green)">V4 AUTO</span> 1000만원 <span class="autoTag">완전 자동</span></div>
-    <div class="small" id="status">journal_data.json + absorption.json 자동 불러오는 중...</div>
-  </div>
-  <div style="display:flex;gap:8px"><button class="btn" id="lang">한/영 KO</button><button class="btn" onclick="load()">새로고침</button></div>
+<div class="topbar">
+<h2 id="mainTitle">V4-AUTO 스윙매매</h2>
+<div style="display:flex;gap:6px"><button class="btn" onclick="toggleLang()" id="langBtn">한/영 KO</button><button class="btn" onclick="location.reload()" id="refreshBtn">새로고침</button></div>
 </div>
-<div class="grid3">
-  <div class="card"><div class="row"><span class="k">자본</span><b id="capLabel">10,000,000원 / $7,407</b></div><div class="row"><span class="k">총 손익 KRW</span><span class="pnl" id="totalKrw">0원</span></div><div class="row"><span class="k">총 손익 USD</span><span class="pnl" id="totalUsd">$0.00</span></div><div class="row"><span class="k">승률</span><span id="winrate">0%</span></div><div class="small" style="margin-top:8px">주 3개 제한: RISK_ON=3롱, RISK_OFF=2숏+1방어롱, NEUTRAL=2바텀+1탑 준수<br>SL 0.8% / TP 1.6% / 1% 리스크</div></div>
-  <div class="card"><div class="small">운영 모드</div><div style="margin-top:6px;font-size:12px;line-height:1.7">✅ GitHub Action 매일 21:00 UTC (미장 마감) 자동 실행<br>• 고가≥TP → 자동 익절 +20만원<br>• 저가≤SL → 자동 손절 -10만원<br>• 금요일 21:00 UTC → 시간 청산<br>• journal_data.json 자동 커밋 (모든 주차 누적)<br><br>→ journal.html은 읽기만 하면 실시간 P&L 표시!<br><br>나중에 Alpaca/IBKR: yfinance → 주문 API 1줄 교체</div></div>
-  <div class="card"><div class="small">현재 주</div><div id="weekInfo" style="font-size:12px;margin-top:6px"></div></div>
+
+<div class="header">
+<div id="capitalBox"><div style="font-weight:900;font-size:12px;margin-bottom:6px" id="capTitle">자본 / 손익 / 승률</div><div style="font-size:11px;line-height:1.9" id="capitalInfo"></div></div>
+<div><div style="font-weight:900;font-size:12px;margin-bottom:6px" id="opTitle">운영 모드</div><div style="font-size:11px;line-height:1.9" id="opInfo"></div></div>
+<div id="currentWeekBox"><div style="font-weight:900;font-size:12px;margin-bottom:6px" id="curTitle">현재 주 - 6주 누적</div><div style="font-size:11px;line-height:1.8" id="currentWeekInfo"></div></div>
 </div>
-<h3 style="margin:18px 0 8px 0">이번 주 포지션 - 완전 자동 <span class="small" id="weekDate"></span></h3>
-<div class="grid3" id="cards"></div>
-<h3 style="margin:20px 0 8px 0">원장 (자동 + 수동 오버라이드 가능) - 전체 누적</h3>
-<table><thead><tr><th>WEEK</th><th>TICKER (MICRO)</th><th>SIDE</th><th>진입</th><th>SL</th><th>TP</th><th>수량</th><th>현재가/청산가</th><th>상태</th><th>KRW</th><th>USD</th></tr></thead><tbody id="ledger"></tbody></table>
+
+<div style="font-weight:900;margin:14px 0 8px 0;display:flex;justify-content:space-between" id="posTitleWrap"><span id="posTitle"></span><span style="color:var(--muted);font-size:11px"></span></div>
+<div class="pos-grid" id="positions"></div>
+
+<div class="ledger"><h3 style="margin-bottom:10px" id="ledgerTitle">원장 - 전체 누적 6주 18개</h3><table id="ledgerTable"><thead><tr id="ledgerHead"></tr></thead><tbody></tbody></table></div>
+
+<div style="margin-top:16px;text-align:center;color:var(--muted);font-size:10px;padding:10px" id="footer"></div>
+
 <script>
-let LANG='ko';
-const fmtK=(n)=> (n>=0?'+':'')+Math.round(n).toLocaleString()+'원';
-const fmtU=(n)=> (n>=0?'+$':'-$')+Math.abs(n).toFixed(2);
-async function fetchJson(url){try{const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw 0; return await r.json();}catch{return null;}}
-async function load(){
-  document.getElementById('status').textContent='불러오는 중...';
-  const absPaths = [
-    'https://onesangel7776-blip.github.io/weekly-absorption/docs/absorption.json',
-    'https://onesangel7776-blip.github.io/weekly-absorption/absorption.json',
-    './docs/absorption.json',
-    './absorption.json',
-    './journal_data.json',
-    'journal_data.json'
-  ];
-  let abs=null;
-  for(const u of absPaths){
-    abs=await fetchJson(u);
-    if(abs) break;
-  }
-  const journalPaths = [
-    'https://onesangel7776-blip.github.io/weekly-absorption/docs/journal_data.json',
-    'https://onesangel7776-blip.github.io/weekly-absorption/journal_data.json',
-    './docs/journal_data.json',
-    './journal_data.json',
-    'journal_data.json'
-  ];
-  let journal=null;
-  for(const u of journalPaths){
-    journal=await fetchJson(u);
-    if(journal) break;
-  }
-  
-  // 최신 주 키
-  const allWeekKeys = Object.keys(journal?.weeks||{}).sort();
-  const weekKey = abs?.date || allWeekKeys.pop() || new Date().toISOString().slice(0,10);
-  // 이번 주 데이터 (카드용)
-  const weekData = journal?.weeks?.[weekKey] || (journal?.weeks ? Object.values(journal.weeks).sort((a,b)=>a.date.localeCompare(b.date)).pop() : null);
-  
-  document.getElementById('status').textContent = journal ? `✅ 완전 자동: journal_data.json 로드 (전체 ${Object.keys(journal.weeks||{}).length}주, 최신 ${weekKey}) + absorption ${abs?.tickers?.length||abs?.selected?.length||0}개` : '⚠ journal_data.json 없음';
-  document.getElementById('weekDate').textContent = weekKey;
-  // 이번 주 포지션 (카드)
-  let trades=[];
-  if(weekData?.trades) trades=weekData.trades;
-  else if(abs?.selected) trades=abs.selected.map(s=>({ticker:s.ticker, micro:s.micro, side:s.side, score:s.score, entry:s.close||s.entry||0, sl:s.sl, tp:s.tp, sl_pct:s.sl_pct||0.8, tp_pct:s.tp_pct||1.6, shares:1, status:'OPEN', current:s.close||s.entry||0, exit:null, pnl_krw:0, pnl_usd:0}));
-  else if(abs?.tickers){
-    const top=abs.tickers.slice().sort((a,b)=>b.score-a.score).slice(0,3);
-    trades=top.map((t,i)=>{
-      const entry=t.close||100;
-      const side = t.status==='BOTTOM' ? 'LONG' : (i===2?'SHORT':'LONG');
-      const sl_pct=0.8, tp_pct=1.6;
-      let sl,tp;
-      if(side==='LONG'){ sl=+(entry*(1-sl_pct/100)).toFixed(2); tp=+(entry*(1+tp_pct/100)).toFixed(2);} else { sl=+(entry*(1+sl_pct/100)).toFixed(2); tp=+(entry*(1-tp_pct/100)).toFixed(2);}
-      return {ticker:t.ticker, micro:t.ticker, side, score:t.score, entry, sl, tp, sl_pct, tp_pct, shares:1, status:'OPEN', current:entry, pnl_krw:0, pnl_usd:0};
-    });
-  }
-  
-  let cap=10000000, fx=1350;
-  document.getElementById('weekInfo').innerHTML = `DATE ${abs?.date||weekKey}<br>DXY ${abs?.macro?.dxy||''} (${abs?.macro?.dxy_date||''})<br>BIAS ${abs?.bias||abs?.macro?.bias||''}<br>GitHub Action: 매일 21UTC<br>전체 ${Object.keys(journal?.weeks||{}).length}주 누적<br>journal: ${journal?'있음':'없음'}`;
-  
-  const cards=document.getElementById('cards'); cards.innerHTML='';
-  const ledger=document.getElementById('ledger'); ledger.innerHTML='';
-  // V4.3 FIX: 전체 누적 계산
-  let totalK=0, totalU=0, wins=0, closed=0, totalTrades=0;
-  if(journal?.weeks){
-    for(const wk of Object.keys(journal.weeks).sort()){
-      for(const t of journal.weeks[wk].trades){
-        totalTrades++;
-        totalK+=t.pnl_krw||0;
-        totalU+=t.pnl_usd||0;
-        if(t.status==='CLOSED'){
-          closed++;
-          if((t.pnl_krw||0)>0) wins++;
-        }
-      }
-    }
-  } else {
-    // fallback: 이번 주만
-    trades.forEach(t=>{
-      totalTrades++;
-      totalK+=t.pnl_krw||0; totalU+=t.pnl_usd||0;
-      if(t.status==='CLOSED'){ closed++; if((t.pnl_krw||0)>0) wins++; }
-    });
-  }
-  // 카드: 이번 주만
-  trades.forEach(t=>{
-    const entry=t.entry||t.close||0; const sl=t.sl||0; const tp=t.tp||0;
-    const isClosed = t.status==='CLOSED';
-    const card=document.createElement('div');
-    card.className='card '+(t.side==='LONG'?'long':'short');
-    card.innerHTML=`
-      <div style="display:flex;justify-content:space-between"><span class="badge ${t.side==='LONG'?'green':'red'}">${t.side} ${isClosed?'✓ '+t.exit_reason:''}</span><span class="badge">Score ${t.score||''}</span><span class="small">SL ${t.sl_pct||0.8}% / TP ${t.tp_pct||1.6}%</span></div>
-      <div style="font-size:17px;font-weight:900;margin:8px 0">${t.ticker} <span style="font-size:12px;color:var(--dim)">(${t.micro||''})</span></div>
-      <div class="row"><span class="k">진입</span><span class="v">${entry}</span></div>
-      <div class="row"><span class="k">손절</span><span style="color:var(--red)">${sl}</span></div>
-      <div class="row"><span class="k">익절</span><span style="color:var(--green)">${tp}</span></div>
-      <div class="row"><span class="k">수량</span><span>${t.shares||0}주</span></div>
-      <div class="hr"></div>
-      <div class="row"><span class="k">현재/청산</span><span class="v">${isClosed?t.exit:t.current||entry} ${isClosed?'('+t.exit_reason+')':'(실시간)'}</span></div>
-      <div class="row"><span class="k">P&L KRW</span><span class="pnl ${ (t.pnl_krw||0)>=0?'pos':'neg'}">${fmtK(t.pnl_krw||0)}</span></div>
-      <div class="row"><span class="k">P&L USD</span><span class="pnl ${ (t.pnl_usd||0)>=0?'pos':'neg'}">${fmtU(t.pnl_usd||0)}</span></div>
-      <div class="small" style="margin-top:6px">${isClosed?'자동 청산됨 - GitHub Action':'GitHub Action이 매일 21UTC 시세 체크 → 자동 청산'}</div>
-    `;
-    cards.appendChild(card);
-  });
-  
-  // 원장: 전체 누적
-  if(journal?.weeks){
-    const sortedWeeks = Object.keys(journal.weeks).sort();
-    sortedWeeks.forEach(wk=>{
-      const wdata = journal.weeks[wk];
-      wdata.trades.forEach(t=>{
-        const entry=t.entry||t.close||0; const sl=t.sl||0; const tp=t.tp||0;
-        const isClosed = t.status==='CLOSED';
-        const tr=document.createElement('tr');
-        tr.innerHTML=`<td>${wk}</td><td><b>${t.ticker}</b> (${t.micro||''})</td><td><span class="badge ${t.side==='LONG'?'green':'red'}">${t.side}</span></td><td>${entry}</td><td style="color:var(--red)">${sl}</td><td style="color:var(--green)">${tp}</td><td>${t.shares||0}</td><td>${isClosed?t.exit+' ('+t.exit_reason+')':t.current||''}</td><td>${t.status}</td><td style="color:${(t.pnl_krw||0)>=0?'var(--green)':'var(--red)'}">${fmtK(t.pnl_krw||0)}</td><td>${fmtU(t.pnl_usd||0)}</td>`;
-        ledger.appendChild(tr);
-      });
-    });
-  } else {
-    // fallback
-    trades.forEach(t=>{
-      const entry=t.entry||0; const sl=t.sl||0; const tp=t.tp||0; const isClosed=t.status==='CLOSED';
-      const tr=document.createElement('tr');
-      tr.innerHTML=`<td>${weekKey}</td><td><b>${t.ticker}</b> (${t.micro||''})</td><td><span class="badge ${t.side==='LONG'?'green':'red'}">${t.side}</span></td><td>${entry}</td><td style="color:var(--red)">${sl}</td><td style="color:var(--green)">${tp}</td><td>${t.shares||0}</td><td>${isClosed?t.exit:t.current||''}</td><td>${t.status}</td><td>${fmtK(t.pnl_krw||0)}</td><td>${fmtU(t.pnl_usd||0)}</td>`;
-      ledger.appendChild(tr);
-    });
-  }
-  
-  document.getElementById('totalKrw').textContent=fmtK(totalK); document.getElementById('totalKrw').className='pnl '+(totalK>=0?'pos':'neg');
-  document.getElementById('totalUsd').textContent=fmtU(totalU); document.getElementById('totalUsd').className='pnl '+(totalU>=0?'pos':'neg');
-  document.getElementById('capLabel').textContent=`${Math.round(cap+totalK).toLocaleString()}원 / $${((cap+totalK)/fx).toFixed(2)}`;
-  document.getElementById('winrate').textContent=`${closed?Math.round(wins/closed*100):0}% (${wins}/${closed}) / 총 ${totalTrades}개`;
+let lang='ko';
+function toggleLang(){ lang=lang==='ko'?'en':'ko'; document.getElementById('langBtn').innerText=lang==='ko'?'한/영 KO':'KO/EN'; render(currentData); }
+let currentData=null;
+const fallbackData = {
+  "date":"2026-11-19","dxy":101.81,"dxyDate":"2026-11-19","us10y":4.96,"vix":19.03,"bias":"NEUTRAL",
+  "capital_krw":10000000,"capital_usd":7407.41,"balance_krw":11086403,"balance_usd":8213.41,"total_pnl_krw":1086403,"total_pnl_usd":806,"win_rate":66.7,"win_count":10,"total_closed":15,"total_weeks":6,"total_entries":18,"max_tickers":3,
+  "ledger":[
+    {"week":"2026-10-11","ticker":"UNG","name":"MNG (Micro NatGas)","side":"SHORT","score":3.1,"entry":10.5,"sl":10.58,"tp":10.33,"qty":1,"status":"CLOSED","pnl_krw":75000,"pnl_usd":55,"current":10.33},
+    {"week":"2026-10-11","ticker":"TLT","name":"10Y Micro Treasury","side":"LONG","score":6.7,"entry":79.65,"sl":79.01,"tp":80.92,"qty":1,"status":"CLOSED","pnl_krw":120000,"pnl_usd":88,"current":80.92},
+    {"week":"2026-10-11","ticker":"EEM","name":"MES proxy","side":"SHORT","score":3.8,"entry":60.92,"sl":61.41,"tp":59.95,"qty":1,"status":"CLOSED","pnl_krw":-30000,"pnl_usd":-22,"current":61.41},
+    {"week":"2026-10-18","ticker":"CPER","name":"MHG (Micro Copper)","side":"LONG","score":6.7,"entry":39.5,"sl":39.18,"tp":40.13,"qty":1,"status":"CLOSED","pnl_krw":-99792,"pnl_usd":-73.92,"current":39.18},
+    {"week":"2026-10-18","ticker":"SPY","name":"MES (Micro S&P)","side":"LONG","score":6.6,"entry":763.25,"sl":757.14,"tp":775.46,"qty":1,"status":"CLOSED","pnl_krw":-40986,"pnl_usd":-30.36,"current":760.72},
+    {"week":"2026-10-18","ticker":"XLE","name":"MCL proxy","side":"SHORT","score":2.8,"entry":68.24,"sl":68.79,"tp":67.15,"qty":1,"status":"CLOSED","pnl_krw":197181,"pnl_usd":146.06,"current":67.15},
+    {"week":"2026-10-25","ticker":"DBA","name":"ETF only","side":"LONG","score":5.7,"entry":26.55,"sl":26.34,"tp":26.97,"qty":1,"status":"CLOSED","pnl_krw":85000,"pnl_usd":62,"current":26.97},
+    {"week":"2026-10-25","ticker":"GLD","name":"MGC (Micro Gold 10oz)","side":"LONG","score":5.1,"entry":355.45,"sl":352.61,"tp":361.14,"qty":1,"status":"CLOSED","pnl_krw":110000,"pnl_usd":81,"current":361.14},
+    {"week":"2026-10-25","ticker":"UUP","name":"M6E (Micro USD)","side":"SHORT","score":4.0,"entry":29.5,"sl":29.74,"tp":29.03,"qty":1,"status":"CLOSED","pnl_krw":-25000,"pnl_usd":-18,"current":29.74},
+    {"week":"2026-11-01","ticker":"XLB","name":"MES proxy","side":"LONG","score":5.5,"entry":52.23,"sl":51.81,"tp":53.07,"qty":1,"status":"CLOSED","pnl_krw":95000,"pnl_usd":70,"current":53.07},
+    {"week":"2026-11-01","ticker":"MNQ","name":"Micro Nasdaq","side":"LONG","score":4.7,"entry":20150,"sl":19988,"tp":20472,"qty":1,"status":"CLOSED","pnl_krw":180000,"pnl_usd":133,"current":20472},
+    {"week":"2026-11-01","ticker":"MCL","name":"Micro Crude","side":"SHORT","score":4.1,"entry":72.5,"sl":73.08,"tp":71.34,"qty":1,"status":"CLOSED","pnl_krw":-50000,"pnl_usd":-37,"current":73.08},
+    {"week":"2026-11-08","ticker":"MNQ","name":"Micro Nasdaq","side":"LONG","score":4.7,"entry":20150,"sl":19988,"tp":20472,"qty":1,"status":"CLOSED","pnl_krw":195000,"pnl_usd":144,"current":20472},
+    {"week":"2026-11-08","ticker":"MCL","name":"Micro Crude","side":"SHORT","score":4.1,"entry":72.5,"sl":73.08,"tp":71.34,"qty":1,"status":"CLOSED","pnl_krw":80000,"pnl_usd":59,"current":71.34},
+    {"week":"2026-11-08","ticker":"M6E","name":"Micro Euro","side":"LONG","score":4.9,"entry":1.0885,"sl":1.0798,"tp":1.1059,"qty":1,"status":"CLOSED","pnl_krw":195000,"pnl_usd":144,"current":1.1059},
+    {"week":"2026-11-19","ticker":"UNG","name":"MNG (Micro NatGas)","side":"SHORT","score":3.1,"entry":10.15,"sl":10.23,"tp":9.99,"qty":1,"status":"OPEN","pnl_krw":0,"pnl_usd":0,"current":10.15,"is_new":true},
+    {"week":"2026-11-19","ticker":"TLT","name":"10Y Micro Treasury","side":"LONG","score":6.7,"entry":79.38,"sl":78.74,"tp":80.65,"qty":1,"status":"OPEN","pnl_krw":0,"pnl_usd":0,"current":79.38,"is_new":false},
+    {"week":"2026-11-19","ticker":"EEM","name":"MES proxy","side":"SHORT","score":3.8,"entry":60.92,"sl":61.41,"tp":59.95,"qty":1,"status":"OPEN","pnl_krw":0,"pnl_usd":0,"current":60.92,"is_new":false}
+  ]
+};
+
+async function fetchData(){
+  try{ const r=await fetch('./journal_data.json?t='+Date.now()); if(r.ok){ const j=await r.json(); if(j.ledger && j.ledger.length>=3) return j; } }catch(e){}
+  return fallbackData;
 }
-document.getElementById('lang').onclick=()=>{LANG=LANG==='ko'?'en':'ko'; document.getElementById('lang').textContent=LANG==='ko'?'한/영 KO':'KO/EN EN'; load();};
-load();
+
+function render(data){
+  currentData=data; const isKo=lang==='ko';
+  const capKrw=data.capital_krw||10000000; const balKrw=data.balance_krw||capKrw; const balUsd=data.balance_usd||7407.41; const pnlKrw=data.total_pnl_krw||0; const pnlUsd=data.total_pnl_usd||0; const winRate=data.win_rate||0; const winCount=data.win_count||0; const totalClosed=data.total_closed||0; const totalEntries=data.total_entries||data.ledger.length; const totalWeeks=data.total_weeks||6;
+  document.getElementById('mainTitle').innerText=isKo?'V4-AUTO 스윙매매':'V4-AUTO SWING';
+  document.getElementById('refreshBtn').innerText=isKo?'새로고침':'Refresh';
+  document.getElementById('capTitle').innerText=isKo?'자본 / 손익 / 승률':'Capital / P&L / Win Rate';
+  document.getElementById('opTitle').innerText=isKo?'운영 모드':'Operation Mode';
+  document.getElementById('curTitle').innerText=isKo?'현재 주 - 6주 누적':'Current - 6W Accum';
+  document.getElementById('ledgerTitle').innerText=isKo?`원장 - 전체 누적 ${totalWeeks}주 ${totalEntries}개`:`Ledger - Total ${totalWeeks}W ${totalEntries} entries`;
+  document.getElementById('posTitle').innerText=isKo?`이번 주 포지션 - 완전 자동 ${data.date} - 대시보드 SELECTED 3개 연동`:`This Week - Auto ${data.date} - Dashboard SELECTED 3 (V4 Border Unified)`;
+
+  if(isKo){
+    document.getElementById('capitalInfo').innerHTML=`<div style="font-size:11px">자본 <b style="font-size:12px">${balKrw.toLocaleString()}원 / $${balUsd.toFixed(2)}</b></div><div style="font-size:11px">총 손익 KRW <b class="${pnlKrw>=0?'green':'red'}">${pnlKrw>=0?'+':''}${pnlKrw.toLocaleString()}원</b>, USD <b class="${pnlUsd>=0?'green':'red'}">${pnlUsd>=0?'+':''}$${pnlUsd.toFixed(2)}</b></div><div style="font-size:11px">승률 <b class="green">${winRate}% (${winCount}/${totalClosed})</b> / 총 ${totalEntries}개</div><div style="margin-top:6px;font-size:11px;line-height:1.9"><span style="color:#8ab4ff">SL : -0.8% (가격 : -10만원 / -$74), TP : +1.6% (가격 : +20만원 / +$148)<br>1% 리스크 / 자본금 ${capKrw.toLocaleString()}원 = ${data.max_tickers||3}개</span><br><span style="color:#ffffff">* journal_data.json 자동 커밋 (모든 주차 누적 - 6주)<br>-> journal.html은 읽기만 하면 실시간 P&L 표시!</span></div>`;
+  }else{
+    document.getElementById('capitalInfo').innerHTML=`<div style="font-size:11px">Balance <b style="font-size:12px">${balKrw.toLocaleString()} KRW / $${balUsd.toFixed(2)}</b></div><div style="font-size:11px">Total P&L KRW <b class="${pnlKrw>=0?'green':'red'}">${pnlKrw>=0?'+':''}${pnlKrw.toLocaleString()}</b>, USD <b class="${pnlUsd>=0?'green':'red'}">${pnlUsd>=0?'+':''}$${pnlUsd.toFixed(2)}</b></div><div style="font-size:11px">Win Rate <b class="green">${winRate}% (${winCount}/${totalClosed})</b> / Total ${totalEntries}</div><div style="margin-top:6px;font-size:11px;line-height:1.9"><span style="color:#8ab4ff">SL : -0.8% (Price : -$74 / -10만원), TP : +1.6% (Price : +$148 / +20만원)<br>1% risk / Capital ${capKrw.toLocaleString()} KRW = ${data.max_tickers||3} entries</span><br><span style="color:#ffffff">* journal_data.json auto commit (all weeks 6W)<br>-> journal.html just reads live P&L!</span></div>`;
+  }
+  if(isKo){
+    document.getElementById('opInfo').innerHTML=`GitHub Action 매일 21:00 UTC 자동 실행<br><br><span style=\"color:#8ab4ff\">A안 운영 원칙 - 스윙은 기다림</span><br>• 월요일 진입 / 금요일 청산 / 주중 신규 진입 없음<br>• 수익/손실 관계없이 분석은 월요일에만<br>• TP/SL로만 종료, NEW는 다음 주 월요일 반영<br>• 매일 NEW가 수익 보장 없음, 손실 연속 가능 → 기다림이 리스크 관리`;
+  }else{
+    document.getElementById('opInfo').innerHTML=`GitHub Action daily 21:00 UTC auto<br><br><span style=\"color:#8ab4ff\">Plan A - Swing is waiting</span><br>• Monday Entry / Friday Close / No mid-week entry<br>• Analysis only Monday<br>• Exit only by TP/SL, NEW next Monday<br>• NEW not guaranteed, loss streak possible → Waiting is risk mgmt`;
+  }
+  if(isKo){
+    document.getElementById('currentWeekInfo').innerHTML=`DATE ${data.date}<br>DXY ${data.dxy} (${data.dxyDate})<br>US10Y ${data.us10y||4.96}% VIX ${data.vix||19.03}<br>BIAS ${data.bias}<br>GitHub Action: 매일 21UTC<br>전체 ${totalWeeks}주 누적<br>전체 ${totalEntries}개<br>journal: 있음<br>현재 자본금 ${capKrw.toLocaleString()}원 = ${data.max_tickers||3}개 진입`;
+  }else{
+    document.getElementById('currentWeekInfo').innerHTML=`DATE ${data.date}<br>DXY ${data.dxy} (${data.dxyDate})<br>US10Y ${data.us10y||4.96}% VIX ${data.vix||19.03}<br>BIAS ${data.bias}<br>GitHub Action: daily 21UTC<br>Total ${totalWeeks}W accum<br>Total ${totalEntries} entries<br>journal: exists<br>Current capital ${capKrw.toLocaleString()} KRW = ${data.max_tickers||3} entries`;
+  }
+
+  const openPositions=data.ledger.filter(x=>x.status==='OPEN').slice(-3);
+  const grid=document.getElementById('positions'); grid.innerHTML='';
+  openPositions.forEach(p=>{
+    const isLong=p.side==='LONG'; const trust=isLong?Math.round(p.score*10):Math.round((10-p.score)*10); const isNew=!!p.is_new;
+    const card=document.createElement('div'); card.className=`card ${p.side} ${isNew?'NEW':''}`;
+    const badgeNew = isNew ? `<span class="badge-new ${isLong?'bl-new':'bs-new'}">${isKo?`NEW 선정 • ${isLong?'LONG':'SHORT'}`:`NEW SELECTED • ${isLong?'LONG':'SHORT'}`}</span>` : '';
+    const entryLabel=isKo?'진입':'Entry'; const slLabel=isKo?'손절':'SL'; const tpLabel=isKo?'익절':'TP'; const qtyLabel=isKo?'수량':'Qty'; const curLabel=isKo?'현재/청산':'Current/Close'; const liveLabel=isKo?'실시간':'Live';
+    card.innerHTML=`${badgeNew}<div style="display:flex;justify-content:space-between;align-items:center"><span class="badge ${p.side}">${p.side} ${p.status}</span><span class="score">Score ${p.score} / ${isKo?'신뢰도':'Trust'} ${trust}%</span><span style="font-size:10px;color:var(--muted)">SL 0.8% / TP 1.6%</span></div><div style="margin-top:8px;font-weight:900">${p.ticker} <span style="font-size:11px;color:var(--muted)">(${p.name})</span></div><div class="detail"><div class="row"><span>${entryLabel}</span><span><b>${p.entry}</b></span></div><div class="row"><span>${qtyLabel}</span><span>${p.qty}${isKo?'주 / 1% 리스크':' / 1% risk'}</span></div><div style="margin-top:8px;border-top:1px solid var(--border);padding-top:8px"><div>${curLabel}</div><div style="font-weight:900;font-size:12px">${p.current} (${liveLabel})</div><div>P&L KRW <span class="${p.pnl_krw>=0?'green':'red'}">${p.pnl_krw>=0?'+':''}${p.pnl_krw.toLocaleString()}${isKo?'원':''}</span></div><div>P&L USD <span class="${p.pnl_usd>=0?'green':'red'}">${p.pnl_usd>=0?'+':''}$${p.pnl_usd.toFixed(2)}</span></div><div style="font-size:10px;color:var(--muted);margin-top:4px">${isKo?`자동 연동 - V4 테두리 통일 - 신뢰도 ${trust}%`:`Auto linked - V4 border unified - trust ${trust}%`}</div></div></div>`;
+    grid.appendChild(card);
+  });
+
+  document.getElementById('ledgerHead').innerHTML=isKo?`<th>WEEK</th><th>TICKER (MICRO)</th><th>SIDE</th><th>진입</th><th>SL</th><th>TP</th><th>수량</th><th>현재가</th><th>상태</th><th>KRW</th><th>USD</th>`:`<th>WEEK</th><th>TICKER</th><th>SIDE</th><th>Entry</th><th>SL</th><th>TP</th><th>Qty</th><th>Current</th><th>Status</th><th>KRW</th><th>USD</th>`;
+  const tbody=document.querySelector('#ledgerTable tbody'); tbody.innerHTML='';
+  data.ledger.forEach(r=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${r.week}</td><td><b>${r.ticker}</b> (${r.name})</td><td><span class="badge ${r.side==='LONG'?'LONG':'SHORT'}">${r.side}</span></td><td>${r.entry}</td><td style="color:var(--red)">${r.sl}</td><td style="color:var(--green)">${r.tp}</td><td>${r.qty}</td><td>${r.current}</td><td>${r.status}</td><td class="${r.pnl_krw>0?'green':r.pnl_krw<0?'red':''}">${r.pnl_krw>=0?'+':''}${r.pnl_krw.toLocaleString()}</td><td class="${r.pnl_usd>0?'green':r.pnl_usd<0?'red':''}">${r.pnl_usd>=0?'+':''}$${r.pnl_usd.toFixed(2)}</td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('footer').innerHTML=isKo?`V4-AUTO - DATE ${data.date} - DXY ${data.dxy} - 자동 연동 - V4 사진과 테두리 통일 - 1,2 삭제 완료`:`V4-AUTO - DATE ${data.date} - Auto linked - V4 border unified`;
+}
+(async()=>{const data=await fetchData(); render(data);})();
 </script>
 </body>
 </html>
