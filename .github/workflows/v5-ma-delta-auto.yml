@@ -1,0 +1,47 @@
+name: V5 MA Delta Auto - RealTime Ready
+
+on:
+  schedule:
+    # 장 시작 전 스캔: 23:00 UTC = 08:00 KST (18:00 EST 전날) 월-금
+    - cron: '0 23 * * 0-4'
+    # 장 중 15분마다 갱신 (실시간 감시 대용, Quantower 연결 전까지)
+    - cron: '*/15 0-10 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  v5-auto:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install requests || true
+      - name: Run V5 scoring (Top5/6 auto by balance)
+        run: |
+          python scoring_engine_v5.py
+          echo "=== absorption_v5.json ==="
+          cat absorption_v5.json | head -n 50
+      - name: Run V5 PnL checker (BALANCE FINAL + unlimited + same side)
+        run: |
+          python daily_pnl_checker_v5.py
+          echo "=== journal_data_v5.json ==="
+          cat journal_data_v5.json | head -n 100
+      - name: Sync to docs
+        run: |
+          python sync_to_pages.py || echo "sync_to_pages.py not found, copying manually"
+          cp -f absorption_v5.json docs/v5-ma-delta/absorption_v5.json || true
+          cp -f journal_data_v5.json docs/v5-ma-delta/journal_data_v5.json || true
+          cp -f best_tf_per_ticker.json docs/v5-ma-delta/best_tf_per_ticker.json || true
+          cp -f absorption_v5.json docs/absorption_v5.json || true
+          cp -f journal_data_v5.json docs/journal_data_v5.json || true
+      - name: Commit & Push
+        run: |
+          git config user.name "v5-bot"
+          git config user.email "v5-bot@github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "V5 auto $(date -u +%Y-%m-%dT%H:%M:%SZ) - Top${MAX} SIDE FIXED BALANCE"
+          git push
