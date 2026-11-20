@@ -3,57 +3,71 @@
   "balance": 49999.92,
   "max_tickers": 5,
   "best_tf_per_ticker": {
-    "MET": {
+    "M6J": {
       "tf": "1m",
-      "family": "FATHER",
-      "pnl": 3.67,
-      "score": 104.0,
-      "entry": 22.12,
-      "sl": 21.36,
-      "reason": "P&L max $3.67 - Entry 22.12 != other TF - Delta 14860"
+      "score": 113.0,
+      "entry": 0.08,
+      "sl": 0.78,
+      "tp1": 0.26,
+      "tp2": -0.03,
+      "tp3": -0.55,
+      "side": "SHORT",
+      "pnl": null
     },
-    "MGC": {
+    "M6E": {
       "tf": "3m",
-      "family": "DAUGHTER",
-      "pnl": -2.42,
-      "score": 105.8,
-      "entry": 32.26,
-      "sl": 31.77,
-      "reason": "P&L max $-2.42 - Entry 32.26 != other TF - Delta 14025"
+      "score": 111.3,
+      "entry": 0.89,
+      "sl": 1.48,
+      "tp1": 1.1,
+      "tp2": 1.0,
+      "tp3": 0.78,
+      "side": "SHORT",
+      "pnl": null
     },
-    "SIL": {
-      "tf": "2m",
-      "family": "SON",
-      "pnl": 4.33,
-      "score": 102.7,
-      "entry": 28.9,
-      "sl": 28.58,
-      "reason": "P&L max $4.33 - Entry 28.9 != other TF - Delta 13973"
+    "M2K2": {
+      "tf": "1m",
+      "score": 112.0,
+      "entry": 18.91,
+      "sl": 19.37,
+      "tp1": 19.19,
+      "tp2": 19.04,
+      "tp3": 18.69,
+      "side": "SHORT",
+      "pnl": null
     },
-    "TLT": {
+    "MET": {
       "tf": "3m",
-      "family": "DAUGHTER",
-      "pnl": 8.75,
-      "score": 109.0,
-      "entry": 88.48,
-      "sl": 88.82,
-      "reason": "P&L max $8.75 - Entry 88.48 != other TF - Delta 13525"
+      "score": 108.3,
+      "entry": 22.09,
+      "sl": 21.33,
+      "tp1": 21.81,
+      "tp2": 21.91,
+      "tp3": 21.87,
+      "side": "LONG",
+      "pnl": null
     },
     "MES": {
       "tf": "1m",
-      "family": "FATHER",
-      "pnl": 1.42,
-      "score": 107.6,
-      "entry": 45.2,
-      "sl": 44.83,
-      "reason": "P&L max $1.42 - Entry 45.2 != other TF - Delta 15141"
+      "score": 111.0,
+      "entry": 45.33,
+      "sl": 44.69,
+      "tp1": 45.15,
+      "tp2": 45.39,
+      "tp3": 45.65,
+      "side": "LONG",
+      "pnl": null
     }
   },
   "topN_distinct": [
+    "M6J",
+    "M6E",
+    "M2K2",
     "MET",
-    "MGC",
-    "SIL",
-    "TLT",
     "MES"
+  ],
+  "top2_distinct": [
+    "M6J",
+    "M6E"
   ]
 }
