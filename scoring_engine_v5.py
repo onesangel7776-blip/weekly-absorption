@@ -1,9 +1,9 @@
-
 """
-scoring_engine_v5.py - V5 MA Delta REAL READY - D2026-11-17 FINAL
-50K기준 하루 최대 5티커, 60K 6티커, 70K 7티커 ... 자본금에 따라 동적 TopN
-21 TICKER SCAN -> TopN DISTINCT -> Nx3TF = 3N SLOTS DIFFERENT Entry/SL/TP
-KST, maejip +15133 / balsan +4428, PROP LOCKED, REAL_DATA_MODE ready
+scoring_engine_v5.py - V5 MA Delta REAL READY - SIDE CONSISTENCY FIX
+- 50K 5티커(15슬롯), 60K 6티커(18슬롯) 잔고 기준 동적 TopN
+- 동일 티커 동일 방향 강제: 1m 나 / 2m 아들 / 3m 딸 전부 같은 LONG/SHORT
+- 21 TICKER SCAN -> TopN DISTINCT -> Nx3TF = 3N SLOTS
+- KST, maejip +15133 / balsan +4428, PROP LOCKED, REAL_DATA_MODE ready
 """
 
 import json, random, os
@@ -59,13 +59,20 @@ def today_kst():
     return now.strftime("D%Y-%m-%d"), now
 
 def get_max_tickers_by_balance(balance=50000):
-    """50K 5개, 60K 6개, 70K 7개, 80K 8개, 90K 9개, 100K 10개"""
-    if balance < 55000: return 5
-    elif balance < 65000: return 6
-    elif balance < 75000: return 7
-    elif balance < 85000: return 8
-    elif balance < 95000: return 9
-    else: return 10
+    """잔고 기준: 50K 5개, 60K 6개, 70K 7개, 80K 8개, 90K 9개, 100K 10개 - BALANCE FINAL"""
+    # V5는 50K=5, 60K=6이 기본, 그 이상은 확장
+    if balance < 55000:
+        return 5
+    elif balance < 65000:
+        return 6
+    elif balance < 75000:
+        return 7
+    elif balance < 85000:
+        return 8
+    elif balance < 95000:
+        return 9
+    else:
+        return 10
 
 def score_ma_convergence(ticker, tf):
     base = 0.08 + random.random()*0.12
@@ -150,18 +157,66 @@ def score_ticker_tf(ticker_id, tf):
         "ichimoku":ichimoku,"entry":entry,"sl":sl,"tp1":tp1,"tp2":tp2,"tp3":tp3,"qty":2,"total":round(total,1)
     }
 
+def enforce_same_side_per_ticker(all_scores):
+    """
+    3번 버그 수정: 동일 티커는 1m/2m/3m 전부 같은 방향이어야 함
+    - 티커별로 가장 높은 점수의 side를 dominant side로 선정
+    - 해당 티커의 모든 TF를 dominant side로 통일하고 entry/sl/tp 재계산
+    """
+    from collections import defaultdict
+    grouped = defaultdict(list)
+    for s in all_scores:
+        grouped[s["ticker"]].append(s)
+
+    fixed = []
+    for ticker_id, tf_list in grouped.items():
+        # dominant side = 가장 높은 total 점수를 가진 TF의 side (또는 1m Father 우선)
+        # 1m Father가 있으면 Father side 우선, 없으면 최고 점수 side
+        father = next((x for x in tf_list if x["tf"]=="1m"), None)
+        if father:
+            dominant_side = father["side"]
+        else:
+            best = max(tf_list, key=lambda x: x["total"])
+            dominant_side = best["side"]
+
+        for s in tf_list:
+            if s["side"] != dominant_side:
+                # side가 다르면 재계산
+                new_entry, new_sl, new_tp1, new_tp2, new_tp3 = calc_entry_sl_tp(
+                    s["ticker"], s["tf"], s["ichimoku"], dominant_side
+                )
+                s["side"] = dominant_side
+                s["entry"] = new_entry
+                s["sl"] = new_sl
+                s["tp1"] = new_tp1
+                s["tp2"] = new_tp2
+                s["tp3"] = new_tp3
+                # 메타도 업데이트
+                for t in TICKERS_21:
+                    if t["id"] == ticker_id:
+                        t["side"] = dominant_side
+            fixed.append(s)
+    return fixed
+
 def main():
     date_str, now_kst = today_kst()
-    # Try read balance from journal if exists for dynamic TopN
+    # 잔고 읽기 - journal_data_v5.json에서 balance 읽기 (BALANCE 기준)
     balance = 50000
     try:
-        if os.path.exists("journal_data_v5.json"):
-            with open("journal_data_v5.json","r",encoding="utf-8") as f:
-                jd=json.load(f)
-                fams=jd.get("families",{})
-                if fams:
-                    balance = max([v.get("balance",50000) for v in fams.values()]) if fams else 50000
+        for p in ["journal_data_v5.json", "docs/journal_data_v5.json", "docs/v5-ma-delta/journal_data_v5.json"]:
+            if os.path.exists(p):
+                with open(p,"r",encoding="utf-8") as f:
+                    jd=json.load(f)
+                    b = jd.get("balance_usd") or jd.get("balance") or jd.get("capital_usd")
+                    if b:
+                        balance = float(str(b).replace(",","").replace("$",""))
+                        break
+                    fams=jd.get("families",{})
+                    if fams:
+                        balance = max([v.get("balance",50000) for v in fams.values()]) if fams else 50000
+                        break
     except: pass
+
     max_tickers = get_max_tickers_by_balance(balance)
     print(f"V5 MA Delta REAL READY - KST {now_kst} date {date_str} balance ${balance} -> max_tickers {max_tickers}")
     print(f"PROP LOCKED DailyLoss ${PROP['daily_loss']} Profit ${PROP['daily_profit']} Judas {PROP['judas']} News {PROP['news_block']} EOD {PROP['eod']}")
@@ -177,9 +232,19 @@ def main():
             avg=sum(x["total"] for x in tf_scores)/len(tf_scores)
             ticker_totals[t["id"]]=avg
 
+    # === 3번 수정: 동일 티커 동일 방향 강제 ===
+    all_scores = enforce_same_side_per_ticker(all_scores)
+
+    # 다시 ticker_totals 갱신 (side 통일 후)
+    ticker_totals = {}
+    for t in TICKERS_21:
+        arr = [x for x in all_scores if x["ticker"]==t["id"]]
+        if arr:
+            avg=sum(x["total"] for x in arr)/len(arr)
+            ticker_totals[t["id"]]=avg
+
     sorted_tickers=sorted(ticker_totals.items(), key=lambda x: x[1], reverse=True)
     topN=[x[0] for x in sorted_tickers[:max_tickers]]
-    # Ensure DISTINCT
     topN=list(dict.fromkeys(topN))
 
     print(f"Top{max_tickers} DISTINCT: {', '.join([f'{tid}({ticker_totals.get(tid,0):.1f})' for tid in topN])}")
@@ -200,7 +265,7 @@ def main():
                 "q_ma":None,"q_maejip":None,"q_balsan":None,"q_flip":None,"q_cvd":None,"q_location":None
             }
             slots.append(slot)
-            print(f"  {slot['id']} {slot['side']} Entry {slot['entry']} != other TF SL {slot['sl']} TP {slot['tp1']}/{slot['tp2']}/{slot['tp3']} Score {slot['score']}")
+            print(f"  {slot['id']} {slot['side']} Entry {slot['entry']} SL {slot['sl']} TP {slot['tp1']}/{slot['tp2']}/{slot['tp3']} Score {slot['score']}")
 
     absorption={
         "date":date_str,"date_kst":now_kst.isoformat(),
@@ -208,7 +273,7 @@ def main():
         "topN_distinct":topN,"top2_distinct":topN[:2],"top2":topN[:2],
         "slots":slots,"ticker_totals":ticker_totals,"all_scores":all_scores[:max_tickers*3],
         "prop_locked":PROP,
-        "note": f"{max_tickers} TICKER x 3TF = {len(slots)} SLOTS DIFFERENT Entry/SL/TP per TF - 50K 5개, 60K 6개 동적 - maejip +15133 balsan +4428 per TF different - REAL READY Lucid L1/L2"
+        "note": f"{max_tickers} TICKER x 3TF = {len(slots)} SLOTS SAME SIDE PER TICKER - 50K 5개, 60K 6개 동적 - maejip +15133 balsan +4428 per TF different - REAL READY"
     }
     with open("absorption_v5.json","w",encoding="utf-8") as f:
         json.dump(absorption,f,indent=2,ensure_ascii=False)
@@ -218,7 +283,7 @@ def main():
         arr=[s for s in slots if s["ticker"]==tid]
         if arr:
             b=max(arr, key=lambda x: x["score"])
-            best[tid]={"tf":b["tf"],"score":b["score"],"entry":b["entry"],"sl":b["sl"],"tp1":b["tp1"],"tp2":b["tp2"],"tp3":b["tp3"],"pnl":None}
+            best[tid]={"tf":b["tf"],"score":b["score"],"entry":b["entry"],"sl":b["sl"],"tp1":b["tp1"],"tp2":b["tp2"],"tp3":b["tp3"],"side":b["side"],"pnl":None}
 
     with open("best_tf_per_ticker.json","w",encoding="utf-8") as f:
         json.dump({"date":date_str,"balance":balance,"max_tickers":max_tickers,"best_tf_per_ticker":best,"topN_distinct":topN,"top2_distinct":topN[:2]},f,indent=2,ensure_ascii=False)
@@ -228,7 +293,7 @@ def main():
             json.dump({"date":date_str,"balance":balance,"max_tickers":max_tickers,"topN":topN,"top2":topN[:2],"slots":slots,"best_tf_per_ticker":best},f,indent=2,ensure_ascii=False)
     except: pass
 
-    print(f"Generated absorption_v5.json with {len(slots)} slots - date {date_str} max_tickers {max_tickers}")
+    print(f"Generated absorption_v5.json with {len(slots)} slots SAME SIDE PER TICKER - date {date_str} max_tickers {max_tickers}")
     print(f"Generated best_tf_per_ticker.json - {list(best.keys())}")
 
 if __name__=="__main__":
