@@ -3,57 +3,71 @@
   "balance": 50000.34,
   "max_tickers": 5,
   "best_tf_per_ticker": {
-    "M6J": {
-      "tf": "2m",
-      "family": "SON",
-      "pnl": 0.92,
-      "score": 110.6,
-      "entry": 0.07,
-      "sl": 0.46,
-      "reason": "P&L max $0.92 - Entry 0.07 != other TF - Delta 14140"
+    "SIL": {
+      "tf": "1m",
+      "score": 112.4,
+      "entry": 28.91,
+      "sl": 28.17,
+      "tp1": 28.41,
+      "tp2": 28.68,
+      "tp3": 28.91,
+      "side": "LONG",
+      "pnl": null
     },
     "MBT": {
       "tf": "2m",
-      "family": "SON",
-      "pnl": 3.58,
-      "score": 101.7,
+      "score": 109.1,
       "entry": 42.24,
-      "sl": 42.57,
-      "reason": "P&L max $3.58 - Entry 42.24 != other TF - Delta 14406"
+      "sl": 42.56,
+      "tp1": 42.25,
+      "tp2": 42.14,
+      "tp3": 42.29,
+      "side": "SHORT",
+      "pnl": null
     },
-    "MNQ": {
-      "tf": "3m",
-      "family": "DAUGHTER",
-      "pnl": 8.92,
-      "score": 105.9,
-      "entry": 121.43,
-      "sl": 121.07,
-      "reason": "P&L max $8.92 - Entry 121.43 != other TF - Delta 13931"
-    },
-    "SIL": {
+    "M6J": {
       "tf": "2m",
-      "family": "SON",
-      "pnl": 4.42,
       "score": 113.5,
-      "entry": 28.79,
-      "sl": 28.28,
-      "reason": "P&L max $4.42 - Entry 28.79 != other TF - Delta 14222"
+      "entry": -0.07,
+      "sl": 0.7,
+      "tp1": 0.3,
+      "tp2": 0.1,
+      "tp3": 0.69,
+      "side": "SHORT",
+      "pnl": null
     },
-    "M6A": {
+    "MCL": {
+      "tf": "2m",
+      "score": 113.5,
+      "entry": 78.27,
+      "sl": 77.93,
+      "tp1": 78.08,
+      "tp2": 78.29,
+      "tp3": 78.34,
+      "side": "LONG",
+      "pnl": null
+    },
+    "M6E": {
       "tf": "1m",
-      "family": "FATHER",
-      "pnl": 4.83,
-      "score": 107.5,
-      "entry": 0.62,
-      "sl": 0.21,
-      "reason": "P&L max $4.83 - Entry 0.62 != other TF - Delta 15193"
+      "score": 111.8,
+      "entry": 1.12,
+      "sl": 1.69,
+      "tp1": 1.34,
+      "tp2": 1.03,
+      "tp3": 1.04,
+      "side": "SHORT",
+      "pnl": null
     }
   },
   "topN_distinct": [
-    "M6J",
-    "MBT",
-    "MNQ",
     "SIL",
-    "M6A"
+    "MBT",
+    "M6J",
+    "MCL",
+    "M6E"
+  ],
+  "top2_distinct": [
+    "SIL",
+    "MBT"
   ]
 }
