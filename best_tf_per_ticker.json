@@ -1,73 +1,73 @@
 {
   "date": "D2026-11-24",
-  "balance": 50000.34,
+  "balance": 50245.0,
   "max_tickers": 5,
   "best_tf_per_ticker": {
-    "SIL": {
+    "M2K": {
       "tf": "1m",
-      "score": 112.4,
-      "entry": 28.91,
-      "sl": 28.17,
-      "tp1": 28.41,
-      "tp2": 28.68,
-      "tp3": 28.91,
+      "score": 111.1,
+      "entry": 92.17,
+      "sl": 92.69,
+      "tp1": 92.51,
+      "tp2": 92.35,
+      "tp3": 91.76,
+      "side": "SHORT",
+      "pnl": null
+    },
+    "MYM2": {
+      "tf": "1m",
+      "score": 111.3,
+      "entry": 28.36,
+      "sl": 27.87,
+      "tp1": 28.27,
+      "tp2": 28.54,
+      "tp3": 28.93,
       "side": "LONG",
       "pnl": null
     },
-    "MBT": {
-      "tf": "2m",
-      "score": 109.1,
-      "entry": 42.24,
-      "sl": 42.56,
-      "tp1": 42.25,
-      "tp2": 42.14,
-      "tp3": 42.29,
-      "side": "SHORT",
+    "M6B": {
+      "tf": "1m",
+      "score": 110.3,
+      "entry": 1.23,
+      "sl": 0.68,
+      "tp1": 1.02,
+      "tp2": 1.41,
+      "tp3": 1.18,
+      "side": "LONG",
       "pnl": null
     },
     "M6J": {
-      "tf": "2m",
-      "score": 113.5,
-      "entry": -0.07,
-      "sl": 0.7,
-      "tp1": 0.3,
-      "tp2": 0.1,
-      "tp3": 0.69,
-      "side": "SHORT",
-      "pnl": null
-    },
-    "MCL": {
-      "tf": "2m",
-      "score": 113.5,
-      "entry": 78.27,
-      "sl": 77.93,
-      "tp1": 78.08,
-      "tp2": 78.29,
-      "tp3": 78.34,
-      "side": "LONG",
-      "pnl": null
-    },
-    "M6E": {
       "tf": "1m",
-      "score": 111.8,
-      "entry": 1.12,
-      "sl": 1.69,
-      "tp1": 1.34,
-      "tp2": 1.03,
-      "tp3": 1.04,
+      "score": 113.9,
+      "entry": -0.0,
+      "sl": 0.5,
+      "tp1": 0.19,
+      "tp2": 0.06,
+      "tp3": -0.1,
       "side": "SHORT",
+      "pnl": null
+    },
+    "XLF": {
+      "tf": "1m",
+      "score": 107.1,
+      "entry": 38.21,
+      "sl": 37.86,
+      "tp1": 38.14,
+      "tp2": 38.51,
+      "tp3": 38.69,
+      "side": "LONG",
       "pnl": null
     }
   },
   "topN_distinct": [
-    "SIL",
-    "MBT",
+    "M2K",
+    "MYM2",
+    "M6B",
     "M6J",
-    "MCL",
-    "M6E"
+    "XLF"
   ],
   "top2_distinct": [
-    "SIL",
-    "MBT"
+    "M2K",
+    "MYM2"
   ]
 }
