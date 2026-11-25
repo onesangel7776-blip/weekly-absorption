@@ -1,73 +1,73 @@
 {
   "date": "D2026-11-25",
-  "balance": 50468.92,
+  "balance": 50449.33,
   "max_tickers": 5,
   "best_tf_per_ticker": {
-    "MBT": {
-      "tf": "1m",
-      "score": 114.5,
-      "entry": 42.31,
-      "sl": 42.86,
-      "tp1": 42.63,
-      "tp2": 42.4,
-      "tp3": 42.37,
-      "side": "SHORT",
-      "pnl": null
-    },
-    "MYM": {
-      "tf": "1m",
-      "score": 114.4,
-      "entry": 38.69,
-      "sl": 39.39,
-      "tp1": 38.98,
-      "tp2": 38.83,
-      "tp3": 37.98,
-      "side": "SHORT",
-      "pnl": null
-    },
-    "XLF": {
-      "tf": "2m",
-      "score": 110.6,
-      "entry": 38.17,
-      "sl": 37.63,
-      "tp1": 38.0,
-      "tp2": 38.15,
-      "tp3": 38.53,
+    "MYM2": {
+      "tf": "3m",
+      "score": 115.0,
+      "entry": 28.35,
+      "sl": 27.56,
+      "tp1": 27.88,
+      "tp2": 27.97,
+      "tp3": 28.68,
       "side": "LONG",
+      "pnl": null
+    },
+    "M6A": {
+      "tf": "2m",
+      "score": 109.1,
+      "entry": 0.53,
+      "sl": -0.13,
+      "tp1": 0.19,
+      "tp2": 0.16,
+      "tp3": 0.77,
+      "side": "LONG",
+      "pnl": null
+    },
+    "M2K": {
+      "tf": "1m",
+      "score": 114.9,
+      "entry": 92.27,
+      "sl": 92.88,
+      "tp1": 92.58,
+      "tp2": 92.37,
+      "tp3": 92.5,
+      "side": "SHORT",
+      "pnl": null
+    },
+    "MGC2": {
+      "tf": "1m",
+      "score": 110.3,
+      "entry": 15.29,
+      "sl": 15.7,
+      "tp1": 15.35,
+      "tp2": 15.12,
+      "tp3": 15.05,
+      "side": "SHORT",
       "pnl": null
     },
     "M6E": {
       "tf": "1m",
-      "score": 111.8,
-      "entry": 1.03,
-      "sl": 1.52,
-      "tp1": 1.35,
-      "tp2": 1.17,
-      "tp3": 0.58,
-      "side": "SHORT",
-      "pnl": null
-    },
-    "GDX": {
-      "tf": "2m",
-      "score": 113.9,
-      "entry": 32.03,
-      "sl": 32.83,
-      "tp1": 32.39,
-      "tp2": 32.14,
-      "tp3": 31.57,
+      "score": 111.3,
+      "entry": 1.18,
+      "sl": 1.61,
+      "tp1": 1.31,
+      "tp2": 1.07,
+      "tp3": 0.57,
       "side": "SHORT",
       "pnl": null
     }
   },
   "topN_distinct": [
-    "MBT",
-    "MYM",
-    "XLF",
-    "M6E",
-    "GDX"
+    "MYM2",
+    "M6A",
+    "M2K",
+    "MGC2",
+    "M6E"
   ],
   "top2_distinct": [
-    "MBT",
-    "MYM"
+    "MYM2",
+    "M6A"
   ]
 }
